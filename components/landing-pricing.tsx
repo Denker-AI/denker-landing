@@ -1,161 +1,281 @@
+"use client";
+
+import { useState } from "react";
 import { cn } from "@/lib/cn";
 import { Icons } from "@/components/icons";
 
-const PLANS = [
+/* ── Plan data ──────────────────────────────────────────────── */
+
+type Plan = {
+  name: string;
+  monthly: number | null;
+  yearly: number | null;
+  description: string;
+  features: string[];
+  highlighted: boolean;
+  cta: string;
+  creditNote: string | null;
+};
+
+const PLANS: Plan[] = [
   {
-    name: "Starter",
-    price: "19",
-    period: "/mo",
-    description: "For individuals who want AI agents with lasting memory and organized workspaces.",
+    name: "Free",
+    monthly: null,
+    yearly: null,
+    description: "Try the canvas and agents. No credit card required.",
     features: [
-      { text: "Unlimited canvas workspaces", included: true },
-      { text: "Up to 3 concurrent agents", included: true },
-      { text: "Memory graph — 10 000 entities", included: true },
-      { text: "5 GB file storage", included: true },
-      { text: "5 tool connections (Gmail, Slack, etc.)", included: true },
-      { text: "Basic workflow automation", included: true },
-      { text: "Community support", included: true },
+      "5 projects",
+      "5 workflows",
+      "Basic memory",
+      "Community support",
     ],
     highlighted: false,
-    cta: "Join Waitlist",
+    cta: "Get started free",
+    creditNote: null,
   },
   {
     name: "Pro",
-    price: "69",
-    period: "/mo",
-    description: "For power users and small teams who need cloud execution, advanced workflows, and unlimited scale.",
+    monthly: 19,
+    yearly: 199,
+    description: "Your full AI workspace. Unlimited projects and persistent knowledge graph.",
     features: [
-      { text: "Everything in Starter, plus:", included: true },
-      { text: "Unlimited concurrent agents", included: true },
-      { text: "Memory graph — unlimited entities", included: true },
-      { text: "50 GB file storage", included: true },
-      { text: "Unlimited tool connections", included: true },
-      { text: "Cloud execution — agents run 24/7", included: true },
-      { text: "Scheduled workflows & triggers", included: true },
-      { text: "Team workspaces (coming soon)", included: true },
-      { text: "Priority support", included: true },
+      "Everything in Free, plus",
+      "Unlimited projects",
+      "Unlimited workflows",
+      "Knowledge graph memory — 10 GB",
+      "Priority support",
     ],
     highlighted: true,
     cta: "Join Waitlist",
+    creditNote: null,
   },
-] as const;
+  {
+    name: "Max",
+    monthly: 99,
+    yearly: 999,
+    description: "Cloud execution with advanced workflows. Agents run 24/7.",
+    features: [
+      "Everything in Pro, plus",
+      "10,000 credits / mo included",
+      "24/7 cloud execution",
+      "Unlimited memory",
+      "Beta features",
+    ],
+    highlighted: false,
+    cta: "Join Waitlist",
+    creditNote: "10,000 credits / mo",
+  },
+];
+
+/* ── Billing toggle ─────────────────────────────────────────── */
+
+function BillingToggle({
+  yearly,
+  onChange,
+}: {
+  yearly: boolean;
+  onChange: (yearly: boolean) => void;
+}) {
+  return (
+    <div className="mb-12 flex flex-col items-center gap-3">
+      <div className="flex items-center gap-3">
+        <button
+          className={cn(
+            "text-xs font-semibold transition-colors",
+            !yearly ? "text-primary" : "text-muted",
+          )}
+          onClick={() => onChange(false)}
+          data-testid="toggle-monthly"
+        >
+          Monthly
+        </button>
+        <button
+          className={cn(
+            "relative h-7 w-12 shrink-0 rounded-full border transition-colors",
+            yearly
+              ? "border-accent/40 bg-accent/20"
+              : "border-glass-stroke bg-glass-fill-heavy",
+          )}
+          onClick={() => onChange(!yearly)}
+          aria-label="Toggle billing period"
+          data-testid="toggle-switch"
+        >
+          <span
+            className={cn(
+              "absolute top-1/2 h-5 w-5 -translate-y-1/2 rounded-full transition-all duration-200",
+              yearly
+                ? "left-[calc(100%-24px)] bg-accent"
+                : "left-[3px] bg-muted",
+            )}
+          />
+        </button>
+        <button
+          className={cn(
+            "text-xs font-semibold transition-colors",
+            yearly ? "text-primary" : "text-muted",
+          )}
+          onClick={() => onChange(true)}
+          data-testid="toggle-yearly"
+        >
+          Yearly
+        </button>
+      </div>
+      <span
+        className={cn(
+          "rounded-full border border-accent/30 bg-accent/10 px-2.5 py-0.5 text-[10px] font-semibold text-accent transition-opacity duration-200",
+          yearly ? "opacity-100" : "opacity-0",
+        )}
+      >
+        2 months free
+      </span>
+    </div>
+  );
+}
+
+/* ── Pricing card ───────────────────────────────────────────── */
 
 function PricingCard({
-  name,
-  price,
-  period,
-  description,
-  features,
-  highlighted,
-  cta,
-}: (typeof PLANS)[number]) {
+  plan,
+  yearly,
+}: {
+  plan: Plan;
+  yearly: boolean;
+}) {
+  const { name, monthly, description, features, highlighted, cta } = plan;
+  const price = yearly ? plan.yearly : monthly;
+  const isFree = price === null;
+
   return (
     <div
       className={cn(
-        "relative flex flex-col rounded-2xl border p-8",
+        "relative flex flex-col rounded-2xl border p-7",
         highlighted
-          ? "border-accent/40 bg-accent/5 shadow-glow-accent"
-          : "border-glass-stroke bg-glass-fill backdrop-blur-glass",
+          ? "border-accent/30 bg-accent/[0.06] dark:bg-accent/[0.04]"
+          : "border-glass-stroke bg-surface shadow-glass-sm dark:bg-glass-fill",
       )}
+      style={highlighted ? { boxShadow: "0 0 48px rgba(21, 128, 61, 0.08), inset 0 1px 0 rgba(21, 128, 61, 0.10)" } : undefined}
       data-testid={`pricing-${name.toLowerCase()}`}
     >
       {highlighted && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-accent px-3 py-0.5 text-xs font-semibold text-white shadow-glow-accent-sm">
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-accent px-3 py-0.5 text-[10px] font-bold text-white shadow-glow-accent-sm">
           Most Popular
         </div>
       )}
-      <h3 className="mb-1 text-xl font-semibold text-primary">{name}</h3>
-      <p className="mb-6 text-sm text-secondary">{description}</p>
-      <div className="mb-6 flex items-baseline gap-1">
-        <span className="text-4xl font-bold text-primary">&euro;{price}</span>
-        <span className="text-sm text-muted">{period}</span>
+
+      {/* Tier name */}
+      <p className={cn("mb-2 text-sm font-bold", highlighted ? "text-accent" : "text-secondary")}>
+        {name}
+      </p>
+
+      {/* Price */}
+      <div className="mb-1 flex items-baseline gap-1.5">
+        {isFree ? (
+          <span className="text-4xl font-extrabold tracking-tight text-primary">&euro;0</span>
+        ) : (
+          <>
+            <span className="text-4xl font-extrabold tracking-tight text-primary">
+              &euro;{price}
+            </span>
+            <span className="text-sm text-muted">{yearly ? "/ yr" : "/ mo"}</span>
+          </>
+        )}
       </div>
+
+      {/* Yearly note */}
+      <div className="mb-5 h-4">
+        {!isFree && yearly && monthly && (
+          <p className="text-[11px] text-muted">
+            &asymp; &euro;{Math.round((plan.yearly ?? 0) / 12)} / mo &mdash; 2 months free
+          </p>
+        )}
+        {isFree && <p className="text-[11px] text-secondary">forever</p>}
+      </div>
+
+      {/* Description */}
+      <p className="mb-6 text-[13px] leading-relaxed text-secondary">{description}</p>
+
+      {/* Divider */}
+      <div className={cn("mb-6 h-px", highlighted ? "bg-accent/10" : "bg-glass-stroke")} />
+
+      {/* Features */}
+      <ul className="flex flex-1 flex-col gap-3.5">
+        {features.map((f) => {
+          const isInherit = f.startsWith("Everything in");
+          return (
+            <li key={f} className="flex items-start gap-2.5">
+              <Icons.Check
+                className={cn(
+                  "mt-0.5 h-3.5 w-3.5 shrink-0",
+                  highlighted && !isInherit ? "text-accent" : "text-secondary",
+                )}
+              />
+              <span
+                className={cn(
+                  "text-sm leading-snug",
+                  isInherit ? "font-medium text-secondary" : "text-secondary",
+                )}
+              >
+                {f}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+
+      {/* CTA */}
       <a
-        href="#waitlist"
+        href="#community"
         className={cn(
-          "mb-8 flex h-12 items-center justify-center rounded-xl text-sm font-semibold transition-all hover:brightness-110",
+          "mt-8 flex h-12 items-center justify-center rounded-full text-sm font-semibold transition-all hover:brightness-110",
           highlighted
             ? "bg-accent text-white shadow-glow-accent"
-            : "border border-glass-stroke bg-glass-fill-heavy text-primary backdrop-blur-glass hover:border-glass-stroke-light",
+            : "border border-glass-stroke bg-glass-fill-heavy text-primary hover:border-glass-stroke-light",
         )}
         data-testid={`pricing-${name.toLowerCase()}-cta`}
       >
         {cta}
       </a>
-      <ul className="flex flex-col gap-3">
-        {features.map((f) => (
-          <li key={f.text} className="flex items-start gap-2.5">
-            <Icons.Check className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-            <span className="text-sm text-secondary">{f.text}</span>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }
 
-function CostBreakdown() {
-  return (
-    <div className="mx-auto mt-16 max-w-2xl rounded-2xl border border-glass-stroke bg-glass-fill p-8 backdrop-blur-glass" data-testid="cost-breakdown">
-      <h3 className="mb-4 text-center text-lg font-semibold text-primary">
-        Where the costs come from
-      </h3>
-      <p className="mb-6 text-center text-sm text-secondary">
-        Denker charges for the workspace layer — not the AI. Your Claude subscription powers the intelligence.
-      </p>
-      <div className="grid gap-4 sm:grid-cols-3">
-        <div className="flex flex-col items-center gap-2 rounded-xl bg-glass-fill-heavy p-4">
-          <Icons.Brain className="h-5 w-5 text-purple-400" />
-          <span className="text-xs font-medium text-primary">Memory &amp; Storage</span>
-          <span className="text-center text-[10px] text-secondary">
-            Knowledge graph, pgvector embeddings, file storage
-          </span>
-        </div>
-        <div className="flex flex-col items-center gap-2 rounded-xl bg-glass-fill-heavy p-4">
-          <Icons.Cloud className="h-5 w-5 text-blue-400" />
-          <span className="text-xs font-medium text-primary">Cloud Execution</span>
-          <span className="text-center text-[10px] text-secondary">
-            Always-on agents, scheduled workflows, background tasks
-          </span>
-        </div>
-        <div className="flex flex-col items-center gap-2 rounded-xl bg-glass-fill-heavy p-4">
-          <Icons.Plug className="h-5 w-5 text-pink-400" />
-          <span className="text-xs font-medium text-primary">Tool Connections</span>
-          <span className="text-center text-[10px] text-secondary">
-            OAuth management, API relaying, webhook infrastructure
-          </span>
-        </div>
-      </div>
-    </div>
-  );
-}
+/* ── Section ────────────────────────────────────────────────── */
 
 export function LandingPricing() {
+  const [yearly, setYearly] = useState(false);
+
   return (
-    <section id="pricing" className="relative bg-canvas px-6 py-24 lg:px-12" data-testid="landing-pricing">
-      <div className="mx-auto mb-12 max-w-2xl text-center">
-        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-glass-stroke bg-glass-fill px-3 py-1 backdrop-blur-glass">
-          <Icons.CreditCard className="h-3 w-3 text-accent" />
-          <span className="text-xs text-secondary">Simple pricing</span>
-        </div>
+    <section id="pricing" className="relative px-5 py-24 sm:px-6 lg:px-12" data-testid="landing-pricing">
+      {/* Heading */}
+      <div className="mx-auto mb-10 max-w-2xl text-center">
+        <span className="badge-section mb-4">Simple pricing</span>
         <h2
-          className="mb-4 text-3xl font-bold tracking-tight text-primary lg:text-4xl"
-          style={{ fontFamily: "'Satoshi', sans-serif" }}
+          className="text-section-heading mb-4"
           data-testid="pricing-heading"
         >
-          Pay for the workspace,{" "}
-          <span className="text-accent">not the AI</span>
+          Less than a hire.
+          <br />
+          <span className="text-accent">More than a tool.</span>
         </h2>
         <p className="text-base text-secondary">
-          Your Claude subscription powers the intelligence. Denker provides the canvas, memory, workflows, and connections.
+          Start free. Pay for what your agents actually need.
         </p>
       </div>
-      <div className="mx-auto grid max-w-3xl gap-6 md:grid-cols-2">
+
+      {/* Toggle */}
+      <BillingToggle yearly={yearly} onChange={setYearly} />
+
+      {/* Cards */}
+      <div className="mx-auto grid max-w-5xl items-stretch gap-5 md:grid-cols-3">
         {PLANS.map((plan) => (
-          <PricingCard key={plan.name} {...plan} />
+          <PricingCard key={plan.name} plan={plan} yearly={yearly} />
         ))}
       </div>
-      <CostBreakdown />
+
+      {/* Footnote */}
+      <p className="mx-auto mt-8 max-w-xl text-center text-xs text-muted">
+        All plans include the canvas, real-time agent visibility, and tool connections. Cancel anytime.
+      </p>
     </section>
   );
 }

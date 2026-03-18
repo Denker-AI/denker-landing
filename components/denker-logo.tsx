@@ -16,7 +16,7 @@ const SRCS: Record<LogoVariant, { dark: string; light: string }> = {
   },
   wordmark: {
     dark: "/logo/logo-white.svg",
-    light: "/logo/logo-dark-green.svg",
+    light: "/logo/logo-black.svg",
   },
 };
 

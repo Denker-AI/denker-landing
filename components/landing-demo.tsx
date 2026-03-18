@@ -1,227 +1,296 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 import { Icons } from "@/components/icons";
 
-const SIDEBAR_SPACES = [
-  { name: "Q2 Campaign", active: true },
-  { name: "Product Launch", active: false },
-  { name: "Research Hub", active: false },
-];
-
-const SIDEBAR_WORKFLOWS = [
-  { name: "Newsletter", icon: Icons.Mail },
-  { name: "Deploy", icon: Icons.Zap },
-];
+/* ── Mini frame — mirrors real FrameHeader + content area ─────────── */
 
 function MiniFrame({
   title,
-  color,
+  accentColor,
+  icon: Icon,
   agent,
   streaming,
-  x,
-  y,
-  width,
+  floatDelay = 0,
   children,
 }: {
   title: string;
-  color: string;
+  accentColor: string;
+  icon: React.ElementType;
   agent: string;
   streaming?: boolean;
-  x: number;
-  y: number;
-  width: number;
-  children?: React.ReactNode;
+  floatDelay?: number;
+  children: React.ReactNode;
 }) {
   return (
     <div
-      className="absolute flex flex-col overflow-hidden rounded-[6px] border border-glass-stroke bg-glass-fill shadow-frame backdrop-blur-glass"
-      style={{ left: x, top: y, width }}
+      className="flex flex-col overflow-hidden rounded-xl border border-glass-stroke bg-glass-fill shadow-glass backdrop-blur-glass"
+      style={{ animation: `hero-float 5s ease-in-out ${floatDelay}s infinite` }}
     >
-      <div className="flex items-center gap-1 border-b border-glass-stroke-faint px-1.5 py-1">
-        <div className={cn("h-1 w-1 rounded-full", color)} />
-        <span className="truncate text-[7px] font-medium text-primary">{title}</span>
-        <span className="ml-auto text-[6px] text-muted">{agent}</span>
-        {streaming && <div className="h-1 w-1 animate-pulse rounded-full bg-accent" />}
+      <div className="flex items-center gap-1.5 border-b border-glass-stroke-faint px-2 py-1.5">
+        <span className="h-3 w-0.5 shrink-0 rounded-full" style={{ backgroundColor: accentColor }} />
+        <Icon className="h-2.5 w-2.5 shrink-0 text-muted" />
+        <span className="flex-1 truncate text-[9px] font-semibold text-secondary">{title}</span>
+        <span className="text-[7px] text-muted">{agent}</span>
+        {streaming && <div className="h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-accent" />}
       </div>
-      <div className="p-1.5">{children}</div>
+      <div className="p-2">{children}</div>
     </div>
   );
 }
 
-function SkeletonLines({ count }: { count: number }) {
+function SkeletonLines({ count, widths }: { count: number; widths?: number[] }) {
+  const dw = [100, 80, 60, 90, 70];
   return (
-    <div className="space-y-0.5">
+    <div className="space-y-1">
       {Array.from({ length: count }).map((_, i) => (
         <div
           key={i}
           className="h-1 rounded bg-glass-fill-heavy"
-          style={{ width: `${80 - i * 12}%` }}
+          style={{ width: `${widths?.[i] ?? dw[i % dw.length]}%` }}
         />
       ))}
     </div>
   );
 }
 
-export function LandingDemo() {
+function AgentCursor({ name, color, label }: { name: string; color: string; label: string }) {
   return (
-    <section className="relative bg-canvas px-6 py-24 lg:px-12" data-testid="landing-demo">
-      <div className="mx-auto max-w-5xl">
-        <div className="mb-12 text-center">
-          <h2
-            className="mb-4 text-3xl font-bold tracking-tight text-primary lg:text-4xl"
-            style={{ fontFamily: "'Satoshi', sans-serif" }}
-            data-testid="demo-heading"
+    <div className="pointer-events-none flex items-center gap-0.5">
+      <svg width="9" height="12" viewBox="0 0 9 12" fill="none">
+        <path d="M1 1L8 6L4.5 7L3 11L1 1Z" fill={color} />
+      </svg>
+      <span
+        className="rounded px-1.5 py-0.5 text-[8px] font-medium text-white"
+        style={{ backgroundColor: color }}
+      >
+        {name} · {label}
+      </span>
+    </div>
+  );
+}
+
+/* ── Canvas visual ────────────────────────────────────────────────── */
+
+function FramesCanvas({ triggered }: { triggered: boolean }) {
+  return (
+    <div
+      className="relative overflow-hidden rounded-2xl"
+      style={{
+        height: "min(560px, 70vh)",
+        backgroundColor: "var(--color-glass-fill)",
+        border: "1px solid var(--color-glass-stroke)",
+        backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px)",
+        backgroundSize: "18px 18px",
+      }}
+    >
+      {/* Ambient glow */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        aria-hidden="true"
+        style={{ background: "radial-gradient(ellipse 70% 55% at 40% 45%, rgba(167,139,250,0.07) 0%, transparent 70%)" }}
+      />
+
+      {/* Frame 1 — Research Brief — top-left */}
+      <div
+        className="absolute"
+        style={{
+          top: "7%", left: 28, width: 200,
+          opacity: triggered ? undefined : 0,
+          animation: triggered ? "hero-fade-in 0.6s ease 0.1s both" : "none",
+        }}
+      >
+        <MiniFrame title="Research Brief" accentColor="#BF5AF2" icon={Icons.Search} agent="Aria" streaming floatDelay={0}>
+          <SkeletonLines count={5} widths={[100, 85, 70, 90, 60]} />
+        </MiniFrame>
+      </div>
+
+      {/* Frame 2 — Email Draft — top-right */}
+      <div
+        className="absolute"
+        style={{
+          top: "20%", right: 24, width: 188,
+          opacity: triggered ? undefined : 0,
+          animation: triggered ? "hero-fade-in 0.6s ease 0.3s both" : "none",
+        }}
+      >
+        <MiniFrame title="Email Draft" accentColor="#FF375F" icon={Icons.Mail} agent="Mia" floatDelay={1.2}>
+          <SkeletonLines count={5} widths={[100, 90, 100, 75, 55]} />
+        </MiniFrame>
+      </div>
+
+      {/* Frame 3 — Data Analysis — center-left */}
+      <div
+        className="absolute"
+        style={{
+          top: "43%", left: 44, width: 184,
+          opacity: triggered ? undefined : 0,
+          animation: triggered ? "hero-fade-in 0.6s ease 0.5s both" : "none",
+        }}
+      >
+        <MiniFrame title="Data Analysis" accentColor="#FFD60A" icon={Icons.Brain} agent="Rex" floatDelay={2.1}>
+          <div className="space-y-1">
+            <div className="flex h-8 items-end gap-0.5">
+              {[60, 80, 50, 90, 70, 85, 55, 95].map((h, i) => (
+                <div key={i} className="flex-1 rounded-sm bg-yellow-400/30" style={{ height: `${h}%` }} />
+              ))}
+            </div>
+            <SkeletonLines count={2} widths={[80, 60]} />
+          </div>
+        </MiniFrame>
+      </div>
+
+      {/* Frame 4 — Feature Build — center-right */}
+      <div
+        className="absolute"
+        style={{
+          top: "55%", right: 32, width: 192,
+          opacity: triggered ? undefined : 0,
+          animation: triggered ? "hero-fade-in 0.6s ease 0.7s both" : "none",
+        }}
+      >
+        <MiniFrame title="Feature Build" accentColor="#0A84FF" icon={Icons.Code} agent="Kai" floatDelay={0.7}>
+          <div className="space-y-0.5">
+            <div className="h-1 w-full rounded bg-blue-400/30" />
+            <div className="h-1 w-4/5 rounded bg-green-400/20" />
+            <div className="h-1 w-3/5 rounded bg-yellow-400/20" />
+            <div className="h-1 w-11/12 rounded bg-blue-400/25" />
+            <div className="h-1 w-2/3 rounded bg-purple-400/20" />
+          </div>
+        </MiniFrame>
+      </div>
+
+      {/* Frame 5 — LinkedIn Post — bottom-left */}
+      <div
+        className="absolute"
+        style={{
+          bottom: "8%", left: 60, width: 188,
+          opacity: triggered ? undefined : 0,
+          animation: triggered ? "hero-fade-in 0.6s ease 0.9s both" : "none",
+        }}
+      >
+        <MiniFrame title="LinkedIn Post" accentColor="#0A66C2" icon={Icons.Send} agent="Mia" floatDelay={1.8}>
+          <SkeletonLines count={4} widths={[100, 90, 75, 50]} />
+        </MiniFrame>
+      </div>
+
+      {/* Agent cursors */}
+      <div
+        className="absolute"
+        style={{
+          top: "17%", left: "42%",
+          opacity: triggered ? undefined : 0,
+          animation: triggered ? "hero-fade-in 0.5s ease 1.1s both" : "none",
+        }}
+      >
+        <AgentCursor name="Aria" color="#A78BFA" label="searching" />
+      </div>
+      <div
+        className="absolute"
+        style={{
+          top: "35%", right: "30%",
+          opacity: triggered ? undefined : 0,
+          animation: triggered ? "hero-fade-in 0.5s ease 1.3s both" : "none",
+        }}
+      >
+        <AgentCursor name="Mia" color="#F472B6" label="writing" />
+      </div>
+      <div
+        className="absolute"
+        style={{
+          top: "66%", left: "48%",
+          opacity: triggered ? undefined : 0,
+          animation: triggered ? "hero-fade-in 0.5s ease 1.5s both" : "none",
+        }}
+      >
+        <AgentCursor name="Kai" color="#60A5FA" label="building" />
+      </div>
+      <div
+        className="absolute"
+        style={{
+          bottom: "25%", left: "33%",
+          opacity: triggered ? undefined : 0,
+          animation: triggered ? "hero-fade-in 0.5s ease 1.7s both" : "none",
+        }}
+      >
+        <AgentCursor name="Rex" color="#FFD60A" label="analyzing" />
+      </div>
+    </div>
+  );
+}
+
+/* ── Feature pill — rounded-full ──────────────────────────────────── */
+
+function Pill({ icon: Icon, label }: { icon: React.ElementType; label: string }) {
+  return (
+    <div className="flex items-center gap-2.5 rounded-full border border-glass-stroke bg-glass-fill px-4 py-3 backdrop-blur-glass-sm">
+      <Icon className="h-4 w-4 text-muted" />
+      <span className="text-sm font-medium text-secondary">{label}</span>
+    </div>
+  );
+}
+
+/* ── Section ──────────────────────────────────────────────────────── */
+
+export function LandingDemo() {
+  const ref = useRef<HTMLElement>(null);
+  const [triggered, setTriggered] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setTriggered(true); },
+      { threshold: 0.1 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section ref={ref} className="relative flex items-center px-5 py-20 sm:px-6 lg:min-h-screen lg:px-12" data-testid="landing-demo">
+      <div className="mx-auto w-full max-w-6xl">
+        <div className="grid items-center gap-10 lg:gap-16 lg:grid-cols-[1.1fr_0.9fr]">
+
+          {/* Left — canvas visual (below text on mobile) */}
+          <div className="order-2 lg:order-1">
+            <FramesCanvas triggered={triggered} />
+          </div>
+
+          {/* Right — copy (above canvas on mobile) */}
+          <div
+            className="order-1 flex flex-col justify-center lg:order-2"
+            style={{
+              opacity: triggered ? undefined : 0,
+              animation: triggered ? "hero-fade-in 0.7s ease 0.2s both" : "none",
+            }}
           >
-            Your workspace, <span className="text-accent">at a glance</span>
-          </h2>
-          <p className="text-base text-secondary">
-            Sidebar, canvas, panels — everything in one view. Agents work while you watch.
-          </p>
-        </div>
-
-        <div
-          className="relative mx-auto overflow-hidden rounded-2xl border border-glass-stroke bg-glass-fill shadow-card-modal backdrop-blur-glass"
-          style={{ aspectRatio: "16/10" }}
-          data-testid="demo-mockup"
-        >
-          {/* Header bar */}
-          <div className="flex h-8 items-center gap-2 border-b border-glass-stroke-faint px-3">
-            <div className="flex gap-1">
-              <div className="h-2 w-2 rounded-full bg-danger/60" />
-              <div className="h-2 w-2 rounded-full bg-warning/60" />
-              <div className="h-2 w-2 rounded-full bg-accent/60" />
-            </div>
-            <div className="flex-1" />
-            <div className="flex items-center gap-1.5">
-              <Icons.Search className="h-3 w-3 text-muted" />
-              <Icons.Bell className="h-3 w-3 text-muted" />
-              <Icons.Settings className="h-3 w-3 text-muted" />
-              <div className="h-4 w-4 rounded-full bg-accent/30" />
-            </div>
-          </div>
-
-          <div className="flex h-[calc(100%-32px)]">
-            {/* Sidebar */}
-            <div className="flex w-36 shrink-0 flex-col border-r border-glass-stroke-faint bg-glass-fill p-2">
-              <div className="mb-3 flex items-center gap-1 rounded-md bg-glass-fill-heavy px-2 py-1">
-                <Icons.Search className="h-2.5 w-2.5 text-muted" />
-                <span className="text-[7px] text-muted">Search...</span>
-              </div>
-              <span className="mb-1 text-[6px] font-semibold uppercase tracking-wider text-muted">Spaces</span>
-              {SIDEBAR_SPACES.map((s) => (
-                <div
-                  key={s.name}
-                  className={cn(
-                    "mb-0.5 flex items-center gap-1.5 rounded-md px-2 py-1 text-[7px]",
-                    s.active ? "bg-glass-fill-heavy text-primary" : "text-secondary hover:bg-glass-fill-heavy",
-                  )}
-                >
-                  <div className={cn("h-1 w-1 rounded-full", s.active ? "bg-accent" : "bg-muted")} />
-                  {s.name}
-                </div>
-              ))}
-              <span className="mb-1 mt-3 text-[6px] font-semibold uppercase tracking-wider text-muted">Automated</span>
-              {SIDEBAR_WORKFLOWS.map((w) => (
-                <div key={w.name} className="mb-0.5 flex items-center gap-1.5 rounded-md px-2 py-1 text-[7px] text-secondary">
-                  <w.icon className="h-2 w-2" />
-                  {w.name}
-                </div>
-              ))}
-            </div>
-
-            {/* Canvas area */}
-            <div
-              className="relative flex-1 overflow-hidden"
-              style={{
-                backgroundImage: "radial-gradient(circle, var(--color-canvas-dot) 0.5px, transparent 0.5px)",
-                backgroundSize: "12px 12px",
-              }}
+            <span className="text-section-label mb-5 block">Canvas Workspace</span>
+            <h2
+              className="text-section-heading mb-6"
+              data-testid="demo-heading"
             >
-              <MiniFrame title="Market Analysis" color="bg-frame-search" agent="Aria" x={20} y={12} width={140}>
-                <SkeletonLines count={3} />
-              </MiniFrame>
-              <MiniFrame title="API Client" color="bg-frame-code" agent="Kai" streaming x={180} y={8} width={130}>
-                <div className="space-y-0.5 font-mono">
-                  <div className="h-1 w-full rounded bg-blue-400/20" />
-                  <div className="h-1 w-4/5 rounded bg-green-400/20" />
-                  <div className="h-1 w-3/5 rounded bg-yellow-400/20" />
-                </div>
-              </MiniFrame>
-              <MiniFrame title="Email Draft" color="bg-frame-email" agent="Mia" x={330} y={16} width={130}>
-                <SkeletonLines count={4} />
-              </MiniFrame>
-              <MiniFrame title="Research Brief" color="bg-frame-conversation" agent="Aria" x={40} y={110} width={140}>
-                <div className="space-y-1">
-                  <div className="rounded bg-glass-fill-heavy p-1">
-                    <div className="h-1 w-full rounded bg-glass-fill-heavy" />
-                  </div>
-                  <div className="rounded bg-accent/10 p-1">
-                    <div className="h-1 w-full rounded bg-accent/20" />
-                  </div>
-                </div>
-              </MiniFrame>
-              <MiniFrame title="Deploy" color="bg-frame-workflow" agent="auto" x={210} y={120} width={120}>
-                <div className="flex items-center gap-0.5">
-                  <div className="h-2 w-2 rounded-full border border-accent bg-accent/30" />
-                  <div className="h-px flex-1 bg-accent/30" />
-                  <div className="h-2 w-2 rounded-full border border-accent bg-accent/30" />
-                  <div className="h-px flex-1 bg-glass-stroke" />
-                  <div className="h-2 w-2 rounded-full border border-glass-stroke" />
-                </div>
-              </MiniFrame>
-
-              {/* Agent cursors */}
-              <div className="absolute" style={{ left: 120, top: 75 }}>
-                <div className="flex items-center gap-0.5">
-                  <svg width="6" height="8" viewBox="0 0 12 16" fill="none">
-                    <path d="M1 1L11 8L5 9L3 15L1 1Z" fill="#A78BFA" />
-                  </svg>
-                  <span className="rounded px-1 py-0.5 text-[5px] font-medium text-white" style={{ backgroundColor: "#A78BFA" }}>Aria</span>
-                </div>
-              </div>
-              <div className="absolute" style={{ left: 270, top: 55 }}>
-                <div className="flex items-center gap-0.5">
-                  <svg width="6" height="8" viewBox="0 0 12 16" fill="none">
-                    <path d="M1 1L11 8L5 9L3 15L1 1Z" fill="#60A5FA" />
-                  </svg>
-                  <span className="rounded px-1 py-0.5 text-[5px] font-medium text-white" style={{ backgroundColor: "#60A5FA" }}>Kai</span>
-                </div>
-              </div>
-
-              {/* Input bar */}
-              <div className="absolute bottom-3 left-1/2 -translate-x-1/2">
-                <div className="flex items-center gap-1.5 rounded-lg border border-glass-stroke bg-glass-fill-dense px-2 py-1 shadow-glass-sm backdrop-blur-glass" style={{ width: 200 }}>
-                  <div className="h-1.5 w-1.5 rounded-full bg-accent" />
-                  <span className="text-[6px] text-muted">Ask your agents anything...</span>
-                </div>
-              </div>
-
-              {/* Zoom toolbar */}
-              <div className="absolute bottom-3 right-3">
-                <div className="flex items-center gap-0.5 rounded-md border border-glass-stroke bg-glass-fill px-1 py-0.5 backdrop-blur-glass">
-                  <Icons.ZoomIn className="h-2.5 w-2.5 text-muted" />
-                  <span className="text-[6px] text-muted">100%</span>
-                  <Icons.ZoomOut className="h-2.5 w-2.5 text-muted" />
-                </div>
-              </div>
-            </div>
-
-            {/* Right panel */}
-            <div className="flex w-28 shrink-0 flex-col border-l border-glass-stroke-faint bg-glass-fill p-2">
-              <span className="mb-2 text-[7px] font-semibold text-primary">Market Analysis</span>
-              <div className="mb-1 flex items-center gap-1">
-                <div className="h-3 w-3 rounded-full bg-purple-400/30 text-center text-[5px] leading-3 text-purple-300">A</div>
-                <span className="text-[6px] text-secondary">Aria</span>
-                <span className="ml-auto rounded bg-accent/20 px-1 text-[5px] text-accent">done</span>
-              </div>
-              <div className="my-2 border-t border-glass-stroke-faint" />
-              <SkeletonLines count={5} />
+              Every output lands{" "}
+              <span className="text-accent">on your canvas.</span>
+            </h2>
+            <p className="mb-8 text-base leading-relaxed text-secondary">
+              <strong className="font-semibold text-primary">See everything, control everything</strong> — research briefs, email drafts, code files. Each agent delivers straight to a named frame. Arrange, resize, and export.
+            </p>
+            <a
+              href="#community"
+              className="mb-10 inline-flex h-12 items-center justify-center rounded-full bg-primary px-7 text-sm font-bold text-canvas transition-opacity hover:opacity-80 max-sm:w-full sm:w-fit"
+            >
+              Join Waitlist
+            </a>
+            <div className="grid grid-cols-2 gap-2">
+              <Pill icon={Icons.Layers} label="Frames" />
+              <Pill icon={Icons.Eye}    label="Live preview" />
+              <Pill icon={Icons.Code}   label="All formats" />
+              <Pill icon={Icons.Send}   label="Export" />
             </div>
           </div>
         </div>
-
-        <p className="mt-4 text-center text-xs text-muted">
-          Multiple agents working in parallel — every action visible on the canvas.
-        </p>
       </div>
     </section>
   );

@@ -47,10 +47,10 @@ module.exports = {
         glass: "var(--shadow-glass)",
         "glass-sm": "var(--shadow-glass-sm)",
         frame: "0 4px 20px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.13)",
-        "glow-accent": "0 3px 12px #30D15840, 0 0 2px 1px #30D15820",
-        "glow-accent-sm": "0 2px 6px #30D15830",
+        "glow-accent": "0 3px 12px #15803D40, 0 0 2px 1px #15803D20",
+        "glow-accent-sm": "0 2px 6px #15803D30",
         "card-modal": "0 10px 40px -6px #00000060, 0 2px 4px #00000025",
-        "input-focus": "0 2px 10px #30D15825, 0 0 2px 1px #30D15815",
+        "input-focus": "0 2px 10px #15803D25, 0 0 2px 1px #15803D15",
       },
       borderRadius: {
         glass: "12px",

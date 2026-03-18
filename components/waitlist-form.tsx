@@ -31,6 +31,11 @@ export function WaitlistForm({ className, size = "default" }: WaitlistFormProps)
         throw new Error(data.error || "Something went wrong");
       }
       setStatus("success");
+      // Track conversion in PostHog
+      const ph = (window as unknown as Record<string, unknown>).posthog as
+        | { capture?: (event: string, properties?: Record<string, unknown>) => void }
+        | undefined;
+      ph?.capture?.("waitlist_signup");
       setEmail("");
     } catch (err) {
       setStatus("error");
@@ -42,7 +47,7 @@ export function WaitlistForm({ className, size = "default" }: WaitlistFormProps)
     return (
       <div
         className={cn(
-          "flex items-center gap-2 rounded-xl border border-accent/30 bg-accent/10 px-4 py-3",
+          "flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-3",
           className,
         )}
         data-testid="waitlist-success"
@@ -56,7 +61,7 @@ export function WaitlistForm({ className, size = "default" }: WaitlistFormProps)
   return (
     <form
       onSubmit={handleSubmit}
-      className={cn("flex w-full max-w-md gap-2", className)}
+      className={cn("flex w-full max-w-xl gap-2", className)}
       data-testid="waitlist-form"
     >
       <input
@@ -66,7 +71,7 @@ export function WaitlistForm({ className, size = "default" }: WaitlistFormProps)
         onChange={(e) => setEmail(e.target.value)}
         placeholder="you@example.com"
         className={cn(
-          "flex-1 rounded-xl border border-glass-stroke bg-glass-fill px-4 text-sm text-primary",
+          "flex-1 rounded-full border border-glass-stroke bg-glass-fill px-4 text-sm text-primary",
           "placeholder:text-muted backdrop-blur-glass focus:border-accent focus:outline-none",
           "focus:shadow-input-focus transition-all",
           size === "default" ? "h-12" : "h-10",
@@ -77,7 +82,7 @@ export function WaitlistForm({ className, size = "default" }: WaitlistFormProps)
         type="submit"
         disabled={status === "loading"}
         className={cn(
-          "shrink-0 rounded-xl bg-accent font-semibold text-white shadow-glow-accent",
+          "shrink-0 rounded-full bg-accent font-semibold text-white shadow-glow-accent",
           "transition-all hover:brightness-110 disabled:opacity-40",
           size === "default" ? "h-12 px-6 text-sm" : "h-10 px-4 text-xs",
         )}

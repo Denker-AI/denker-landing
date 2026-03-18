@@ -1,8 +1,6 @@
 import { cn } from "@/lib/cn";
 import { Icons } from "@/components/icons";
-import { DenkerLogo } from "@/components/denker-logo";
 import { WaitlistForm } from "@/components/waitlist-form";
-import { ThemeToggle } from "@/components/theme-toggle";
 
 /* ── Floating frame (background decoration) ──────────────────── */
 
@@ -58,57 +56,85 @@ function CursorLabel({ name, color }: { name: string; color: string }) {
   );
 }
 
+function SkeletonLines({ count, widths }: { count: number; widths?: number[] }) {
+  const defaultWidths = [100, 80, 60, 90, 70];
+  return (
+    <div className="space-y-1">
+      {Array.from({ length: count }).map((_, i) => (
+        <div
+          key={i}
+          className="h-1.5 rounded bg-glass-fill-heavy"
+          style={{ width: `${(widths?.[i] ?? defaultWidths[i % defaultWidths.length])}%` }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function WorkflowDots() {
+  return (
+    <div className="flex items-center gap-1">
+      <div className="h-2 w-2 animate-pulse rounded-full bg-frame-workflow" />
+      <div className="h-px w-4 rounded bg-glass-fill-heavy" />
+      <div className="h-2 w-2 rounded-full border border-glass-stroke" />
+      <div className="h-px w-4 rounded bg-glass-fill-heavy" />
+      <div className="h-2 w-2 rounded-full border border-glass-stroke" />
+    </div>
+  );
+}
+
 function HeroCanvas() {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-      <div
-        className="absolute -left-32 -top-32 h-96 w-96 rounded-full opacity-20 blur-3xl"
-        style={{ background: "radial-gradient(circle, var(--color-accent), transparent 70%)" }}
-      />
-      <div
-        className="absolute -bottom-32 -right-32 h-96 w-96 rounded-full opacity-15 blur-3xl"
-        style={{ background: "radial-gradient(circle, #0A84FF, transparent 70%)" }}
-      />
-
-      {/* Top frames — pushed down to clear the nav bar */}
-      <FloatingFrame title="Market Research" color="bg-frame-search" status="Aria" style={{ top: "15%", left: "3%", width: 180 }} delay={0.3}>
-        <div className="space-y-1">
-          <div className="h-1.5 w-full rounded bg-glass-fill-heavy" />
-          <div className="h-1.5 w-4/5 rounded bg-glass-fill-heavy" />
-          <div className="h-1.5 w-3/5 rounded bg-glass-fill-heavy" />
-        </div>
+      {/* Left column */}
+      <FloatingFrame title="Market Research" color="bg-frame-search" status="Aria" style={{ top: "15%", left: "2%", width: 178 }} delay={0.3}>
+        <SkeletonLines count={3} widths={[100, 80, 55]} />
       </FloatingFrame>
 
-      <FloatingFrame title="API Client" color="bg-frame-code" status="Kai" style={{ top: "13%", right: "5%", width: 170 }} delay={0.6}>
-        <div className="space-y-0.5 font-mono">
-          <p className="text-[8px] text-blue-300">const <span className="text-gray-300">client = </span><span className="text-green-300">new</span></p>
-          <p className="text-[8px] text-yellow-200">  DenkerClient<span className="text-gray-300">(key);</span></p>
-        </div>
+      <div className="hidden md:block">
+        <FloatingFrame title="Outreach Draft" color="bg-frame-email" status="Mia" style={{ top: "42%", left: "1%", width: 172 }} delay={0.7}>
+          <SkeletonLines count={4} widths={[100, 90, 100, 60]} />
+        </FloatingFrame>
+      </div>
+
+      <FloatingFrame title="Competitor Analysis" color="bg-frame-search" status="Nova" style={{ bottom: "14%", left: "6%", width: 182 }} delay={1.1}>
+        <SkeletonLines count={3} widths={[85, 100, 70]} />
       </FloatingFrame>
 
-      <FloatingFrame title="Newsletter Draft" color="bg-frame-email" status="Mia" style={{ bottom: "15%", left: "8%", width: 180 }} delay={0.9}>
-        <div className="space-y-1">
-          <div className="h-1.5 w-full rounded bg-glass-fill-heavy" />
-          <div className="h-1.5 w-full rounded bg-glass-fill-heavy" />
-          <div className="h-1.5 w-2/3 rounded bg-glass-fill-heavy" />
-        </div>
+      {/* Right column */}
+      <FloatingFrame title="Feature Build" color="bg-frame-code" status="Kai" style={{ top: "13%", right: "4%", width: 170 }} delay={0.5}>
+        <SkeletonLines count={3} widths={[70, 100, 85]} />
       </FloatingFrame>
 
-      <FloatingFrame title="Deploy Pipeline" color="bg-frame-workflow" status="running" style={{ bottom: "10%", right: "3%", width: 160 }} delay={1.2}>
-        <div className="flex items-center gap-1">
-          <div className="h-2 w-2 animate-pulse rounded-full bg-accent" />
-          <div className="h-1.5 flex-1 rounded bg-glass-fill-heavy" />
-        </div>
+      <div className="hidden md:block">
+        <FloatingFrame title="Newsletter" color="bg-frame-email" status="Mia" style={{ top: "40%", right: "2%", width: 165 }} delay={0.9}>
+          <SkeletonLines count={3} widths={[100, 75, 90]} />
+        </FloatingFrame>
+      </div>
+
+      <FloatingFrame title="Deploy Pipeline" color="bg-frame-workflow" status="running" style={{ bottom: "10%", right: "3%", width: 162 }} delay={1.3}>
+        <WorkflowDots />
       </FloatingFrame>
 
-      <div className="absolute" style={{ top: "28%", left: "18%", animation: "hero-fade-in 0.5s ease 1.8s both" }}>
-        <div style={{ animation: "hero-drift-1 8s ease-in-out 0s infinite" }}>
+      {/* Agent cursors — 4 agents drifting */}
+      <div className="absolute" style={{ top: "30%", left: "19%", animation: "hero-fade-in 0.5s ease 1.6s both" }}>
+        <div style={{ animation: "hero-drift-1 9s ease-in-out 0s infinite" }}>
           <CursorLabel name="Aria" color="#A78BFA" />
         </div>
       </div>
-      <div className="absolute" style={{ top: "25%", right: "12%", animation: "hero-fade-in 0.5s ease 2.1s both" }}>
-        <div style={{ animation: "hero-drift-2 8s ease-in-out 1s infinite" }}>
+      <div className="absolute" style={{ top: "26%", right: "13%", animation: "hero-fade-in 0.5s ease 1.9s both" }}>
+        <div style={{ animation: "hero-drift-2 8s ease-in-out 0.5s infinite" }}>
           <CursorLabel name="Kai" color="#60A5FA" />
+        </div>
+      </div>
+      <div className="absolute hidden md:block" style={{ top: "55%", left: "22%", animation: "hero-fade-in 0.5s ease 2.2s both" }}>
+        <div style={{ animation: "hero-drift-3 10s ease-in-out 1s infinite" }}>
+          <CursorLabel name="Mia" color="#F472B6" />
+        </div>
+      </div>
+      <div className="absolute hidden md:block" style={{ top: "60%", right: "20%", animation: "hero-fade-in 0.5s ease 2.5s both" }}>
+        <div style={{ animation: "hero-drift-4 11s ease-in-out 2s infinite" }}>
+          <CursorLabel name="Nova" color="#34D399" />
         </div>
       </div>
     </div>
@@ -120,12 +146,8 @@ function HeroCanvas() {
 export function LandingHero() {
   return (
     <section
-      className="relative min-h-screen overflow-hidden bg-canvas"
+      className="relative min-h-screen overflow-hidden"
       data-testid="landing-hero"
-      style={{
-        backgroundImage: "radial-gradient(circle, var(--color-canvas-dot) 1px, transparent 1px)",
-        backgroundSize: "24px 24px",
-      }}
     >
       <div
         className="pointer-events-none absolute inset-0"
@@ -135,47 +157,26 @@ export function LandingHero() {
 
       <HeroCanvas />
 
-      <nav className="relative z-20 flex items-center justify-between px-6 py-4 lg:px-12" data-testid="landing-nav">
-        <DenkerLogo variant="wordmark" height={28} />
-        <div className="flex items-center gap-4">
-          <a href="#pricing" className="text-sm text-secondary transition-colors hover:text-primary" data-testid="nav-pricing">
-            Pricing
-          </a>
-          <a href="#features" className="text-sm text-secondary transition-colors hover:text-primary" data-testid="nav-features">
-            Features
-          </a>
-          <a
-            href="#waitlist"
-            className="inline-flex h-[34px] items-center rounded-lg bg-accent px-3.5 text-xs font-medium text-white shadow-glow-accent transition-all hover:brightness-110"
-            data-testid="nav-cta"
-          >
-            Join Waitlist
-          </a>
-          <ThemeToggle />
-        </div>
-      </nav>
-
-      <div className="relative z-10 flex min-h-[calc(100vh-72px)] flex-col items-center justify-center px-6 text-center">
+      <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 pt-24 text-center">
         <div
           className="mb-6 inline-flex items-center gap-2 rounded-full border border-glass-stroke bg-glass-fill px-4 py-1.5 backdrop-blur-glass"
           data-testid="hero-badge"
         >
           <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
-          <span className="text-xs text-secondary">Early access coming soon</span>
+          <span className="text-xs text-secondary">Your agents are standing by</span>
         </div>
 
         <h1
-          className="mb-6 max-w-3xl text-5xl font-bold leading-tight tracking-tight text-primary lg:text-6xl"
-          style={{ fontFamily: "'Satoshi', sans-serif" }}
+          className="text-section-heading mb-6 max-w-3xl"
           data-testid="hero-heading"
         >
-          Where humans and AI agents{" "}
-          <span className="text-accent">co-work visually</span>
+          Your AI team executes.{" "}
+          <span className="text-accent">You decide what&apos;s next.</span>
         </h1>
 
-        <p className="mb-10 max-w-xl text-lg text-secondary" data-testid="hero-subheading">
-          A limitless canvas workspace where your AI agents research, write, code, and automate
-          — all visible in real time. No black boxes. No config hell.
+        <p className="mb-10 max-w-xl text-base text-secondary sm:text-lg" data-testid="hero-subheading">
+          Research, writing, code, outreach — your agents run it all in parallel.
+          Visible at every step. Yours to direct.
         </p>
 
         <div className="relative w-full max-w-md">
@@ -186,11 +187,17 @@ export function LandingHero() {
           Free early access. No credit card required.
         </p>
 
-        <div className="absolute bottom-8 flex flex-col items-center gap-2 opacity-40">
-          <span className="text-xs text-muted">Scroll to explore</span>
-          <Icons.ChevronDown className="h-4 w-4 animate-bounce text-muted" />
-        </div>
+        <a
+          href="#features"
+          className="absolute bottom-8 flex flex-col items-center gap-2 transition-opacity hover:opacity-100"
+          style={{ opacity: 0.75 }}
+          aria-label="Scroll to explore"
+        >
+          <span className="text-xs font-medium text-secondary">Scroll to explore</span>
+          <Icons.ChevronDown className="h-5 w-5 animate-bounce text-secondary" />
+        </a>
       </div>
+
     </section>
   );
 }

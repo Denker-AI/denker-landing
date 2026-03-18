@@ -2,17 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+  overscroll-behavior: none;
+}
+
 @layer base {
   :root {
     /* Canvas */
     --color-canvas: #F2F2F7;
     --color-surface: #FFFFFF;
     --color-elevated: #FFFFFF;
-    --color-accent: #34C759;
+    --color-accent: #15803D;
     --color-canvas-dot: rgba(0, 0, 0, 0.20);
 
     /* Glass — light mode */
-    --color-glass-fill: rgba(0, 0, 0, 0.03);
+    --color-glass-fill: rgba(255, 255, 255, 0.65);
     --color-glass-stroke: rgba(0, 0, 0, 0.10);
     --color-glass-fill-heavy: rgba(0, 0, 0, 0.05);
     --color-glass-fill-dense: rgba(255, 255, 255, 0.85);
@@ -39,11 +44,11 @@
     --color-frame-search: #AF52DE;
     --color-frame-email: #FF2D55;
     --color-frame-workflow: #FF9500;
-    --color-frame-conversation: #34C759;
+    --color-frame-conversation: #15803D;
 
     /* Page gradient */
     --gradient-page-overlay:
-      radial-gradient(ellipse 55% 45% at 15% 25%, rgba(48, 209, 88, 0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 55% 45% at 15% 25%, rgba(21, 128, 61, 0.12) 0%, transparent 70%),
       radial-gradient(ellipse 50% 40% at 85% 75%, rgba(10, 132, 255, 0.10) 0%, transparent 70%),
       radial-gradient(ellipse 40% 35% at 75% 8%,  rgba(167, 139, 250, 0.08) 0%, transparent 65%);
   }
@@ -52,7 +57,7 @@
     --color-canvas: #0A0A0F;
     --color-surface: #1C1C1E;
     --color-elevated: #2C2C2E;
-    --color-accent: #30D158;
+    --color-accent: #15803D;
     --color-canvas-dot: rgba(255, 255, 255, 0.14);
 
     --color-glass-fill: rgba(255, 255, 255, 0.06);
@@ -72,17 +77,17 @@
 
     --color-danger: #FF453A;
     --color-danger-light: #FF6961;
-    --color-success: #30D158;
+    --color-success: #15803D;
     --color-warning: #FFD60A;
 
     --color-frame-code: #0A84FF;
     --color-frame-search: #BF5AF2;
     --color-frame-email: #FF375F;
     --color-frame-workflow: #FFD60A;
-    --color-frame-conversation: #30D158;
+    --color-frame-conversation: #15803D;
 
     --gradient-page-overlay:
-      radial-gradient(ellipse 55% 45% at 15% 25%, rgba(48, 209, 88, 0.14) 0%, transparent 70%),
+      radial-gradient(ellipse 55% 45% at 15% 25%, rgba(21, 128, 61, 0.14) 0%, transparent 70%),
       radial-gradient(ellipse 50% 40% at 85% 75%, rgba(10, 132, 255, 0.12) 0%, transparent 70%),
       radial-gradient(ellipse 40% 35% at 75% 8%,  rgba(167, 139, 250, 0.10) 0%, transparent 65%);
   }
@@ -121,6 +126,42 @@ body {
   .text-canvas-xs  { font-size: 8px; line-height: 1.2; }
   .text-canvas-sm  { font-size: 9px; line-height: 1.3; }
   .text-canvas-base { font-size: 10px; line-height: 1.4; }
+
+  /* Section heading tokens */
+  .text-section-heading {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    color: var(--color-primary);
+    font-size: 1.875rem;   /* text-3xl */
+    line-height: 1.05;
+  }
+  @media (min-width: 640px) {
+    .text-section-heading { font-size: 3rem; }    /* sm:text-5xl */
+  }
+  @media (min-width: 1024px) {
+    .text-section-heading { font-size: 3.75rem; }  /* lg:text-6xl */
+  }
+
+  .text-section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-muted);
+  }
+
+  /* Section badge — glass pill label */
+  .badge-section {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 9999px;
+    border: 1px solid var(--color-glass-stroke);
+    background: var(--color-glass-fill);
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    color: var(--color-secondary);
+  }
 }
 
 /* Hero animations */
@@ -146,4 +187,59 @@ body {
   30%       { transform: translate(-10px, 8px);  }
   60%       { transform: translate(8px, 16px);   }
   80%       { transform: translate(-5px, 5px);   }
+}
+
+@keyframes hero-drift-3 {
+  0%, 100% { transform: translate(0, 0);       }
+  35%       { transform: translate(-8px, 12px); }
+  65%       { transform: translate(10px, 6px);  }
+  85%       { transform: translate(-4px, -8px); }
+}
+
+@keyframes hero-drift-4 {
+  0%, 100% { transform: translate(0, 0);       }
+  20%       { transform: translate(6px, -10px); }
+  55%       { transform: translate(-12px, 4px); }
+  80%       { transform: translate(4px, 8px);   }
+}
+
+/* Manifesto section */
+@keyframes timeline-draw {
+  from { height: 0; }
+  to   { height: 100%; }
+}
+
+@keyframes statement-rise {
+  from { opacity: 0; transform: translateY(28px); filter: blur(4px); }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+}
+
+@keyframes label-fade {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes subtext-rise {
+  from { opacity: 0; transform: translateY(16px); filter: blur(6px); }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+}
+
+@keyframes tomorrow-pulse {
+  0%, 100% { text-shadow: 0 0 0px rgba(21, 128, 61, 0); }
+  50%       { text-shadow: 0 0 40px rgba(21, 128, 61, 0.5), 0 0 80px rgba(21, 128, 61, 0.2); }
+}
+
+@keyframes dot-pop {
+  from { transform: scale(0); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+@keyframes line-grow {
+  from { transform: scaleX(0); opacity: 0; }
+  to   { transform: scaleX(1); opacity: 1; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
