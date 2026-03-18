@@ -97,9 +97,11 @@ function HeroCanvas() {
         </FloatingFrame>
       </div>
 
-      <FloatingFrame title="Competitor Analysis" color="bg-frame-search" status="Nova" style={{ bottom: "14%", left: "6%", width: 182 }} delay={1.1}>
-        <SkeletonLines count={3} widths={[85, 100, 70]} />
-      </FloatingFrame>
+      <div className="hidden md:block">
+        <FloatingFrame title="Competitor Analysis" color="bg-frame-search" status="Nova" style={{ bottom: "14%", left: "6%", width: 182 }} delay={1.1}>
+          <SkeletonLines count={3} widths={[85, 100, 70]} />
+        </FloatingFrame>
+      </div>
 
       {/* Right column */}
       <FloatingFrame title="Feature Build" color="bg-frame-code" status="Kai" style={{ top: "13%", right: "4%", width: 170 }} delay={0.5}>
@@ -112,27 +114,29 @@ function HeroCanvas() {
         </FloatingFrame>
       </div>
 
-      <FloatingFrame title="Deploy Pipeline" color="bg-frame-workflow" status="running" style={{ bottom: "10%", right: "3%", width: 162 }} delay={1.3}>
-        <WorkflowDots />
-      </FloatingFrame>
+      <div className="hidden md:block">
+        <FloatingFrame title="Deploy Pipeline" color="bg-frame-workflow" status="running" style={{ bottom: "10%", right: "3%", width: 162 }} delay={1.3}>
+          <WorkflowDots />
+        </FloatingFrame>
+      </div>
 
-      {/* Agent cursors — 4 agents drifting */}
+      {/* Agent cursors */}
       <div className="absolute" style={{ top: "30%", left: "19%", animation: "hero-fade-in 0.5s ease 1.6s both" }}>
         <div style={{ animation: "hero-drift-1 9s ease-in-out 0s infinite" }}>
           <CursorLabel name="Aria" color="#A78BFA" />
         </div>
       </div>
-      <div className="absolute" style={{ top: "26%", right: "13%", animation: "hero-fade-in 0.5s ease 1.9s both" }}>
+      <div className="absolute hidden md:block" style={{ top: "26%", right: "13%", animation: "hero-fade-in 0.5s ease 1.9s both" }}>
         <div style={{ animation: "hero-drift-2 8s ease-in-out 0.5s infinite" }}>
           <CursorLabel name="Kai" color="#60A5FA" />
         </div>
       </div>
-      <div className="absolute hidden md:block" style={{ top: "55%", left: "22%", animation: "hero-fade-in 0.5s ease 2.2s both" }}>
+      <div className="absolute hidden lg:block" style={{ top: "55%", left: "22%", animation: "hero-fade-in 0.5s ease 2.2s both" }}>
         <div style={{ animation: "hero-drift-3 10s ease-in-out 1s infinite" }}>
           <CursorLabel name="Mia" color="#F472B6" />
         </div>
       </div>
-      <div className="absolute hidden md:block" style={{ top: "60%", right: "20%", animation: "hero-fade-in 0.5s ease 2.5s both" }}>
+      <div className="absolute hidden lg:block" style={{ top: "60%", right: "20%", animation: "hero-fade-in 0.5s ease 2.5s both" }}>
         <div style={{ animation: "hero-drift-4 11s ease-in-out 2s infinite" }}>
           <CursorLabel name="Nova" color="#34D399" />
         </div>
@@ -157,7 +161,9 @@ export function LandingHero() {
 
       <HeroCanvas />
 
-      <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 pt-24 text-center">
+      <div className="relative z-10 flex min-h-screen flex-col items-center px-6 pt-24 text-center">
+        {/* Spacer — pushes heading group to ~40% on mobile, centers on desktop */}
+        <div className="flex-1 min-h-12 md:min-h-0" />
         <div
           className="mb-6 inline-flex items-center gap-2 rounded-full border border-glass-stroke bg-glass-fill px-4 py-1.5 backdrop-blur-glass"
           data-testid="hero-badge"
@@ -187,9 +193,12 @@ export function LandingHero() {
           Free early access. No credit card required.
         </p>
 
+        {/* Spacer — pushes form lower on mobile */}
+        <div className="flex-[1.6] min-h-16 md:flex-1 md:min-h-0" />
+
         <a
           href="#features"
-          className="absolute bottom-8 flex flex-col items-center gap-2 transition-opacity hover:opacity-100"
+          className="pb-8 flex flex-col items-center gap-2 transition-opacity hover:opacity-100"
           style={{ opacity: 0.75 }}
           aria-label="Scroll to explore"
         >

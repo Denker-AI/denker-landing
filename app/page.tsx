@@ -30,8 +30,8 @@ export default function HomePage() {
       <LandingManifesto />
 
       {/* Features anchor + heading */}
-      <section id="features" className="px-5 pb-20 pt-24 text-center sm:px-6 sm:pb-28 lg:px-12">
-        <span className="badge-section mb-4">Features</span>
+      <section id="features" className="flex min-h-screen flex-col items-center justify-center px-5 text-center sm:px-6 lg:px-12">
+        <span className="badge-section mb-6">Features</span>
         <h2
           className="text-section-heading mx-auto max-w-3xl"
         >
