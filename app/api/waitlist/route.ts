@@ -164,16 +164,16 @@ const LOGO_URL = "https://www.denker.ai/logo/logo-white.png";
 const F = "'Inter', -apple-system, BlinkMacSystemFont, sans-serif";
 const FH = "'Satoshi', -apple-system, sans-serif";
 const E = {
-  bg: "#0A0A0F",
-  cardSolid: "#101018",
-  cardBorderSolid: "#25252f",
-  surface: "#1c1c26",
-  surfaceBorder: "#252530",
-  accent: "#30D158",
+  bg: "#0F1115",
+  cardSolid: "#141821",
+  cardBorderSolid: "#1e2230",
+  surface: "#1a1f2a",
+  surfaceBorder: "#242a36",
+  accent: "#3AF88C",
   text: "#F5F5F7",
   textSec: "#A1A1A6",
   textMuted: "#636366",
-  divider: "#222230",
+  divider: "#1e2230",
 };
 
 function emailShell(content: string): string {
@@ -184,7 +184,6 @@ function emailShell(content: string): string {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="color-scheme" content="dark only" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@500,700&display=swap" rel="stylesheet" />
   <style>
     :root { color-scheme: dark only; }
     body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
@@ -196,7 +195,7 @@ function emailShell(content: string): string {
   </style>
 </head>
 <body style="margin:0;padding:0;background-color:${E.bg};">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:${E.bg};background-image:radial-gradient(circle, rgba(255,255,255,0.10) 1px, transparent 1px), radial-gradient(ellipse 55% 45% at 15% 25%, rgba(48,209,88,0.14) 0%, transparent 70%), radial-gradient(ellipse 50% 40% at 85% 75%, rgba(10,132,255,0.12) 0%, transparent 70%), radial-gradient(ellipse 40% 35% at 75% 8%, rgba(167,139,250,0.10) 0%, transparent 65%);background-size:24px 24px, 100% 100%, 100% 100%, 100% 100%;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:${E.bg};background-image:radial-gradient(ellipse 60% 50% at 15% 25%, rgba(58,248,140,0.07) 0%, transparent 70%), radial-gradient(ellipse 55% 45% at 80% 65%, rgba(255,200,50,0.05) 0%, transparent 70%);background-size:100% 100%, 100% 100%;">
     <tr><td align="center" class="wrapper" style="padding:48px 16px;">
       <table width="560" cellpadding="0" cellspacing="0" class="container" style="max-width:560px;width:100%;">
         <tr><td align="center" style="padding:0 0 36px;">
