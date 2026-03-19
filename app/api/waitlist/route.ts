@@ -14,8 +14,8 @@ let _ratelimit: Ratelimit | null | undefined;
 
 function getRatelimit(): Ratelimit | null {
   if (_ratelimit !== undefined) return _ratelimit;
-  const url = process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+  const url = process.env.UPSTASH_REDIS_REST_URL?.trim();
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN?.trim();
   _ratelimit = url && token
     ? new Ratelimit({
         redis: new Redis({ url, token }),

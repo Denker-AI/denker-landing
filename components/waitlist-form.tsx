@@ -61,7 +61,7 @@ export function WaitlistForm({ className, size = "default" }: WaitlistFormProps)
   return (
     <form
       onSubmit={handleSubmit}
-      className={cn("flex w-full max-w-xl gap-2", className)}
+      className={cn("relative flex w-full max-w-xl flex-wrap gap-2", className)}
       data-testid="waitlist-form"
     >
       <input
