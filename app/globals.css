@@ -9,29 +9,29 @@ html {
 
 @layer base {
   :root {
-    /* Canvas */
-    --color-canvas: #F2F2F7;
+    /* Canvas — clean, neutral white */
+    --color-canvas: #F5F5F7;
     --color-surface: #FFFFFF;
     --color-elevated: #FFFFFF;
-    --color-accent: #15803D;
-    --color-canvas-dot: rgba(0, 0, 0, 0.20);
+    --color-accent: #16a34a;
+    --color-canvas-dot: rgba(0, 0, 0, 0.10);
 
-    /* Glass — light mode */
-    --color-glass-fill: rgba(255, 255, 255, 0.65);
-    --color-glass-stroke: rgba(0, 0, 0, 0.10);
-    --color-glass-fill-heavy: rgba(0, 0, 0, 0.05);
-    --color-glass-fill-dense: rgba(255, 255, 255, 0.85);
-    --color-glass-stroke-light: rgba(0, 0, 0, 0.08);
-    --color-glass-stroke-subtle: rgba(0, 0, 0, 0.05);
-    --color-glass-stroke-faint: rgba(0, 0, 0, 0.03);
-    --shadow-glass: 0 4px 24px rgba(0, 0, 0, 0.10), 0 1px 4px rgba(0, 0, 0, 0.06), inset 0 0.5px 0 rgba(255, 255, 255, 0.80);
-    --shadow-glass-sm: 0 2px 12px rgba(0, 0, 0, 0.08), inset 0 0.5px 0 rgba(255, 255, 255, 0.70);
+    /* Glass — light mode (clean, translucent) */
+    --color-glass-fill: rgba(255, 255, 255, 0.55);
+    --color-glass-stroke: rgba(0, 0, 0, 0.06);
+    --color-glass-fill-heavy: rgba(0, 0, 0, 0.03);
+    --color-glass-fill-dense: rgba(255, 255, 255, 0.88);
+    --color-glass-stroke-light: rgba(0, 0, 0, 0.04);
+    --color-glass-stroke-subtle: rgba(0, 0, 0, 0.03);
+    --color-glass-stroke-faint: rgba(0, 0, 0, 0.02);
+    --shadow-glass: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.90);
+    --shadow-glass-sm: 0 2px 12px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.80);
 
     /* Text */
-    --color-primary: #1D1D1F;
-    --color-secondary: #86868B;
-    --color-muted: #AEAEB2;
-    --color-subtle: #C7C7CC;
+    --color-primary: rgba(0, 0, 0, 0.88);
+    --color-secondary: rgba(0, 0, 0, 0.50);
+    --color-muted: rgba(0, 0, 0, 0.30);
+    --color-subtle: rgba(0, 0, 0, 0.18);
 
     /* Status */
     --color-danger: #FF3B30;
@@ -44,52 +44,56 @@ html {
     --color-frame-search: #AF52DE;
     --color-frame-email: #FF2D55;
     --color-frame-workflow: #FF9500;
-    --color-frame-conversation: #15803D;
+    --color-frame-conversation: #16a34a;
 
-    /* Page gradient */
+    /* Page gradient — warm ambient blobs */
     --gradient-page-overlay:
-      radial-gradient(ellipse 55% 45% at 15% 25%, rgba(21, 128, 61, 0.12) 0%, transparent 70%),
-      radial-gradient(ellipse 50% 40% at 85% 75%, rgba(10, 132, 255, 0.10) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 35% at 75% 8%,  rgba(167, 139, 250, 0.08) 0%, transparent 65%);
+      radial-gradient(ellipse 60% 50% at 15% 25%, rgba(58, 248, 140, 0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 55% 45% at 85% 65%, rgba(96, 165, 250, 0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 45% 40% at 70% 8%,  rgba(167, 139, 250, 0.06) 0%, transparent 65%);
   }
 
   .dark {
-    --color-canvas: #0A0A0F;
-    --color-surface: #1C1C1E;
-    --color-elevated: #2C2C2E;
-    --color-accent: #15803D;
-    --color-canvas-dot: rgba(255, 255, 255, 0.14);
+    --color-canvas: #0F1115;
+    --color-surface: #1C1C22;
+    --color-elevated: #2C2C34;
+    --color-accent: #3AF88C;
+    --color-canvas-dot: rgba(255, 255, 255, 0.08);
 
-    --color-glass-fill: rgba(255, 255, 255, 0.06);
-    --color-glass-stroke: rgba(255, 255, 255, 0.23);
-    --color-glass-fill-heavy: rgba(255, 255, 255, 0.12);
-    --color-glass-fill-dense: rgba(18, 18, 26, 0.94);
-    --color-glass-stroke-light: rgba(255, 255, 255, 0.23);
-    --color-glass-stroke-subtle: rgba(255, 255, 255, 0.05);
+    /* Glass — dark mode (warm, 3-tier) */
+    --color-glass-fill: rgba(255, 255, 255, 0.08);
+    --color-glass-stroke: rgba(255, 255, 255, 0.12);
+    --color-glass-fill-heavy: rgba(255, 255, 255, 0.16);
+    --color-glass-fill-dense: rgba(15, 17, 21, 0.94);
+    --color-glass-stroke-light: rgba(255, 255, 255, 0.10);
+    --color-glass-stroke-subtle: rgba(255, 255, 255, 0.06);
     --color-glass-stroke-faint: rgba(255, 255, 255, 0.03);
-    --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 0 20px rgba(255, 255, 255, 0.04);
-    --shadow-glass-sm: 0 4px 16px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06), inset 0 0 20px rgba(255, 255, 255, 0.02);
+    --shadow-glass-sm: 0 4px 16px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 
-    --color-primary: #F5F5F7;
-    --color-secondary: #A1A1A6;
-    --color-muted: #636366;
-    --color-subtle: #48484A;
+    /* Text — warmer, brighter (matched to Chardonnay) */
+    --color-primary: rgba(255, 255, 255, 0.95);
+    --color-secondary: rgba(255, 255, 255, 0.75);
+    --color-muted: rgba(255, 255, 255, 0.45);
+    --color-subtle: rgba(255, 255, 255, 0.30);
 
     --color-danger: #FF453A;
     --color-danger-light: #FF6961;
-    --color-success: #15803D;
+    --color-success: #3AF88C;
     --color-warning: #FFD60A;
 
     --color-frame-code: #0A84FF;
     --color-frame-search: #BF5AF2;
     --color-frame-email: #FF375F;
     --color-frame-workflow: #FFD60A;
-    --color-frame-conversation: #15803D;
+    --color-frame-conversation: #3AF88C;
 
+    /* Page gradient — warm ambient blobs with color-mix */
     --gradient-page-overlay:
-      radial-gradient(ellipse 55% 45% at 15% 25%, rgba(21, 128, 61, 0.14) 0%, transparent 70%),
-      radial-gradient(ellipse 50% 40% at 85% 75%, rgba(10, 132, 255, 0.12) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 35% at 75% 8%,  rgba(167, 139, 250, 0.10) 0%, transparent 65%);
+      radial-gradient(ellipse 60% 50% at 15% 25%, rgba(58, 248, 140, 0.10) 0%, transparent 70%),
+      radial-gradient(ellipse 55% 45% at 85% 65%, rgba(96, 165, 250, 0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 45% 40% at 70% 8%,  rgba(167, 139, 250, 0.07) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 40% at 40% 80%, rgba(244, 114, 182, 0.05) 0%, transparent 65%);
   }
 }
 
@@ -113,12 +117,12 @@ body {
 /* Glass morphism blur utilities */
 @layer utilities {
   .backdrop-blur-glass {
-    -webkit-backdrop-filter: saturate(220%) brightness(112%) blur(10px);
-    backdrop-filter: saturate(220%) brightness(112%) blur(10px);
+    -webkit-backdrop-filter: saturate(180%) blur(40px);
+    backdrop-filter: saturate(180%) blur(40px);
   }
   .backdrop-blur-glass-sm {
-    -webkit-backdrop-filter: saturate(200%) brightness(110%) blur(8px);
-    backdrop-filter: saturate(200%) brightness(110%) blur(8px);
+    -webkit-backdrop-filter: saturate(160%) blur(25px);
+    backdrop-filter: saturate(160%) blur(25px);
   }
 
   /* Canvas miniature typography */
@@ -156,11 +160,14 @@ body {
     display: inline-flex;
     align-items: center;
     border-radius: 9999px;
-    border: 1px solid var(--color-glass-stroke);
+    border: 0.5px solid var(--color-glass-stroke);
     background: var(--color-glass-fill);
+    -webkit-backdrop-filter: saturate(180%) blur(40px);
+    backdrop-filter: saturate(180%) blur(40px);
     padding: 0.25rem 0.75rem;
     font-size: 0.75rem;
     color: var(--color-secondary);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
 }
 
@@ -225,8 +232,8 @@ body {
 }
 
 @keyframes tomorrow-pulse {
-  0%, 100% { text-shadow: 0 0 0px rgba(21, 128, 61, 0); }
-  50%       { text-shadow: 0 0 40px rgba(21, 128, 61, 0.5), 0 0 80px rgba(21, 128, 61, 0.2); }
+  0%, 100% { text-shadow: 0 0 0px rgba(58, 248, 140, 0); }
+  50%       { text-shadow: 0 0 40px rgba(58, 248, 140, 0.4), 0 0 80px rgba(58, 248, 140, 0.15); }
 }
 
 @keyframes dot-pop {

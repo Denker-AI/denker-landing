@@ -42,13 +42,145 @@ function LinkedInIcon({ size = 18 }: { size?: number }) {
   );
 }
 
+/* ── Canvas visual (from demo) ──────────────────────────────────── */
+
+function MiniFrame({
+  title,
+  accentColor,
+  icon: Icon,
+  agent,
+  streaming,
+  floatDelay = 0,
+  children,
+}: {
+  title: string;
+  accentColor: string;
+  icon: React.ElementType;
+  agent: string;
+  streaming?: boolean;
+  floatDelay?: number;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      className="flex flex-col overflow-hidden rounded-xl border border-glass-stroke bg-glass-fill shadow-glass backdrop-blur-glass"
+      style={{ animation: `hero-float 5s ease-in-out ${floatDelay}s infinite` }}
+    >
+      <div className="flex items-center gap-1.5 border-b border-glass-stroke-faint px-2 py-1.5">
+        <span className="h-3 w-0.5 shrink-0 rounded-full" style={{ backgroundColor: accentColor }} />
+        <Icon className="h-2.5 w-2.5 shrink-0 text-muted" />
+        <span className="flex-1 truncate text-[9px] font-semibold text-secondary">{title}</span>
+        <span className="text-[7px] text-muted">{agent}</span>
+        {streaming && <div className="h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-accent" />}
+      </div>
+      <div className="p-2">{children}</div>
+    </div>
+  );
+}
+
+function DemoSkeletonLines({ count, widths }: { count: number; widths?: number[] }) {
+  const dw = [100, 80, 60, 90, 70];
+  return (
+    <div className="space-y-1">
+      {Array.from({ length: count }).map((_, i) => (
+        <div
+          key={i}
+          className="h-1 rounded bg-glass-fill-heavy"
+          style={{ width: `${widths?.[i] ?? dw[i % dw.length]}%` }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function DemoAgentCursor({ name, color, label }: { name: string; color: string; label: string }) {
+  return (
+    <div className="pointer-events-none flex items-center gap-0.5">
+      <svg width="9" height="12" viewBox="0 0 9 12" fill="none">
+        <path d="M1 1L8 6L4.5 7L3 11L1 1Z" fill={color} />
+      </svg>
+      <span className="rounded px-1.5 py-0.5 text-[8px] font-medium text-white" style={{ backgroundColor: color }}>
+        {name} · {label}
+      </span>
+    </div>
+  );
+}
+
+function CanvasVisual() {
+  return (
+    <div
+      className="relative overflow-hidden rounded-2xl sm:max-h-[min(560px,70vh)]"
+      style={{
+        minHeight: 400,
+        backgroundColor: "var(--color-glass-fill)",
+        border: "1px solid var(--color-glass-stroke)",
+        backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px)",
+        backgroundSize: "18px 18px",
+      }}
+    >
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true"
+        style={{ background: "radial-gradient(ellipse 70% 55% at 40% 45%, rgba(167,139,250,0.07) 0%, transparent 70%)" }} />
+      <div className="absolute" style={{ top: "7%", left: 28, width: 200, animation: "hero-fade-in 0.6s ease 0.1s both" }}>
+        <MiniFrame title="Research Brief" accentColor="#BF5AF2" icon={Icons.Search} agent="Aria" streaming floatDelay={0}>
+          <DemoSkeletonLines count={5} widths={[100, 85, 70, 90, 60]} />
+        </MiniFrame>
+      </div>
+      <div className="absolute" style={{ top: "20%", right: 24, width: 188, animation: "hero-fade-in 0.6s ease 0.3s both" }}>
+        <MiniFrame title="Email Draft" accentColor="#FF375F" icon={Icons.Mail} agent="Mia" floatDelay={1.2}>
+          <DemoSkeletonLines count={5} widths={[100, 90, 100, 75, 55]} />
+        </MiniFrame>
+      </div>
+      <div className="absolute" style={{ top: "43%", left: 44, width: 184, animation: "hero-fade-in 0.6s ease 0.5s both" }}>
+        <MiniFrame title="Data Analysis" accentColor="#FFD60A" icon={Icons.Brain} agent="Rex" floatDelay={2.1}>
+          <div className="space-y-1">
+            <div className="flex h-8 items-end gap-0.5">
+              {[60, 80, 50, 90, 70, 85, 55, 95].map((h, i) => (
+                <div key={i} className="flex-1 rounded-sm bg-yellow-400/30" style={{ height: `${h}%` }} />
+              ))}
+            </div>
+            <DemoSkeletonLines count={2} widths={[80, 60]} />
+          </div>
+        </MiniFrame>
+      </div>
+      <div className="absolute" style={{ top: "55%", right: 32, width: 192, animation: "hero-fade-in 0.6s ease 0.7s both" }}>
+        <MiniFrame title="Feature Build" accentColor="#0A84FF" icon={Icons.Code} agent="Kai" floatDelay={0.7}>
+          <div className="space-y-0.5">
+            <div className="h-1 w-full rounded bg-blue-400/30" />
+            <div className="h-1 w-4/5 rounded bg-green-400/20" />
+            <div className="h-1 w-3/5 rounded bg-yellow-400/20" />
+            <div className="h-1 w-11/12 rounded bg-blue-400/25" />
+            <div className="h-1 w-2/3 rounded bg-purple-400/20" />
+          </div>
+        </MiniFrame>
+      </div>
+      <div className="absolute" style={{ bottom: "8%", left: 60, width: 188, animation: "hero-fade-in 0.6s ease 0.9s both" }}>
+        <MiniFrame title="LinkedIn Post" accentColor="#0A66C2" icon={Icons.Send} agent="Mia" floatDelay={1.8}>
+          <DemoSkeletonLines count={4} widths={[100, 90, 75, 50]} />
+        </MiniFrame>
+      </div>
+      <div className="absolute" style={{ top: "17%", left: "42%", animation: "hero-fade-in 0.5s ease 1.1s both" }}>
+        <DemoAgentCursor name="Aria" color="#A78BFA" label="searching" />
+      </div>
+      <div className="absolute" style={{ top: "35%", right: "30%", animation: "hero-fade-in 0.5s ease 1.3s both" }}>
+        <DemoAgentCursor name="Mia" color="#F472B6" label="writing" />
+      </div>
+      <div className="absolute" style={{ top: "66%", left: "48%", animation: "hero-fade-in 0.5s ease 1.5s both" }}>
+        <DemoAgentCursor name="Kai" color="#60A5FA" label="building" />
+      </div>
+      <div className="absolute" style={{ bottom: "25%", left: "33%", animation: "hero-fade-in 0.5s ease 1.7s both" }}>
+        <DemoAgentCursor name="Rex" color="#FFD60A" label="analyzing" />
+      </div>
+    </div>
+  );
+}
+
 /* ── Shared pill ─────────────────────────────────────────────────── */
 
 function Pill({ icon: Icon, label }: { icon: React.ElementType; label: string }) {
   return (
-    <div className="flex items-center gap-2.5 rounded-full border border-glass-stroke bg-glass-fill px-4 py-3 backdrop-blur-glass-sm">
-      <Icon className="h-4 w-4 text-muted" />
-      <span className="text-sm font-medium text-secondary">{label}</span>
+    <div className="flex items-center gap-2 rounded-full border border-glass-stroke bg-glass-fill px-3 py-2 backdrop-blur-glass-sm sm:gap-2.5 sm:px-4 sm:py-3">
+      <Icon className="h-4 w-4 shrink-0 text-muted" />
+      <span className="truncate text-xs font-medium text-secondary sm:text-sm">{label}</span>
     </div>
   );
 }
@@ -83,22 +215,21 @@ function ChartStepIcon({ iconType }: { iconType: ChartStep["iconType"] }) {
   return <Icon className="h-3 w-3 shrink-0 text-muted" />;
 }
 
-const FLOW_NODE_W = 260;
-const FLOW_NODE_H = 36;
-const FLOW_GAP_H  = 44;
+const FLOW_NODE_H = 34;
+const FLOW_GAP_H  = 32;
 
 function WorkflowPill({ step }: { step: ChartStep }) {
   return (
     <div
       className={cn(
-        "flex items-center gap-2 rounded-full px-3",
+        "flex w-full items-center gap-1.5 rounded-full px-2.5 sm:gap-2 sm:px-3",
         "border bg-glass-fill/80 backdrop-blur-sm",
         step.dashed ? "border-dashed border-glass-stroke" : "border-glass-stroke",
         step.status === "completed" && !step.dashed && "border-success/30 bg-success/[0.04]",
         step.status === "running" && "border-blue-400/30 bg-blue-400/[0.04]",
         step.status === "pending" && "opacity-40",
       )}
-      style={{ width: FLOW_NODE_W, height: FLOW_NODE_H }}
+      style={{ height: FLOW_NODE_H }}
     >
       {/* Status indicator — left side */}
       {step.status === "completed" ? (
@@ -106,13 +237,10 @@ function WorkflowPill({ step }: { step: ChartStep }) {
       ) : (
         <ChartStepIcon iconType={step.iconType} />
       )}
-      <span className={cn(
-        "flex-1 truncate text-xs font-medium",
-        step.status === "completed" ? "text-secondary" : "text-secondary",
-      )}>{step.label}</span>
-      {step.badge && <span className="shrink-0 text-[9px] text-muted">{step.badge}</span>}
+      <span className="flex-1 truncate text-[11px] font-medium text-secondary sm:text-xs">{step.label}</span>
+      {step.badge && <span className="hidden shrink-0 text-[9px] text-muted sm:inline">{step.badge}</span>}
       {step.approved && (
-        <span className="shrink-0 rounded-full bg-accent/10 px-1.5 py-0.5 text-[9px] font-medium text-accent">Approved</span>
+        <span className="hidden shrink-0 rounded-full bg-accent/10 px-1.5 py-0.5 text-[9px] font-medium text-accent sm:inline">Approved</span>
       )}
       {/* Status dot — right side */}
       {step.status === "running" && (
@@ -144,9 +272,9 @@ function FlowConnector() {
 
 function WorkflowFlowchart() {
   return (
-    <div className="flex h-full flex-col items-center justify-center">
+    <div className="flex h-full flex-col items-center justify-center px-2">
       {CHART_STEPS.map((step, i) => (
-        <div key={step.id} className="flex flex-col items-center">
+        <div key={step.id} className="flex w-full flex-col items-center">
           <WorkflowPill step={step} />
           {i < CHART_STEPS.length - 1 && <FlowConnector />}
         </div>
@@ -159,13 +287,13 @@ const completedSteps = CHART_STEPS.filter((s) => s.status === "completed").lengt
 
 function WorkflowVisual() {
   return (
-    <div className="flex flex-col overflow-hidden rounded-2xl border border-glass-stroke bg-glass-fill shadow-glass" style={{ height: 560 }}>
+    <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-glass-stroke bg-glass-fill shadow-glass sm:max-h-[min(560px,70vh)]">
       {/* Frame header + progress */}
-      <div className="flex flex-col gap-3 px-4 pb-4 pt-3">
-        <div className="flex items-center gap-2">
+      <div className="flex flex-col gap-3 px-3 pb-3 pt-3 sm:px-4 sm:pb-4">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           <span className="h-3 w-0.5 shrink-0 rounded-full bg-frame-workflow" />
           <Icons.GitBranch className="h-3 w-3 shrink-0 text-muted" />
-          <span className="flex-1 truncate text-xs font-semibold text-primary">Research competitors → publish newsletter</span>
+          <span className="flex-1 truncate text-[11px] font-semibold text-primary sm:text-xs">Research → publish newsletter</span>
           <span className="shrink-0 rounded-full bg-accent/10 px-2 py-0.5 text-[10px] font-medium text-accent">Running</span>
         </div>
         <div className="flex items-center gap-2">
@@ -187,7 +315,7 @@ function WorkflowVisual() {
           <span className="shrink-0 text-[10px] text-muted">{completedSteps}/{CHART_STEPS.length}</span>
         </div>
       </div>
-      <div className="flex-1 p-6">
+      <div className="flex-1 px-3 py-4 sm:p-6">
         <WorkflowFlowchart />
       </div>
     </div>
@@ -217,7 +345,7 @@ function MemoryVisual() {
   const crossLinks = [[0, 1], [0, 2], [1, 2]] as const;
 
   return (
-    <div className="flex flex-col overflow-hidden rounded-2xl border border-glass-stroke bg-glass-fill p-4 shadow-glass" style={{ height: "min(560px, 70vh)" }}>
+    <div className="flex flex-col overflow-hidden rounded-2xl border border-glass-stroke bg-glass-fill p-4 shadow-glass sm:max-h-[min(560px,70vh)]" style={{ minHeight: 400 }}>
       <div className="mb-2 flex items-center gap-2">
         <Icons.Network className="h-3.5 w-3.5 text-purple-400" />
         <span className="text-xs font-semibold text-secondary">Knowledge Graph</span>
@@ -381,95 +509,108 @@ function BentoCard({ className, children }: { className?: string; children: Reac
   );
 }
 
+/* ── Feature block helper ────────────────────────────────────────── */
+
+function FeatureBlock({
+  label,
+  heading,
+  description,
+  pills,
+  visual,
+  reversed,
+}: {
+  label: string;
+  heading: React.ReactNode;
+  description: React.ReactNode;
+  pills: { icon: React.ElementType; label: string }[];
+  visual: React.ReactNode;
+  reversed?: boolean;
+}) {
+  return (
+    <div className="px-5 py-16 sm:px-6 sm:py-20 lg:px-12">
+      <div className="mx-auto w-full max-w-6xl">
+        <div className={cn(
+          "grid items-center gap-10 lg:gap-16",
+          reversed ? "lg:grid-cols-[1.1fr_0.9fr]" : "lg:grid-cols-[0.9fr_1.1fr]",
+        )}>
+          <div className={cn("flex flex-col justify-center", reversed && "lg:order-2")}>
+            <span className="text-section-label mb-5 block">{label}</span>
+            <h2 className="text-section-heading mb-6">{heading}</h2>
+            <p className="mb-8 text-base leading-relaxed text-secondary">{description}</p>
+            <a
+              href="#community"
+              className="mb-10 inline-flex h-12 items-center justify-center rounded-full bg-primary px-7 text-sm font-bold text-canvas transition-opacity hover:opacity-80 max-sm:w-full sm:w-fit"
+            >
+              Join Waitlist
+            </a>
+            <div className="grid grid-cols-2 gap-2">
+              {pills.map((p) => <Pill key={p.label} icon={p.icon} label={p.label} />)}
+            </div>
+          </div>
+          <div className={cn("min-w-0 overflow-hidden", reversed && "lg:order-1")}>
+            {visual}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ── Main section ─────────────────────────────────────────────────── */
 
 export function LandingFeatures() {
   return (
-    <section className="relative" data-testid="landing-features">
+    <section className="relative overflow-x-hidden" data-testid="landing-features">
 
-      {/* ── Workflow — text left, visual right ── */}
-      <div className="flex items-center px-5 py-20 sm:px-6 lg:min-h-screen lg:px-12">
-        <div className="mx-auto w-full max-w-6xl">
-          <div className="grid items-center gap-10 lg:gap-16 lg:grid-cols-[0.9fr_1.1fr]">
+      {/* ── Canvas ── */}
+      <FeatureBlock
+        label="Canvas Workspace"
+        heading={<>Every output lands{" "}<span className="text-accent">on your canvas.</span></>}
+        description={<><strong className="font-semibold text-primary">See everything, control everything</strong> — research briefs, email drafts, code files. Each agent delivers straight to a named frame. Arrange, resize, and export.</>}
+        pills={[
+          { icon: Icons.Layers, label: "Frames" },
+          { icon: Icons.Eye, label: "Live preview" },
+          { icon: Icons.Code, label: "All formats" },
+          { icon: Icons.Send, label: "Export" },
+        ]}
+        visual={<CanvasVisual />}
+        reversed
+      />
 
-            {/* Copy — left */}
-            <div className="flex flex-col justify-center">
-              <span className="text-section-label mb-5 block">Workflow Builder</span>
-              <h2
-                className="text-section-heading mb-6"
-                data-testid="features-heading"
-              >
-                Automate your work{" "}
-                <span className="text-accent">as simple as conversation</span>
-              </h2>
-              <p className="mb-8 text-base leading-relaxed text-secondary">
-                <strong className="font-semibold text-primary">Plan, configure, and deliver</strong> — just describe the work in conversation, Denker creates, configures, and runs your workflow. No setup hours. No learning curve.
-              </p>
-              <a
-                href="#community"
-                className="mb-10 inline-flex h-12 items-center justify-center rounded-full bg-primary px-7 text-sm font-bold text-canvas transition-opacity hover:opacity-80 max-sm:w-full sm:w-fit"
-              >
-                Join Waitlist
-              </a>
-              <div className="grid grid-cols-2 gap-2">
-                <Pill icon={Icons.Zap}         label="Workflow"   />
-                <Pill icon={Icons.Clock}       label="Schedule"   />
-                <Pill icon={Icons.ShieldCheck} label="Approval"   />
-                <Pill icon={Icons.Plug}        label="Connector"  />
-              </div>
-            </div>
+      {/* ── Workflow ── */}
+      <FeatureBlock
+        label="Workflow Builder"
+        heading={<>Automate your work{" "}<span className="text-accent">as simple as conversation</span></>}
+        description={<><strong className="font-semibold text-primary">Plan, configure, and deliver</strong> — just describe the work in conversation, Denker creates, configures, and runs your workflow. No setup hours. No learning curve.</>}
+        pills={[
+          { icon: Icons.Zap, label: "Workflow" },
+          { icon: Icons.Clock, label: "Schedule" },
+          { icon: Icons.ShieldCheck, label: "Approval" },
+          { icon: Icons.Plug, label: "Connector" },
+        ]}
+        visual={<WorkflowVisual />}
+      />
 
-            {/* Visual — right */}
-            <WorkflowVisual />
-
-          </div>
-        </div>
-      </div>
-
-      {/* ── Memory — visual left, text right ── */}
-      <div className="flex items-center px-5 py-20 sm:px-6 lg:min-h-screen lg:px-12">
-        <div className="mx-auto w-full max-w-6xl">
-          <div className="grid items-center gap-10 lg:gap-16 lg:grid-cols-[1.1fr_0.9fr]">
-
-            {/* Visual — left on desktop, below text on mobile */}
-            <div className="order-2 lg:order-1">
-              <MemoryVisual />
-            </div>
-
-            {/* Copy — right on desktop, above visual on mobile */}
-            <div className="order-1 flex flex-col justify-center lg:order-2">
-              <span className="text-section-label mb-5 block">Intelligent Memory</span>
-              <h2
-                className="text-section-heading mb-6"
-              >
-                Remember{" "}
-                <span className="text-accent">everything that matters</span>
-              </h2>
-              <p className="mb-8 text-base leading-relaxed text-secondary">
-                <strong className="font-semibold text-primary">Every task builds your knowledge graph</strong> — clients, context, preferences, outcomes. Agents surface exactly what&apos;s relevant when it matters, without you repeating yourself.
-              </p>
-              <a
-                href="#community"
-                className="mb-10 inline-flex h-12 items-center justify-center rounded-full bg-primary px-7 text-sm font-bold text-canvas transition-opacity hover:opacity-80 max-sm:w-full sm:w-fit"
-              >
-                Join Waitlist
-              </a>
-              <div className="grid grid-cols-2 gap-2">
-                <Pill icon={Icons.Network}  label="Knowledge graph"  />
-                <Pill icon={Icons.Eye}    label="Always in context" />
-                <Pill icon={Icons.Layers} label="Persistent"        />
-                <Pill icon={Icons.Search} label="Semantic search"   />
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
+      {/* ── Memory ── */}
+      <FeatureBlock
+        label="Intelligent Memory"
+        heading={<>Remember{" "}<span className="text-accent">everything that matters</span></>}
+        description={<><strong className="font-semibold text-primary">Every task builds your knowledge graph</strong> — clients, context, preferences, outcomes. Agents surface exactly what&apos;s relevant when it matters, without you repeating yourself.</>}
+        pills={[
+          { icon: Icons.Network, label: "Knowledge graph" },
+          { icon: Icons.Eye, label: "Always in context" },
+          { icon: Icons.Layers, label: "Persistent" },
+          { icon: Icons.Search, label: "Semantic search" },
+        ]}
+        visual={<MemoryVisual />}
+        reversed
+      />
 
       {/* ── Bento ── */}
-      <div className="flex flex-col justify-center px-5 py-20 sm:px-6 lg:min-h-screen lg:px-12">
+      <div className="flex flex-col justify-center px-5 py-16 sm:px-6 sm:py-24 lg:px-12">
         <div className="mx-auto w-full max-w-6xl">
           <div className="mb-14 text-center">
+            <span className="badge-section mb-6 inline-block">Platform</span>
             <h2
               className="text-section-heading"
             >

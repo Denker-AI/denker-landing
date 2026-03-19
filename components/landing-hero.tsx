@@ -1,6 +1,5 @@
 import { cn } from "@/lib/cn";
 import { Icons } from "@/components/icons";
-import { WaitlistForm } from "@/components/waitlist-form";
 
 /* ── Floating frame (background decoration) ──────────────────── */
 
@@ -86,46 +85,56 @@ function WorkflowDots() {
 function HeroCanvas() {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-      {/* Left column */}
+      {/* ── Top: Market Research + Aria (all screens) ── */}
       <FloatingFrame title="Market Research" color="bg-frame-search" status="Aria" style={{ top: "15%", left: "2%", width: 178 }} delay={0.3}>
         <SkeletonLines count={3} widths={[100, 80, 55]} />
       </FloatingFrame>
+      <div className="absolute" style={{ top: "22%", left: "10%", animation: "hero-fade-in 0.5s ease 1.6s both" }}>
+        <div style={{ animation: "hero-drift-1 9s ease-in-out 0s infinite" }}>
+          <CursorLabel name="Aria" color="#A78BFA" />
+        </div>
+      </div>
 
+      {/* ── Bottom: Deploy Pipeline + Kai (mobile only) ── */}
+      <div className="md:hidden">
+        <FloatingFrame title="Deploy Pipeline" color="bg-frame-workflow" status="running" style={{ bottom: "12%", right: "3%", width: 162 }} delay={0.9}>
+          <WorkflowDots />
+        </FloatingFrame>
+      </div>
+      <div className="absolute md:hidden" style={{ bottom: "22%", right: "18%", animation: "hero-fade-in 0.5s ease 1.9s both" }}>
+        <div style={{ animation: "hero-drift-2 8s ease-in-out 0.5s infinite" }}>
+          <CursorLabel name="Kai" color="#60A5FA" />
+        </div>
+      </div>
+
+      {/* ── Desktop-only frames ── */}
       <div className="hidden md:block">
         <FloatingFrame title="Outreach Draft" color="bg-frame-email" status="Mia" style={{ top: "42%", left: "1%", width: 172 }} delay={0.7}>
           <SkeletonLines count={4} widths={[100, 90, 100, 60]} />
         </FloatingFrame>
       </div>
-
       <div className="hidden md:block">
         <FloatingFrame title="Competitor Analysis" color="bg-frame-search" status="Nova" style={{ bottom: "14%", left: "6%", width: 182 }} delay={1.1}>
           <SkeletonLines count={3} widths={[85, 100, 70]} />
         </FloatingFrame>
       </div>
-
-      {/* Right column */}
-      <FloatingFrame title="Feature Build" color="bg-frame-code" status="Kai" style={{ top: "13%", right: "4%", width: 170 }} delay={0.5}>
-        <SkeletonLines count={3} widths={[70, 100, 85]} />
-      </FloatingFrame>
-
+      <div className="hidden md:block">
+        <FloatingFrame title="Feature Build" color="bg-frame-code" status="Kai" style={{ top: "13%", right: "4%", width: 170 }} delay={0.5}>
+          <SkeletonLines count={3} widths={[70, 100, 85]} />
+        </FloatingFrame>
+      </div>
       <div className="hidden md:block">
         <FloatingFrame title="Newsletter" color="bg-frame-email" status="Mia" style={{ top: "40%", right: "2%", width: 165 }} delay={0.9}>
           <SkeletonLines count={3} widths={[100, 75, 90]} />
         </FloatingFrame>
       </div>
-
       <div className="hidden md:block">
         <FloatingFrame title="Deploy Pipeline" color="bg-frame-workflow" status="running" style={{ bottom: "10%", right: "3%", width: 162 }} delay={1.3}>
           <WorkflowDots />
         </FloatingFrame>
       </div>
 
-      {/* Agent cursors */}
-      <div className="absolute" style={{ top: "30%", left: "19%", animation: "hero-fade-in 0.5s ease 1.6s both" }}>
-        <div style={{ animation: "hero-drift-1 9s ease-in-out 0s infinite" }}>
-          <CursorLabel name="Aria" color="#A78BFA" />
-        </div>
-      </div>
+      {/* ── Desktop-only cursors ── */}
       <div className="absolute hidden md:block" style={{ top: "26%", right: "13%", animation: "hero-fade-in 0.5s ease 1.9s both" }}>
         <div style={{ animation: "hero-drift-2 8s ease-in-out 0.5s infinite" }}>
           <CursorLabel name="Kai" color="#60A5FA" />
@@ -161,17 +170,9 @@ export function LandingHero() {
 
       <HeroCanvas />
 
-      <div className="relative z-10 flex min-h-screen flex-col items-center px-6 pt-24 text-center">
+      <div className="relative z-10 flex h-screen flex-col items-center px-6 pt-24 text-center">
         {/* Spacer — pushes heading group to ~40% on mobile, centers on desktop */}
         <div className="flex-1 min-h-12 md:min-h-0" />
-        <div
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-glass-stroke bg-glass-fill px-4 py-1.5 backdrop-blur-glass"
-          data-testid="hero-badge"
-        >
-          <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
-          <span className="text-xs text-secondary">Your agents are standing by</span>
-        </div>
-
         <h1
           className="text-section-heading mb-6 max-w-3xl"
           data-testid="hero-heading"
@@ -180,17 +181,9 @@ export function LandingHero() {
           <span className="text-accent">You decide what&apos;s next.</span>
         </h1>
 
-        <p className="mb-10 max-w-xl text-base text-secondary sm:text-lg" data-testid="hero-subheading">
+        <p className="max-w-xl text-base text-secondary sm:text-lg" data-testid="hero-subheading">
           Research, writing, code, outreach — your agents run it all in parallel.
           Visible at every step. Yours to direct.
-        </p>
-
-        <div className="relative w-full max-w-md">
-          <WaitlistForm />
-        </div>
-
-        <p className="mt-4 text-xs text-muted" data-testid="hero-note">
-          Free early access. No credit card required.
         </p>
 
         {/* Spacer — pushes form lower on mobile */}

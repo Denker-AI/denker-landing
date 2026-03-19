@@ -249,7 +249,7 @@ export function LandingDemo() {
   }, []);
 
   return (
-    <section ref={ref} className="relative flex items-center px-5 py-20 sm:px-6 lg:min-h-screen lg:px-12" data-testid="landing-demo">
+    <section ref={ref} className="relative flex items-center px-5 pb-16 pt-6 sm:px-6 sm:pb-24 sm:pt-8 lg:px-12" data-testid="landing-demo">
       <div className="mx-auto w-full max-w-6xl">
         <div className="grid items-center gap-10 lg:gap-16 lg:grid-cols-[1.1fr_0.9fr]">
 

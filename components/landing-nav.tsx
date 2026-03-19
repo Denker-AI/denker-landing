@@ -41,7 +41,7 @@ export function LandingNav() {
           className="ml-1 inline-flex h-8 items-center rounded-full bg-primary px-5 text-sm font-semibold text-canvas transition-opacity hover:opacity-80"
           data-testid="nav-cta"
         >
-          Try Denker free
+          Join Waitlist
         </a>
       </nav>
 

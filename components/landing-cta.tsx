@@ -37,14 +37,14 @@ function NewsletterForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex w-full gap-2" data-testid="newsletter-form">
+    <form onSubmit={handleSubmit} className="flex w-full flex-col gap-2 sm:flex-row" data-testid="newsletter-form">
       <input
         type="email"
         required
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="name@company.com"
-        className="h-10 flex-1 rounded-full border border-glass-stroke bg-glass-fill px-4 text-sm text-primary placeholder:text-muted backdrop-blur-glass transition-all focus:border-accent focus:outline-none"
+        className="h-10 w-full rounded-full border border-glass-stroke bg-glass-fill px-4 text-sm text-primary placeholder:text-muted backdrop-blur-glass transition-all focus:border-accent focus:outline-none sm:flex-1"
         data-testid="newsletter-email"
       />
       <button
@@ -78,7 +78,7 @@ export function LandingCta() {
         <div className="mx-auto grid max-w-5xl gap-5 md:grid-cols-2">
           {/* LinkedIn */}
           <div
-            className="flex flex-col rounded-2xl border border-glass-stroke bg-glass-fill p-10 backdrop-blur-glass"
+            className="flex flex-col rounded-2xl border border-glass-stroke bg-glass-fill p-6 backdrop-blur-glass sm:p-10"
             data-testid="community-linkedin"
           >
             {/* LinkedIn brand icon */}
@@ -104,7 +104,7 @@ export function LandingCta() {
 
           {/* Newsletter */}
           <div
-            className="flex flex-col rounded-2xl border border-glass-stroke bg-glass-fill p-10 backdrop-blur-glass"
+            className="flex flex-col rounded-2xl border border-glass-stroke bg-glass-fill p-6 backdrop-blur-glass sm:p-10"
             data-testid="community-newsletter"
           >
             {/* Denker symbol */}
