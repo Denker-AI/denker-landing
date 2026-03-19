@@ -130,7 +130,7 @@ export function CookieConsent() {
       <div className="flex items-center gap-2">
         <button
           onClick={accept}
-          className="h-7 rounded-full bg-accent px-4 text-[11px] font-semibold text-white transition-all hover:brightness-110"
+          className="h-7 rounded-full bg-accent px-4 text-[11px] font-semibold text-[#0F1115] transition-all hover:brightness-110"
           data-testid="cookie-accept"
         >
           Accept

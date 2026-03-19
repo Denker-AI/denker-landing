@@ -99,7 +99,7 @@ function DemoAgentCursor({ name, color, label }: { name: string; color: string; 
       <svg width="9" height="12" viewBox="0 0 9 12" fill="none">
         <path d="M1 1L8 6L4.5 7L3 11L1 1Z" fill={color} />
       </svg>
-      <span className="rounded px-1.5 py-0.5 text-[8px] font-medium text-white" style={{ backgroundColor: color }}>
+      <span className="rounded px-1.5 py-0.5 text-[8px] font-medium text-[#0F1115]" style={{ backgroundColor: color }}>
         {name} · {label}
       </span>
     </div>
@@ -109,9 +109,10 @@ function DemoAgentCursor({ name, color, label }: { name: string; color: string; 
 function CanvasVisual() {
   return (
     <div
-      className="relative overflow-hidden rounded-2xl sm:max-h-[min(560px,70vh)]"
+      aria-hidden="true"
+      className="relative h-full max-h-[560px] overflow-hidden rounded-2xl"
       style={{
-        minHeight: 400,
+        minHeight: 380,
         backgroundColor: "var(--color-glass-fill)",
         border: "1px solid var(--color-glass-stroke)",
         backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px)",
@@ -287,7 +288,7 @@ const completedSteps = CHART_STEPS.filter((s) => s.status === "completed").lengt
 
 function WorkflowVisual() {
   return (
-    <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-glass-stroke bg-glass-fill shadow-glass sm:max-h-[min(560px,70vh)]">
+    <div className="flex h-full max-h-[560px] w-full flex-col overflow-hidden rounded-2xl border border-glass-stroke bg-glass-fill shadow-glass" style={{ minHeight: 380 }}>
       {/* Frame header + progress */}
       <div className="flex flex-col gap-3 px-3 pb-3 pt-3 sm:px-4 sm:pb-4">
         <div className="flex items-center gap-1.5 sm:gap-2">
@@ -345,7 +346,7 @@ function MemoryVisual() {
   const crossLinks = [[0, 1], [0, 2], [1, 2]] as const;
 
   return (
-    <div className="flex flex-col overflow-hidden rounded-2xl border border-glass-stroke bg-glass-fill p-4 shadow-glass sm:max-h-[min(560px,70vh)]" style={{ minHeight: 400 }}>
+    <div className="flex h-full max-h-[560px] flex-col overflow-hidden rounded-2xl border border-glass-stroke bg-glass-fill p-4 shadow-glass" style={{ minHeight: 380 }}>
       <div className="mb-2 flex items-center gap-2">
         <Icons.Network className="h-3.5 w-3.5 text-purple-400" />
         <span className="text-xs font-semibold text-secondary">Knowledge Graph</span>
@@ -463,7 +464,7 @@ function AgentDockCard() {
               {a.letter}
             </div>
           ))}
-          <span className="pointer-events-none absolute -top-1 flex h-3.5 min-w-[14px] items-center justify-center rounded-full bg-accent px-0.5 text-[8px] font-bold text-white shadow-sm" style={{ left: 20, zIndex: 10 }}>
+          <span className="pointer-events-none absolute -top-1 flex h-3.5 min-w-[14px] items-center justify-center rounded-full bg-accent px-0.5 text-[8px] font-bold text-[#0F1115] shadow-sm" style={{ left: 20, zIndex: 10 }}>
             {AGENT_PRESETS.length}
           </span>
         </div>
@@ -475,7 +476,7 @@ function AgentDockCard() {
         <span className="flex-1 text-[13px] text-muted">Ask anything...</span>
 
         {/* Send button */}
-        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent text-white">
+        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent text-[#0F1115]">
           <Icons.ArrowUp className="h-3.5 w-3.5" />
         </div>
       </div>
@@ -527,10 +528,10 @@ function FeatureBlock({
   reversed?: boolean;
 }) {
   return (
-    <div className="px-5 py-16 sm:px-6 sm:py-20 lg:px-12">
+    <div className="flex min-h-screen items-center px-5 py-16 sm:px-6 sm:py-20 lg:px-12">
       <div className="mx-auto w-full max-w-6xl">
         <div className={cn(
-          "grid items-center gap-10 lg:gap-16",
+          "grid items-stretch gap-10 lg:gap-16",
           reversed ? "lg:grid-cols-[1.1fr_0.9fr]" : "lg:grid-cols-[0.9fr_1.1fr]",
         )}>
           <div className={cn("flex flex-col justify-center", reversed && "lg:order-2")}>
@@ -547,8 +548,10 @@ function FeatureBlock({
               {pills.map((p) => <Pill key={p.label} icon={p.icon} label={p.label} />)}
             </div>
           </div>
-          <div className={cn("min-w-0 overflow-hidden", reversed && "lg:order-1")}>
-            {visual}
+          <div className={cn("flex min-w-0 flex-col overflow-hidden", reversed && "lg:order-1")}>
+            <div className="flex-1 [&>*]:h-full">
+              {visual}
+            </div>
           </div>
         </div>
       </div>

@@ -82,7 +82,7 @@ export function WaitlistForm({ className, size = "default" }: WaitlistFormProps)
         type="submit"
         disabled={status === "loading"}
         className={cn(
-          "shrink-0 rounded-full bg-accent font-semibold text-white shadow-glow-accent",
+          "shrink-0 rounded-full bg-accent font-semibold text-[#0F1115] shadow-glow-accent",
           "transition-all hover:brightness-110 disabled:opacity-40",
           size === "default" ? "h-12 px-6 text-sm" : "h-10 px-4 text-xs",
         )}

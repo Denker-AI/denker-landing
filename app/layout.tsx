@@ -81,25 +81,6 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <head>
-        <link
-          rel="preconnect"
-          href="https://api.fontshare.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preconnect"
-          href="https://cdn.fontshare.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="https://api.fontshare.com/v2/css?f[]=satoshi@700,500&display=optional"
-          as="style"
-        />
-        <link
-          href="https://api.fontshare.com/v2/css?f[]=satoshi@700,500&display=optional"
-          rel="stylesheet"
-        />
         <JsonLd />
       </head>
       <body className="antialiased">

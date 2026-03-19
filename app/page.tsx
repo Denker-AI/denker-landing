@@ -2,6 +2,7 @@ import { LandingNav } from "@/components/landing-nav";
 import { ScrollButton } from "@/components/scroll-button";
 import { LandingHero } from "@/components/landing-hero";
 import { LandingManifesto } from "@/components/landing-manifesto";
+import { FeaturesGrid } from "@/components/features-grid";
 
 import { LandingFeatures } from "@/components/landing-features";
 import { LandingPricing } from "@/components/landing-pricing";
@@ -15,14 +16,12 @@ export default function HomePage() {
       className="min-h-screen bg-canvas"
       style={{
         backgroundImage: `
-          radial-gradient(ellipse 70% 60% at 20% 15%, rgba(58,248,140,0.09) 0%, transparent 70%),
-          radial-gradient(ellipse 60% 50% at 80% 50%, rgba(96,165,250,0.07) 0%, transparent 70%),
-          radial-gradient(ellipse 50% 45% at 65% 5%,  rgba(167,139,250,0.06) 0%, transparent 65%),
-          radial-gradient(ellipse 55% 40% at 35% 85%, rgba(244,114,182,0.04) 0%, transparent 65%),
-          radial-gradient(circle, var(--color-canvas-dot) 1px, transparent 1px)
+          radial-gradient(ellipse 65% 55% at 15% 20%, rgba(58,248,140,0.07) 0%, transparent 70%),
+          radial-gradient(ellipse 55% 45% at 80% 60%, rgba(255,200,50,0.05) 0%, transparent 70%),
+          radial-gradient(ellipse 50% 40% at 60% 5%,  rgba(255,180,80,0.04) 0%, transparent 65%)
         `,
-        backgroundSize: "100% 100%, 100% 100%, 100% 100%, 100% 100%, 24px 24px",
-        backgroundAttachment: "fixed, fixed, fixed, fixed, scroll",
+        backgroundSize: "100% 100%, 100% 100%, 100% 100%",
+        backgroundAttachment: "fixed, fixed, fixed",
       }}
     >
       <LandingNav />
@@ -31,9 +30,10 @@ export default function HomePage() {
       <LandingManifesto />
 
       {/* Features anchor + heading */}
-      <section id="features" className="flex min-h-screen flex-col items-center justify-center px-5 text-center sm:px-6 lg:px-12">
-        <span className="badge-section mb-6">Features</span>
-        <h2 className="text-section-heading mx-auto max-w-3xl">
+      <section id="features" className="relative flex min-h-screen flex-col items-center justify-center px-5 text-center sm:px-6 lg:px-12">
+        <FeaturesGrid />
+        <span className="relative badge-section mb-6">Features</span>
+        <h2 className="relative text-section-heading mx-auto max-w-3xl">
           One canvas. Multiple agents.
           <br />
           <span className="text-accent">Everything runs in parallel.</span>

@@ -157,7 +157,7 @@ function PricingCard({
       data-testid={`pricing-${name.toLowerCase()}`}
     >
       {highlighted && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-accent px-3 py-0.5 text-[10px] font-bold text-white shadow-glow-accent-sm">
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-accent px-3 py-0.5 text-[10px] font-bold text-[#0F1115] shadow-glow-accent-sm">
           Most Popular
         </div>
       )}
@@ -228,7 +228,7 @@ function PricingCard({
         className={cn(
           "mt-8 flex h-12 items-center justify-center rounded-full text-sm font-semibold transition-all hover:brightness-110",
           highlighted
-            ? "bg-accent text-white shadow-glow-accent"
+            ? "bg-accent text-[#0F1115] shadow-glow-accent"
             : "border border-glass-stroke bg-glass-fill-heavy text-primary hover:border-glass-stroke-light",
         )}
         data-testid={`pricing-${name.toLowerCase()}-cta`}
