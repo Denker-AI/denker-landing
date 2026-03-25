@@ -1,8 +1,16 @@
 import type { MetadataRoute } from "next";
+import { getAllNewsletters } from "@/lib/newsletters";
 
 const SITE_URL = "https://www.denker.ai";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const newsletterEntries = getAllNewsletters().map((n) => ({
+    url: `${SITE_URL}/blog/${n.slug}`,
+    lastModified: new Date(n.date),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
   return [
     {
       url: SITE_URL,
@@ -10,6 +18,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 1,
     },
+    {
+      url: `${SITE_URL}/blog`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    ...newsletterEntries,
     {
       url: `${SITE_URL}/privacy`,
       lastModified: new Date(),

@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getNewsletter } from "@/lib/newsletters";
+import { generateNewsletterEmail } from "@/lib/newsletter-email";
 
 /* ── Brand tokens — dolcetto glass style ─────────────────── */
 const LOGO_URL = "https://www.denker.ai/logo/logo-white.png";
@@ -238,9 +240,22 @@ function newsletterHtml(email: string): string {
 
 /* ── Preview route ──────────────────────────────────────── */
 
+/**
+ * GET /api/preview-email?type=waitlist|newsletter
+ * GET /api/preview-email?slug=introducing-denker   (newsletter broadcast preview)
+ */
 export async function GET(req: NextRequest) {
   if (process.env.NODE_ENV === "production") {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
+  const slug = req.nextUrl.searchParams.get("slug");
+  if (slug) {
+    const n = getNewsletter(slug);
+    if (!n) return NextResponse.json({ error: `Newsletter "${slug}" not found` }, { status: 404 });
+    return new NextResponse(generateNewsletterEmail(n), {
+      headers: { "Content-Type": "text/html" },
+    });
   }
 
   const type = req.nextUrl.searchParams.get("type") || "waitlist";
