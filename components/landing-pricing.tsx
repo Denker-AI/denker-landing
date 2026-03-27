@@ -274,6 +274,7 @@ export function LandingPricing() {
 
       {/* Footnote */}
       <p className="mx-auto mt-8 max-w-xl text-center text-xs text-muted">
+        Agents currently run on your own Claude Code subscription. More AI platforms coming soon.
         All plans include the canvas, real-time agent visibility, and tool connections. Cancel anytime.
       </p>
     </section>

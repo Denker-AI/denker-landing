@@ -23,8 +23,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const apiKey = process.env.RESEND_FULL_ACCESS_API_KEY;
-  const audienceId = process.env.RESEND_AUDIENCE_ID;
+  const apiKey = process.env.RESEND_FULL_ACCESS_API_KEY?.trim();
+  const audienceId = process.env.RESEND_AUDIENCE_ID?.trim();
   if (!apiKey || !audienceId) {
     return NextResponse.json(
       { error: "RESEND_FULL_ACCESS_API_KEY and RESEND_AUDIENCE_ID required" },

@@ -65,8 +65,8 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const sendKey = process.env.RESEND_API_KEY;
-  const audienceKey = process.env.RESEND_FULL_ACCESS_API_KEY || sendKey;
+  const sendKey = process.env.RESEND_API_KEY?.trim();
+  const audienceKey = process.env.RESEND_FULL_ACCESS_API_KEY?.trim() || sendKey;
   if (!sendKey) {
     console.error("RESEND_API_KEY not set");
     return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
@@ -83,24 +83,11 @@ export async function POST(req: NextRequest) {
   const normalizedEmail = email.trim().toLowerCase();
 
   try {
-    const audienceId = process.env.RESEND_AUDIENCE_ID;
-    let isNewContact = true;
+    const audienceId = process.env.RESEND_AUDIENCE_ID?.trim();
 
-    /* Check if contact already exists in audience */
-    if (audienceId && audienceKey) {
-      const checkRes = await fetch(
-        `${RESEND_API}/audiences/${audienceId}/contacts?email=${encodeURIComponent(normalizedEmail)}`,
-        { headers: { Authorization: `Bearer ${audienceKey}` } },
-      );
-      if (checkRes.ok) {
-        const checkData = await checkRes.json();
-        if (checkData?.data?.length > 0) {
-          isNewContact = false;
-        }
-      }
-    }
-
-    /* Add to Resend Audience — uses full access key */
+    /* Add to Resend Audience — uses full access key.
+     * The contacts POST is idempotent; it returns the contact id
+     * regardless of whether it already existed. */
     if (audienceId && audienceKey) {
       const audienceRes = await fetch(`${RESEND_API}/audiences/${audienceId}/contacts`, {
         method: "POST",
@@ -118,11 +105,6 @@ export async function POST(req: NextRequest) {
         const err = await audienceRes.text();
         console.error("Failed to add contact to audience:", err);
       }
-    }
-
-    /* Only send confirmation email to new contacts */
-    if (!isNewContact) {
-      return NextResponse.json({ ok: true });
     }
 
     /* Send confirmation email */
