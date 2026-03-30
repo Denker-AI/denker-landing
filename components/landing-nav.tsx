@@ -19,9 +19,9 @@ export function LandingNav() {
     <header className="fixed left-0 right-0 top-0 z-50 flex justify-center px-4 pt-4 sm:px-6 sm:pt-5" data-testid="landing-nav">
       {/* Desktop nav */}
       <nav className="hidden items-center gap-1 rounded-full border border-glass-stroke bg-glass-fill px-3 py-2 shadow-glass backdrop-blur-glass md:flex">
-        <div className="flex items-center px-2 pr-5">
+        <a href="/" className="flex items-center px-2 pr-5" data-testid="nav-logo">
           <DenkerLogo variant="wordmark" height={18} />
-        </div>
+        </a>
 
         {NAV_LINKS.map((link) => (
           <a
@@ -37,18 +37,20 @@ export function LandingNav() {
         <div className="mx-2 h-4 w-px bg-glass-stroke" />
         <ThemeToggle />
         <a
-          href="#community"
+          href="https://space.denker.ai"
           className="ml-1 inline-flex h-8 items-center rounded-full bg-primary px-5 text-sm font-semibold text-canvas transition-opacity hover:opacity-80"
           data-testid="nav-cta"
         >
-          Join Waitlist
+          Get Started
         </a>
       </nav>
 
       {/* Mobile nav */}
       <nav className="flex w-full flex-col md:hidden">
         <div className="flex items-center justify-between rounded-full border border-glass-stroke bg-glass-fill px-4 py-2.5 shadow-glass backdrop-blur-glass">
-          <DenkerLogo variant="wordmark" height={16} />
+          <a href="/" data-testid="nav-logo-mobile">
+            <DenkerLogo variant="wordmark" height={16} />
+          </a>
           <div className="flex items-center gap-2">
             <ThemeToggle />
             <button
@@ -94,12 +96,12 @@ export function LandingNav() {
             </a>
           ))}
           <a
-            href="#community"
+            href="https://space.denker.ai"
             onClick={() => setOpen(false)}
             className="mt-1 flex h-11 items-center justify-center rounded-full bg-primary text-sm font-semibold text-canvas transition-opacity hover:opacity-80"
             data-testid="nav-cta-mobile"
           >
-            Join Waitlist
+            Get Started
           </a>
         </div>
       </nav>

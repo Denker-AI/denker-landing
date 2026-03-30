@@ -157,16 +157,37 @@ export default async function NewsletterPage({
           className="rounded-2xl border border-glass-stroke bg-glass-fill p-8 text-center backdrop-blur-glass sm:p-12"
           data-testid="newsletter-cta"
         >
-          <h2 className="mb-3 font-['Satoshi',sans-serif] text-2xl font-bold text-primary sm:text-3xl">
-            Ready to see it in action?
-          </h2>
-          <p className="mx-auto mb-8 max-w-md text-secondary">
-            We&apos;re rolling out access in waves. Join the waitlist and
-            be among the first to experience Denker.
-          </p>
-          <div className="mx-auto max-w-sm">
-            <WaitlistForm size="compact" />
-          </div>
+          {n.cta.style === "button" ? (
+            <>
+              <h2 className="mb-3 font-['Satoshi',sans-serif] text-2xl font-bold text-primary sm:text-3xl">
+                Ready to get started?
+              </h2>
+              <p className="mx-auto mb-8 max-w-md text-secondary">
+                No waitlist. No invite codes. Sign in with Google and your
+                workspace is ready in seconds.
+              </p>
+              <a
+                href={n.cta.url}
+                className="inline-flex items-center gap-2 rounded-full bg-accent px-8 py-3.5 text-base font-semibold text-black transition-opacity hover:opacity-90"
+                data-testid="newsletter-cta-button"
+              >
+                {n.cta.text} <span aria-hidden="true">&rarr;</span>
+              </a>
+            </>
+          ) : (
+            <>
+              <h2 className="mb-3 font-['Satoshi',sans-serif] text-2xl font-bold text-primary sm:text-3xl">
+                Ready to see it in action?
+              </h2>
+              <p className="mx-auto mb-8 max-w-md text-secondary">
+                We&apos;re rolling out access in waves. Join the waitlist and
+                be among the first to experience Denker.
+              </p>
+              <div className="mx-auto max-w-sm">
+                <WaitlistForm size="compact" />
+              </div>
+            </>
+          )}
         </section>
       </main>
       <LandingFooter />

@@ -20,6 +20,8 @@ export interface Newsletter {
   cta: {
     text: string;
     url: string;
+    /** "waitlist" renders inline form; "button" renders a link button. Default: "waitlist" */
+    style?: "waitlist" | "button";
   };
   status: "draft" | "sent";
   sentAt?: string;
@@ -33,25 +35,25 @@ export interface Newsletter {
 
 export const newsletters: Newsletter[] = [
   {
-    slug: "introducing-denker",
-    title: "Introducing Denker",
-    subject: "Introducing Denker — Where humans and AI agents co-work visually",
+    slug: "denker-is-live",
+    title: "Denker Is Live",
+    subject: "Denker is live — your AI workspace is ready",
     previewText:
-      "A limitless canvas workspace where your AI agents research, write, code, and automate — all visible in real time.",
-    date: "2026-03-20",
-    heroTitle: "Meet Denker",
+      "No more waitlist. Sign in with Google and start working with AI agents on an infinite canvas — right now.",
+    date: "2026-03-30",
+    heroTitle: "Denker Is Live",
     heroSubtitle: "Where humans and AI agents co-work visually",
     intro:
-      "We've been building something different. Not another chatbot. Not another workflow builder. Denker is a visual workspace where you and your AI agents work side by side — on one limitless canvas. Every task is visible. Every agent step is transparent. You direct. They execute.",
+      "We've been building something different — not another chatbot, not another workflow builder. Today we're opening the doors. Denker is now live at space.denker.ai. Sign in with your Google account and you're in. No waitlist, no invite codes. This is the workspace where you and your AI agents work side by side on one limitless canvas. Every task is visible. Every agent step is transparent. You direct. They execute.",
     features: [
       {
-        title: "The Canvas",
+        title: "The Infinite Canvas",
         badge: "CORE",
         badgeColor: "green",
         description:
-          "Everything lives on one infinite canvas. Research, code, emails, data charts, workflows — each in its own frame, rendered live as agents work on them. No tabs. No hidden windows. Your entire workspace, at a glance.",
+          "Everything lives on one infinite canvas. Research, code, emails, data charts, workflows — each in its own frame, rendered live as agents work on them. No tabs. No hidden windows. No juggling context. Your entire workspace, at a glance.",
         tagline: "One surface. Everything visible.",
-        image: "/blog/assets/introducing-denker/canvas.png",
+        image: "/blog/assets/denker-is-live/canvas.svg",
       },
       {
         title: "AI Agents as Teammates",
@@ -60,16 +62,16 @@ export const newsletters: Newsletter[] = [
         description:
           "Agents aren't tools you configure — they're teammates you invite. Each has a name, avatar, and cursor on the canvas. Aria researches. Kai writes code. Mia drafts outreach. You see them working in real time, and you can step in at any moment.",
         tagline: "Your agents have names. And you can see them work.",
-        image: "/blog/assets/introducing-denker/agents.png",
+        image: "/blog/assets/denker-is-live/agents.svg",
       },
       {
         title: "Memory That Actually Works",
         badge: "CORE",
         badgeColor: "green",
         description:
-          "Every conversation builds a knowledge graph — people, companies, projects, decisions — structured in a real database with vector search. Not flat-file RAG. Your agents remember context across sessions, and you can see exactly what they know.",
+          "Every conversation builds a knowledge graph — people, companies, projects, decisions — structured in a real database with vector search. Your agents remember context across sessions, and you can see exactly what they know. Not flat-file RAG. Real structured memory.",
         tagline: "Structured memory. Full transparency.",
-        image: "/blog/assets/introducing-denker/memory.png",
+        image: "/blog/assets/denker-is-live/memory.svg",
       },
       {
         title: "Natural Language Workflows",
@@ -78,12 +80,13 @@ export const newsletters: Newsletter[] = [
         description:
           "Describe what you want in plain language. Denker plans the steps, picks the right agents, and runs everything in parallel. Multi-step research, content pipelines, data analysis — no drag-and-drop builders, no JSON configs.",
         tagline: "Describe it. Denker runs it.",
-        image: "/blog/assets/introducing-denker/workflows.png",
+        image: "/blog/assets/denker-is-live/workflows.svg",
       },
     ],
     cta: {
-      text: "Join the Waitlist",
-      url: "https://www.denker.ai/#community",
+      text: "Get Started",
+      url: "https://space.denker.ai",
+      style: "button",
     },
     status: "draft",
   },
