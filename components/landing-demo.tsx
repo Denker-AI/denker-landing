@@ -55,17 +55,14 @@ function SkeletonLines({ count, widths }: { count: number; widths?: number[] }) 
   );
 }
 
-function AgentCursor({ name, color, label }: { name: string; color: string; label: string }) {
+function AgentCursor({ name, color }: { name: string; color: string }) {
   return (
-    <div className="pointer-events-none flex items-center gap-0.5">
-      <svg width="9" height="12" viewBox="0 0 9 12" fill="none">
-        <path d="M1 1L8 6L4.5 7L3 11L1 1Z" fill={color} />
+    <div className="pointer-events-none flex items-baseline gap-0.5">
+      <svg width="10" height="14" viewBox="0 0 10 14" fill="none">
+        <path d="M1 1L9 7L4.5 7.8L2.5 13L1 1Z" fill={color} />
       </svg>
-      <span
-        className="rounded px-1.5 py-0.5 text-[8px] font-medium text-white"
-        style={{ backgroundColor: color }}
-      >
-        {name} · {label}
+      <span className="text-[11px] font-semibold tracking-wide" style={{ color }}>
+        {name}
       </span>
     </div>
   );
@@ -101,7 +98,7 @@ function FramesCanvas({ triggered }: { triggered: boolean }) {
           animation: triggered ? "hero-fade-in 0.6s ease 0.1s both" : "none",
         }}
       >
-        <MiniFrame title="Research Brief" accentColor="#BF5AF2" icon={Icons.Search} agent="Aria" streaming floatDelay={0}>
+        <MiniFrame title="Research Brief" accentColor="#BF5AF2" icon={Icons.Search} agent="Researcher" streaming floatDelay={0}>
           <SkeletonLines count={5} widths={[100, 85, 70, 90, 60]} />
         </MiniFrame>
       </div>
@@ -115,7 +112,7 @@ function FramesCanvas({ triggered }: { triggered: boolean }) {
           animation: triggered ? "hero-fade-in 0.6s ease 0.3s both" : "none",
         }}
       >
-        <MiniFrame title="Email Draft" accentColor="#FF375F" icon={Icons.Mail} agent="Mia" floatDelay={1.2}>
+        <MiniFrame title="Email Draft" accentColor="#FF375F" icon={Icons.Mail} agent="Writer" floatDelay={1.2}>
           <SkeletonLines count={5} widths={[100, 90, 100, 75, 55]} />
         </MiniFrame>
       </div>
@@ -129,7 +126,7 @@ function FramesCanvas({ triggered }: { triggered: boolean }) {
           animation: triggered ? "hero-fade-in 0.6s ease 0.5s both" : "none",
         }}
       >
-        <MiniFrame title="Data Analysis" accentColor="#FFD60A" icon={Icons.Brain} agent="Rex" floatDelay={2.1}>
+        <MiniFrame title="Data Analysis" accentColor="#FFD60A" icon={Icons.Brain} agent="Analyst" floatDelay={2.1}>
           <div className="space-y-1">
             <div className="flex h-8 items-end gap-0.5">
               {[60, 80, 50, 90, 70, 85, 55, 95].map((h, i) => (
@@ -150,7 +147,7 @@ function FramesCanvas({ triggered }: { triggered: boolean }) {
           animation: triggered ? "hero-fade-in 0.6s ease 0.7s both" : "none",
         }}
       >
-        <MiniFrame title="Feature Build" accentColor="#0A84FF" icon={Icons.Code} agent="Kai" floatDelay={0.7}>
+        <MiniFrame title="Feature Build" accentColor="#0A84FF" icon={Icons.Code} agent="Coder" floatDelay={0.7}>
           <div className="space-y-0.5">
             <div className="h-1 w-full rounded bg-blue-400/30" />
             <div className="h-1 w-4/5 rounded bg-green-400/20" />
@@ -170,7 +167,7 @@ function FramesCanvas({ triggered }: { triggered: boolean }) {
           animation: triggered ? "hero-fade-in 0.6s ease 0.9s both" : "none",
         }}
       >
-        <MiniFrame title="LinkedIn Post" accentColor="#0A66C2" icon={Icons.Send} agent="Mia" floatDelay={1.8}>
+        <MiniFrame title="LinkedIn Post" accentColor="#0A66C2" icon={Icons.Send} agent="Writer" floatDelay={1.8}>
           <SkeletonLines count={4} widths={[100, 90, 75, 50]} />
         </MiniFrame>
       </div>
@@ -184,7 +181,7 @@ function FramesCanvas({ triggered }: { triggered: boolean }) {
           animation: triggered ? "hero-fade-in 0.5s ease 1.1s both" : "none",
         }}
       >
-        <AgentCursor name="Aria" color="#A78BFA" label="searching" />
+        <AgentCursor name="Researcher" color="#60A5FA" />
       </div>
       <div
         className="absolute"
@@ -194,7 +191,7 @@ function FramesCanvas({ triggered }: { triggered: boolean }) {
           animation: triggered ? "hero-fade-in 0.5s ease 1.3s both" : "none",
         }}
       >
-        <AgentCursor name="Mia" color="#F472B6" label="writing" />
+        <AgentCursor name="Writer" color="#A78BFA" />
       </div>
       <div
         className="absolute"
@@ -204,7 +201,7 @@ function FramesCanvas({ triggered }: { triggered: boolean }) {
           animation: triggered ? "hero-fade-in 0.5s ease 1.5s both" : "none",
         }}
       >
-        <AgentCursor name="Kai" color="#60A5FA" label="building" />
+        <AgentCursor name="Coder" color="#EF4444" />
       </div>
       <div
         className="absolute"
@@ -214,7 +211,7 @@ function FramesCanvas({ triggered }: { triggered: boolean }) {
           animation: triggered ? "hero-fade-in 0.5s ease 1.7s both" : "none",
         }}
       >
-        <AgentCursor name="Rex" color="#FFD60A" label="analyzing" />
+        <AgentCursor name="Analyst" color="#F59E0B" />
       </div>
     </div>
   );
@@ -278,10 +275,10 @@ export function LandingDemo() {
               <strong className="font-semibold text-primary">See everything, control everything</strong> — research briefs, email drafts, code files. Each agent delivers straight to a named frame. Arrange, resize, and export.
             </p>
             <a
-              href="#community"
+              href="https://space.denker.ai"
               className="mb-10 inline-flex h-12 items-center justify-center rounded-full bg-primary px-7 text-sm font-bold text-canvas transition-opacity hover:opacity-80 max-sm:w-full sm:w-fit"
             >
-              Join Waitlist
+              Try Free
             </a>
             <div className="grid grid-cols-2 gap-2">
               <Pill icon={Icons.Layers} label="Frames" />

@@ -93,14 +93,14 @@ function DemoSkeletonLines({ count, widths }: { count: number; widths?: number[]
   );
 }
 
-function DemoAgentCursor({ name, color, label }: { name: string; color: string; label: string }) {
+function DemoAgentCursor({ name, color }: { name: string; color: string }) {
   return (
-    <div className="pointer-events-none flex items-center gap-0.5">
-      <svg width="9" height="12" viewBox="0 0 9 12" fill="none">
-        <path d="M1 1L8 6L4.5 7L3 11L1 1Z" fill={color} />
+    <div className="pointer-events-none flex items-baseline gap-0.5">
+      <svg width="10" height="14" viewBox="0 0 10 14" fill="none">
+        <path d="M1 1L9 7L4.5 7.8L2.5 13L1 1Z" fill={color} />
       </svg>
-      <span className="rounded px-1.5 py-0.5 text-[8px] font-medium text-[#0F1115]" style={{ backgroundColor: color }}>
-        {name} · {label}
+      <span className="text-[11px] font-semibold tracking-wide" style={{ color }}>
+        {name}
       </span>
     </div>
   );
@@ -121,18 +121,33 @@ function CanvasVisual() {
     >
       <div className="pointer-events-none absolute inset-0" aria-hidden="true"
         style={{ background: "radial-gradient(ellipse 70% 55% at 40% 45%, rgba(167,139,250,0.07) 0%, transparent 70%)" }} />
+      {/* Frame 1: Research Brief — always visible */}
       <div className="absolute" style={{ top: "7%", left: 28, width: 200, animation: "hero-fade-in 0.6s ease 0.1s both" }}>
-        <MiniFrame title="Research Brief" accentColor="#BF5AF2" icon={Icons.Search} agent="Aria" streaming floatDelay={0}>
+        <MiniFrame title="Research Brief" accentColor="#BF5AF2" icon={Icons.Search} agent="Researcher" streaming floatDelay={0}>
           <DemoSkeletonLines count={5} widths={[100, 85, 70, 90, 60]} />
         </MiniFrame>
       </div>
-      <div className="absolute" style={{ top: "20%", right: 24, width: 188, animation: "hero-fade-in 0.6s ease 0.3s both" }}>
-        <MiniFrame title="Email Draft" accentColor="#FF375F" icon={Icons.Mail} agent="Mia" floatDelay={1.2}>
+      {/* Frame 2: Email Draft — always visible */}
+      <div className="absolute" style={{ top: "22%", right: 24, width: 188, animation: "hero-fade-in 0.6s ease 0.3s both" }}>
+        <MiniFrame title="Email Draft" accentColor="#FF375F" icon={Icons.Mail} agent="Writer" floatDelay={1.2}>
           <DemoSkeletonLines count={5} widths={[100, 90, 100, 75, 55]} />
         </MiniFrame>
       </div>
-      <div className="absolute" style={{ top: "43%", left: 44, width: 184, animation: "hero-fade-in 0.6s ease 0.5s both" }}>
-        <MiniFrame title="Data Analysis" accentColor="#FFD60A" icon={Icons.Brain} agent="Rex" floatDelay={2.1}>
+      {/* Frame 3: Feature Build — always visible */}
+      <div className="absolute" style={{ bottom: "5%", left: 44, width: 192, animation: "hero-fade-in 0.6s ease 0.5s both" }}>
+        <MiniFrame title="Feature Build" accentColor="#0A84FF" icon={Icons.Code} agent="Coder" floatDelay={0.7}>
+          <div className="space-y-0.5">
+            <div className="h-1 w-full rounded bg-blue-400/30" />
+            <div className="h-1 w-4/5 rounded bg-green-400/20" />
+            <div className="h-1 w-3/5 rounded bg-yellow-400/20" />
+            <div className="h-1 w-11/12 rounded bg-blue-400/25" />
+            <div className="h-1 w-2/3 rounded bg-purple-400/20" />
+          </div>
+        </MiniFrame>
+      </div>
+      {/* Frame 4: Data Analysis — desktop only */}
+      <div className="absolute hidden md:block" style={{ top: "40%", left: 36, width: 184, animation: "hero-fade-in 0.6s ease 0.7s both" }}>
+        <MiniFrame title="Data Analysis" accentColor="#FFD60A" icon={Icons.Brain} agent="Analyst" floatDelay={2.1}>
           <div className="space-y-1">
             <div className="flex h-8 items-end gap-0.5">
               {[60, 80, 50, 90, 70, 85, 55, 95].map((h, i) => (
@@ -143,33 +158,24 @@ function CanvasVisual() {
           </div>
         </MiniFrame>
       </div>
-      <div className="absolute" style={{ top: "55%", right: 32, width: 192, animation: "hero-fade-in 0.6s ease 0.7s both" }}>
-        <MiniFrame title="Feature Build" accentColor="#0A84FF" icon={Icons.Code} agent="Kai" floatDelay={0.7}>
-          <div className="space-y-0.5">
-            <div className="h-1 w-full rounded bg-blue-400/30" />
-            <div className="h-1 w-4/5 rounded bg-green-400/20" />
-            <div className="h-1 w-3/5 rounded bg-yellow-400/20" />
-            <div className="h-1 w-11/12 rounded bg-blue-400/25" />
-            <div className="h-1 w-2/3 rounded bg-purple-400/20" />
-          </div>
-        </MiniFrame>
-      </div>
-      <div className="absolute" style={{ bottom: "8%", left: 60, width: 188, animation: "hero-fade-in 0.6s ease 0.9s both" }}>
-        <MiniFrame title="LinkedIn Post" accentColor="#0A66C2" icon={Icons.Send} agent="Mia" floatDelay={1.8}>
+      {/* Frame 5: LinkedIn Post — desktop only */}
+      <div className="absolute hidden md:block" style={{ bottom: "5%", right: 30, width: 188, animation: "hero-fade-in 0.6s ease 0.9s both" }}>
+        <MiniFrame title="LinkedIn Post" accentColor="#0A66C2" icon={Icons.Send} agent="Writer" floatDelay={1.8}>
           <DemoSkeletonLines count={4} widths={[100, 90, 75, 50]} />
         </MiniFrame>
       </div>
+      {/* Cursors: Researcher + Writer + Coder always visible, Rex desktop only */}
       <div className="absolute" style={{ top: "17%", left: "42%", animation: "hero-fade-in 0.5s ease 1.1s both" }}>
-        <DemoAgentCursor name="Aria" color="#A78BFA" label="searching" />
+        <DemoAgentCursor name="Researcher" color="#60A5FA" />
       </div>
-      <div className="absolute" style={{ top: "35%", right: "30%", animation: "hero-fade-in 0.5s ease 1.3s both" }}>
-        <DemoAgentCursor name="Mia" color="#F472B6" label="writing" />
+      <div className="absolute" style={{ top: "45%", right: "25%", animation: "hero-fade-in 0.5s ease 1.3s both" }}>
+        <DemoAgentCursor name="Writer" color="#A78BFA" />
       </div>
-      <div className="absolute" style={{ top: "66%", left: "48%", animation: "hero-fade-in 0.5s ease 1.5s both" }}>
-        <DemoAgentCursor name="Kai" color="#60A5FA" label="building" />
+      <div className="absolute" style={{ bottom: "20%", left: "48%", animation: "hero-fade-in 0.5s ease 1.5s both" }}>
+        <DemoAgentCursor name="Coder" color="#EF4444" />
       </div>
-      <div className="absolute" style={{ bottom: "25%", left: "33%", animation: "hero-fade-in 0.5s ease 1.7s both" }}>
-        <DemoAgentCursor name="Rex" color="#FFD60A" label="analyzing" />
+      <div className="absolute hidden md:block" style={{ bottom: "25%", left: "33%", animation: "hero-fade-in 0.5s ease 1.7s both" }}>
+        <DemoAgentCursor name="Analyst" color="#F59E0B" />
       </div>
     </div>
   );
@@ -186,138 +192,91 @@ function Pill({ icon: Icon, label }: { icon: React.ElementType; label: string })
   );
 }
 
-/* ── Workflow flowchart ──────────────────────────────────────────── */
+/* ── Task Board visual ──────────────────────────────────────────── */
 
-type StepStatus = "completed" | "running" | "pending";
-
-interface ChartStep {
-  id: string;
-  label: string;
-  iconType: "clock" | "search" | "listChecks" | "shield" | "gmail" | "linkedin";
-  status: StepStatus;
-  dashed?: boolean;
-  badge?: string;
-  approved?: boolean;
+interface BoardTask {
+  title: string;
+  agent: string;
+  agentColor: string;
+  borderColor: string;
 }
 
-const CHART_STEPS: ChartStep[] = [
-  { id: "trigger",  label: "Every Monday at 9 am",       iconType: "clock",    status: "completed", dashed: true                 },
-  { id: "research", label: "Research top 5 competitors", iconType: "search",   status: "completed",              badge: "Aria"  },
-  { id: "approve",  label: "Human approval",             iconType: "shield",   status: "completed", dashed: true, approved: true },
-  { id: "send",     label: "Draft & send newsletter",    iconType: "gmail",    status: "running",                badge: "Mia"   },
-  { id: "linkedin", label: "Post on LinkedIn",           iconType: "linkedin", status: "pending",                badge: "Mia"   },
+interface BoardColumn {
+  name: string;
+  color: string;
+  count: number;
+  showPlus?: boolean;
+  tasks: BoardTask[];
+}
+
+const BOARD_DATA: BoardColumn[] = [
+  { name: "Backlog", color: "#6B7280", count: 0, tasks: [] },
+  {
+    name: "Todo",
+    color: "#3B82F6",
+    count: 2,
+    showPlus: true,
+    tasks: [
+      { title: "Create a summary rep...", agent: "Analyst", agentColor: "#F59E0B", borderColor: "#F59E0B" },
+      { title: "Research the latest AI...", agent: "Researcher", agentColor: "#60A5FA", borderColor: "#60A5FA" },
+    ],
+  },
+  {
+    name: "In Progress",
+    color: "#F59E0B",
+    count: 1,
+    tasks: [
+      { title: "Build payment integr...", agent: "Coder", agentColor: "#EF4444", borderColor: "#EF4444" },
+    ],
+  },
+  { name: "Blocked", color: "#EF4444", count: 0, tasks: [] },
+  { name: "In Review", color: "#A855F7", count: 0, tasks: [] },
+  { name: "Done", color: "#22C55E", count: 0, tasks: [] },
 ];
 
-function ChartStepIcon({ iconType }: { iconType: ChartStep["iconType"] }) {
-  if (iconType === "gmail")    return <GmailIcon size={12} />;
-  if (iconType === "linkedin") return <LinkedInIcon size={12} />;
-  const map = { clock: Icons.Clock, search: Icons.Search, listChecks: Icons.ListChecks, shield: Icons.ShieldCheck } as const;
-  const Icon = map[iconType as keyof typeof map];
-  return <Icon className="h-3 w-3 shrink-0 text-muted" />;
-}
-
-const FLOW_NODE_H = 34;
-const FLOW_GAP_H  = 32;
-
-function WorkflowPill({ step }: { step: ChartStep }) {
+function TaskBoardVisual() {
   return (
-    <div
-      className={cn(
-        "flex w-full items-center gap-1.5 rounded-full px-2.5 sm:gap-2 sm:px-3",
-        "border bg-glass-fill/80 backdrop-blur-sm",
-        step.dashed ? "border-dashed border-glass-stroke" : "border-glass-stroke",
-        step.status === "completed" && !step.dashed && "border-success/30 bg-success/[0.04]",
-        step.status === "running" && "border-blue-400/30 bg-blue-400/[0.04]",
-        step.status === "pending" && "opacity-40",
-      )}
-      style={{ height: FLOW_NODE_H }}
-    >
-      {/* Status indicator — left side */}
-      {step.status === "completed" ? (
-        <Icons.Check className="h-3 w-3 shrink-0 text-success" />
-      ) : (
-        <ChartStepIcon iconType={step.iconType} />
-      )}
-      <span className="flex-1 truncate text-[11px] font-medium text-secondary sm:text-xs">{step.label}</span>
-      {step.badge && <span className="hidden shrink-0 text-[9px] text-muted sm:inline">{step.badge}</span>}
-      {step.approved && (
-        <span className="hidden shrink-0 rounded-full bg-accent/10 px-1.5 py-0.5 text-[9px] font-medium text-accent sm:inline">Approved</span>
-      )}
-      {/* Status dot — right side */}
-      {step.status === "running" && (
-        <span className="relative flex h-2 w-2 shrink-0">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75" />
-          <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-400" />
-        </span>
-      )}
-      {step.status === "completed" && (
-        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-success" />
-      )}
-      {step.status === "pending" && (
-        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-muted" />
-      )}
-    </div>
-  );
-}
-
-function FlowConnector() {
-  return (
-    <div className="flex flex-col items-center" style={{ height: FLOW_GAP_H }}>
-      <div className="w-px flex-1" style={{ backgroundColor: "var(--color-glass-stroke)" }} />
-      <svg width="6" height="5" viewBox="0 0 6 5" className="shrink-0">
-        <path d="M3 5L0 0h6z" fill="var(--color-glass-stroke)" />
-      </svg>
-    </div>
-  );
-}
-
-function WorkflowFlowchart() {
-  return (
-    <div className="flex h-full flex-col items-center justify-center px-2">
-      {CHART_STEPS.map((step, i) => (
-        <div key={step.id} className="flex w-full flex-col items-center">
-          <WorkflowPill step={step} />
-          {i < CHART_STEPS.length - 1 && <FlowConnector />}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-const completedSteps = CHART_STEPS.filter((s) => s.status === "completed").length;
-
-function WorkflowVisual() {
-  return (
-    <div className="flex h-full max-h-[560px] w-full flex-col overflow-hidden rounded-2xl border border-glass-stroke bg-glass-fill shadow-glass" style={{ minHeight: 380 }}>
-      {/* Frame header + progress */}
-      <div className="flex flex-col gap-3 px-3 pb-3 pt-3 sm:px-4 sm:pb-4">
-        <div className="flex items-center gap-1.5 sm:gap-2">
-          <span className="h-3 w-0.5 shrink-0 rounded-full bg-frame-workflow" />
-          <Icons.GitBranch className="h-3 w-3 shrink-0 text-muted" />
-          <span className="flex-1 truncate text-[11px] font-semibold text-primary sm:text-xs">Research → publish newsletter</span>
-          <span className="shrink-0 rounded-full bg-accent/10 px-2 py-0.5 text-[10px] font-medium text-accent">Running</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="h-1 flex-1 overflow-hidden rounded-full bg-glass-fill-heavy">
-            <div
-              className="relative h-full overflow-hidden rounded-full bg-accent"
-              style={{ width: `${(completedSteps / CHART_STEPS.length) * 100}%` }}
-            >
-              <div
-                className="absolute inset-0"
-                style={{
-                  background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%)",
-                  backgroundSize: "200% 100%",
-                  animation: "shimmer 2s ease-in-out infinite",
-                }}
-              />
-            </div>
-          </div>
-          <span className="shrink-0 text-[10px] text-muted">{completedSteps}/{CHART_STEPS.length}</span>
-        </div>
+    <div className="flex h-full max-h-[560px] flex-col overflow-hidden rounded-2xl border border-glass-stroke bg-glass-fill shadow-glass" style={{ minHeight: 380 }}>
+      {/* Frame header */}
+      <div className="flex items-center gap-2 border-b border-glass-stroke-faint px-3 py-2.5 sm:px-4">
+        <span className="h-3 w-0.5 shrink-0 rounded-full bg-accent" />
+        <Icons.ListChecks className="h-3 w-3 shrink-0 text-muted" />
+        <span className="flex-1 truncate text-[11px] font-semibold text-primary sm:text-xs">Taskboard</span>
       </div>
-      <div className="flex-1 px-3 py-4 sm:p-6">
-        <WorkflowFlowchart />
+      {/* Column headers — horizontal row like the real app */}
+      <div className="flex items-center gap-0 px-4 py-2.5">
+        {BOARD_DATA.map((col) => (
+          <div key={col.name} className="flex items-center gap-1.5 pr-5">
+            <span className="h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: col.color }} />
+            <span className="text-[10px] font-semibold text-secondary whitespace-nowrap">{col.name}</span>
+            <span className="text-[9px] text-muted">{col.count}</span>
+            {col.showPlus && <span className="text-[10px] text-muted">+</span>}
+          </div>
+        ))}
+      </div>
+      {/* Tasks — displayed under their respective column positions */}
+      <div className="flex-1 px-4 pt-1">
+        {BOARD_DATA.filter((col) => col.tasks.length > 0).map((col) => (
+          <div key={col.name} className="mb-1"
+            style={{
+              /* Offset to align under the column header */
+              marginLeft: col.name === "In Progress" ? 168 : 0,
+            }}
+          >
+            {col.tasks.map((task) => (
+              <div key={task.title} className="flex py-1.5">
+                <div className="w-[3px] shrink-0 rounded-full" style={{ backgroundColor: task.borderColor }} />
+                <div className="flex flex-col gap-1 pl-3">
+                  <span className="text-[11px] font-medium leading-tight text-primary">{task.title}</span>
+                  <div className="flex items-center gap-1">
+                    <span className="h-2 w-2 rounded-full" style={{ backgroundColor: task.agentColor }} />
+                    <span className="text-[10px] text-muted">{task.agent}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -438,10 +397,10 @@ function ConnectionGrid() {
 }
 
 const AGENT_PRESETS = [
-  { id: "aria", letter: "A", color: "#A78BFA", name: "Aria",       desc: "Research & search"  },
-  { id: "mia",  letter: "M", color: "#F472B6", name: "Mia",        desc: "Write & draft"       },
-  { id: "kai",  letter: "K", color: "#60A5FA", name: "Kai",        desc: "Code & build"        },
-  { id: "rex",  letter: "R", color: "#FFD60A", name: "Rex",        desc: "Analyze & insights"  },
+  { id: "researcher", letter: "R", color: "#60A5FA", name: "Researcher", desc: "Research & search"  },
+  { id: "writer", letter: "W", color: "#A78BFA", name: "Writer",   desc: "Write & draft"       },
+  { id: "coder", letter: "C", color: "#EF4444", name: "Coder",     desc: "Code & build"        },
+  { id: "analyst", letter: "A", color: "#F59E0B", name: "Analyst",    desc: "Analyze & insights"  },
 ];
 
 function AgentDockCard() {
@@ -531,7 +490,7 @@ function FeatureBlock({
     <div className="flex min-h-screen items-center px-5 py-16 sm:px-6 sm:py-20 lg:px-12">
       <div className="mx-auto w-full max-w-6xl">
         <div className={cn(
-          "grid items-stretch gap-10 lg:gap-16",
+          "grid items-stretch gap-10 lg:min-h-[520px] lg:gap-16",
           reversed ? "lg:grid-cols-[1.1fr_0.9fr]" : "lg:grid-cols-[0.9fr_1.1fr]",
         )}>
           <div className={cn("flex flex-col justify-center", reversed && "lg:order-2")}>
@@ -539,16 +498,16 @@ function FeatureBlock({
             <h2 className="text-section-heading mb-6">{heading}</h2>
             <p className="mb-8 text-base leading-relaxed text-secondary">{description}</p>
             <a
-              href="#community"
+              href="https://space.denker.ai"
               className="mb-10 inline-flex h-12 items-center justify-center rounded-full bg-primary px-7 text-sm font-bold text-canvas transition-opacity hover:opacity-80 max-sm:w-full sm:w-fit"
             >
-              Join Waitlist
+              Try Free
             </a>
             <div className="grid grid-cols-2 gap-2">
               {pills.map((p) => <Pill key={p.label} icon={p.icon} label={p.label} />)}
             </div>
           </div>
-          <div className={cn("flex min-w-0 flex-col overflow-hidden", reversed && "lg:order-1")}>
+          <div className={cn("flex min-w-0 flex-col", reversed && "lg:order-1")}>
             <div className="flex-1 [&>*]:h-full">
               {visual}
             </div>
@@ -580,18 +539,18 @@ export function LandingFeatures() {
         reversed
       />
 
-      {/* ── Workflow ── */}
+      {/* ── Task Board ── */}
       <FeatureBlock
-        label="Workflow Builder"
-        heading={<>Automate your work{" "}<span className="text-accent">as simple as conversation</span></>}
-        description={<><strong className="font-semibold text-primary">Plan, configure, and deliver</strong> — just describe the work in conversation, Denker creates, configures, and runs your workflow. No setup hours. No learning curve.</>}
+        label="Task Board"
+        heading={<>Delegate work.{" "}<span className="text-accent">Track everything.</span></>}
+        description={<><strong className="font-semibold text-primary">Assign, track, and deliver</strong> — create tasks in plain language, assign them to agents, and watch progress on a visual board. Agents pick up work, report back, and move tasks forward.</>}
         pills={[
-          { icon: Icons.Zap, label: "Workflow" },
-          { icon: Icons.Clock, label: "Schedule" },
-          { icon: Icons.ShieldCheck, label: "Approval" },
-          { icon: Icons.Plug, label: "Connector" },
+          { icon: Icons.ListChecks, label: "Tasks" },
+          { icon: Icons.Bot, label: "Delegation" },
+          { icon: Icons.Network, label: "Agent-to-agent" },
+          { icon: Icons.Zap, label: "Auto wake-up" },
         ]}
-        visual={<WorkflowVisual />}
+        visual={<TaskBoardVisual />}
       />
 
       {/* ── Memory ── */}

@@ -152,6 +152,13 @@ export default async function NewsletterPage({
           ))}
         </div>
 
+        {/* Note */}
+        {n.note && (
+          <div className="mb-16 border-t border-glass-stroke pt-6">
+            <p className="text-sm leading-relaxed text-secondary">{n.note}</p>
+          </div>
+        )}
+
         {/* CTA */}
         <section
           className="rounded-2xl border border-glass-stroke bg-glass-fill p-8 text-center backdrop-blur-glass sm:p-12"

@@ -132,6 +132,13 @@ export function generateNewsletterEmail(newsletter: Newsletter): string {
               <!-- Features -->
               ${featuresHtml}
 
+              ${newsletter.note ? `<!-- Migration note -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 8px;">
+                <tr><td style="border-top:1px solid ${C.divider};padding-top:24px;">
+                  <p style="font-family:${F};font-size:14px;color:${C.textSec};line-height:1.65;margin:0;">${newsletter.note}</p>
+                </td></tr>
+              </table>` : ""}
+
               <!-- CTA Button -->
               <table width="100%" cellpadding="0" cellspacing="0" style="margin:32px 0 0;">
                 <tr><td align="center">

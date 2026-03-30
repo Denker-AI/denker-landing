@@ -30,7 +30,7 @@ const PLANS: Plan[] = [
       "Community support",
     ],
     highlighted: false,
-    cta: "Get started free",
+    cta: "Get Started",
     creditNote: null,
   },
   {
@@ -46,7 +46,7 @@ const PLANS: Plan[] = [
       "Priority support",
     ],
     highlighted: true,
-    cta: "Join Waitlist",
+    cta: "Get Started",
     creditNote: null,
   },
   {
@@ -62,7 +62,7 @@ const PLANS: Plan[] = [
       "Beta features",
     ],
     highlighted: false,
-    cta: "Join Waitlist",
+    cta: "Get Started",
     creditNote: "10,000 credits / mo",
   },
 ];
@@ -224,7 +224,7 @@ function PricingCard({
 
       {/* CTA */}
       <a
-        href="#community"
+        href="https://space.denker.ai"
         className={cn(
           "mt-8 flex h-12 items-center justify-center rounded-full text-sm font-semibold transition-all hover:brightness-110",
           highlighted
@@ -272,11 +272,33 @@ export function LandingPricing() {
         ))}
       </div>
 
-      {/* Footnote */}
-      <p className="mx-auto mt-8 max-w-xl text-center text-xs text-muted">
-        Agents currently run on your own Claude Code subscription. More AI platforms coming soon.
-        All plans include the canvas, real-time agent visibility, and tool connections. Cancel anytime.
-      </p>
+      {/* Supported CLI platforms */}
+      <div className="mx-auto mt-10 max-w-xl text-center">
+        <p className="mb-4 text-xs font-medium uppercase tracking-widest text-muted">
+          Powered by your CLI subscription
+        </p>
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-xs font-semibold text-accent">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+            Claude Code
+          </span>
+          <span className="inline-flex items-center gap-2 rounded-full border border-glass-stroke bg-glass-fill px-4 py-1.5 text-xs text-muted">
+            Codex
+            <span className="text-[10px] opacity-60">soon</span>
+          </span>
+          <span className="inline-flex items-center gap-2 rounded-full border border-glass-stroke bg-glass-fill px-4 py-1.5 text-xs text-muted">
+            OpenCode
+            <span className="text-[10px] opacity-60">soon</span>
+          </span>
+          <span className="inline-flex items-center gap-2 rounded-full border border-glass-stroke bg-glass-fill px-4 py-1.5 text-xs text-muted">
+            OpenRouter
+            <span className="text-[10px] opacity-60">soon</span>
+          </span>
+        </div>
+        <p className="mt-4 text-xs text-muted">
+          All plans include the canvas, real-time agent visibility, and tool connections. Cancel anytime.
+        </p>
+      </div>
     </section>
   );
 }
