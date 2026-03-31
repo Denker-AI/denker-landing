@@ -6,10 +6,11 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/cn";
 
 const NAV_LINKS = [
-  { href: "#features", label: "Features", testId: "nav-features" },
-  { href: "#pricing", label: "Pricing", testId: "nav-pricing" },
+  { href: "/#features", label: "Features", testId: "nav-features" },
+  { href: "/#pricing", label: "Pricing", testId: "nav-pricing" },
+  { href: "/docs", label: "Docs", testId: "nav-docs" },
   { href: "/blog", label: "Blog", testId: "nav-blog" },
-  { href: "#community", label: "Community", testId: "nav-community" },
+  { href: "/#community", label: "Community", testId: "nav-community" },
 ];
 
 export function LandingNav() {

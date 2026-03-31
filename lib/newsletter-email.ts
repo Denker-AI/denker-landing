@@ -115,7 +115,7 @@ export function generateNewsletterEmail(newsletter: Newsletter): string {
 
             <tr><td class="content-area" style="padding:44px 36px;">
               <!-- Greeting -->
-              <p style="font-family:${F};font-size:15px;color:${C.textSec};margin:0 0 24px;line-height:1.7;">Hi {{{FIRST_NAME|there}}},</p>
+              <p style="font-family:${F};font-size:15px;color:${C.textSec};margin:0 0 24px;line-height:1.7;">Hi there,</p>
 
               <!-- Hero heading -->
               <h1 style="font-family:${FH};font-size:28px;font-weight:700;margin:0 0 8px;color:${C.text};line-height:1.2;">${newsletter.heroTitle}</h1>
