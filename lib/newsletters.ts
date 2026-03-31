@@ -37,7 +37,7 @@ export interface Newsletter {
 export const newsletters: Newsletter[] = [
   {
     slug: "denker-is-live",
-    title: "Denker Is Live",
+    title: "Your AI Team Is Ready",
     subject: "Your AI team is ready.",
     previewText:
       "Welcome to the co-working space for humans and agents.",

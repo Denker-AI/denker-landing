@@ -53,10 +53,11 @@ export function LandingFooter() {
               <span className="text-xs font-semibold uppercase tracking-widest text-muted">Pages</span>
               <nav className="flex flex-col gap-3">
                 <a href="/" className="text-sm text-secondary transition-colors hover:text-primary">Home</a>
-                <a href="#features" className="text-sm text-secondary transition-colors hover:text-primary">Features</a>
-                <a href="#pricing" className="text-sm text-secondary transition-colors hover:text-primary">Pricing</a>
+                <a href="/#features" className="text-sm text-secondary transition-colors hover:text-primary">Features</a>
+                <a href="/#pricing" className="text-sm text-secondary transition-colors hover:text-primary">Pricing</a>
+                <a href="/docs" className="text-sm text-secondary transition-colors hover:text-primary">Docs</a>
                 <a href="/blog" className="text-sm text-secondary transition-colors hover:text-primary">Blog</a>
-                <a href="#community" className="text-sm text-secondary transition-colors hover:text-primary">Community</a>
+                <a href="/#community" className="text-sm text-secondary transition-colors hover:text-primary">Community</a>
               </nav>
             </div>
 
