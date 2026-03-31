@@ -42,10 +42,10 @@ export const newsletters: Newsletter[] = [
     previewText:
       "Welcome to the co-working space for humans and agents.",
     date: "2026-03-30",
-    heroTitle: "Denker Is Live",
-    heroSubtitle: "The co-working space for humans and agents",
+    heroTitle: "Your AI team is ready",
+    heroSubtitle: "Meet the workspace where agents actually work with you",
     intro:
-      "What if your AI agents didn't just answer questions — they worked alongside you? Today we're opening Denker: a co-working space where humans and AI agents collaborate on one infinite canvas. Sign in at space.denker.ai with your Google account. No waitlist, no invite codes. You direct. They execute.",
+      "What if your AI agents didn't just answer questions — they worked alongside you? Today we're opening Denker: a workspace where humans and AI agents collaborate on one infinite canvas. No waitlist, no invite codes. You direct. They execute.",
     features: [
       {
         title: "The Infinite Canvas",
