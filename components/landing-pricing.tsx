@@ -24,14 +24,14 @@ const PLANS: Plan[] = [
     yearly: null,
     description: "Try the canvas and agents. No credit card required.",
     features: [
-      "5 projects",
-      "5 workflows",
+      "2 projects",
+      "5 spaces",
       "Basic memory",
       "Community support",
     ],
     highlighted: false,
     cta: "Get Started",
-    creditNote: null,
+    creditNote: "AI tokens not included — requires your own Claude Code subscription",
   },
   {
     name: "Pro",
@@ -41,8 +41,8 @@ const PLANS: Plan[] = [
     features: [
       "Everything in Free, plus",
       "Unlimited projects",
-      "Unlimited workflows",
-      "Knowledge graph memory — 10 GB",
+      "Unlimited spaces",
+      "Knowledge graph memory",
       "Priority support",
     ],
     highlighted: true,
@@ -51,19 +51,18 @@ const PLANS: Plan[] = [
   },
   {
     name: "Max",
-    monthly: 99,
-    yearly: 999,
-    description: "Cloud execution with advanced workflows. Agents run 24/7.",
+    monthly: null,
+    yearly: null,
+    description: "Cloud execution with persistent agents. Coming soon.",
     features: [
       "Everything in Pro, plus",
-      "10,000 credits / mo included",
       "24/7 cloud execution",
       "Unlimited memory",
       "Beta features",
     ],
     highlighted: false,
-    cta: "Get Started",
-    creditNote: "10,000 credits / mo",
+    cta: "Coming Soon",
+    creditNote: null,
   },
 ];
 
@@ -143,7 +142,8 @@ function PricingCard({
 }) {
   const { name, monthly, description, features, highlighted, cta } = plan;
   const price = yearly ? plan.yearly : monthly;
-  const isFree = price === null;
+  const isFree = name === "Free";
+  const isComingSoon = price === null && !isFree;
 
   return (
     <div
@@ -169,7 +169,9 @@ function PricingCard({
 
       {/* Price */}
       <div className="mb-1 flex items-baseline gap-1.5">
-        {isFree ? (
+        {isComingSoon ? (
+          <span className="text-4xl font-extrabold tracking-tight text-muted">TBD</span>
+        ) : isFree ? (
           <span className="text-4xl font-extrabold tracking-tight text-primary">&euro;0</span>
         ) : (
           <>
@@ -183,12 +185,13 @@ function PricingCard({
 
       {/* Yearly note */}
       <div className="mb-5 h-4">
-        {!isFree && yearly && monthly && (
+        {!isFree && !isComingSoon && yearly && monthly && (
           <p className="text-[11px] text-muted">
             &asymp; &euro;{Math.round((plan.yearly ?? 0) / 12)} / mo &mdash; 2 months free
           </p>
         )}
         {isFree && <p className="text-[11px] text-secondary">forever</p>}
+        {isComingSoon && <p className="text-[11px] text-secondary">coming soon</p>}
       </div>
 
       {/* Description */}
@@ -222,19 +225,36 @@ function PricingCard({
         })}
       </ul>
 
+      {/* Credit note */}
+      {plan.creditNote && (
+        <div className="mt-4 flex items-start gap-2 rounded-lg border border-glass-stroke bg-glass-fill px-3 py-2">
+          <Icons.Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted" />
+          <span className="text-[11px] leading-snug text-muted">{plan.creditNote}</span>
+        </div>
+      )}
+
       {/* CTA */}
-      <a
-        href="https://space.denker.ai"
-        className={cn(
-          "mt-8 flex h-12 items-center justify-center rounded-full text-sm font-semibold transition-all hover:brightness-110",
-          highlighted
-            ? "bg-accent text-[#0F1115] shadow-glow-accent"
-            : "border border-glass-stroke bg-glass-fill-heavy text-primary hover:border-glass-stroke-light",
-        )}
-        data-testid={`pricing-${name.toLowerCase()}-cta`}
-      >
-        {cta}
-      </a>
+      {isComingSoon ? (
+        <div
+          className="mt-8 flex h-12 items-center justify-center rounded-full border border-glass-stroke bg-glass-fill text-sm font-semibold text-muted"
+          data-testid={`pricing-${name.toLowerCase()}-cta`}
+        >
+          {cta}
+        </div>
+      ) : (
+        <a
+          href="https://space.denker.ai"
+          className={cn(
+            "mt-8 flex h-12 items-center justify-center rounded-full text-sm font-semibold transition-all hover:brightness-110",
+            highlighted
+              ? "bg-accent text-[#0F1115] shadow-glow-accent"
+              : "border border-glass-stroke bg-glass-fill-heavy text-primary hover:border-glass-stroke-light",
+          )}
+          data-testid={`pricing-${name.toLowerCase()}-cta`}
+        >
+          {cta}
+        </a>
+      )}
     </div>
   );
 }
