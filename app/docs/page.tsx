@@ -66,22 +66,15 @@ export default function DocsHubPage() {
       >
         {DOCS_CARDS.map((card) => {
           const Icon = card.icon;
-          const Wrapper = card.comingSoon ? "div" : Link;
-          const wrapperProps = card.comingSoon
-            ? {}
-            : { href: card.href };
+          const sharedClassName = `group relative rounded-2xl border border-glass-stroke bg-glass-fill p-7 backdrop-blur-glass transition-all ${
+            card.comingSoon
+              ? "cursor-default opacity-50"
+              : "hover:border-glass-stroke-light hover:shadow-glass"
+          }`;
+          const testId = `docs-card-${card.title.toLowerCase().replace(/\s+/g, "-")}`;
 
-          return (
-            <Wrapper
-              key={card.title}
-              {...(wrapperProps as Record<string, string>)}
-              className={`group relative rounded-2xl border border-glass-stroke bg-glass-fill p-7 backdrop-blur-glass transition-all ${
-                card.comingSoon
-                  ? "cursor-default opacity-50"
-                  : "hover:border-glass-stroke-light hover:shadow-glass"
-              }`}
-              data-testid={`docs-card-${card.title.toLowerCase().replace(/\s+/g, "-")}`}
-            >
+          const content = (
+            <>
               {card.comingSoon && (
                 <span className="absolute right-4 top-4 rounded-full bg-glass-fill-heavy px-2.5 py-0.5 text-xs font-medium text-muted">
                   Coming soon
@@ -101,7 +94,21 @@ export default function DocsHubPage() {
               <p className="text-sm leading-relaxed text-secondary">
                 {card.description}
               </p>
-            </Wrapper>
+            </>
+          );
+
+          if (card.comingSoon) {
+            return (
+              <div key={card.title} className={sharedClassName} data-testid={testId}>
+                {content}
+              </div>
+            );
+          }
+
+          return (
+            <Link key={card.title} href={card.href} className={sharedClassName} data-testid={testId}>
+              {content}
+            </Link>
           );
         })}
       </div>
