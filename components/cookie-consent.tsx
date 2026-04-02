@@ -61,6 +61,9 @@ function loadPostHog() {
     capture_pageview: true,
     capture_pageleave: true,
     cookie_domain: ".denker.ai",
+    loaded: (posthog: { register: (props: Record<string, string>) => void }) => {
+      posthog.register({ app: "landing" });
+    },
   });
 
   // Load async script
