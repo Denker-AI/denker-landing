@@ -31,7 +31,7 @@ const PLANS: Plan[] = [
     ],
     highlighted: false,
     cta: "Get Started",
-    creditNote: "AI tokens not included — requires your own Claude Code subscription",
+    creditNote: "AI tokens not included — requires your own CLI subscription (Claude Code, Codex, or OpenCode)",
   },
   {
     name: "Pro",
@@ -302,13 +302,13 @@ export function LandingPricing() {
             <span className="h-1.5 w-1.5 rounded-full bg-accent" />
             Claude Code
           </span>
-          <span className="inline-flex items-center gap-2 rounded-full border border-glass-stroke bg-glass-fill px-4 py-1.5 text-xs text-muted">
+          <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-xs font-semibold text-accent">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent" />
             Codex
-            <span className="text-[10px] opacity-60">soon</span>
           </span>
-          <span className="inline-flex items-center gap-2 rounded-full border border-glass-stroke bg-glass-fill px-4 py-1.5 text-xs text-muted">
+          <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-xs font-semibold text-accent">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent" />
             OpenCode
-            <span className="text-[10px] opacity-60">soon</span>
           </span>
           <span className="inline-flex items-center gap-2 rounded-full border border-glass-stroke bg-glass-fill px-4 py-1.5 text-xs text-muted">
             OpenRouter

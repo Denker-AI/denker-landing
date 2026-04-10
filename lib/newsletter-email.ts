@@ -40,11 +40,15 @@ const BADGE_STYLES: Record<string, { bg: string; color: string }> = {
 function featureHtml(f: Newsletter["features"][number]): string {
   const badge = BADGE_STYLES[f.badgeColor] ?? BADGE_STYLES.green;
   // Skip SVG images — most email clients don't render them
-  const hasRasterImage = f.image && !f.image.endsWith(".svg");
-  const imageBlock = hasRasterImage
+  const hasImage = f.image && !f.image.endsWith(".svg");
+  // For MP4 videos, use the corresponding GIF for email (auto-plays inline)
+  const imageSrc = f.image?.endsWith(".mp4")
+    ? `${SITE_URL}${f.image.replace(".mp4", ".gif")}`
+    : `${SITE_URL}${f.image}`;
+  const imageBlock = hasImage
     ? `<table width="100%" cellpadding="0" cellspacing="0" style="margin:16px 0;">
         <tr><td align="center">
-          <img src="${SITE_URL}${f.image}" alt="${f.title}" width="488" class="responsive-img"
+          <img src="${imageSrc}" alt="${f.title}" width="488" class="responsive-img"
                style="display:block;width:488px;height:auto;max-width:100%;border-radius:12px;border:1px solid ${C.surfaceBorder};" />
         </td></tr>
       </table>`

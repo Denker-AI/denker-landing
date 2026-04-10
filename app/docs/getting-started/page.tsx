@@ -25,19 +25,36 @@ export default function GettingStartedPage() {
 
         <p className="text-lg leading-relaxed text-secondary">
         From sign-up to your first AI-powered task on the canvas.
-        You&apos;ll need a{" "}
-        <strong className="text-primary">Claude Code subscription</strong>{" "}
-        (Pro or Max) — Denker uses your own subscription for AI, which is much
-        cheaper than platform pricing.{" "}
-        <a
-          href="https://claude.ai/pricing"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-accent underline decoration-accent/30 underline-offset-2 hover:text-accent/80"
-        >
-          Get a subscription &rarr;
-        </a>
+        You&apos;ll need one of these AI CLI subscriptions — Denker
+        uses your own subscription for AI, which is much cheaper than
+        platform pricing.
         </p>
+        <div className="mt-4 flex flex-wrap gap-3">
+          <a
+            href="https://claude.ai/pricing"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-sm font-medium text-accent transition-colors hover:bg-accent/20"
+          >
+            Claude Code &rarr;
+          </a>
+          <a
+            href="https://openai.com/pricing"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-sm font-medium text-accent transition-colors hover:bg-accent/20"
+          >
+            Codex &rarr;
+          </a>
+          <a
+            href="https://openrouter.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-sm font-medium text-accent transition-colors hover:bg-accent/20"
+          >
+            OpenCode &rarr;
+          </a>
+        </div>
       </div>
 
       {/* Step 1 */}
@@ -75,9 +92,9 @@ export default function GettingStartedPage() {
           Connect the Companion
         </h2>
         <p className="mb-8 text-base leading-relaxed text-secondary">
-          The Companion connects Claude Code on your machine to your Denker
-          workspace. A setup wizard guides you — copy the install command and
-          paste it into your terminal.
+          The Companion connects your AI CLI (Claude Code, Codex, or OpenCode)
+          on your machine to your Denker workspace. A setup wizard guides
+          you — copy the install command and paste it into your terminal.
         </p>
         <DocsImage
           src="/docs/companion-install.png"
@@ -125,30 +142,81 @@ export default function GettingStartedPage() {
         <div className="space-y-12">
           <div>
             <h3 className="mb-3 text-lg font-semibold text-primary">
-              Why do I need Claude Code?
+              Which AI CLIs are supported?
             </h3>
             <p className="text-base leading-relaxed text-secondary">
-              Denker provides the workspace. Claude Code provides the AI. Your
-              own subscription covers token costs — much cheaper than paying
-              per-token. Other CLIs and language models coming in the future.
+              Denker provides the workspace — your AI CLI provides the
+              intelligence. We currently support{" "}
+              <strong className="text-primary">Claude Code</strong>,{" "}
+              <strong className="text-primary">Codex</strong> (OpenAI), and{" "}
+              <strong className="text-primary">OpenCode</strong>. Pick the best
+              model for each agent, or mix and match. Your own subscription
+              covers token costs — much cheaper than paying per-token.
             </p>
-            <div className="mt-3 flex flex-wrap gap-4 text-sm">
-              <a
-                href="https://claude.ai/pricing"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-accent underline decoration-accent/30 underline-offset-2 hover:text-accent/80"
-              >
-                Get a subscription &rarr;
-              </a>
-              <a
-                href="https://docs.anthropic.com/en/docs/claude-code/getting-started"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-accent underline decoration-accent/30 underline-offset-2 hover:text-accent/80"
-              >
-                Install Claude Code &rarr;
-              </a>
+            <div className="mt-5 space-y-4">
+              <div>
+                <p className="mb-1.5 text-sm font-semibold text-primary">Claude Code</p>
+                <div className="flex flex-wrap gap-4 text-sm">
+                  <a
+                    href="https://docs.anthropic.com/en/docs/claude-code/getting-started"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent underline decoration-accent/30 underline-offset-2 hover:text-accent/80"
+                  >
+                    Install guide &rarr;
+                  </a>
+                  <a
+                    href="https://claude.ai/pricing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent underline decoration-accent/30 underline-offset-2 hover:text-accent/80"
+                  >
+                    Get subscription &rarr;
+                  </a>
+                </div>
+              </div>
+              <div>
+                <p className="mb-1.5 text-sm font-semibold text-primary">Codex (OpenAI)</p>
+                <div className="flex flex-wrap gap-4 text-sm">
+                  <a
+                    href="https://github.com/openai/codex"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent underline decoration-accent/30 underline-offset-2 hover:text-accent/80"
+                  >
+                    Install guide &rarr;
+                  </a>
+                  <a
+                    href="https://openai.com/pricing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent underline decoration-accent/30 underline-offset-2 hover:text-accent/80"
+                  >
+                    Get subscription &rarr;
+                  </a>
+                </div>
+              </div>
+              <div>
+                <p className="mb-1.5 text-sm font-semibold text-primary">OpenCode</p>
+                <div className="flex flex-wrap gap-4 text-sm">
+                  <a
+                    href="https://github.com/nichochar/opencode"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent underline decoration-accent/30 underline-offset-2 hover:text-accent/80"
+                  >
+                    Install guide &rarr;
+                  </a>
+                  <a
+                    href="https://openrouter.ai"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent underline decoration-accent/30 underline-offset-2 hover:text-accent/80"
+                  >
+                    Get API key &rarr;
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -157,9 +225,10 @@ export default function GettingStartedPage() {
               What is the Companion?
             </h3>
             <p className="text-base leading-relaxed text-secondary">
-              A lightweight local process that bridges Claude Code to Denker.
+              A lightweight local process that bridges your AI CLI to Denker.
               When you send a prompt, it spawns a session and streams results to
-              your canvas in real time.
+              your canvas in real time. It auto-detects which CLIs you have
+              installed.
             </p>
           </div>
         </div>

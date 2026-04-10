@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { LandingNav } from "@/components/landing-nav";
 import { LandingFooter } from "@/components/landing-footer";
-import { getAllNewsletters } from "@/lib/newsletters";
+import { BlogFilter } from "@/components/blog-filter";
+import { getAllPosts, CATEGORY_LABELS, CATEGORY_COLORS } from "@/lib/newsletters";
+import type { BlogPost } from "@/lib/newsletters";
 
 export const metadata: Metadata = {
   title: "Blog",
   description:
-    "Product updates, workflow ideas, and practical guides on working with AI agents from the Denker team.",
+    "Product updates, changelogs, and practical guides on working with AI agents from the Denker team.",
   alternates: { canonical: "/blog" },
 };
 
@@ -19,8 +21,36 @@ function formatDate(dateStr: string) {
   });
 }
 
+function PostCard({ post }: { post: BlogPost }) {
+  return (
+    <Link
+      href={`/blog/${post.slug}`}
+      className="group rounded-2xl border border-glass-stroke bg-glass-fill p-6 backdrop-blur-glass transition-all hover:border-glass-stroke-light hover:shadow-glass"
+      data-testid={`blog-card-${post.slug}`}
+      data-category={post.category}
+    >
+      <div className="mb-3 flex items-center gap-2">
+        <span
+          className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${CATEGORY_COLORS[post.category]}`}
+        >
+          {CATEGORY_LABELS[post.category]}
+        </span>
+        <span className="text-xs text-muted">
+          {formatDate(post.date)}
+        </span>
+      </div>
+      <h2 className="mb-2 font-['Satoshi',sans-serif] text-xl font-bold text-primary transition-colors group-hover:text-accent">
+        {post.title}
+      </h2>
+      <p className="text-sm leading-relaxed text-secondary">
+        {post.previewText}
+      </p>
+    </Link>
+  );
+}
+
 export default function BlogIndexPage() {
-  const newsletters = getAllNewsletters();
+  const allPosts = getAllPosts();
 
   return (
     <div
@@ -46,34 +76,18 @@ export default function BlogIndexPage() {
             <span className="text-accent">Denker</span>
           </h1>
           <p className="mx-auto max-w-xl text-base text-secondary sm:text-lg">
-            Product updates, workflow ideas, and practical guides on working
+            Product updates, changelogs, and practical guides on working
             with AI agents.
           </p>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2">
-          {newsletters.map((n) => (
-            <Link
-              key={n.slug}
-              href={`/blog/${n.slug}`}
-              className="group rounded-2xl border border-glass-stroke bg-glass-fill p-6 backdrop-blur-glass transition-all hover:border-glass-stroke-light hover:shadow-glass"
-              data-testid={`blog-card-${n.slug}`}
-            >
-              <div className="mb-3 flex items-center gap-2">
-                <span className="rounded-full bg-accent/10 px-2.5 py-0.5 text-xs font-semibold text-accent">
-                  Newsletter
-                </span>
-                <span className="text-xs text-muted">
-                  {formatDate(n.date)}
-                </span>
-              </div>
-              <h2 className="mb-2 font-['Satoshi',sans-serif] text-xl font-bold text-primary transition-colors group-hover:text-accent">
-                {n.title}
-              </h2>
-              <p className="text-sm leading-relaxed text-secondary">
-                {n.previewText}
-              </p>
-            </Link>
+        {/* Filter tabs */}
+        <BlogFilter />
+
+        {/* Post grid */}
+        <div className="grid gap-6 sm:grid-cols-2" data-testid="blog-grid">
+          {allPosts.map((post) => (
+            <PostCard key={post.slug} post={post} />
           ))}
         </div>
       </main>

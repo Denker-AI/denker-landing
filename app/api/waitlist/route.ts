@@ -1,34 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Ratelimit } from "@upstash/ratelimit";
-import { Redis } from "@upstash/redis";
 
 const RESEND_API = "https://api.resend.com";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-/* ── Rate limiter ─────────────────────────────────────────
- * Uses Upstash Redis when configured (shared across all serverless instances).
- * Falls back to a simple in-memory limiter for local dev.
- * Lazy-initialised to avoid accessing env vars at build time.
- */
-let _ratelimit: Ratelimit | null | undefined;
-
-function getRatelimit(): Ratelimit | null {
-  if (_ratelimit !== undefined) return _ratelimit;
-  const url = process.env.UPSTASH_REDIS_REST_URL?.trim();
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN?.trim();
-  _ratelimit = url && token
-    ? new Ratelimit({
-        redis: new Redis({ url, token }),
-        limiter: Ratelimit.slidingWindow(5, "60 s"),
-        prefix: "waitlist",
-      })
-    : null;
-  return _ratelimit;
-}
-
-/* Fallback in-memory limiter for local dev only */
+/* ── Rate limiter (in-memory) ──────────────────────────── */
 const ipRequests = new Map<string, { count: number; resetAt: number }>();
-function isRateLimitedInMemory(ip: string): boolean {
+function isRateLimited(ip: string): boolean {
   const now = Date.now();
   const entry = ipRequests.get(ip);
   if (!entry || now > entry.resetAt) {
@@ -37,15 +14,6 @@ function isRateLimitedInMemory(ip: string): boolean {
   }
   entry.count += 1;
   return entry.count > 5;
-}
-
-async function isRateLimited(ip: string): Promise<boolean> {
-  const rl = getRatelimit();
-  if (rl) {
-    const { success } = await rl.limit(ip);
-    return !success;
-  }
-  return isRateLimitedInMemory(ip);
 }
 
 function escapeHtml(str: string): string {
@@ -58,7 +26,7 @@ function escapeHtml(str: string): string {
 
 export async function POST(req: NextRequest) {
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-  if (await isRateLimited(ip)) {
+  if (isRateLimited(ip)) {
     return NextResponse.json(
       { error: "Too many requests. Please try again later." },
       { status: 429 },
