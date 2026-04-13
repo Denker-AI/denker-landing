@@ -1,9 +1,18 @@
 import type { Metadata } from "next";
 import { DenkerLogo } from "@/components/denker-logo";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — Denker",
+  title: "Privacy Policy",
   description: "Privacy policy for Denker AI.",
+  alternates: { canonical: "/privacy" },
+  openGraph: {
+    title: "Privacy Policy — Denker",
+    description: "Privacy policy for Denker AI.",
+    url: "https://www.denker.ai/privacy",
+    type: "website",
+    images: [DEFAULT_OG_IMAGE],
+  },
 };
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -57,8 +66,7 @@ export default function PrivacyPage() {
       {/* Content */}
       <main className="mx-auto max-w-2xl px-6 pb-24 pt-12">
         <h1
-          className="mb-2 text-3xl font-bold tracking-tight text-primary"
-          style={{ fontFamily: "'Satoshi', sans-serif" }}
+          className="mb-2 text-3xl font-bold font-satoshi tracking-tight text-primary"
         >
           Privacy Policy
         </h1>
@@ -74,7 +82,7 @@ export default function PrivacyPage() {
           </P>
           <P>
             Email:{" "}
-            <a href="mailto:support@denker.ai" className="text-accent hover:underline">
+            <a href="mailto:support@denker.ai" className="text-accent underline underline-offset-2 hover:no-underline">
               support@denker.ai
             </a>
             <br />
@@ -180,7 +188,7 @@ export default function PrivacyPage() {
                 href="https://vercel.com/legal/privacy-policy"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-accent hover:underline"
+                className="text-accent underline underline-offset-2 hover:no-underline"
               >
                 Vercel&apos;s privacy policy
               </a>
@@ -259,7 +267,7 @@ export default function PrivacyPage() {
           <P>If you have any questions about data protection, you can contact us at any time:</P>
           <P>
             Email:{" "}
-            <a href="mailto:support@denker.ai" className="text-accent hover:underline">
+            <a href="mailto:support@denker.ai" className="text-accent underline underline-offset-2 hover:no-underline">
               support@denker.ai
             </a>
             <br />

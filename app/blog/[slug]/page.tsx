@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { LandingNav } from "@/components/landing-nav";
@@ -6,6 +7,7 @@ import { LandingFooter } from "@/components/landing-footer";
 import { WaitlistForm } from "@/components/waitlist-form";
 import { getAllPosts, getPost, CATEGORY_LABELS, CATEGORY_COLORS } from "@/lib/newsletters";
 import type { NewsletterFeature } from "@/lib/newsletters";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 import { VideoLightbox } from "@/components/video-lightbox";
 
 const SITE_URL = "https://www.denker.ai";
@@ -22,15 +24,24 @@ export function generateMetadata({
   return params.then(({ slug }) => {
     const p = getPost(slug);
     if (!p) return { title: "Not Found" };
+    // Strip trailing " | Denker" so root template's " — Denker" doesn't double-suffix.
+    const cleanTitle = (p.metaTitle ?? p.title).replace(/\s*\|\s*Denker\s*$/, "");
+    const description = p.metaDescription ?? p.previewText;
+    const canonicalPath = `/blog/${p.slug}`;
     return {
-      title: p.metaTitle ?? p.title,
-      description: p.metaDescription ?? p.previewText,
-      alternates: { canonical: `/blog/${p.slug}` },
+      title: cleanTitle,
+      description,
+      alternates: { canonical: canonicalPath },
       openGraph: {
-        title: p.metaTitle ?? p.subject,
-        description: p.metaDescription ?? p.previewText,
+        title: `${cleanTitle} — Denker`,
+        description,
+        url: `https://www.denker.ai${canonicalPath}`,
         type: "article",
         publishedTime: p.date,
+        images:
+          p.media && !p.media.endsWith(".mp4")
+            ? [{ url: `https://www.denker.ai${p.media}`, alt: p.heroTitle }]
+            : [DEFAULT_OG_IMAGE],
       },
     };
   });
@@ -47,9 +58,14 @@ function MediaBlock({ src, alt }: { src: string; alt: string }) {
     return <VideoLightbox src={src} alt={alt} />;
   }
   return (
-    <div className="overflow-hidden rounded-xl border border-glass-stroke-subtle">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={src} alt={alt} className="w-full" loading="lazy" />
+    <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-glass-stroke-subtle">
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes="(min-width: 768px) 768px, 100vw"
+        className="object-cover"
+      />
     </div>
   );
 }
@@ -65,7 +81,7 @@ function FeatureCard({ feature }: { feature: NewsletterFeature }) {
       >
         {feature.badge}
       </span>
-      <h3 className="mb-2 font-['Satoshi',sans-serif] text-xl font-bold text-primary sm:text-2xl">
+      <h3 className="mb-2 font-satoshi text-xl font-bold text-primary sm:text-2xl">
         {feature.title}
       </h3>
       <p className="mb-4 text-sm leading-relaxed text-secondary sm:text-base">
@@ -225,7 +241,7 @@ export default async function BlogPostPage({
         >
           {p.cta.style === "button" ? (
             <>
-              <h2 className="mb-3 font-['Satoshi',sans-serif] text-2xl font-bold text-primary sm:text-3xl">
+              <h2 className="mb-3 font-satoshi text-2xl font-bold text-primary sm:text-3xl">
                 {isChangelog ? "Try it yourself" : "Ready to get started?"}
               </h2>
               <p className="mx-auto mb-8 max-w-md text-secondary">
@@ -242,7 +258,7 @@ export default async function BlogPostPage({
             </>
           ) : (
             <>
-              <h2 className="mb-3 font-['Satoshi',sans-serif] text-2xl font-bold text-primary sm:text-3xl">
+              <h2 className="mb-3 font-satoshi text-2xl font-bold text-primary sm:text-3xl">
                 Ready to see it in action?
               </h2>
               <p className="mx-auto mb-8 max-w-md text-secondary">

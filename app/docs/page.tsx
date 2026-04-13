@@ -1,12 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Icons } from "@/components/icons";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Documentation",
-  description:
-    "Everything you need to get started with Denker — guides, concepts, and reference.",
+  description: "Everything you need to get started with Denker — guides, concepts, and reference.",
   alternates: { canonical: "/docs" },
+  openGraph: {
+    title: "Documentation — Denker",
+    description: "Everything you need to get started with Denker — guides, concepts, and reference.",
+    url: "https://www.denker.ai/docs",
+    type: "website",
+    images: [DEFAULT_OG_IMAGE],
+  },
 };
 
 const DOCS_CARDS = [
@@ -88,7 +95,7 @@ export default function DocsHubPage() {
               >
                 <Icon className={cn("h-5 w-5", card.accent)} />
               </div>
-              <h2 className="mb-1.5 font-['Satoshi',sans-serif] text-lg font-bold text-primary">
+              <h2 className="mb-1.5 font-satoshi text-lg font-bold text-primary">
                 {card.title}
               </h2>
               <p className="text-sm leading-relaxed text-secondary">

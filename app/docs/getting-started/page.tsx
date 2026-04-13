@@ -2,12 +2,19 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { DocsNav } from "@/components/docs-sidebar";
 import { DocsImage } from "@/components/docs-lightbox";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Getting Started",
-  description:
-    "Set up Denker and send your first prompt in under 5 minutes.",
+  description: "Set up Denker and send your first prompt in under 5 minutes.",
   alternates: { canonical: "/docs/getting-started" },
+  openGraph: {
+    title: "Getting Started — Denker",
+    description: "Set up Denker and send your first prompt in under 5 minutes.",
+    url: "https://www.denker.ai/docs/getting-started",
+    type: "article",
+    images: [DEFAULT_OG_IMAGE],
+  },
 };
 
 export default function GettingStartedPage() {
@@ -17,7 +24,7 @@ export default function GettingStartedPage() {
 
       <div className="mb-32 pt-8 sm:pt-12">
         <h1
-          className="mb-6 font-['Satoshi',sans-serif] text-3xl font-black tracking-tight text-primary sm:text-4xl lg:text-5xl"
+          className="mb-6 font-satoshi text-3xl font-black tracking-tight text-primary sm:text-4xl lg:text-5xl"
           data-testid="getting-started-heading"
         >
           Up and running in <span className="text-accent">5 minutes</span>
@@ -60,7 +67,7 @@ export default function GettingStartedPage() {
       {/* Step 1 */}
       <section className="mb-28">
         <p className="text-section-label mb-3 text-accent">Step 1</p>
-        <h2 className="mb-5 font-['Satoshi',sans-serif] text-2xl font-bold text-primary sm:text-3xl">
+        <h2 className="mb-5 font-satoshi text-2xl font-bold text-primary sm:text-3xl">
           Create your workspace
         </h2>
         <p className="mb-8 text-base leading-relaxed text-secondary">
@@ -88,7 +95,7 @@ export default function GettingStartedPage() {
       {/* Step 2 */}
       <section className="mb-28">
         <p className="text-section-label mb-3 text-accent">Step 2</p>
-        <h2 className="mb-5 font-['Satoshi',sans-serif] text-2xl font-bold text-primary sm:text-3xl">
+        <h2 className="mb-5 font-satoshi text-2xl font-bold text-primary sm:text-3xl">
           Connect the Companion
         </h2>
         <p className="mb-8 text-base leading-relaxed text-secondary">
@@ -121,7 +128,7 @@ export default function GettingStartedPage() {
       {/* Step 3 */}
       <section className="mb-28">
         <p className="text-section-label mb-3 text-accent">Step 3</p>
-        <h2 className="mb-5 font-['Satoshi',sans-serif] text-2xl font-bold text-primary sm:text-3xl">
+        <h2 className="mb-5 font-satoshi text-2xl font-bold text-primary sm:text-3xl">
           Ask Denker your first question
         </h2>
         <p className="text-base leading-relaxed text-secondary">
@@ -135,7 +142,7 @@ export default function GettingStartedPage() {
 
       {/* Q&A */}
       <section className="mb-28">
-        <h2 className="mb-10 font-['Satoshi',sans-serif] text-2xl font-bold text-primary sm:text-3xl">
+        <h2 className="mb-10 font-satoshi text-2xl font-bold text-primary sm:text-3xl">
           Common questions
         </h2>
 

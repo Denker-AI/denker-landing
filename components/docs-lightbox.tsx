@@ -38,6 +38,7 @@ export function DocsImage({ src, alt, width, height, testId }: DocsImageProps) {
           alt={alt}
           width={width}
           height={height}
+          sizes="(min-width: 768px) 768px, 100vw"
           className="w-full"
         />
       </button>
@@ -64,6 +65,7 @@ export function DocsImage({ src, alt, width, height, testId }: DocsImageProps) {
             alt={alt}
             width={width}
             height={height}
+            sizes="90vw"
             className="max-h-[90vh] max-w-full cursor-zoom-out rounded-lg object-contain"
             onClick={(e) => {
               e.stopPropagation();

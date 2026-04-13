@@ -1,10 +1,16 @@
-"use client";
-
 /**
  * Temporary preview page for newsletter mockup screenshots.
  * Visit /preview to review all 4 feature images before capturing.
  * DELETE THIS FILE after screenshots are taken.
  */
+
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Preview",
+  robots: { index: false, follow: false },
+  alternates: { canonical: "/preview" },
+};
 
 /* ── Shared UI atoms ──────────────────────────────────────── */
 
@@ -590,7 +596,7 @@ export default function PreviewPage() {
     <div className="min-h-screen bg-canvas p-8">
       <div className="mx-auto max-w-[800px] space-y-16">
         <div>
-          <h1 className="mb-2 text-xl font-bold text-primary" style={{ fontFamily: "'Satoshi', sans-serif" }}>
+          <h1 className="mb-2 text-xl font-bold font-satoshi text-primary">
             Newsletter Image Previews
           </h1>
           <p className="text-sm text-muted">Review each mockup. These will be captured at 700x420 for the newsletter.</p>

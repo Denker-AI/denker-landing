@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 import { LandingNav } from "@/components/landing-nav";
 import { ScrollButton } from "@/components/scroll-button";
 import { LandingHero } from "@/components/landing-hero";
@@ -9,6 +11,14 @@ import { LandingPricing } from "@/components/landing-pricing";
 import { LandingCta } from "@/components/landing-cta";
 import { LandingFinalCta } from "@/components/landing-final-cta";
 import { LandingFooter } from "@/components/landing-footer";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+  openGraph: {
+    url: "https://www.denker.ai/",
+    images: [DEFAULT_OG_IMAGE],
+  },
+};
 
 export default function HomePage() {
   return (

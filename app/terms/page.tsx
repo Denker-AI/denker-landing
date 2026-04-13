@@ -1,9 +1,18 @@
 import type { Metadata } from "next";
 import { DenkerLogo } from "@/components/denker-logo";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Terms of Service — Denker",
+  title: "Terms of Service",
   description: "Terms of service for Denker AI.",
+  alternates: { canonical: "/terms" },
+  openGraph: {
+    title: "Terms of Service — Denker",
+    description: "Terms of service for Denker AI.",
+    url: "https://www.denker.ai/terms",
+    type: "website",
+    images: [DEFAULT_OG_IMAGE],
+  },
 };
 
 function Section({ number, title, children }: { number: string; title: string; children: React.ReactNode }) {
@@ -60,8 +69,7 @@ export default function TermsPage() {
       {/* Content */}
       <main className="mx-auto max-w-2xl px-6 pb-24 pt-12">
         <h1
-          className="mb-2 text-3xl font-bold tracking-tight text-primary"
-          style={{ fontFamily: "'Satoshi', sans-serif" }}
+          className="mb-2 text-3xl font-bold font-satoshi tracking-tight text-primary"
         >
           Terms of Service
         </h1>
@@ -122,7 +130,7 @@ export default function TermsPage() {
 
         <Section number="7" title="Data Protection and Security">
           <Ol items={[
-            <>The Provider processes personal data in accordance with applicable data protection laws, in particular the GDPR. For details, please refer to our{" "}<a href="/privacy" className="text-accent hover:underline">Privacy Policy</a>.</>,
+            <>The Provider processes personal data in accordance with applicable data protection laws, in particular the GDPR. For details, please refer to our{" "}<a href="/privacy" className="text-accent underline underline-offset-2 hover:no-underline">Privacy Policy</a>.</>,
             "The Customer remains the owner of all data and content they enter.",
             "The Provider will not share customer data with third parties unless this is necessary for contract performance or required by law.",
           ]} />
@@ -189,7 +197,7 @@ export default function TermsPage() {
           </P>
           <P>
             Email:{" "}
-            <a href="mailto:support@denker.ai" className="text-accent hover:underline">
+            <a href="mailto:support@denker.ai" className="text-accent underline underline-offset-2 hover:no-underline">
               support@denker.ai
             </a>
             <br />

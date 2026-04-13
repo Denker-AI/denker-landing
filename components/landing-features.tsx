@@ -588,7 +588,7 @@ export function LandingFeatures() {
             {/* Agent dock — 2/3 */}
             <BentoCard className="lg:col-span-2">
               <span className="mb-1 text-xs font-semibold uppercase tracking-widest text-muted">Agents</span>
-              <h3 className="mb-5 text-lg font-bold text-primary" style={{ fontFamily: "'Satoshi', sans-serif" }}>
+              <h3 className="mb-5 text-lg font-bold font-satoshi text-primary">
                 Ready-made agents
               </h3>
               <AgentDockCard />
@@ -597,7 +597,7 @@ export function LandingFeatures() {
             {/* Integrations — 1/3 */}
             <BentoCard>
               <span className="mb-1 text-xs font-semibold uppercase tracking-widest text-muted">Integrations</span>
-              <h3 className="mb-5 text-lg font-bold text-primary" style={{ fontFamily: "'Satoshi', sans-serif" }}>
+              <h3 className="mb-5 text-lg font-bold font-satoshi text-primary">
                 Connects to everything you use
               </h3>
               <ConnectionGrid />

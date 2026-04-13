@@ -1,34 +1,29 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { cn } from "@/lib/cn";
 
 const TABS = [
   { key: "all", label: "All" },
   { key: "newsletter", label: "Newsletter" },
   { key: "changelog", label: "Changelog" },
+  { key: "use-case", label: "Use Cases" },
 ] as const;
 
-type TabKey = (typeof TABS)[number]["key"];
+export type BlogFilterTab = (typeof TABS)[number]["key"];
 
-export function BlogFilter() {
-  const [active, setActive] = useState<TabKey>("all");
-
-  useEffect(() => {
-    const cards = document.querySelectorAll<HTMLElement>("[data-category]");
-    cards.forEach((card) => {
-      const category = card.dataset.category;
-      const show = active === "all" || category === active;
-      card.style.display = show ? "" : "none";
-    });
-  }, [active]);
-
+export function BlogFilter({
+  active,
+  onChange,
+}: {
+  active: BlogFilterTab;
+  onChange: (tab: BlogFilterTab) => void;
+}) {
   return (
     <div className="mb-8 flex justify-center gap-2" data-testid="blog-filter">
       {TABS.map((tab) => (
         <button
           key={tab.key}
-          onClick={() => setActive(tab.key)}
+          onClick={() => onChange(tab.key)}
           className={cn(
             "rounded-full px-4 py-1.5 text-sm font-medium transition-all",
             active === tab.key

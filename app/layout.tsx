@@ -1,7 +1,17 @@
 import type { Metadata, Viewport } from "next";
+import localFont from "next/font/local";
 import { CookieConsent } from "@/components/cookie-consent";
 import { JsonLd } from "@/components/json-ld";
 import "./globals.css";
+
+const satoshi = localFont({
+  src: [
+    { path: "../public/fonts/satoshi-500.woff2", weight: "500", style: "normal" },
+    { path: "../public/fonts/satoshi-700.woff2", weight: "700", style: "normal" },
+  ],
+  variable: "--font-satoshi",
+  display: "swap",
+});
 
 const SITE_URL = "https://www.denker.ai";
 const TITLE = "Denker — Where humans and AI agents co-work visually";
@@ -79,7 +89,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" className={`dark ${satoshi.variable}`} suppressHydrationWarning>
       <head>
         <JsonLd />
       </head>

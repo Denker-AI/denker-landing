@@ -140,11 +140,10 @@ export function LandingManifesto() {
                 </span>
                 <p
                   className={cn(
-                    "text-xl font-bold tracking-tight sm:text-2xl lg:text-3xl",
+                    "font-satoshi text-xl font-bold tracking-tight sm:text-2xl lg:text-3xl",
                     row.accent ? "text-accent" : "text-primary",
                   )}
                   style={{
-                    fontFamily: "'Satoshi', sans-serif",
                     animation:
                       row.accent && row.progress > 0.9
                         ? "tomorrow-pulse 3s ease infinite"

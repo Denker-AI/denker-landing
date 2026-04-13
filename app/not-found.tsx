@@ -16,8 +16,7 @@ export default function NotFound() {
 
       <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-muted">404</p>
       <h1
-        className="mb-4 text-center text-5xl font-black tracking-tight text-primary lg:text-6xl"
-        style={{ fontFamily: "'Satoshi', sans-serif" }}
+        className="mb-4 text-center text-5xl font-black font-satoshi tracking-tight text-primary lg:text-6xl"
       >
         Page not found.
       </h1>

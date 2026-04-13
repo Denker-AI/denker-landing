@@ -7,6 +7,9 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
+      fontFamily: {
+        satoshi: ["var(--font-satoshi)", "sans-serif"],
+      },
       colors: {
         canvas: "var(--color-canvas)",
         "canvas-dot": "var(--color-canvas-dot)",

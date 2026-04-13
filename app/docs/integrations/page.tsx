@@ -2,12 +2,19 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { DocsNav } from "@/components/docs-sidebar";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Integrations",
-  description:
-    "Connect Gmail, Slack, GitHub, Notion, and 1,000+ more apps via Composio.",
+  description: "Connect Gmail, Slack, GitHub, Notion, and 1,000+ more apps via Composio.",
   alternates: { canonical: "/docs/integrations" },
+  openGraph: {
+    title: "Integrations — Denker",
+    description: "Connect Gmail, Slack, GitHub, Notion, and 1,000+ more apps via Composio.",
+    url: "https://www.denker.ai/docs/integrations",
+    type: "article",
+    images: [DEFAULT_OG_IMAGE],
+  },
 };
 
 const INTEGRATIONS = [
@@ -38,7 +45,7 @@ export default function IntegrationsPage() {
 
       <div className="mb-32 pt-8 sm:pt-12">
         <h1
-          className="mb-6 font-['Satoshi',sans-serif] text-3xl font-black tracking-tight text-primary sm:text-4xl lg:text-5xl"
+          className="mb-6 font-satoshi text-3xl font-black tracking-tight text-primary sm:text-4xl lg:text-5xl"
           data-testid="integrations-heading"
         >
           Connect to <span className="text-accent">1,000+ apps</span>
@@ -60,7 +67,7 @@ export default function IntegrationsPage() {
 
       {/* How it works */}
       <section className="mb-28">
-        <h2 className="mb-5 font-['Satoshi',sans-serif] text-2xl font-bold text-primary sm:text-3xl">
+        <h2 className="mb-5 font-satoshi text-2xl font-bold text-primary sm:text-3xl">
           How connecting works
         </h2>
         <p className="mb-8 text-base leading-relaxed text-secondary">
@@ -84,7 +91,7 @@ export default function IntegrationsPage() {
 
       {/* Popular integrations */}
       <section className="mb-28">
-        <h2 className="mb-8 font-['Satoshi',sans-serif] text-2xl font-bold text-primary sm:text-3xl">
+        <h2 className="mb-8 font-satoshi text-2xl font-bold text-primary sm:text-3xl">
           Popular integrations
         </h2>
         <div className="grid gap-x-8 gap-y-5 sm:grid-cols-2">
@@ -101,7 +108,7 @@ export default function IntegrationsPage() {
 
       {/* Frame types */}
       <section className="mb-28">
-        <h2 className="mb-5 font-['Satoshi',sans-serif] text-2xl font-bold text-primary sm:text-3xl">
+        <h2 className="mb-5 font-satoshi text-2xl font-bold text-primary sm:text-3xl">
           What agents produce
         </h2>
         <p className="mb-8 text-base leading-relaxed text-secondary">

@@ -2,12 +2,19 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { DocsNav } from "@/components/docs-sidebar";
 import { DocsImage } from "@/components/docs-lightbox";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "How Denker Works",
-  description:
-    "Understand how Denker's Taskboard enables AI agents to work autonomously.",
+  description: "Understand how Denker's Taskboard enables AI agents to work autonomously.",
   alternates: { canonical: "/docs/how-denker-works" },
+  openGraph: {
+    title: "How Denker Works — Denker",
+    description: "Understand how Denker's Taskboard enables AI agents to work autonomously.",
+    url: "https://www.denker.ai/docs/how-denker-works",
+    type: "article",
+    images: [DEFAULT_OG_IMAGE],
+  },
 };
 
 export default function HowDenkerWorksPage() {
@@ -17,7 +24,7 @@ export default function HowDenkerWorksPage() {
 
       <div className="mb-32 pt-8 sm:pt-12">
         <h1
-          className="mb-6 font-['Satoshi',sans-serif] text-3xl font-black tracking-tight text-primary sm:text-4xl lg:text-5xl"
+          className="mb-6 font-satoshi text-3xl font-black tracking-tight text-primary sm:text-4xl lg:text-5xl"
           data-testid="how-denker-works-heading"
         >
           How Denker <span className="text-accent">Works</span>
@@ -32,7 +39,7 @@ export default function HowDenkerWorksPage() {
       {/* The Taskboard */}
       <section className="mb-28">
         <p className="text-section-label mb-3 text-accent">Core concept</p>
-        <h2 className="mb-5 font-['Satoshi',sans-serif] text-2xl font-bold text-primary sm:text-3xl">
+        <h2 className="mb-5 font-satoshi text-2xl font-bold text-primary sm:text-3xl">
           The Taskboard
         </h2>
         <p className="mb-6 text-base leading-relaxed text-secondary">
@@ -68,7 +75,7 @@ export default function HowDenkerWorksPage() {
 
       {/* Autonomous agents */}
       <section className="mb-28">
-        <h2 className="mb-5 font-['Satoshi',sans-serif] text-2xl font-bold text-primary sm:text-3xl">
+        <h2 className="mb-5 font-satoshi text-2xl font-bold text-primary sm:text-3xl">
           Agents pick up tasks on their own
         </h2>
         <div className="space-y-5 text-base leading-relaxed text-secondary">
@@ -90,7 +97,7 @@ export default function HowDenkerWorksPage() {
 
       {/* Frames */}
       <section className="mb-28">
-        <h2 className="mb-5 font-['Satoshi',sans-serif] text-2xl font-bold text-primary sm:text-3xl">
+        <h2 className="mb-5 font-satoshi text-2xl font-bold text-primary sm:text-3xl">
           Everything is a frame
         </h2>
         <p className="text-base leading-relaxed text-secondary">

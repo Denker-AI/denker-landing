@@ -2,15 +2,24 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { LandingNav } from "@/components/landing-nav";
 import { LandingFooter } from "@/components/landing-footer";
-import { BlogFilter } from "@/components/blog-filter";
+import { BlogGrid } from "@/components/blog-grid";
 import { getAllPosts, CATEGORY_LABELS, CATEGORY_COLORS } from "@/lib/newsletters";
 import type { BlogPost } from "@/lib/newsletters";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Blog",
   description:
     "Product updates, changelogs, and practical guides on working with AI agents from the Denker team.",
   alternates: { canonical: "/blog" },
+  openGraph: {
+    title: "Blog — Denker",
+    description:
+      "Product updates, changelogs, and practical guides on working with AI agents from the Denker team.",
+    url: "https://www.denker.ai/blog",
+    type: "website",
+    images: [DEFAULT_OG_IMAGE],
+  },
 };
 
 function formatDate(dateStr: string) {
@@ -39,7 +48,7 @@ function PostCard({ post }: { post: BlogPost }) {
           {formatDate(post.date)}
         </span>
       </div>
-      <h2 className="mb-2 font-['Satoshi',sans-serif] text-xl font-bold text-primary transition-colors group-hover:text-accent">
+      <h2 className="mb-2 font-satoshi text-xl font-bold text-primary transition-colors group-hover:text-accent">
         {post.title}
       </h2>
       <p className="text-sm leading-relaxed text-secondary">
@@ -81,15 +90,11 @@ export default function BlogIndexPage() {
           </p>
         </div>
 
-        {/* Filter tabs */}
-        <BlogFilter />
-
-        {/* Post grid */}
-        <div className="grid gap-6 sm:grid-cols-2" data-testid="blog-grid">
+        <BlogGrid>
           {allPosts.map((post) => (
             <PostCard key={post.slug} post={post} />
           ))}
-        </div>
+        </BlogGrid>
       </main>
       <LandingFooter />
     </div>
