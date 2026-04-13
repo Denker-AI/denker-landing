@@ -39,7 +39,7 @@ export function generateMetadata({
         type: "article",
         publishedTime: p.date,
         images:
-          p.media && !p.media.endsWith(".mp4")
+          p.media && !p.media.endsWith(".mp4") && !p.media.startsWith("http")
             ? [{ url: `https://www.denker.ai${p.media}`, alt: p.heroTitle }]
             : [DEFAULT_OG_IMAGE],
       },
@@ -53,7 +53,29 @@ const BADGE_COLORS: Record<string, string> = {
   blue: "bg-blue-500/10 text-blue-400",
 };
 
+function getYouTubeId(src: string): string | null {
+  const match = src.match(
+    /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]{11})/,
+  );
+  return match ? match[1] : null;
+}
+
 function MediaBlock({ src, alt }: { src: string; alt: string }) {
+  const youtubeId = getYouTubeId(src);
+  if (youtubeId) {
+    return (
+      <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-glass-stroke-subtle">
+        <iframe
+          src={`https://www.youtube-nocookie.com/embed/${youtubeId}`}
+          title={alt}
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+          className="absolute inset-0 h-full w-full"
+        />
+      </div>
+    );
+  }
   if (src.endsWith(".mp4")) {
     return <VideoLightbox src={src} alt={alt} />;
   }
@@ -134,6 +156,34 @@ function BlogPostSchema({ slug, title, description, date }: {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: schema }} />;
 }
 
+/**
+ * VideoObject structured data — emitted when a post embeds a YouTube video.
+ * Lets Google surface video thumbnails in search results. All values are
+ * compile-time constants from the post registry — no user input.
+ */
+function VideoObjectSchema({ videoId, name, description, uploadDate }: {
+  videoId: string;
+  name: string;
+  description: string;
+  uploadDate: string;
+}) {
+  const schema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    name,
+    description,
+    thumbnailUrl: [
+      `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`,
+      `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+    ],
+    uploadDate,
+    embedUrl: `https://www.youtube-nocookie.com/embed/${videoId}`,
+    contentUrl: `https://www.youtube.com/watch?v=${videoId}`,
+  });
+  // eslint-disable-next-line react/no-danger
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: schema }} />;
+}
+
 export default async function BlogPostPage({
   params,
 }: {
@@ -144,6 +194,7 @@ export default async function BlogPostPage({
   if (!p) notFound();
 
   const isChangelog = p.category === "changelog";
+  const videoId = p.media ? getYouTubeId(p.media) : null;
 
   return (
     <div
@@ -163,6 +214,14 @@ export default async function BlogPostPage({
         description={p.metaDescription ?? p.previewText}
         date={p.date}
       />
+      {videoId && (
+        <VideoObjectSchema
+          videoId={videoId}
+          name={p.heroTitle}
+          description={p.metaDescription ?? p.previewText}
+          uploadDate={p.date}
+        />
+      )}
       <LandingNav />
       <main className="mx-auto max-w-3xl px-5 pb-24 pt-32 sm:px-6 lg:px-8">
         {/* Breadcrumb */}

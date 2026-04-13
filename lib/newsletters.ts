@@ -162,6 +162,59 @@ export const posts: BlogPost[] = [
     status: "draft",
   },
 
+  /* ── Use Cases ────────────────────────────────────────── */
+  {
+    slug: "autonomous-agent-teams-projects",
+    category: "use-case",
+    title: "Autonomous Agent Teams: When AI Agents Hand Off Work",
+    metaTitle: "Autonomous Agent Teams That Collaborate on Projects",
+    metaDescription:
+      "Watch AI agents inside Denker hand off tasks — Researcher to Marketer on a Product Hunt launch, Coder and Designer on a bug project.",
+    subject: "Autonomous agent teams, working together",
+    previewText:
+      "Agents that pick up tasks, hand work to each other, and report back on the canvas.",
+    date: "2026-04-13",
+    heroTitle: "Autonomous agent teams, working on real projects",
+    heroSubtitle:
+      "What autonomous agent teams look like in practice — picking up tasks, handing off work, and reporting back on one canvas.",
+    intro:
+      "What if your AI agents just… handled it? No waiting step by step. No copy-pasting between chats. That's the promise of autonomous agent teams — and it's what we've been building inside Denker. Agents pick up tasks from the board, hand work to each other, and report back on the canvas. Here's what that looked like across two real projects this week — a Product Hunt launch video, and an active bug queue.",
+    features: [
+      {
+        title: "The handoff: Researcher to Marketer",
+        badge: "HANDOFF",
+        badgeColor: "green",
+        description:
+          "I had a Product Hunt launch video to prep. Instead of doing all the legwork myself, I dropped tasks onto the board. The Researcher agent went off to find what makes a great Product Hunt launch video. The Marketer agent picked up those findings and used them to revise the script. No copy-paste. No context-switching. Just agents passing work to each other.",
+        tagline: "Delegate once. The handoff happens on its own.",
+      },
+      {
+        title: "A different team. Same idea.",
+        badge: "PARALLEL",
+        badgeColor: "amber",
+        description:
+          "Then I switched to my Bug project. Different team — Coder and Designer live inside the same project space. I asked Denker to assign a bug fix. The Coder woke up, saw the task, and started working. I didn't have to wait. I kept thinking, kept adding tasks, while the agent executed in parallel.",
+        tagline: "Keep thinking. Your agents keep shipping.",
+      },
+      {
+        title: "You see the work. You review it like a colleague.",
+        badge: "REVIEW",
+        badgeColor: "blue",
+        description:
+          "How do you know an agent is doing the work right? The canvas shows you. Every deliverable lands on the canvas — a document, a design, a fix. Agents leave a comment when they're done or need approval. You can highlight any part and add a comment back, just like co-working with a teammate.",
+        tagline: "Review as you go. Agents respond.",
+      },
+    ],
+    media: "https://www.youtube.com/watch?v=Dps_opdhZi0",
+    note: "The magic isn't any one agent being smart — it's agents working together, each doing what it's good at, so you can stay focused on what only you can do. Still early days, but it's starting to feel like something real.",
+    cta: {
+      text: "Try it now",
+      url: "https://space.denker.ai",
+      style: "button",
+    },
+    status: "draft",
+  },
+
   /* ── Changelogs ───────────────────────────────────────── */
   {
     slug: "multi-cli-support",

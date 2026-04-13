@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { CookieConsent } from "@/components/cookie-consent";
 import { JsonLd } from "@/components/json-ld";
+import { PostHogProvider } from "@/components/posthog-provider";
 import "./globals.css";
 
 const satoshi = localFont({
@@ -94,6 +95,7 @@ export default function RootLayout({
         <JsonLd />
       </head>
       <body className="antialiased">
+        <PostHogProvider />
         {children}
         <CookieConsent />
       </body>
