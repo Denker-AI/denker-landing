@@ -24,8 +24,9 @@ function PageviewTracker() {
 
   useEffect(() => {
     if (!pathname) return;
-    // PostHog's own `capture_pageview: true` fires on initial load. We only
-    // need to capture on client-side route changes (pathname or query change).
+    // Auto-capture is disabled in init so we can register `app: "landing"`
+    // before the first pageview. Capture every pageview manually — initial
+    // mount and subsequent client-side route changes.
     capturePageview();
   }, [pathname, searchParams]);
 

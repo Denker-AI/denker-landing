@@ -77,11 +77,15 @@ export function loadPostHog(mode: ConsentMode): boolean {
     ui_host: "https://eu.posthog.com",
     person_profiles: "identified_only",
     persistence,
-    // Disable Web Vitals autocapture to keep the anonymous payload minimal.
-    capture_pageview: true,
+    // Suppress the automatic init-time pageview so we can register the
+    // `app: "landing"` super-property BEFORE the first pageview fires.
+    // The provider's PageviewTracker captures it manually on mount.
+    capture_pageview: false,
     capture_pageleave: mode === "identified",
     cookie_domain: COOKIE_DOMAIN,
-    loaded: (posthog: { register: (props: Record<string, string>) => void }) => {
+    loaded: (posthog: {
+      register: (props: Record<string, string>) => void;
+    }) => {
       posthog.register({ app: "landing" });
     },
   });
