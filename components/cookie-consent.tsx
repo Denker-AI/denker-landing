@@ -3,15 +3,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { cn } from "@/lib/cn";
 import { upgradePostHogConsent, optOutPostHog } from "@/lib/posthog";
-
-const COOKIE_KEY = "denker-cookie-consent";
-
-type Consent = "accepted" | "declined" | null;
-
-function getConsent(): Consent {
-  if (typeof window === "undefined") return null;
-  return localStorage.getItem(COOKIE_KEY) as Consent;
-}
+import { loadLinkedIn } from "@/lib/linkedin";
+import { COOKIE_KEY, getConsent } from "@/lib/consent";
 
 /** Reset consent — call from footer "Cookies" link to re-show the banner. */
 export function resetCookieConsent() {
@@ -31,6 +24,7 @@ export function CookieConsent() {
     localStorage.setItem(COOKIE_KEY, "accepted");
     setVisible(false);
     upgradePostHogConsent();
+    loadLinkedIn();
   }, []);
 
   const decline = useCallback(() => {

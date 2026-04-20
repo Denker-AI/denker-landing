@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { CookieConsent } from "@/components/cookie-consent";
 import { JsonLd } from "@/components/json-ld";
 import { PostHogProvider } from "@/components/posthog-provider";
+import { LinkedInProvider } from "@/components/linkedin-provider";
 import "./globals.css";
 
 const satoshi = localFont({
@@ -96,8 +97,18 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         <PostHogProvider />
+        <LinkedInProvider />
         {children}
         <CookieConsent />
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            style={{ display: "none" }}
+            alt=""
+            src="https://px.ads.linkedin.com/collect/?pid=9957393&fmt=gif"
+          />
+        </noscript>
       </body>
     </html>
   );

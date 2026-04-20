@@ -3,20 +3,10 @@
 import { useEffect, Suspense } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { loadPostHog, capturePageview, getDistinctId } from "@/lib/posthog";
+import { getConsent } from "@/lib/consent";
 
 const APP_ORIGIN = "space.denker.ai";
 const PH_PARAM = "ph";
-
-const COOKIE_KEY = "denker-cookie-consent";
-
-function getConsent(): "accepted" | "declined" | null {
-  if (typeof window === "undefined") return null;
-  try {
-    return localStorage.getItem(COOKIE_KEY) as "accepted" | "declined" | null;
-  } catch {
-    return null;
-  }
-}
 
 function PageviewTracker() {
   const pathname = usePathname();
