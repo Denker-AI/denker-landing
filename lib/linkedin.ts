@@ -40,7 +40,11 @@ export function loadLinkedIn(): void {
   script.type = "text/javascript";
   script.async = true;
   script.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
-  existing.parentNode?.insertBefore(script, existing);
+  if (existing?.parentNode) {
+    existing.parentNode.insertBefore(script, existing);
+  } else {
+    document.head.appendChild(script);
+  }
 }
 
 /**
