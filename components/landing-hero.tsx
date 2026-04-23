@@ -174,8 +174,8 @@ export function LandingHero() {
           className="text-section-heading mb-6 max-w-3xl"
           data-testid="hero-heading"
         >
-          Your AI team executes.{" "}
-          <span className="text-accent">You decide what&apos;s next.</span>
+          Your AI Team,{" "}
+          <span className="text-accent">One Canvas.</span>
         </h1>
 
         <p className="max-w-xl text-base text-secondary sm:text-lg" data-testid="hero-subheading">

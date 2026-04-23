@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import Script from "next/script";
 import { CookieConsent } from "@/components/cookie-consent";
 import { JsonLd } from "@/components/json-ld";
 import { PostHogProvider } from "@/components/posthog-provider";
@@ -94,8 +95,22 @@ export default function RootLayout({
     <html lang="en" className={`dark ${satoshi.variable}`} suppressHydrationWarning>
       <head>
         <JsonLd />
+        <script
+          src="https://rankai.ai/apply.js"
+          data-rankai-id="cmo8vcnbu0001xtxtgh0wuhk3"
+          crossOrigin="anonymous"
+          defer
+        />
       </head>
       <body className="antialiased">
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-KB83CWVN"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
         <PostHogProvider />
         <LinkedInProvider />
         {children}
@@ -109,6 +124,11 @@ export default function RootLayout({
             src="https://px.ads.linkedin.com/collect/?pid=9957393&fmt=gif"
           />
         </noscript>
+        <Script
+          id="google-tag-manager"
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtm.js?id=GTM-KB83CWVN"
+        />
       </body>
     </html>
   );
