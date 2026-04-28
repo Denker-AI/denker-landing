@@ -1,5 +1,45 @@
+"use client";
+
 import { cn } from "@/lib/cn";
 import { Icons } from "@/components/icons";
+import { useExperiment } from "@/hooks/use-experiment";
+
+/* ── Copy variants ───────────────────────────────────────────────── */
+
+const HERO_COPY = {
+  control: {
+    heading: (
+      <>
+        Your AI Team,{" "}
+        <span className="text-accent">One Canvas.</span>
+      </>
+    ),
+    subheading: "Research, writing, code, outreach — your agents run it all in parallel. Visible at every step. Yours to direct.",
+    cta: "Try Free →",
+  },
+  "variant-b": {
+    heading: (
+      <>
+        All your AI work,{" "}
+        <span className="text-accent whitespace-nowrap">moving in parallel.</span>
+      </>
+    ),
+    subheading: "Direct specialist agents instead of prompting one thing at a time. See everything on one canvas. Stay in control.",
+    cta: "Start free",
+  },
+  "variant-c": {
+    heading: (
+      <>
+        Stop doing AI work{" "}
+        <span className="text-accent">one prompt at a time.</span>
+      </>
+    ),
+    subheading: "Denker lets you direct a team of AI agents on one canvas, so research, writing, code, and outreach move forward in parallel — with every step visible and under your control.",
+    cta: "Start free",
+  },
+} as const;
+
+type HeroVariant = keyof typeof HERO_COPY;
 
 /* ── Floating frame (background decoration) ──────────────────── */
 
@@ -154,6 +194,9 @@ function HeroCanvas() {
 /* ── Hero section ─────────────────────────────────────────────── */
 
 export function LandingHero() {
+  const variant = useExperiment("hero-copy-test");
+  const copy = HERO_COPY[(variant as HeroVariant) ?? "control"] ?? HERO_COPY.control;
+
   return (
     <section
       className="relative min-h-screen overflow-hidden"
@@ -174,13 +217,11 @@ export function LandingHero() {
           className="text-section-heading mb-6 max-w-3xl"
           data-testid="hero-heading"
         >
-          Your AI Team,{" "}
-          <span className="text-accent">One Canvas.</span>
+          {copy.heading}
         </h1>
 
         <p className="max-w-xl text-base text-secondary sm:text-lg" data-testid="hero-subheading">
-          Research, writing, code, outreach — your agents run it all in parallel.
-          Visible at every step. Yours to direct.
+          {copy.subheading}
         </p>
 
         <a
@@ -188,7 +229,7 @@ export function LandingHero() {
           className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-accent px-8 text-sm font-bold text-canvas transition-opacity hover:opacity-80"
           data-testid="hero-cta-button"
         >
-          Try Free →
+          {copy.cta}
         </a>
 
         {/* Spacer — pushes form lower on mobile */}

@@ -128,6 +128,23 @@ export function capturePageview(): void {
   if (ph?.capture) ph.capture("$pageview");
 }
 
+/** Get a feature flag value synchronously. Returns undefined if PostHog isn't ready. */
+export function getFeatureFlag(key: string): string | boolean | undefined {
+  const ph = getPostHog();
+  if (!ph?.getFeatureFlag) return undefined;
+  try {
+    return ph.getFeatureFlag(key) as string | boolean | undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+/** Register a callback that fires once PostHog has loaded feature flags. */
+export function onFeatureFlags(callback: () => void): void {
+  const ph = getPostHog();
+  if (ph?.onFeatureFlags) ph.onFeatureFlags(callback);
+}
+
 /** Return the current PostHog distinct_id, or null if PostHog isn't ready. */
 export function getDistinctId(): string | null {
   const ph = getPostHog();
