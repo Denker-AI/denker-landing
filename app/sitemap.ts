@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getAllNewsletters } from "@/lib/newsletters";
-
-const SITE_URL = "https://www.denker.ai";
+import { SITE_URL } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const newsletterEntries = getAllNewsletters().map((n) => ({

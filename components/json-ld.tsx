@@ -1,6 +1,4 @@
-const SITE_URL = "https://www.denker.ai";
-const DESCRIPTION =
-  "A limitless canvas workspace where your AI agents research, write, code, and automate — all visible in real time. No black boxes. No config hell.";
+import { SITE_URL, DESCRIPTION } from "@/lib/seo";
 
 const schema = JSON.stringify({
   "@context": "https://schema.org",

@@ -6,11 +6,9 @@ import { LandingNav } from "@/components/landing-nav";
 import { LandingFooter } from "@/components/landing-footer";
 import { WaitlistForm } from "@/components/waitlist-form";
 import { getAllPosts, getPost, CATEGORY_LABELS, CATEGORY_COLORS } from "@/lib/newsletters";
-import type { NewsletterFeature } from "@/lib/newsletters";
-import { DEFAULT_OG_IMAGE } from "@/lib/seo";
+import type { NewsletterFeature, BlogPost } from "@/lib/newsletters";
+import { SITE_URL } from "@/lib/seo";
 import { VideoLightbox } from "@/components/video-lightbox";
-
-const SITE_URL = "https://www.denker.ai";
 
 export function generateStaticParams() {
   return getAllPosts().map((p) => ({ slug: p.slug }));
@@ -35,13 +33,9 @@ export function generateMetadata({
       openGraph: {
         title: `${cleanTitle} — Denker`,
         description,
-        url: `https://www.denker.ai${canonicalPath}`,
+        url: `${SITE_URL}${canonicalPath}`,
         type: "article",
         publishedTime: p.date,
-        images:
-          p.media && !p.media.endsWith(".mp4") && !p.media.startsWith("http")
-            ? [{ url: `https://www.denker.ai${p.media}`, alt: p.heroTitle }]
-            : [DEFAULT_OG_IMAGE],
       },
     };
   });
@@ -116,6 +110,38 @@ function FeatureCard({ feature }: { feature: NewsletterFeature }) {
       )}
       <p className="text-sm italic text-muted">{feature.tagline}</p>
     </div>
+  );
+}
+
+function RelatedPosts({ currentSlug, currentCategory }: { currentSlug: string; currentCategory: BlogPost["category"] }) {
+  const all = getAllPosts().filter((p) => p.slug !== currentSlug);
+  const sameCategory = all.filter((p) => p.category === currentCategory);
+  const related = (sameCategory.length >= 3 ? sameCategory : all).slice(0, 3);
+
+  if (related.length === 0) return null;
+
+  return (
+    <section className="mb-16 border-t border-glass-stroke pt-12">
+      <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-muted">
+        More from Denker
+      </h2>
+      <div className="grid gap-4 sm:grid-cols-3">
+        {related.map((p) => (
+          <Link
+            key={p.slug}
+            href={`/blog/${p.slug}`}
+            className="group flex flex-col rounded-xl border border-glass-stroke bg-glass-fill p-4 backdrop-blur-glass transition-colors hover:border-glass-stroke-light"
+          >
+            <span className={`mb-2 self-start rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${CATEGORY_COLORS[p.category]}`}>
+              {CATEGORY_LABELS[p.category]}
+            </span>
+            <p className="text-sm font-semibold leading-snug text-primary group-hover:text-accent transition-colors">
+              {p.heroTitle}
+            </p>
+          </Link>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -293,6 +319,9 @@ export default async function BlogPostPage({
           </div>
         )}
 
+        {/* Related posts */}
+        <RelatedPosts currentSlug={p.slug} currentCategory={p.category} />
+
         {/* CTA */}
         <section
           className="rounded-2xl border border-glass-stroke bg-glass-fill p-8 text-center backdrop-blur-glass sm:p-12"
@@ -330,6 +359,16 @@ export default async function BlogPostPage({
             </>
           )}
         </section>
+
+        {/* Homepage internal link */}
+        <div className="mt-10 text-center">
+          <Link
+            href="/"
+            className="text-sm text-muted transition-colors hover:text-secondary"
+          >
+            ← Back to Denker, your AI agent workspace
+          </Link>
+        </div>
       </main>
       <LandingFooter />
     </div>

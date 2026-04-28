@@ -14,7 +14,7 @@ const HERO_COPY = {
         <span className="text-accent">One Canvas.</span>
       </>
     ),
-    subheading: "Research, writing, code, outreach — your agents run it all in parallel. Visible at every step. Yours to direct.",
+    subheading: "The AI agent workspace where your team researches, writes, codes, and ships in parallel. Visible at every step. Yours to direct.",
     cta: "Try Free →",
   },
   "variant-b": {

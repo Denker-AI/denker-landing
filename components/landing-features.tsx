@@ -576,7 +576,7 @@ export function LandingFeatures() {
             <h2
               className="text-section-heading"
             >
-              Built for thinkers,
+              The AI workspace built for thinkers,
               <br />
               <span className="text-accent">powered by simplicity</span>
             </h2>

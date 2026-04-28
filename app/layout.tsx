@@ -5,6 +5,7 @@ import { CookieConsent } from "@/components/cookie-consent";
 import { JsonLd } from "@/components/json-ld";
 import { PostHogProvider } from "@/components/posthog-provider";
 import { LinkedInProvider } from "@/components/linkedin-provider";
+import { SITE_URL, TITLE, DESCRIPTION } from "@/lib/seo";
 import "./globals.css";
 
 const satoshi = localFont({
@@ -15,11 +16,6 @@ const satoshi = localFont({
   variable: "--font-satoshi",
   display: "swap",
 });
-
-const SITE_URL = "https://www.denker.ai";
-const TITLE = "Denker — Where humans and AI agents co-work visually";
-const DESCRIPTION =
-  "A limitless canvas workspace where your AI agents research, write, code, and automate — all visible in real time. No black boxes. No config hell.";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -39,13 +35,17 @@ export const metadata: Metadata = {
   },
   description: DESCRIPTION,
   keywords: [
+    "AI team",
     "AI agents",
     "AI workspace",
+    "AI agent platform",
+    "parallel AI agents",
+    "visual AI workspace",
     "AI automation",
     "canvas workspace",
     "knowledge graph",
     "workflow automation",
-    "AI team",
+    "autonomous AI agents",
   ],
   authors: [{ name: "Denker AI" }],
   creator: "Denker AI",
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
         url: `${SITE_URL}/og-image.jpg`,
         width: 1200,
         height: 630,
-        alt: "Denker — AI agents co-working on a visual canvas",
+        alt: "Denker — Your AI team working in parallel on one canvas",
       },
     ],
   },
