@@ -4,9 +4,10 @@ import { LandingNav } from "@/components/landing-nav";
 import { ScrollButton } from "@/components/scroll-button";
 import { LandingHero } from "@/components/landing-hero";
 import { LandingManifesto } from "@/components/landing-manifesto";
-import { FeaturesGrid } from "@/components/features-grid";
+import { LandingTeamIntro } from "@/components/landing-team-intro";
 
 import { LandingFeatures } from "@/components/landing-features";
+import { LandingFounderVoices } from "@/components/landing-founder-voices";
 import { LandingPricing } from "@/components/landing-pricing";
 import { LandingCta } from "@/components/landing-cta";
 import { LandingFinalCta } from "@/components/landing-final-cta";
@@ -39,18 +40,10 @@ export default function HomePage() {
       <LandingHero />
       <LandingManifesto />
 
-      {/* Features anchor + heading */}
-      <section id="features" className="relative flex min-h-screen flex-col items-center justify-center px-5 text-center sm:px-6 lg:px-12">
-        <FeaturesGrid />
-        <span className="relative badge-section mb-6">Features</span>
-        <h2 className="relative text-section-heading mx-auto max-w-3xl">
-          One canvas. Multiple agents.
-          <br />
-          <span className="text-accent">Everything runs in parallel.</span>
-        </h2>
-      </section>
+      <LandingTeamIntro />
 
       <LandingFeatures />
+      <LandingFounderVoices />
       <LandingPricing />
       <LandingCta />
       <LandingFinalCta />

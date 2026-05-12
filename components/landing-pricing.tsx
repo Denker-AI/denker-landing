@@ -22,7 +22,7 @@ const PLANS: Plan[] = [
     name: "Free",
     monthly: null,
     yearly: null,
-    description: "Try the canvas and agents. No credit card required.",
+    description: "Try the desktop app. No credit card needed.",
     features: [
       "2 projects",
       "5 spaces",
@@ -37,7 +37,7 @@ const PLANS: Plan[] = [
     name: "Pro",
     monthly: 19,
     yearly: 199,
-    description: "Your full AI workspace. Unlimited projects and persistent knowledge graph.",
+    description: "Your full team. Unlimited projects. Persistent memory.",
     features: [
       "Everything in Free, plus",
       "Unlimited projects",

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { DenkerLogo } from "@/components/denker-logo";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { CtaGateDialog, useCtaGate } from "@/components/cta-gate-dialog";
 import { cn } from "@/lib/cn";
 
 const NAV_LINKS = [
@@ -15,6 +16,7 @@ const NAV_LINKS = [
 
 export function LandingNav() {
   const [open, setOpen] = useState(false);
+  const { open: gateOpen, openGate, closeGate } = useCtaGate();
 
   return (
     <header className="fixed left-0 right-0 top-0 z-50 flex justify-center px-4 pt-4 sm:px-6 sm:pt-5" data-testid="landing-nav">
@@ -37,13 +39,14 @@ export function LandingNav() {
 
         <div className="mx-2 h-4 w-px bg-glass-stroke" />
         <ThemeToggle />
-        <a
-          href="https://space.denker.ai"
+        <button
+          type="button"
+          onClick={openGate}
           className="ml-1 inline-flex h-8 items-center rounded-full bg-primary px-5 text-sm font-semibold text-canvas transition-opacity hover:opacity-80"
           data-testid="nav-cta"
         >
-          Get Started
-        </a>
+          Start Now
+        </button>
       </nav>
 
       {/* Mobile nav */}
@@ -96,16 +99,20 @@ export function LandingNav() {
               {link.label}
             </a>
           ))}
-          <a
-            href="https://space.denker.ai"
-            onClick={() => setOpen(false)}
+          <button
+            type="button"
+            onClick={() => {
+              setOpen(false);
+              openGate();
+            }}
             className="mt-1 flex h-11 items-center justify-center rounded-full bg-primary text-sm font-semibold text-canvas transition-opacity hover:opacity-80"
             data-testid="nav-cta-mobile"
           >
-            Get Started
-          </a>
+            Start Now
+          </button>
         </div>
       </nav>
+      <CtaGateDialog open={gateOpen} onClose={closeGate} />
     </header>
   );
 }

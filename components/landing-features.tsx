@@ -1,5 +1,8 @@
+"use client";
+
 import { cn } from "@/lib/cn";
 import { Icons } from "@/components/icons";
+import { CtaGateDialog, useCtaGate } from "@/components/cta-gate-dialog";
 
 /* ── Brand SVG icons ─────────────────────────────────────────────── */
 
@@ -403,59 +406,142 @@ const AGENT_PRESETS = [
   { id: "analyst", letter: "A", color: "#F59E0B", name: "Analyst",    desc: "Analyze & insights"  },
 ];
 
-function AgentDockCard() {
+function ShortcutChip({ keys }: { keys: string[] }) {
   return (
-    <div className="flex flex-col gap-5">
-      {/* Input bar — mirrors real InputBar: glass pill + agent stack + input + send */}
-      <div className="flex h-10 items-center gap-2 rounded-full border border-glass-stroke bg-glass-fill p-1.5 shadow-glass backdrop-blur-glass">
-        {/* Agent stack — overlapping */}
-        <div className="relative flex shrink-0 items-center" style={{ width: 56, height: 24 }}>
+    <div className="flex shrink-0 items-center gap-1">
+      {keys.map((k, i) => (
+        <kbd
+          key={i}
+          className="inline-flex h-6 min-w-6 items-center justify-center rounded-md border border-glass-stroke bg-glass-fill-heavy px-1.5 text-[11px] font-semibold text-primary shadow-glass-sm"
+        >
+          {k}
+        </kbd>
+      ))}
+    </div>
+  );
+}
+
+function TypeSummonShortcut() {
+  return (
+    <div className="flex flex-1 flex-col">
+      <div className="flex items-center gap-2">
+        <ShortcutChip keys={["⌃", "⌃"]} />
+        <span className="text-xs text-muted">Tap Control twice</span>
+      </div>
+      {/* Real InputBar visual replica — centered in remaining card space */}
+      <div className="flex flex-1 items-center pt-4">
+      <form
+        className="flex min-h-[32px] w-full items-center gap-2 rounded-full pl-2 pr-1 py-1 backdrop-blur-glass"
+        style={{ background: "var(--input-bar-fill)" }}
+      >
+        {/* Agent stack — overlapping circles + add button */}
+        <div
+          className="relative flex shrink-0 items-center"
+          style={{ height: 24, width: 24 + (AGENT_PRESETS.length - 1) * 16 + 26 }}
+        >
           {AGENT_PRESETS.map((a, i) => (
             <div
               key={a.id}
-              className="absolute left-0 top-0 flex h-6 w-6 items-center justify-center rounded-full text-[9px] font-semibold text-white"
+              className="absolute top-0 flex h-6 w-6 items-center justify-center rounded-full text-[9px] font-semibold text-white"
               style={{
+                left: i * 16,
                 backgroundColor: a.color,
-                transform: `translateX(${i * 8}px)`,
                 zIndex: AGENT_PRESETS.length - i,
+                boxShadow: "0 0 0 1.5px rgba(11,13,16,0.7)",
               }}
             >
               {a.letter}
             </div>
           ))}
-          <span className="pointer-events-none absolute -top-1 flex h-3.5 min-w-[14px] items-center justify-center rounded-full bg-accent px-0.5 text-[8px] font-bold text-[#0F1115] shadow-sm" style={{ left: 20, zIndex: 10 }}>
-            {AGENT_PRESETS.length}
-          </span>
+          <button
+            type="button"
+            className="absolute top-0 flex h-6 w-6 items-center justify-center rounded-full border border-glass-stroke-light text-muted transition-colors hover:text-primary"
+            style={{ left: AGENT_PRESETS.length * 16 + 4 }}
+            aria-label="Add agent"
+            tabIndex={-1}
+          >
+            <Icons.Plus className="h-3 w-3" />
+          </button>
         </div>
 
-        {/* Divider */}
-        <div className="h-4 w-px shrink-0 bg-glass-stroke-subtle" />
+        <div className="h-4 w-px shrink-0 bg-glass-stroke-subtle" aria-hidden="true" />
 
-        {/* Placeholder text */}
-        <span className="flex-1 text-[13px] text-muted">Ask anything...</span>
+        <span className="flex-1 truncate text-[13px] text-secondary">Ask anything…</span>
 
-        {/* Send button */}
-        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent text-[#0F1115]">
+        <button
+          type="button"
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent text-canvas"
+          aria-label="Send"
+          tabIndex={-1}
+        >
           <Icons.ArrowUp className="h-3.5 w-3.5" />
+        </button>
+      </form>
+      </div>
+    </div>
+  );
+}
+
+function SpeakSummonShortcut() {
+  return (
+    <div className="flex flex-1 flex-col">
+      <div className="flex items-center gap-2">
+        <ShortcutChip keys={["⌃", "⌥"]} />
+        <span className="text-xs text-muted">Hold to speak</span>
+      </div>
+      {/* Real VoiceIndicator visual replica — anchored next to a mock user cursor */}
+      <div className="flex flex-1 items-center justify-center pt-4">
+      <div className="relative h-12 w-28">
+        {/* User cursor arrow (white) — anchor point */}
+        <svg
+          width="14"
+          height="20"
+          viewBox="0 0 10 14"
+          fill="none"
+          aria-hidden="true"
+          className="absolute left-0 top-0"
+        >
+          <path d="M1 1L9 7L4.5 7.8L2.5 13L1 1Z" fill="#f5f5f7" stroke="#0b0d10" strokeWidth="0.6" />
+        </svg>
+        {/* Voice indicator — offset from cursor by (+14, +18) like the real production layout */}
+        <div className="absolute flex items-center gap-1.5 leading-none" style={{ left: 14, top: 18 }}>
+        <span
+          className="whitespace-nowrap text-[11px] font-semibold tracking-wide"
+          style={{
+            color: "#30D158",
+            textShadow:
+              "0 1px 2px rgba(0,0,0,0.78), 0 0 7px rgba(0,0,0,0.38), 0 0 1px rgba(255,255,255,0.8)",
+          }}
+        >
+          Denker
+        </span>
+        <div
+          className="flex items-center justify-center gap-[3px] rounded-full backdrop-blur-sm"
+          style={{
+            minWidth: 32,
+            height: 18,
+            padding: "0 7px",
+            background: "var(--voice-pill-bg)",
+            border: "1px solid var(--voice-pill-stroke)",
+            boxShadow: "var(--voice-pill-shadow)",
+          }}
+        >
+          {[0, 1, 2].map((i) => (
+            <span
+              key={i}
+              style={{
+                width: 3,
+                height: 10,
+                backgroundColor: "#30D158",
+                borderRadius: 1,
+                animation: `voice-bar-real 0.9s ease-in-out ${i * 0.15}s infinite`,
+                transformOrigin: "center",
+              }}
+            />
+          ))}
+        </div>
         </div>
       </div>
-
-      {/* Agent preset grid */}
-      <div className="grid grid-cols-2 gap-2">
-        {AGENT_PRESETS.map((a) => (
-          <div key={a.id} className="flex items-center gap-2.5 rounded-xl border border-glass-stroke bg-glass-fill px-3 py-2.5 shadow-glass-sm backdrop-blur-glass-sm">
-            <div
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold text-canvas"
-              style={{ backgroundColor: a.color }}
-            >
-              {a.letter}
-            </div>
-            <div className="min-w-0">
-              <div className="text-xs font-semibold text-primary">{a.name}</div>
-              <div className="truncate text-[10px] text-muted">{a.desc}</div>
-            </div>
-          </div>
-        ))}
       </div>
     </div>
   );
@@ -478,6 +564,7 @@ function FeatureBlock({
   pills,
   visual,
   reversed,
+  onCta,
 }: {
   label: string;
   heading: React.ReactNode;
@@ -485,6 +572,7 @@ function FeatureBlock({
   pills: { icon: React.ElementType; label: string }[];
   visual: React.ReactNode;
   reversed?: boolean;
+  onCta: () => void;
 }) {
   return (
     <div className="flex min-h-screen items-center px-5 py-16 sm:px-6 sm:py-20 lg:px-12">
@@ -497,12 +585,13 @@ function FeatureBlock({
             <span className="text-section-label mb-5 block">{label}</span>
             <h2 className="text-section-heading mb-6">{heading}</h2>
             <p className="mb-8 text-base leading-relaxed text-secondary">{description}</p>
-            <a
-              href="https://space.denker.ai"
+            <button
+              type="button"
+              onClick={onCta}
               className="mb-10 inline-flex h-12 items-center justify-center rounded-full bg-primary px-7 text-sm font-bold text-canvas transition-opacity hover:opacity-80 max-sm:w-full sm:w-fit"
             >
-              Try Free
-            </a>
+              Start Now
+            </button>
             <div className="grid grid-cols-2 gap-2">
               {pills.map((p) => <Pill key={p.label} icon={p.icon} label={p.label} />)}
             </div>
@@ -521,6 +610,8 @@ function FeatureBlock({
 /* ── Main section ─────────────────────────────────────────────────── */
 
 export function LandingFeatures() {
+  const { open, openGate, closeGate } = useCtaGate();
+
   return (
     <section className="relative overflow-x-hidden" data-testid="landing-features">
 
@@ -537,6 +628,7 @@ export function LandingFeatures() {
         ]}
         visual={<CanvasVisual />}
         reversed
+        onCta={openGate}
       />
 
       {/* ── Task Board ── */}
@@ -551,6 +643,7 @@ export function LandingFeatures() {
           { icon: Icons.Zap, label: "Auto wake-up" },
         ]}
         visual={<TaskBoardVisual />}
+        onCta={openGate}
       />
 
       {/* ── Memory ── */}
@@ -566,6 +659,7 @@ export function LandingFeatures() {
         ]}
         visual={<MemoryVisual />}
         reversed
+        onCta={openGate}
       />
 
       {/* ── Bento ── */}
@@ -582,19 +676,28 @@ export function LandingFeatures() {
             </h2>
           </div>
 
-          {/* Row 1 */}
-          <div className="mb-4 grid gap-4 lg:grid-cols-3">
+          {/* Row 1 — three equal columns: type · voice · integrations */}
+          <div className="mb-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
 
-            {/* Agent dock — 2/3 */}
-            <BentoCard className="lg:col-span-2">
-              <span className="mb-1 text-xs font-semibold uppercase tracking-widest text-muted">Agents</span>
+            {/* Type to summon */}
+            <BentoCard>
+              <span className="mb-1 text-xs font-semibold uppercase tracking-widest text-muted">Type to summon</span>
               <h3 className="mb-5 text-lg font-bold font-satoshi text-primary">
-                Ready-made agents
+                Tap Control, twice.
               </h3>
-              <AgentDockCard />
+              <TypeSummonShortcut />
             </BentoCard>
 
-            {/* Integrations — 1/3 */}
+            {/* Speak to summon */}
+            <BentoCard>
+              <span className="mb-1 text-xs font-semibold uppercase tracking-widest text-muted">Speak to summon</span>
+              <h3 className="mb-5 text-lg font-bold font-satoshi text-primary">
+                Hold Control + Option.
+              </h3>
+              <SpeakSummonShortcut />
+            </BentoCard>
+
+            {/* Integrations */}
             <BentoCard>
               <span className="mb-1 text-xs font-semibold uppercase tracking-widest text-muted">Integrations</span>
               <h3 className="mb-5 text-lg font-bold font-satoshi text-primary">
@@ -614,7 +717,7 @@ export function LandingFeatures() {
               </div>
               <h3 className="mb-2 font-bold text-primary">Heartbeat</h3>
               <p className="text-sm leading-relaxed text-secondary">
-                Agents run 24/7 in the cloud. Close the tab — your work continues on schedule.
+                Agents run on your computer, around the clock. Close the window — your work keeps moving.
               </p>
             </BentoCard>
 
@@ -642,6 +745,7 @@ export function LandingFeatures() {
         </div>
       </div>
 
+      <CtaGateDialog open={open} onClose={closeGate} />
     </section>
   );
 }

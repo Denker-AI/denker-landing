@@ -3,6 +3,7 @@
 import { cn } from "@/lib/cn";
 import { Icons } from "@/components/icons";
 import { useExperiment } from "@/hooks/use-experiment";
+import { CtaGateDialog, useCtaGate } from "@/components/cta-gate-dialog";
 
 /* ── Copy variants ───────────────────────────────────────────────── */
 
@@ -10,32 +11,32 @@ const HERO_COPY = {
   control: {
     heading: (
       <>
-        Your AI Team,{" "}
-        <span className="text-accent">One Canvas.</span>
+        Wear every hat?{" "}
+        <span className="text-accent">Bring a team to your cursor.</span>
       </>
     ),
-    subheading: "The AI agent workspace where your team researches, writes, codes, and ships in parallel. Visible at every step. Yours to direct.",
-    cta: "Try Free →",
+    subheading: "AI agents that research, write, code and ship — in parallel, right where you work.",
+    cta: "Start Now",
   },
   "variant-b": {
     heading: (
       <>
-        All your AI work,{" "}
-        <span className="text-accent whitespace-nowrap">moving in parallel.</span>
+        Stop juggling tabs.{" "}
+        <span className="text-accent whitespace-nowrap">Direct a team.</span>
       </>
     ),
-    subheading: "Direct specialist agents instead of prompting one thing at a time. See everything on one canvas. Stay in control.",
-    cta: "Start free",
+    subheading: "Specialist agents work in parallel on one canvas, on your desktop, around your cursor.",
+    cta: "Start Now",
   },
   "variant-c": {
     heading: (
       <>
-        Stop doing AI work{" "}
-        <span className="text-accent">one prompt at a time.</span>
+        Stop wearing every hat.{" "}
+        <span className="text-accent">Start delegating it.</span>
       </>
     ),
-    subheading: "Denker lets you direct a team of AI agents on one canvas, so research, writing, code, and outreach move forward in parallel — with every step visible and under your control.",
-    cta: "Start free",
+    subheading: "A team of AI specialists on your desktop. You direct. They ship — in parallel.",
+    cta: "Start Now",
   },
 } as const;
 
@@ -196,6 +197,7 @@ function HeroCanvas() {
 export function LandingHero() {
   const variant = useExperiment("hero-copy-test");
   const copy = HERO_COPY[(variant as HeroVariant) ?? "control"] ?? HERO_COPY.control;
+  const { open, openGate, closeGate } = useCtaGate();
 
   return (
     <section
@@ -214,23 +216,29 @@ export function LandingHero() {
         {/* Spacer — pushes heading group to ~40% on mobile, centers on desktop */}
         <div className="flex-1 min-h-12 md:min-h-0" />
         <h1
-          className="text-section-heading mb-6 max-w-3xl"
+          className="text-section-heading mb-6 max-w-3xl text-balance"
           data-testid="hero-heading"
         >
           {copy.heading}
         </h1>
 
-        <p className="max-w-xl text-base text-secondary sm:text-lg" data-testid="hero-subheading">
+        <p className="max-w-xl text-base text-secondary text-balance sm:text-lg" data-testid="hero-subheading">
           {copy.subheading}
         </p>
 
-        <a
-          href="https://space.denker.ai"
-          className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-accent px-8 text-sm font-bold text-canvas transition-opacity hover:opacity-80"
-          data-testid="hero-cta-button"
-        >
-          {copy.cta}
-        </a>
+        <div className="mt-9 flex flex-col items-center gap-3" data-testid="hero-cta-group">
+          <button
+            type="button"
+            onClick={openGate}
+            className="inline-flex h-12 items-center justify-center rounded-full bg-accent px-8 text-sm font-bold text-canvas transition-opacity hover:opacity-80"
+            data-testid="hero-cta-button"
+          >
+            {copy.cta}
+          </button>
+          <p className="text-xs text-muted" data-testid="hero-cta-note">
+            Free · No credit card
+          </p>
+        </div>
 
         {/* Spacer — pushes form lower on mobile */}
         <div className="flex-[1.6] min-h-16 md:flex-1 md:min-h-0" />
@@ -246,6 +254,7 @@ export function LandingHero() {
         </a>
       </div>
 
+      <CtaGateDialog open={open} onClose={closeGate} />
     </section>
   );
 }

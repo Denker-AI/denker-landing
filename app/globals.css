@@ -51,6 +51,13 @@ html {
       radial-gradient(ellipse 60% 50% at 15% 25%, rgba(58, 248, 140, 0.08) 0%, transparent 70%),
       radial-gradient(ellipse 55% 45% at 85% 65%, rgba(96, 165, 250, 0.07) 0%, transparent 70%),
       radial-gradient(ellipse 45% 40% at 70% 8%,  rgba(167, 139, 250, 0.06) 0%, transparent 65%);
+
+    /* Input bar + voice pill (light) */
+    --input-bar-fill: rgba(245, 245, 247, 0.94);
+    --input-bar-drop: 0 4px 14px rgba(0, 0, 0, 0.10);
+    --voice-pill-bg: rgba(255, 255, 255, 0.55);
+    --voice-pill-stroke: rgba(0, 0, 0, 0.06);
+    --voice-pill-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
   }
 
   .dark {
@@ -94,6 +101,16 @@ html {
       radial-gradient(ellipse 55% 45% at 85% 65%, rgba(96, 165, 250, 0.08) 0%, transparent 70%),
       radial-gradient(ellipse 45% 40% at 70% 8%,  rgba(167, 139, 250, 0.07) 0%, transparent 65%),
       radial-gradient(ellipse 50% 40% at 40% 80%, rgba(244, 114, 182, 0.05) 0%, transparent 65%);
+
+    /* Input bar + voice pill (dark) */
+    --input-bar-fill: rgba(20, 20, 22, 0.92);
+    --input-bar-drop: 0 8px 24px rgba(0, 0, 0, 0.55);
+    --voice-pill-bg: var(--color-glass-fill);
+    --voice-pill-stroke: var(--color-glass-stroke);
+    --voice-pill-shadow:
+      0 0 0 1px rgba(48, 209, 88, 0.15) inset,
+      0 0 14px 2px rgba(48, 209, 88, 0.18),
+      0 4px 12px rgba(0, 0, 0, 0.35);
   }
 }
 
@@ -249,4 +266,62 @@ body {
 @keyframes shimmer {
   0%   { background-position: 200% 0; }
   100% { background-position: -200% 0; }
+}
+
+/* Founder voices marquee */
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marquee-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+.marquee-left  { animation: marquee-left  60s linear infinite; }
+.marquee-right { animation: marquee-right 60s linear infinite; }
+.marquee-row:hover .marquee-left,
+.marquee-row:hover .marquee-right { animation-play-state: paused; }
+
+/* ── Denker compact pill: rotating comet glow during onboarding ───── */
+@property --denker-runner-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes denker-pill-runner-rotate {
+  to {
+    --denker-runner-angle: 360deg;
+  }
+}
+.denker-pill-runner {
+  background: conic-gradient(
+    from var(--denker-runner-angle, 0deg),
+    transparent 0deg,
+    rgba(48, 209, 88, 0) 200deg,
+    rgba(48, 209, 88, 0.6) 280deg,
+    rgba(48, 209, 88, 1) 320deg,
+    rgba(48, 209, 88, 0.6) 340deg,
+    transparent 360deg
+  );
+  animation: denker-pill-runner-rotate 3s linear infinite;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1.5px;
+  border-radius: 9999px;
+}
+
+@keyframes voice-bar {
+  0%, 100% { transform: scaleY(0.35); }
+  50%      { transform: scaleY(1); }
+}
+
+@keyframes voice-bar-real {
+  0%, 100% { transform: scaleY(0.3); }
+  20%      { transform: scaleY(0.85); }
+  40%      { transform: scaleY(0.5); }
+  60%      { transform: scaleY(1); }
+  80%      { transform: scaleY(0.65); }
 }

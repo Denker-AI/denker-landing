@@ -51,7 +51,7 @@ export function LandingManifesto() {
   const spineScale = Math.min(1, progress * 1.4);
 
   const rows = [
-    { label: "Yesterday", text: "You did everything yourself.", progress: row1P, accent: false },
+    { label: "Yesterday", text: "You did everything yourself.",  progress: row1P, accent: false },
     { label: "Today",     text: "You prompt. You wait. You fix.", progress: row2P, accent: false },
     { label: "Tomorrow",  text: "You direct. They ship.",         progress: row3P, accent: true  },
   ];
@@ -162,8 +162,8 @@ export function LandingManifesto() {
                 transform: `translateY(${(1 - subtextP) * 12}px)`,
               }}
             >
-              The future of work isn&apos;t doing more — it&apos;s delegating everything else.
-              Your agents handle the execution. You own the direction.
+              The future of work isn&apos;t doing more — it&apos;s having more time to think.
+              Your team handles the execution. You focus on the work only you can do.
             </p>
           </div>
 
