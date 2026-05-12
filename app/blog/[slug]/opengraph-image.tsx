@@ -21,16 +21,14 @@ export default async function Image({
   const { slug } = await params;
   const post = getPost(slug);
 
-  let fontBold: ArrayBuffer;
-  let fontMedium: ArrayBuffer;
-  try {
-    [fontBold, fontMedium] = await Promise.all([
-      fetch(new URL("/fonts/satoshi-700.woff2", SITE_URL)).then((r) => r.arrayBuffer()),
-      fetch(new URL("/fonts/satoshi-500.woff2", SITE_URL)).then((r) => r.arrayBuffer()),
-    ]);
-  } catch {
-    [fontBold, fontMedium] = [new ArrayBuffer(0), new ArrayBuffer(0)];
-  }
+  /* Satori (next/og) only accepts OTF/TTF, not WOFF2 — use the local TTF files. */
+  const [fontBold, fontMedium, logoUrl] = await Promise.all([
+    fetch(new URL("../../_fonts/satoshi-700.ttf", import.meta.url)).then((r) => r.arrayBuffer()),
+    fetch(new URL("../../_fonts/satoshi-500.ttf", import.meta.url)).then((r) => r.arrayBuffer()),
+    fetch(new URL("/logo/logo-white.svg", SITE_URL))
+      .then((r) => r.text())
+      .then((svg) => `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`),
+  ]);
 
   const title = post?.heroTitle ?? "Denker Blog";
   const category = post?.category ?? "newsletter";
@@ -136,39 +134,9 @@ export default async function Image({
             paddingTop: 28,
           }}
         >
-          {/* Logo + wordmark */}
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <div
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: 10,
-                backgroundColor: accent,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <div
-                style={{
-                  width: 18,
-                  height: 18,
-                  borderRadius: 3,
-                  backgroundColor: "#0A0A0F",
-                }}
-              />
-            </div>
-            <span
-              style={{
-                fontSize: 22,
-                fontWeight: 700,
-                color: "#F2F2F7",
-                letterSpacing: "-0.01em",
-              }}
-            >
-              Denker
-            </span>
-          </div>
+          {/* Real Denker wordmark — replaces the previous placeholder square. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={logoUrl} alt="Denker" width={130} height={32} style={{ width: 130, height: 32 }} />
 
           <span
             style={{

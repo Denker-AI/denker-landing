@@ -4,43 +4,14 @@ import { cn } from "@/lib/cn";
 import { Icons } from "@/components/icons";
 import { useExperiment } from "@/hooks/use-experiment";
 import { CtaGateDialog, useCtaGate } from "@/components/cta-gate-dialog";
+import { HERO_COPY, type HeroVariant } from "@/lib/hero-copy";
 
-/* ── Copy variants ───────────────────────────────────────────────── */
-
-const HERO_COPY = {
-  control: {
-    heading: (
-      <>
-        Wear every hat?{" "}
-        <span className="text-accent">Bring a team to your cursor.</span>
-      </>
-    ),
-    subheading: "AI agents that research, write, code and ship — in parallel, right where you work.",
-    cta: "Start Now",
-  },
-  "variant-b": {
-    heading: (
-      <>
-        Stop juggling tabs.{" "}
-        <span className="text-accent whitespace-nowrap">Direct a team.</span>
-      </>
-    ),
-    subheading: "Specialist agents work in parallel on one canvas, on your desktop, around your cursor.",
-    cta: "Start Now",
-  },
-  "variant-c": {
-    heading: (
-      <>
-        Stop wearing every hat.{" "}
-        <span className="text-accent">Start delegating it.</span>
-      </>
-    ),
-    subheading: "A team of AI specialists on your desktop. You direct. They ship — in parallel.",
-    cta: "Start Now",
-  },
-} as const;
-
-type HeroVariant = keyof typeof HERO_COPY;
+/* Variant-b's accent phrase is short — keep it on one line. */
+const HEADING_ACCENT_CLASS: Record<HeroVariant, string> = {
+  control: "text-accent",
+  "variant-b": "text-accent whitespace-nowrap",
+  "variant-c": "text-accent",
+};
 
 /* ── Floating frame (background decoration) ──────────────────── */
 
@@ -196,7 +167,9 @@ function HeroCanvas() {
 
 export function LandingHero() {
   const variant = useExperiment("hero-copy-test");
-  const copy = HERO_COPY[(variant as HeroVariant) ?? "control"] ?? HERO_COPY.control;
+  const heroVariant = (variant as HeroVariant) ?? "control";
+  const copy = HERO_COPY[heroVariant] ?? HERO_COPY.control;
+  const accentClass = HEADING_ACCENT_CLASS[heroVariant] ?? HEADING_ACCENT_CLASS.control;
   const { open, openGate, closeGate } = useCtaGate();
 
   return (
@@ -219,7 +192,8 @@ export function LandingHero() {
           className="text-section-heading mb-6 max-w-3xl text-balance"
           data-testid="hero-heading"
         >
-          {copy.heading}
+          {copy.headingPrefix}{" "}
+          <span className={accentClass}>{copy.headingAccent}</span>
         </h1>
 
         <p className="max-w-xl text-base text-secondary text-balance sm:text-lg" data-testid="hero-subheading">
