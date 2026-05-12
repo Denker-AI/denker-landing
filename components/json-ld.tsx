@@ -21,8 +21,8 @@ const schema = JSON.stringify({
     {
       "@type": "SoftwareApplication",
       name: "Denker",
-      applicationCategory: "BusinessApplication",
-      operatingSystem: "Web",
+      applicationCategory: "ProductivityApplication",
+      operatingSystem: "macOS",
       description: DESCRIPTION,
       offers: {
         "@type": "Offer",

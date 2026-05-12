@@ -1,9 +1,9 @@
 export const SITE_URL = "https://www.denker.ai";
 
-export const TITLE = "Denker — Your AI Team, One Canvas";
+export const TITLE = "Denker — Your AI Agent Team around your cursor";
 
 export const DESCRIPTION =
-  "Denker is your AI agent workspace. Direct a team that researches, writes, codes, and automates — all in parallel on one canvas. Every step visible. Always under your control.";
+  "Desktop AI agent team around your cursor on macOS. Specialists that research, write, code, ship — all in parallel on one canvas. Web app for any browser.";
 
 export const DEFAULT_OG_IMAGE = {
   url: `${SITE_URL}/og-image.png`,

@@ -12,7 +12,7 @@ export const HERO_COPY = {
     headingPrefix: "Wear every hat?",
     headingAccent: "Bring a team to your cursor.",
     subheading:
-      "AI agents that research, write, code and ship — in parallel, right where you work.",
+      "AI agents that research, write, code and ship — in parallel, right on your desktop.",
     cta: "Start Now",
   },
   "variant-b": {
