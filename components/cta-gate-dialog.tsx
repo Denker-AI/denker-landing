@@ -2,64 +2,13 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-
-/* ── OS / device detection ───────────────────────────────────────── */
-
-type Device = "mac-desktop" | "mobile" | "other-desktop";
-
-function detectDevice(): Device {
-  if (typeof navigator === "undefined") return "other-desktop";
-  const platform = navigator.platform || "";
-  const ua = navigator.userAgent || "";
-
-  /* Phone / tablet: iPhone, iPad, iPod, Android, or any UA with "Mobile". */
-  const isIOS = /iPhone|iPad|iPod/.test(platform) || /iPhone|iPad|iPod/.test(ua);
-  const isAndroid = /Android/.test(ua);
-  const isTouchMobile = isIOS || isAndroid || /Mobile/.test(ua);
-  if (isTouchMobile) return "mobile";
-
-  /* True macOS desktop. iPad-on-iPadOS-13+ reports as "MacIntel" but is mobile,
-   * caught above by the iPad UA check (modern iPadOS includes "iPad" only via
-   * userAgent if requestDesktopSite is off — for the requestDesktopSite case,
-   * we accept the false positive; user can still click "Open in browser"). */
-  if (/Mac/.test(platform) || /Mac OS X/.test(ua)) return "mac-desktop";
-
-  return "other-desktop";
-}
-
-/* Returning-user detection — reads the `denker_user` cookie set by the auth
- * backend on `.denker.ai`. Present = signed in (or has been recently). Cookie
- * does NOT carry session data — it's a UX-only hint to re-rank our CTAs. */
-function detectReturningUser(): boolean {
-  if (typeof document === "undefined") return false;
-  return /(?:^|;\s*)denker_user=1(?:;|$)/.test(document.cookie);
-}
-
-/* Resolve the right Mac binary URL from the Tauri auto-updater manifest.
- * Returns null if the manifest is empty (no public build yet) or unreachable —
- * caller falls back to the sign-up flow. */
-async function fetchMacDownloadUrl(): Promise<string | null> {
-  try {
-    const res = await fetch("https://updates.denker.ai/latest.json", {
-      cache: "no-store",
-    });
-    if (!res.ok) return null;
-    const data = (await res.json()) as {
-      platforms?: Record<string, { url?: string }>;
-    };
-    const platforms = data.platforms ?? {};
-    /* Apple Silicon is the modern default; fall back to Intel if only that exists. */
-    return (
-      platforms["darwin-aarch64"]?.url ??
-      platforms["darwin-x86_64"]?.url ??
-      null
-    );
-  } catch {
-    return null;
-  }
-}
-
-const SIGNUP_DESKTOP_FALLBACK = "https://space.denker.ai/auth/register?intent=desktop";
+import {
+  detectDevice,
+  detectReturningUser,
+  fetchMacDownloadUrl,
+  SIGNUP_DESKTOP_FALLBACK,
+  type Device,
+} from "@/lib/download-resolver";
 
 /* ── Convenience hook ────────────────────────────────────────────── */
 

@@ -65,6 +65,56 @@ export const CATEGORY_COLORS: Record<BlogCategory, string> = {
 export const posts: BlogPost[] = [
   /* ── Newsletters ──────────────────────────────────────── */
   {
+    slug: "denker-on-your-desktop",
+    category: "newsletter",
+    title: "Denker Is Now a Mac App",
+    subject: "Your AI team just moved to your desktop.",
+    previewText:
+      "Agent cursors, voice, and a global hotkey — Denker for macOS is here.",
+    date: "2026-05-12",
+    heroTitle: "Your AI team just moved to your desktop",
+    heroSubtitle:
+      "Denker for macOS is here — agents around your cursor, on every screen",
+    intro:
+      "Until today, your AI team lived in a browser tab. Today it lives on your desktop. Denker for macOS is a native app — built for the way you actually work. Agents follow your cursor, listen when you talk, and show up the moment you summon them. Same canvas, same agents, now woven into your machine.",
+    features: [
+      {
+        title: "A team around your cursor",
+        badge: "NEW",
+        badgeColor: "green",
+        description:
+          "Your agents are no longer trapped behind a tab. Researcher, Coder, Writer — each has a cursor that lives on your screen, moves with intent, and works alongside yours. You see what they're doing in real time, on top of whatever app you're in. The canvas is now one hover away from your desktop.",
+        tagline: "Specialists at your side. Literally.",
+        image: "/blog/assets/denker-on-your-desktop/agent-cursors.mp4",
+      },
+      {
+        title: "Summon with a hotkey. Talk to it.",
+        badge: "NEW",
+        badgeColor: "amber",
+        description:
+          "Hit the global hotkey from anywhere — Slack, your IDE, a browser, a doc — and Denker comes to you. Speak your task; dictation is built in. No app switching, no context loss. Just say what you need and an agent picks it up.",
+        tagline: "Stay where you are. Direct from anywhere.",
+        image: "/blog/assets/denker-on-your-desktop/summon-and-voice.mp4",
+      },
+      {
+        title: "Native, signed, auto-updating",
+        badge: "UPGRADE",
+        badgeColor: "blue",
+        description:
+          "Denker Local is a real Mac app — signed and notarized, universal binary for Apple Silicon and Intel, multi-monitor aware, with silent auto-updates. The companion that runs your CLIs is bundled inside. One download, no terminal commands.",
+        tagline: "Install once. Always up to date.",
+        image: "/blog/assets/denker-on-your-desktop/install.png",
+      },
+    ],
+    note: "Still works in the browser at space.denker.ai. The Mac app just makes it feel like it always belonged on your machine.",
+    cta: {
+      text: "Download for macOS",
+      url: "https://www.denker.ai/download?utm_source=newsletter&utm_medium=email&utm_campaign=denker-on-your-desktop",
+      style: "button",
+    },
+    status: "draft",
+  },
+  {
     slug: "denker-is-live",
     category: "newsletter",
     title: "Your AI Team Is Ready",
