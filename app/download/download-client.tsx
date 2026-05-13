@@ -17,6 +17,7 @@ import {
 } from "@/lib/download-resolver";
 
 const SESSION_TRIGGER_KEY = "denker_download_triggered";
+const DOWNLOAD_FRAME_ID = "denker-download-frame";
 
 /* ── PostHog capture helper (matches waitlist-form.tsx pattern) ─ */
 
@@ -29,6 +30,17 @@ function captureEvent(event: string, properties?: Record<string, unknown>): void
     | PostHogInstance
     | undefined;
   ph?.capture?.(event, properties);
+}
+
+function triggerDownload(url: string): void {
+  document.getElementById(DOWNLOAD_FRAME_ID)?.remove();
+
+  const frame = document.createElement("iframe");
+  frame.id = DOWNLOAD_FRAME_ID;
+  frame.hidden = true;
+  frame.setAttribute("aria-hidden", "true");
+  frame.src = url;
+  document.body.appendChild(frame);
 }
 
 /* ── Page state ─────────────────────────────────────────────── */
@@ -90,7 +102,7 @@ export function DownloadClient() {
       setState({ kind: "mac-downloading", url });
       if (!alreadyTriggered) {
         sessionStorage.setItem(SESSION_TRIGGER_KEY, "1");
-        window.location.assign(url);
+        triggerDownload(url);
         captureEvent("mac_download_started", { channel });
       }
     });
@@ -112,7 +124,7 @@ export function DownloadClient() {
       }
       setState({ kind: "mac-downloading", url });
       sessionStorage.setItem(SESSION_TRIGGER_KEY, "1");
-      window.location.assign(url);
+      triggerDownload(url);
       captureEvent("mac_download_started", { channel });
     });
   };
@@ -133,7 +145,11 @@ export function DownloadClient() {
         label: "Download for Mac",
         disabled: false,
         href: (state as { kind: "mac-downloading"; url: string }).url,
-        onClick: undefined,
+        onClick: () => {
+          const url = (state as { kind: "mac-downloading"; url: string }).url;
+          triggerDownload(url);
+          captureEvent("mac_download_started", { channel: getChannel(), manual: true });
+        },
       };
     }
     if (isMacFailed) {
@@ -180,6 +196,11 @@ export function DownloadClient() {
           {primaryButton.href ? (
             <a
               href={primaryButton.href}
+              onClick={(event) => {
+                if (!primaryButton.onClick) return;
+                event.preventDefault();
+                primaryButton.onClick();
+              }}
               className="inline-flex h-11 w-full items-center justify-center rounded-full bg-accent text-sm font-bold text-canvas transition-opacity hover:opacity-80"
               data-testid="download-primary-btn"
             >
