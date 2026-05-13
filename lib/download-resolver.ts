@@ -116,5 +116,10 @@ export async function fetchMacDownloadUrlWithUtm(search: string): Promise<string
   return url.toString();
 }
 
-export const SIGNUP_DESKTOP_FALLBACK =
-  "https://space.denker.ai/auth/register?intent=desktop";
+/**
+ * Fallback destination for "Get Denker for Mac" when the auto-updater manifest
+ * is unreachable or empty. Routes to `/download`, which re-attempts the
+ * resolver client-side and surfaces explicit error / retry / "Open in browser"
+ * / "Back to home" options — instead of silently dumping users into sign-up.
+ */
+export const MAC_DOWNLOAD_PAGE_FALLBACK = "/download";

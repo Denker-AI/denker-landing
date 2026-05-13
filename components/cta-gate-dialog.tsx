@@ -6,7 +6,7 @@ import {
   detectDevice,
   detectReturningUser,
   fetchMacDownloadUrl,
-  SIGNUP_DESKTOP_FALLBACK,
+  MAC_DOWNLOAD_PAGE_FALLBACK,
   type Device,
 } from "@/lib/download-resolver";
 
@@ -62,7 +62,7 @@ export function CtaGateDialog({
        * already points at the sign-up fallback so the click works either way. */
       e.preventDefault();
       fetchMacDownloadUrl().then((url) => {
-        window.location.href = url ?? SIGNUP_DESKTOP_FALLBACK;
+        window.location.href = url ?? MAC_DOWNLOAD_PAGE_FALLBACK;
       });
     },
     [macDownloadUrl],
@@ -165,7 +165,7 @@ export function CtaGateDialog({
             ) : isMac ? (
               <>
                 <a
-                  href={macDownloadUrl ?? SIGNUP_DESKTOP_FALLBACK}
+                  href={macDownloadUrl ?? MAC_DOWNLOAD_PAGE_FALLBACK}
                   onClick={handleMacDownload}
                   className="inline-flex h-11 w-full items-center justify-center rounded-full bg-accent text-sm font-bold text-canvas transition-opacity hover:opacity-80"
                   data-testid="cta-gate-download-mac"
