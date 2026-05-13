@@ -215,6 +215,19 @@ export function DownloadClient() {
             </a>
           </div>
         )}
+
+        {/* Tertiary link — extra escape hatch back to the marketing site */}
+        {(isNonMacDesktop || isMobile || isMacFailed) && (
+          <div className="mt-4">
+            <a
+              href="/"
+              className="text-xs text-muted underline-offset-4 hover:text-secondary hover:underline"
+              data-testid="download-back-home-link"
+            >
+              Back to home
+            </a>
+          </div>
+        )}
       </div>
 
       {/* Footnote — always visible */}
