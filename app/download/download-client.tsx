@@ -16,9 +16,6 @@ import {
   type Device,
 } from "@/lib/download-resolver";
 
-const SESSION_TRIGGER_KEY = "denker_download_triggered";
-const DOWNLOAD_FRAME_ID = "denker-download-frame";
-
 /* ── PostHog capture helper (matches waitlist-form.tsx pattern) ─ */
 
 type PostHogInstance = {
@@ -33,14 +30,7 @@ function captureEvent(event: string, properties?: Record<string, unknown>): void
 }
 
 function triggerDownload(url: string): void {
-  document.getElementById(DOWNLOAD_FRAME_ID)?.remove();
-
-  const frame = document.createElement("iframe");
-  frame.id = DOWNLOAD_FRAME_ID;
-  frame.hidden = true;
-  frame.setAttribute("aria-hidden", "true");
-  frame.src = url;
-  document.body.appendChild(frame);
+  window.location.assign(url);
 }
 
 /* ── Page state ─────────────────────────────────────────────── */
@@ -87,10 +77,6 @@ export function DownloadClient() {
 
     let cancelled = false;
     const channel = getChannel();
-    /* Guard against double-trigger on accidental reload / back-button. */
-    const alreadyTriggered =
-      typeof sessionStorage !== "undefined" &&
-      sessionStorage.getItem(SESSION_TRIGGER_KEY) === "1";
 
     fetchMacDownloadUrlWithUtm(window.location.search).then((url) => {
       if (cancelled) return;
@@ -100,11 +86,8 @@ export function DownloadClient() {
         return;
       }
       setState({ kind: "mac-downloading", url });
-      if (!alreadyTriggered) {
-        sessionStorage.setItem(SESSION_TRIGGER_KEY, "1");
-        triggerDownload(url);
-        captureEvent("mac_download_started", { channel });
-      }
+      triggerDownload(url);
+      captureEvent("mac_download_started", { channel });
     });
 
     return () => {
@@ -123,7 +106,6 @@ export function DownloadClient() {
         return;
       }
       setState({ kind: "mac-downloading", url });
-      sessionStorage.setItem(SESSION_TRIGGER_KEY, "1");
       triggerDownload(url);
       captureEvent("mac_download_started", { channel });
     });
@@ -146,8 +128,6 @@ export function DownloadClient() {
         disabled: false,
         href: (state as { kind: "mac-downloading"; url: string }).url,
         onClick: () => {
-          const url = (state as { kind: "mac-downloading"; url: string }).url;
-          triggerDownload(url);
           captureEvent("mac_download_started", { channel: getChannel(), manual: true });
         },
       };
@@ -198,7 +178,6 @@ export function DownloadClient() {
               href={primaryButton.href}
               onClick={(event) => {
                 if (!primaryButton.onClick) return;
-                event.preventDefault();
                 primaryButton.onClick();
               }}
               className="inline-flex h-11 w-full items-center justify-center rounded-full bg-accent text-sm font-bold text-canvas transition-opacity hover:opacity-80"

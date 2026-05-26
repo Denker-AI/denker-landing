@@ -64,6 +64,12 @@ function manifestUrlForChannel(channel: "prod" | "preview"): string {
     : "https://updates.denker.ai/latest.json";
 }
 
+function installerUrlForChannel(channel: "prod" | "preview"): string {
+  return channel === "preview"
+    ? "https://updates.denker.ai/preview/Denker_latest_universal.dmg"
+    : "https://updates.denker.ai/Denker_latest_universal.dmg";
+}
+
 /**
  * Resolve the right Mac binary URL from the Tauri auto-updater manifest.
  * The manifest exposes the `.app.tar.gz` URL (the in-place updater payload);
@@ -76,7 +82,8 @@ function manifestUrlForChannel(channel: "prod" | "preview"): string {
  */
 export async function fetchMacDownloadUrl(): Promise<string | null> {
   try {
-    const res = await fetch(manifestUrlForChannel(getChannel()), { cache: "no-store" });
+    const channel = getChannel();
+    const res = await fetch(manifestUrlForChannel(channel), { cache: "no-store" });
     if (!res.ok) return null;
     const data = (await res.json()) as {
       platforms?: Record<string, { url?: string }>;
@@ -87,8 +94,7 @@ export async function fetchMacDownloadUrl(): Promise<string | null> {
     const updaterUrl =
       platforms["darwin-aarch64"]?.url ?? platforms["darwin-x86_64"]?.url;
     if (!updaterUrl) return null;
-    /* Swap auto-updater tarball → installer DMG (same filename root, same dir). */
-    return updaterUrl.replace(/\.app\.tar\.gz$/, ".dmg");
+    return installerUrlForChannel(channel);
   } catch {
     return null;
   }
