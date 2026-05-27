@@ -70,7 +70,7 @@ export function LandingCta() {
             className="text-section-heading"
             data-testid="cta-heading"
           >
-            Stay in the loop
+            Follow the shift
           </h2>
         </div>
 
@@ -89,7 +89,7 @@ export function LandingCta() {
             </div>
             <h3 className="mb-2 text-lg font-bold text-primary">LinkedIn</h3>
             <p className="mb-6 flex-1 text-sm leading-relaxed text-secondary">
-              Stay updated on new features and discover how others are using Denker.
+              See how founders direct AI agents from one canvas and move more work forward.
             </p>
             <a
               href="https://linkedin.com/company/denkerai"
@@ -113,7 +113,7 @@ export function LandingCta() {
             </div>
             <h3 className="mb-2 text-lg font-bold text-primary">Newsletter</h3>
             <p className="mb-6 flex-1 text-sm leading-relaxed text-secondary">
-              Tips, tutorials, and in-depth feature guides to inspire and enhance your workflows.
+              Get practical examples for saving time, directing agents, and growing output as a founder.
             </p>
             <NewsletterForm />
           </div>

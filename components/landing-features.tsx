@@ -617,9 +617,9 @@ export function LandingFeatures() {
 
       {/* ── Canvas ── */}
       <FeatureBlock
-        label="Canvas Workspace"
-        heading={<>Every output lands{" "}<span className="text-accent">on your canvas.</span></>}
-        description={<><strong className="font-semibold text-primary">See everything, control everything</strong> — research briefs, email drafts, code files. Each agent delivers straight to a named frame. Arrange, resize, and export.</>}
+        label="Less Tool Switching"
+        heading={<>Review every AI result{" "}<span className="text-accent">on one canvas.</span></>}
+        description={<><strong className="font-semibold text-primary">Research, drafts, code and decisions land in one place</strong> — so you can check progress without jumping between sessions and tools.</>}
         pills={[
           { icon: Icons.Layers, label: "Frames" },
           { icon: Icons.Eye, label: "Live preview" },
@@ -633,9 +633,9 @@ export function LandingFeatures() {
 
       {/* ── Task Board ── */}
       <FeatureBlock
-        label="Task Board"
-        heading={<>Delegate work.{" "}<span className="text-accent">Track everything.</span></>}
-        description={<><strong className="font-semibold text-primary">Assign, track, and deliver</strong> — create tasks in plain language, assign them to agents, and watch progress on a visual board. Agents pick up work, report back, and move tasks forward.</>}
+        label="Move Work Forward"
+        heading={<>Turn sessions{" "}<span className="text-accent">into tasks.</span></>}
+        description={<><strong className="font-semibold text-primary">Create tasks in plain language and hand them to agents</strong> — so each session stays tied to a next step.</>}
         pills={[
           { icon: Icons.ListChecks, label: "Tasks" },
           { icon: Icons.Bot, label: "Delegation" },
@@ -648,9 +648,9 @@ export function LandingFeatures() {
 
       {/* ── Memory ── */}
       <FeatureBlock
-        label="Intelligent Memory"
-        heading={<>Remember{" "}<span className="text-accent">everything that matters</span></>}
-        description={<><strong className="font-semibold text-primary">Every task builds your knowledge graph</strong> — clients, context, preferences, outcomes. Agents surface exactly what&apos;s relevant when it matters, without you repeating yourself.</>}
+        label="Protect Business Context"
+        heading={<>Stop repeating{" "}<span className="text-accent">context.</span></>}
+        description={<><strong className="font-semibold text-primary">Every task builds shared memory</strong> — customers, decisions and outcomes stay reusable, so agents can move faster without making you repeat yourself.</>}
         pills={[
           { icon: Icons.Network, label: "Knowledge graph" },
           { icon: Icons.Eye, label: "Always in context" },
@@ -670,9 +670,9 @@ export function LandingFeatures() {
             <h2
               className="text-section-heading"
             >
-              The AI workspace built for thinkers,
+              More business progress,
               <br />
-              <span className="text-accent">powered by simplicity</span>
+              <span className="text-accent">less AI coordination</span>
             </h2>
           </div>
 
@@ -683,7 +683,7 @@ export function LandingFeatures() {
             <BentoCard>
               <span className="mb-1 text-xs font-semibold uppercase tracking-widest text-muted">Type to summon</span>
               <h3 className="mb-5 text-lg font-bold font-satoshi text-primary">
-                Tap Control, twice.
+                Start from anywhere.
               </h3>
               <TypeSummonShortcut />
             </BentoCard>
@@ -692,7 +692,7 @@ export function LandingFeatures() {
             <BentoCard>
               <span className="mb-1 text-xs font-semibold uppercase tracking-widest text-muted">Speak to summon</span>
               <h3 className="mb-5 text-lg font-bold font-satoshi text-primary">
-                Hold Control + Option.
+                Capture work by voice.
               </h3>
               <SpeakSummonShortcut />
             </BentoCard>
@@ -701,7 +701,7 @@ export function LandingFeatures() {
             <BentoCard>
               <span className="mb-1 text-xs font-semibold uppercase tracking-widest text-muted">Integrations</span>
               <h3 className="mb-5 text-lg font-bold font-satoshi text-primary">
-                Connects to everything you use
+                Connect the tools you use
               </h3>
               <ConnectionGrid />
             </BentoCard>
@@ -715,9 +715,9 @@ export function LandingFeatures() {
               <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-accent/10">
                 <Icons.Heart className="h-5 w-5 text-accent" />
               </div>
-              <h3 className="mb-2 font-bold text-primary">Heartbeat</h3>
+              <h3 className="mb-2 font-bold text-primary">Save coordination time</h3>
               <p className="text-sm leading-relaxed text-secondary">
-                Agents run on your computer, around the clock. Close the window — your work keeps moving.
+                Agents run on your computer, around the clock, so work can continue while you focus elsewhere.
               </p>
             </BentoCard>
 
@@ -727,7 +727,7 @@ export function LandingFeatures() {
               </div>
               <h3 className="mb-2 font-bold text-primary">Always in control</h3>
               <p className="text-sm leading-relaxed text-secondary">
-                Set approval gates anywhere. Nothing moves forward without your explicit sign-off.
+                Set approval gates anywhere. Review important work before it affects customers or the business.
               </p>
             </BentoCard>
 
@@ -735,9 +735,9 @@ export function LandingFeatures() {
               <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-accent/10">
                 <Icons.Cpu className="h-5 w-5 text-accent" />
               </div>
-              <h3 className="mb-2 font-bold text-primary">Autonomous</h3>
+              <h3 className="mb-2 font-bold text-primary">More progress per founder</h3>
               <p className="text-sm leading-relaxed text-secondary">
-                Agents plan and track their own tasks. You see every step — steer anytime.
+                Agents plan and track tasks, so solo founders and small teams can move more work forward.
               </p>
             </BentoCard>
 

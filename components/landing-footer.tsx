@@ -16,7 +16,7 @@ export function LandingFooter() {
             <div className="flex flex-col gap-5">
               <DenkerLogo variant="wordmark" height={22} />
               <p className="max-w-[220px] text-sm leading-relaxed text-secondary">
-                Making AI work as natural as conversation. Built for thinkers who move fast.
+                Turn scattered AI sessions into business progress.
               </p>
               <div className="flex items-center gap-2">
                 <a

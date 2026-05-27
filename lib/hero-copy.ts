@@ -9,24 +9,24 @@
 
 export const HERO_COPY = {
   control: {
-    headingPrefix: "Wear every hat?",
-    headingAccent: "Bring a team to your cursor.",
+    headingPrefix: "Turn scattered AI sessions",
+    headingAccent: "into business progress.",
     subheading:
-      "AI agents that research, write, code and ship — in parallel, right on your desktop.",
+      "Denker gives founders one AI agent team and one canvas to direct work, review outputs, and move priorities forward.",
     cta: "Start Now",
   },
   "variant-b": {
-    headingPrefix: "Stop juggling tabs.",
-    headingAccent: "Direct a team.",
+    headingPrefix: "Turn scattered AI sessions",
+    headingAccent: "into business progress.",
     subheading:
-      "Specialist agents work in parallel on one canvas, on your desktop, around your cursor.",
+      "Denker gives founders one AI agent team and one canvas to direct work, review outputs, and move priorities forward.",
     cta: "Start Now",
   },
   "variant-c": {
-    headingPrefix: "Stop wearing every hat.",
-    headingAccent: "Start delegating it.",
+    headingPrefix: "Turn scattered AI sessions",
+    headingAccent: "into business progress.",
     subheading:
-      "A team of AI specialists on your desktop. You direct. They ship — in parallel.",
+      "Denker gives founders one AI agent team and one canvas to direct work, review outputs, and move priorities forward.",
     cta: "Start Now",
   },
 } as const;

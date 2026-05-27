@@ -1,10 +1,10 @@
-import { SITE_URL, DESCRIPTION } from "@/lib/seo";
+import { SITE_URL, TAGLINE, DESCRIPTION } from "@/lib/seo";
 
 const CONTENT = `# Denker
 
-> Your AI agent team, on your desktop. ${DESCRIPTION}
+> ${TAGLINE} ${DESCRIPTION}
 
-Denker is a desktop AI agent workspace. The macOS app is available today; Windows and Linux users have full access via the web app, with native desktop apps for both coming soon. Instead of prompting one AI at a time, you direct a team of specialist agents — Researcher, Writer, Coder, Analyst — each with a named cursor that lives on your screen, working in parallel on a shared canvas around your active cursor. You give direction; they handle execution. Every action is visible in real time — no black boxes, no waiting for one task to finish before the next begins.
+Denker is an AI agent workspace for founders. The macOS app is available today; Windows and Linux users have full access via the web app, with native desktop apps for both coming soon. Instead of scattering work across separate AI chats, you direct a team of specialist agents — Researcher, Writer, Coder, Analyst — from one shared canvas. Tasks, context, outputs, and review stay together so AI work can move business priorities forward.
 
 Denker runs on your own CLI subscription (Claude Code, OpenAI Codex, or OpenCode). You own the AI tokens and costs. Denker provides the desktop app, the agent orchestration, the canvas, the memory, and the integrations.
 
@@ -14,15 +14,16 @@ Denker runs on your own CLI subscription (Claude Code, OpenAI Codex, or OpenCode
 - Agent cursors: each agent has a named cursor visible on your screen, alongside your own
 - Parallel agent execution: multiple specialist agents work simultaneously on one canvas
 - Around-your-cursor workflow: summon Denker with a global hotkey and dictate tasks from any app
-- Real-time visibility: every agent action appears live — research, writing, code, outreach, automation
+- One canvas for outputs: research, drafts, code, decisions, and reviews stay in one place
+- Taskboard: turn AI sessions into tracked tasks with next steps
 - Knowledge graph memory: agents build and reuse a persistent memory across all your work
 - 2000+ integrations: connect agents to Gmail, Slack, GitHub, Notion, and more via Composio
-- Infinite canvas workspace: work is organized spatially, not in a chat thread
+- Infinite canvas workspace: work is organized spatially, not trapped in separate chat threads
 - Bring your own AI: Claude Code GUI, Codex GUI, or OpenCode — you control the model and the cost
 
 ## Who it is for
 
-Solo founders, builders, and small teams who want to delegate execution to an AI agent team while staying in control of direction. Replaces the pattern of prompting one AI repeatedly with directing a coordinated team of agents that work in parallel, directly on your desktop.
+Solo founders, builders, and small teams who want more business progress from AI without scattering context across chat sessions and tools. Denker replaces the pattern of prompting one AI repeatedly with directing a coordinated agent team from one canvas.
 
 ## Pricing
 

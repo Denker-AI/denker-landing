@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { DEFAULT_OG_IMAGE } from "@/lib/seo";
+import { DEFAULT_OG_IMAGE, DESCRIPTION } from "@/lib/seo";
 import { DownloadClient } from "./download-client";
 
 export const metadata: Metadata = {
   title: "Download Denker for macOS",
-  description: "Download the Denker desktop app for macOS. Your AI team on one canvas.",
+  description: DESCRIPTION,
   alternates: { canonical: "/download" },
   robots: { index: true, follow: true },
   openGraph: {
     title: "Download Denker for macOS",
-    description: "Download the Denker desktop app for macOS. Your AI team on one canvas.",
+    description: DESCRIPTION,
     url: "https://www.denker.ai/download",
     type: "website",
     images: [DEFAULT_OG_IMAGE],
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Download Denker for macOS",
-    description: "Download the Denker desktop app for macOS. Your AI team on one canvas.",
+    description: DESCRIPTION,
   },
 };
 

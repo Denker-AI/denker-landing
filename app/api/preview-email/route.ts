@@ -101,9 +101,9 @@ function waitlistHtml(email: string): string {
     </h1>
 
     <p style="font-family:${F};font-size:15px;color:${C.textSec};line-height:1.7;margin:0 0 28px;">
-      Thanks for your interest in Denker. We're building a workspace where
-      AI agents research, write, code, and automate &mdash; all visible on
-      one canvas.
+      Thanks for your interest in Denker. We're building one AI agent team
+      and one canvas to direct work, review outputs, and move priorities
+      forward.
     </p>
 
     <!-- Glass card -->

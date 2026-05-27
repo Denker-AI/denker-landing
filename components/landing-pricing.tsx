@@ -273,9 +273,9 @@ export function LandingPricing() {
           className="text-section-heading mb-4"
           data-testid="pricing-heading"
         >
-          Less than a hire.
+          More progress.
           <br />
-          <span className="text-accent">More than a tool.</span>
+          <span className="text-accent">One workspace.</span>
         </h2>
         <p className="text-base text-secondary">
           Start free. Pay for what your agents actually need.

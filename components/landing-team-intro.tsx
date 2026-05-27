@@ -611,11 +611,11 @@ function MeetDenkerStage() {
         <div className="relative z-10 mx-auto flex min-h-screen max-w-3xl flex-col items-center justify-center px-5 text-center sm:px-6">
           <span className="badge-section mb-4">Meet Denker</span>
           <h2 className="text-section-heading mb-5 text-balance">
-            Your team. <span className="text-accent">All in parallel.</span>
+            Direct your AI agent team <span className="text-accent">from one place.</span>
           </h2>
           <p className="mx-auto max-w-xl text-base leading-relaxed text-secondary text-balance">
-            One keystroke wakes your team lead. Denker stays next to your cursor,
-            picks up tasks, and routes them to the right specialist.
+            One keystroke wakes Denker. It picks up tasks, keeps context close,
+            and routes work to the right agent.
           </p>
         </div>
 

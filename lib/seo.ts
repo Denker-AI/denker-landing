@@ -1,13 +1,15 @@
 export const SITE_URL = "https://www.denker.ai";
 
-export const TITLE = "Denker — Your AI Agent Team around your cursor";
+export const TAGLINE = "Turn scattered AI sessions into business progress.";
+
+export const TITLE = "Denker — Turn Scattered AI Sessions into Business Progress";
 
 export const DESCRIPTION =
-  "Desktop AI agent team around your cursor on macOS. Specialists that research, write, code, ship — all in parallel on one canvas. Web app for any browser.";
+  "Denker gives founders one AI agent team and one canvas to direct work, review outputs, and move priorities forward.";
 
 export const DEFAULT_OG_IMAGE = {
   url: `${SITE_URL}/og-image.png`,
   width: 1200,
   height: 630,
-  alt: "Denker — Your AI team working in parallel on one canvas",
+  alt: "Denker — turn scattered AI sessions into business progress",
 } as const;

@@ -180,7 +180,7 @@ function waitlistConfirmHtml(email: string): string {
   const safe = escapeHtml(email);
   const content = `
     <h1 style="font-family:${FH};font-size:24px;font-weight:700;margin:0 0 20px;color:${E.text};line-height:1.3;">You're on the waitlist</h1>
-    <p style="font-family:${F};font-size:15px;color:${E.textSec};line-height:1.7;margin:0 0 28px;">Thanks for your interest in Denker. We're building a workspace where AI agents research, write, code, and automate &mdash; all visible on one canvas.</p>
+    <p style="font-family:${F};font-size:15px;color:${E.textSec};line-height:1.7;margin:0 0 28px;">Thanks for your interest in Denker. We're building one AI agent team and one canvas to direct work, review outputs, and move priorities forward.</p>
     <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 28px;">
       <tr><td style="background-color:${E.surface};border:1px solid ${E.surfaceBorder};border-radius:12px;padding:20px 24px;">
         <p style="font-family:${F};font-size:11px;color:${E.textMuted};margin:0 0 6px;text-transform:uppercase;letter-spacing:0.08em;">Reserved for</p>

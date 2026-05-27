@@ -9,11 +9,11 @@ export function LandingFinalCta() {
     <section className="px-5 py-28 sm:px-6 lg:px-12" data-testid="landing-final-cta">
       <div className="mx-auto max-w-xl text-center">
         <h2 className="text-section-heading mb-4">
-          Your team.<br />
-          <span className="text-accent">One signup away.</span>
+          Move more work<br />
+          <span className="text-accent">with AI agents.</span>
         </h2>
         <p className="mb-10 text-base text-secondary">
-          Free to start. Works on Mac, Windows, and Linux. No credit card.
+          Start with one canvas for sessions, tasks, context and outputs.
         </p>
         <button
           type="button"
