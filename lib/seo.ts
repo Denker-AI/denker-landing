@@ -11,5 +11,5 @@ export const DEFAULT_OG_IMAGE = {
   url: `${SITE_URL}/og-image.png`,
   width: 1200,
   height: 630,
-  alt: "Denker — turn scattered AI sessions into business progress",
+  alt: "Denker — Turn scattered AI sessions into business progress",
 } as const;
