@@ -49,7 +49,7 @@ function getStatusLine(state: PageState): string {
     case "detecting":
       return "Detecting your device…";
     case "mac-downloading":
-      return "Downloading Denker for macOS…";
+      return "Your download should start automatically. If it doesn't, click Download again.";
     case "mac-failed":
       return "Couldn't reach our servers. Try again?";
     case "other-desktop":
@@ -124,7 +124,7 @@ export function DownloadClient() {
     }
     if (isMacDownloading) {
       return {
-        label: "Download for Mac",
+        label: "Download again",
         disabled: false,
         href: (state as { kind: "mac-downloading"; url: string }).url,
         onClick: () => {
@@ -163,13 +163,6 @@ export function DownloadClient() {
         >
           {getStatusLine(state)}
         </p>
-
-        {/* Spinner — shown while detecting or downloading */}
-        {(isDetecting || isMacDownloading) && (
-          <div className="mt-5 flex justify-center" aria-hidden="true">
-            <div className="h-5 w-5 animate-spin rounded-full border-2 border-glass-stroke border-t-accent" />
-          </div>
-        )}
 
         {/* Primary button */}
         <div className="mt-6">
