@@ -128,6 +128,47 @@ export function capturePageview(): void {
   if (ph?.capture) ph.capture("$pageview");
 }
 
+function getReferringDomain(): string | null {
+  if (typeof document === "undefined" || !document.referrer) return null;
+  try {
+    return new URL(document.referrer).hostname;
+  } catch {
+    return null;
+  }
+}
+
+export function getAttributionProperties(): Record<string, string | null> {
+  if (typeof window === "undefined") return {};
+  const params = new URLSearchParams(window.location.search);
+  const referrer = typeof document === "undefined" ? null : document.referrer || null;
+  const referringDomain = getReferringDomain();
+  const utmSource = params.get("utm_source");
+
+  return {
+    page_url: window.location.href,
+    page_path: window.location.pathname,
+    referrer,
+    referring_domain: referringDomain,
+    acquisition_channel: utmSource || referringDomain || "direct",
+    utm_source: utmSource,
+    utm_medium: params.get("utm_medium"),
+    utm_campaign: params.get("utm_campaign"),
+    utm_content: params.get("utm_content"),
+    utm_term: params.get("utm_term"),
+    gclid: params.get("gclid"),
+    fbclid: params.get("fbclid"),
+    li_fat_id: params.get("li_fat_id"),
+  };
+}
+
+export function captureEvent(
+  event: string,
+  properties?: Record<string, unknown>,
+): void {
+  const ph = getPostHog();
+  if (ph?.capture) ph.capture(event, properties);
+}
+
 /** Get a feature flag value synchronously. Returns undefined if PostHog isn't ready. */
 export function getFeatureFlag(key: string): string | boolean | undefined {
   const ph = getPostHog();
