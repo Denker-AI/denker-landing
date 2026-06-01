@@ -3,6 +3,7 @@ import Link from "next/link";
 import { DocsNav } from "@/components/docs-sidebar";
 import { DocsImage } from "@/components/docs-lightbox";
 import { DEFAULT_OG_IMAGE } from "@/lib/seo";
+import { webAppAuthUrls } from "@/lib/web-app-auth";
 
 export const metadata: Metadata = {
   title: "Getting Started",
@@ -73,7 +74,7 @@ export default function GettingStartedPage() {
         <p className="mb-8 text-base leading-relaxed text-secondary">
           Sign up at{" "}
           <a
-            href="https://space.denker.ai"
+            href={webAppAuthUrls.desktopRegister}
             target="_blank"
             rel="noopener noreferrer"
             className="text-accent underline decoration-accent/30 underline-offset-2 hover:text-accent/80"
