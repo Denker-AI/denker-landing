@@ -9,6 +9,7 @@ import {
   MAC_DOWNLOAD_PAGE_FALLBACK,
   type Device,
 } from "@/lib/download-resolver";
+import { webAppAuthUrls } from "@/lib/web-app-auth";
 
 /* ── Convenience hook ────────────────────────────────────────────── */
 
@@ -58,8 +59,8 @@ export function CtaGateDialog({
     (e: React.MouseEvent<HTMLAnchorElement>) => {
       /* If we already resolved a binary URL, the <a> href is set — let it through. */
       if (macDownloadUrl) return;
-      /* Otherwise, try one more time at click time. If still nothing, the <a>
-       * already points at the sign-up fallback so the click works either way. */
+      /* Otherwise, try one more time at click time. If still nothing, send the
+       * user to /download so that page can retry and explain the fallback. */
       e.preventDefault();
       fetchMacDownloadUrl().then((url) => {
         window.location.href = url ?? MAC_DOWNLOAD_PAGE_FALLBACK;
@@ -133,7 +134,7 @@ export function CtaGateDialog({
               <>
                 {isMac && (
                   <a
-                    href={macDownloadUrl ?? "https://space.denker.ai/auth/login?intent=desktop"}
+                    href={macDownloadUrl ?? webAppAuthUrls.desktopLogin}
                     onClick={handleMacDownload}
                     className="inline-flex h-11 w-full items-center justify-center rounded-full border border-glass-stroke bg-glass-fill text-sm font-semibold text-primary transition-colors hover:border-glass-stroke-light"
                     data-testid="cta-gate-download-mac"
@@ -142,7 +143,7 @@ export function CtaGateDialog({
                   </a>
                 )}
                 <a
-                  href="https://space.denker.ai/auth/login"
+                  href={isMac ? webAppAuthUrls.desktopLogin : webAppAuthUrls.login}
                   className="inline-flex h-11 w-full items-center justify-center rounded-full bg-accent text-sm font-bold text-canvas transition-opacity hover:opacity-80"
                   data-testid="cta-gate-signin-primary"
                 >
@@ -152,7 +153,7 @@ export function CtaGateDialog({
             ) : isMobile ? (
               <>
                 <a
-                  href="https://space.denker.ai/auth/register?platform=mobile&intent=desktop-handoff"
+                  href={webAppAuthUrls.mobileDesktopRegister}
                   className="inline-flex h-11 w-full items-center justify-center rounded-full bg-accent text-sm font-bold text-canvas transition-opacity hover:opacity-80"
                   data-testid="cta-gate-create-account-mobile"
                 >
@@ -173,17 +174,17 @@ export function CtaGateDialog({
                   {macDownloadUrl ? "Download for Mac" : "Get Denker for Mac"}
                 </a>
                 <a
-                  href="https://space.denker.ai/auth/register"
+                  href={webAppAuthUrls.desktopRegister}
                   className="inline-flex h-11 w-full items-center justify-center rounded-full border border-glass-stroke bg-glass-fill text-sm font-semibold text-primary transition-colors hover:border-glass-stroke-light"
                   data-testid="cta-gate-open-browser"
                 >
-                  Open in browser
+                  Create account
                 </a>
               </>
             ) : (
               <>
                 <a
-                  href="https://space.denker.ai/auth/register"
+                  href={webAppAuthUrls.register}
                   className="inline-flex h-11 w-full items-center justify-center rounded-full bg-accent text-sm font-bold text-canvas transition-opacity hover:opacity-80"
                   data-testid="cta-gate-open-browser"
                 >
@@ -202,8 +203,12 @@ export function CtaGateDialog({
               <a
                 href={
                   isReturning
-                    ? "https://space.denker.ai/auth/register"
-                    : "https://space.denker.ai/auth/login"
+                    ? isMac
+                      ? webAppAuthUrls.desktopRegister
+                      : webAppAuthUrls.register
+                    : isMac
+                      ? webAppAuthUrls.desktopLogin
+                      : webAppAuthUrls.login
                 }
                 className="text-xs text-secondary underline-offset-4 hover:text-primary hover:underline"
                 data-testid={isReturning ? "cta-gate-signup" : "cta-gate-signin"}

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { cn } from "@/lib/cn";
 import { Icons } from "@/components/icons";
+import { CtaGateDialog, useCtaGate } from "@/components/cta-gate-dialog";
 
 /* ── Plan data ──────────────────────────────────────────────── */
 
@@ -136,9 +137,11 @@ function BillingToggle({
 function PricingCard({
   plan,
   yearly,
+  onCta,
 }: {
   plan: Plan;
   yearly: boolean;
+  onCta: () => void;
 }) {
   const { name, monthly, description, features, highlighted, cta } = plan;
   const price = yearly ? plan.yearly : monthly;
@@ -242,8 +245,9 @@ function PricingCard({
           {cta}
         </div>
       ) : (
-        <a
-          href="https://space.denker.ai"
+        <button
+          type="button"
+          onClick={onCta}
           className={cn(
             "mt-8 flex h-12 items-center justify-center rounded-full text-sm font-semibold transition-all hover:brightness-110",
             highlighted
@@ -253,7 +257,7 @@ function PricingCard({
           data-testid={`pricing-${name.toLowerCase()}-cta`}
         >
           {cta}
-        </a>
+        </button>
       )}
     </div>
   );
@@ -263,6 +267,7 @@ function PricingCard({
 
 export function LandingPricing() {
   const [yearly, setYearly] = useState(false);
+  const { open, openGate, closeGate } = useCtaGate();
 
   return (
     <section id="pricing" className="relative px-5 py-24 sm:px-6 lg:px-12" data-testid="landing-pricing">
@@ -288,7 +293,12 @@ export function LandingPricing() {
       {/* Cards */}
       <div className="mx-auto grid max-w-5xl items-stretch gap-5 md:grid-cols-3">
         {PLANS.map((plan) => (
-          <PricingCard key={plan.name} plan={plan} yearly={yearly} />
+          <PricingCard
+            key={plan.name}
+            plan={plan}
+            yearly={yearly}
+            onCta={openGate}
+          />
         ))}
       </div>
 
@@ -319,6 +329,7 @@ export function LandingPricing() {
           All plans include the canvas, real-time agent visibility, and tool connections. Cancel anytime.
         </p>
       </div>
+      <CtaGateDialog open={open} onClose={closeGate} />
     </section>
   );
 }

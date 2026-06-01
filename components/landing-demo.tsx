@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 import { Icons } from "@/components/icons";
+import { CtaGateDialog, useCtaGate } from "@/components/cta-gate-dialog";
 
 /* ── Mini frame — mirrors real FrameHeader + content area ─────────── */
 
@@ -233,6 +234,7 @@ function Pill({ icon: Icon, label }: { icon: React.ElementType; label: string })
 export function LandingDemo() {
   const ref = useRef<HTMLElement>(null);
   const [triggered, setTriggered] = useState(false);
+  const { open, openGate, closeGate } = useCtaGate();
 
   useEffect(() => {
     const el = ref.current;
@@ -274,12 +276,14 @@ export function LandingDemo() {
             <p className="mb-8 text-base leading-relaxed text-secondary">
               <strong className="font-semibold text-primary">See everything, control everything</strong> — research briefs, email drafts, code files. Each agent delivers straight to a named frame. Arrange, resize, and export.
             </p>
-            <a
-              href="https://space.denker.ai"
+            <button
+              type="button"
+              onClick={openGate}
               className="mb-10 inline-flex h-12 items-center justify-center rounded-full bg-primary px-7 text-sm font-bold text-canvas transition-opacity hover:opacity-80 max-sm:w-full sm:w-fit"
+              data-testid="demo-cta-button"
             >
               Try Free
-            </a>
+            </button>
             <div className="grid grid-cols-2 gap-2">
               <Pill icon={Icons.Layers} label="Frames" />
               <Pill icon={Icons.Eye}    label="Live preview" />
@@ -289,6 +293,7 @@ export function LandingDemo() {
           </div>
         </div>
       </div>
+      <CtaGateDialog open={open} onClose={closeGate} />
     </section>
   );
 }
