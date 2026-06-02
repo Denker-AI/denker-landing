@@ -57,6 +57,7 @@ export function LandingFooter() {
                 <a href="/#pricing" className="text-sm text-secondary transition-colors hover:text-primary">Pricing</a>
                 <a href="/docs" className="text-sm text-secondary transition-colors hover:text-primary">Docs</a>
                 <a href="/blog" className="text-sm text-secondary transition-colors hover:text-primary">Blog</a>
+                <a href="/traction" className="text-sm text-secondary transition-colors hover:text-primary">Traction</a>
                 <a href="/#community" className="text-sm text-secondary transition-colors hover:text-primary">Community</a>
               </nav>
             </div>

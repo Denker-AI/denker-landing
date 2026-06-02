@@ -15,19 +15,7 @@ import {
   getChannel,
   type Device,
 } from "@/lib/download-resolver";
-
-/* ── PostHog capture helper (matches waitlist-form.tsx pattern) ─ */
-
-type PostHogInstance = {
-  capture?: (event: string, properties?: Record<string, unknown>) => void;
-};
-
-function captureEvent(event: string, properties?: Record<string, unknown>): void {
-  const ph = (window as unknown as Record<string, unknown>).posthog as
-    | PostHogInstance
-    | undefined;
-  ph?.capture?.(event, properties);
-}
+import { captureEvent, getAttributionProperties } from "@/lib/posthog";
 
 function triggerDownload(url: string): void {
   window.location.assign(url);
@@ -66,9 +54,16 @@ export function DownloadClient() {
 
   /* On mount: detect device, fetch manifest, auto-trigger download on Mac. */
   useEffect(() => {
-    captureEvent("download_page_viewed");
-
     const device: Device = detectDevice();
+    const channel = getChannel();
+    const baseProps = {
+      ...getAttributionProperties(),
+      device,
+      download_channel: channel,
+      source: "download_page",
+    };
+
+    captureEvent("download_page_viewed", baseProps);
 
     if (device !== "mac-desktop") {
       setState({ kind: device === "mobile" ? "mobile" : "other-desktop" });
@@ -76,18 +71,23 @@ export function DownloadClient() {
     }
 
     let cancelled = false;
-    const channel = getChannel();
 
     fetchMacDownloadUrlWithUtm(window.location.search).then((url) => {
       if (cancelled) return;
       if (!url) {
         setState({ kind: "mac-failed" });
-        captureEvent("mac_download_failed", { reason: "manifest_unreachable" });
+        captureEvent("mac_download_failed", {
+          ...baseProps,
+          reason: "manifest_unreachable",
+        });
         return;
       }
       setState({ kind: "mac-downloading", url });
       triggerDownload(url);
-      captureEvent("mac_download_started", { channel });
+      captureEvent("mac_download_started", {
+        ...baseProps,
+        resolved_url_host: new URL(url).hostname,
+      });
     });
 
     return () => {
@@ -98,16 +98,29 @@ export function DownloadClient() {
   const handleRetry = () => {
     setState({ kind: "detecting" });
     const channel = getChannel();
+    const props = {
+      ...getAttributionProperties(),
+      device: detectDevice(),
+      download_channel: channel,
+      manual: true,
+      source: "download_page",
+    };
 
     fetchMacDownloadUrlWithUtm(window.location.search).then((url) => {
       if (!url) {
         setState({ kind: "mac-failed" });
-        captureEvent("mac_download_failed", { reason: "manifest_unreachable_retry" });
+        captureEvent("mac_download_failed", {
+          ...props,
+          reason: "manifest_unreachable_retry",
+        });
         return;
       }
       setState({ kind: "mac-downloading", url });
       triggerDownload(url);
-      captureEvent("mac_download_started", { channel });
+      captureEvent("mac_download_started", {
+        ...props,
+        resolved_url_host: new URL(url).hostname,
+      });
     });
   };
 
@@ -128,7 +141,13 @@ export function DownloadClient() {
         disabled: false,
         href: (state as { kind: "mac-downloading"; url: string }).url,
         onClick: () => {
-          captureEvent("mac_download_started", { channel: getChannel(), manual: true });
+          captureEvent("mac_download_started", {
+            ...getAttributionProperties(),
+            device: detectDevice(),
+            download_channel: getChannel(),
+            manual: true,
+            source: "download_page",
+          });
         },
       };
     }

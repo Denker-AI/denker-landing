@@ -5,10 +5,12 @@ import { createPortal } from "react-dom";
 import {
   detectDevice,
   detectReturningUser,
-  fetchMacDownloadUrl,
+  fetchMacDownloadUrlWithUtm,
+  getChannel,
   MAC_DOWNLOAD_PAGE_FALLBACK,
   type Device,
 } from "@/lib/download-resolver";
+import { captureEvent, getAttributionProperties } from "@/lib/posthog";
 import { webAppAuthUrls } from "@/lib/web-app-auth";
 
 /* ── Convenience hook ────────────────────────────────────────────── */
@@ -47,7 +49,7 @@ export function CtaGateDialog({
   useEffect(() => {
     if (!open || !isMac || macDownloadUrl) return;
     let cancelled = false;
-    fetchMacDownloadUrl().then((url) => {
+    fetchMacDownloadUrlWithUtm(window.location.search).then((url) => {
       if (!cancelled) setMacDownloadUrl(url);
     });
     return () => {
@@ -58,15 +60,40 @@ export function CtaGateDialog({
   const handleMacDownload = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>) => {
       /* If we already resolved a binary URL, the <a> href is set — let it through. */
-      if (macDownloadUrl) return;
+      const props = {
+        ...getAttributionProperties(),
+        device,
+        download_channel: getChannel(),
+        returning_user_hint: isReturning,
+        source: "cta_gate",
+      };
+      if (macDownloadUrl) {
+        captureEvent("mac_download_started", {
+          ...props,
+          resolved_url_host: new URL(macDownloadUrl).hostname,
+        });
+        return;
+      }
       /* Otherwise, try one more time at click time. If still nothing, send the
        * user to /download so that page can retry and explain the fallback. */
       e.preventDefault();
-      fetchMacDownloadUrl().then((url) => {
-        window.location.href = url ?? MAC_DOWNLOAD_PAGE_FALLBACK;
+      fetchMacDownloadUrlWithUtm(window.location.search).then((url) => {
+        if (!url) {
+          captureEvent("mac_download_failed", {
+            ...props,
+            reason: "manifest_unreachable_cta",
+          });
+          window.location.href = MAC_DOWNLOAD_PAGE_FALLBACK;
+          return;
+        }
+        captureEvent("mac_download_started", {
+          ...props,
+          resolved_url_host: new URL(url).hostname,
+        });
+        window.location.href = url;
       });
     },
-    [macDownloadUrl],
+    [device, isReturning, macDownloadUrl],
   );
 
   /* Escape to close. */
