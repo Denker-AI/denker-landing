@@ -4,7 +4,6 @@ import { cn } from "@/lib/cn";
 import { Icons } from "@/components/icons";
 import { useExperiment } from "@/hooks/use-experiment";
 import { CtaGateDialog, useCtaGate } from "@/components/cta-gate-dialog";
-import { LandingGlassSurface } from "@/components/landing-glass-surface";
 import { HERO_COPY, type HeroVariant } from "@/lib/hero-copy";
 
 /* Variant-b's accent phrase is short — keep it on one line. */
@@ -37,24 +36,16 @@ function FloatingFrame({
       style={{ ...style, animation: `hero-fade-in 0.8s ease ${delay}s both` }}
     >
       <div style={{ animation: `hero-float 5s ease-in-out ${delay * 0.5}s infinite` }}>
-        <LandingGlassSurface
-          borderRadius={13}
-          className="landing-liquid-panel"
-          data-testid={`hero-floating-frame-${title.toLowerCase().replace(/\s+/g, "-")}`}
-        >
-          <div className="flex flex-col overflow-hidden rounded-[13px]">
-            <div className="flex items-center gap-1.5 border-b border-glass-stroke-faint px-2 py-1.5">
-              <div className={cn("h-1.5 w-1.5 rounded-full", color)} />
-              <span className="truncate text-canvas-sm font-medium text-primary">
-                {title}
-              </span>
-              <div className="ml-auto flex items-center gap-1">
-                <span className="text-canvas-2xs text-muted">{status}</span>
-              </div>
+        <div className="flex flex-col overflow-hidden rounded-frame border border-glass-stroke bg-glass-fill shadow-frame backdrop-blur-glass">
+          <div className="flex items-center gap-1.5 border-b border-glass-stroke-faint px-2 py-1.5">
+            <div className={cn("h-1.5 w-1.5 rounded-full", color)} />
+            <span className="truncate text-canvas-sm font-medium text-primary">{title}</span>
+            <div className="ml-auto flex items-center gap-1">
+              <span className="text-canvas-2xs text-muted">{status}</span>
             </div>
-            <div className="p-2">{children}</div>
           </div>
-        </LandingGlassSurface>
+          <div className="p-2">{children}</div>
+        </div>
       </div>
     </div>
   );
@@ -187,12 +178,9 @@ export function LandingHero() {
       data-testid="landing-hero"
     >
       <div
-        className="pointer-events-none absolute inset-0 opacity-70"
+        className="pointer-events-none absolute inset-0"
         aria-hidden="true"
-        style={{
-          background:
-            "radial-gradient(ellipse 45% 30% at 50% 38%, rgba(255,255,255,0.1), transparent 72%)",
-        }}
+        style={{ background: "var(--gradient-page-overlay)" }}
       />
 
       <HeroCanvas />
@@ -201,14 +189,14 @@ export function LandingHero() {
         {/* Spacer — pushes heading group to ~40% on mobile, centers on desktop */}
         <div className="flex-1 min-h-12 md:min-h-0" />
         <h1
-          className="landing-readable-text text-section-heading mb-6 max-w-3xl text-balance"
+          className="text-section-heading mb-6 max-w-3xl text-balance"
           data-testid="hero-heading"
         >
           {copy.headingPrefix}{" "}
           <span className={accentClass}>{copy.headingAccent}</span>
         </h1>
 
-        <p className="landing-readable-secondary max-w-xl text-base text-balance sm:text-lg" data-testid="hero-subheading">
+        <p className="max-w-xl text-base text-secondary text-balance sm:text-lg" data-testid="hero-subheading">
           {copy.subheading}
         </p>
 
@@ -216,12 +204,12 @@ export function LandingHero() {
           <button
             type="button"
             onClick={openGate}
-            className="landing-liquid-button inline-flex h-12 items-center justify-center rounded-full bg-white/[0.92] px-8 text-sm font-bold text-[#120814] transition-opacity hover:opacity-85"
+            className="inline-flex h-12 items-center justify-center rounded-full bg-accent px-8 text-sm font-bold text-canvas transition-opacity hover:opacity-80"
             data-testid="hero-cta-button"
           >
             {copy.cta}
           </button>
-          <p className="landing-readable-secondary text-xs" data-testid="hero-cta-note">
+          <p className="text-xs text-muted" data-testid="hero-cta-note">
             Free · No credit card
           </p>
         </div>
@@ -231,13 +219,12 @@ export function LandingHero() {
 
         <a
           href="#features"
-          className="landing-readable-secondary flex flex-col items-center gap-2 pb-8 transition-opacity hover:opacity-100"
+          className="pb-8 flex flex-col items-center gap-2 transition-opacity hover:opacity-100"
           style={{ opacity: 0.75 }}
           aria-label="Scroll to explore"
-          data-testid="hero-scroll-link"
         >
-          <span className="text-xs font-medium">Scroll to explore</span>
-          <Icons.ChevronDown className="h-5 w-5 animate-bounce" />
+          <span className="text-xs font-medium text-secondary">Scroll to explore</span>
+          <Icons.ChevronDown className="h-5 w-5 animate-bounce text-secondary" />
         </a>
       </div>
 
