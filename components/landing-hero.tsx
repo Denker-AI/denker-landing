@@ -9,9 +9,9 @@ import { HERO_COPY, type HeroVariant } from "@/lib/hero-copy";
 
 /* Variant-b's accent phrase is short — keep it on one line. */
 const HEADING_ACCENT_CLASS: Record<HeroVariant, string> = {
-  control: "landing-login-accent",
-  "variant-b": "landing-login-accent whitespace-nowrap",
-  "variant-c": "landing-login-accent",
+  control: "text-accent",
+  "variant-b": "text-accent whitespace-nowrap",
+  "variant-c": "text-accent",
 };
 
 /* ── Floating frame (background decoration) ──────────────────── */

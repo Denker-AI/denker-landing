@@ -24,13 +24,11 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-canvas">
+    <div className="landing-liquid-shell relative min-h-screen overflow-hidden bg-canvas">
+      <LandingLiquidBackground />
+      <LandingNav />
       <main className="relative z-10">
-        <div className="landing-liquid-shell relative overflow-hidden">
-          <LandingLiquidBackground />
-          <LandingNav />
-          <LandingHero />
-        </div>
+        <LandingHero />
         <LandingManifesto />
 
         <LandingTeamIntro />
