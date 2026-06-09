@@ -34,7 +34,7 @@ export function ScrollButton() {
     <button
       onClick={handleClick}
       aria-label={atBottom ? "Scroll to top" : "Scroll to bottom"}
-      className="landing-liquid-button fixed bottom-6 right-6 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-glass-stroke bg-white/[0.08] shadow-glass backdrop-blur-glass transition-all hover:bg-white/[0.14]"
+      className="fixed bottom-6 right-6 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-glass-stroke bg-glass-fill shadow-glass backdrop-blur-glass transition-all hover:bg-glass-fill-heavy"
       data-testid="scroll-page-button"
     >
       {atBottom ? (

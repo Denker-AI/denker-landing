@@ -20,7 +20,7 @@
 
 .landing-liquid-shell::after {
   content: "";
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 1;
   pointer-events: none;
@@ -33,7 +33,7 @@
 }
 
 .landing-liquid-background {
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 0;
   overflow: hidden;
@@ -158,6 +158,14 @@
 .landing-readable-secondary {
   color: var(--landing-ink-secondary);
   text-shadow: var(--landing-clear-text-shadow);
+}
+
+.landing-login-accent {
+  background: linear-gradient(90deg, #ff2d55 0%, #ffd60a 48%, #bf5af2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 1px 18px rgba(0, 0, 0, 0.28));
 }
 
 .landing-liquid-shell [data-logo-tone="light"] {
