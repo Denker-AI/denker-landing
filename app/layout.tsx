@@ -7,6 +7,7 @@ import { PostHogProvider } from "@/components/posthog-provider";
 import { LinkedInProvider } from "@/components/linkedin-provider";
 import { SITE_URL, TITLE, DESCRIPTION } from "@/lib/seo";
 import "./globals.css";
+import "./landing-liquid-glass.css";
 
 const satoshi = localFont({
   src: [

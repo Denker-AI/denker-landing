@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DEFAULT_OG_IMAGE } from "@/lib/seo";
+import { LandingLiquidBackground } from "@/components/landing-liquid-background";
 import { LandingNav } from "@/components/landing-nav";
 import { ScrollButton } from "@/components/scroll-button";
 import { LandingHero } from "@/components/landing-hero";
@@ -23,33 +24,25 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <div
-      className="min-h-screen bg-canvas"
-      style={{
-        backgroundImage: `
-          radial-gradient(ellipse 65% 55% at 15% 20%, rgba(58,248,140,0.07) 0%, transparent 70%),
-          radial-gradient(ellipse 55% 45% at 80% 60%, rgba(255,200,50,0.05) 0%, transparent 70%),
-          radial-gradient(ellipse 50% 40% at 60% 5%,  rgba(255,180,80,0.04) 0%, transparent 65%)
-        `,
-        backgroundSize: "100% 100%, 100% 100%, 100% 100%",
-        backgroundAttachment: "fixed, fixed, fixed",
-      }}
-    >
+    <div className="landing-liquid-shell relative min-h-screen overflow-hidden bg-canvas">
+      <LandingLiquidBackground />
       <LandingNav />
-      <main>
-      <LandingHero />
-      <LandingManifesto />
+      <main className="relative z-10">
+        <LandingHero />
+        <LandingManifesto />
 
-      <LandingTeamIntro />
+        <LandingTeamIntro />
 
-      <LandingFeatures />
-      <LandingFounderVoices />
-      <LandingPricing />
-      <LandingCta />
-      <LandingFinalCta />
+        <LandingFeatures />
+        <LandingFounderVoices />
+        <LandingPricing />
+        <LandingCta />
+        <LandingFinalCta />
       </main>
-      <LandingFooter />
-      <ScrollButton />
+      <div className="relative z-10">
+        <LandingFooter />
+        <ScrollButton />
+      </div>
     </div>
   );
 }

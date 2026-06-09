@@ -33,6 +33,7 @@ export function DenkerLogo({
         alt="Denker"
         width={Math.round(height * 3.5)}
         height={height}
+        data-logo-tone="light"
         className="dark:hidden"
         style={{ height, width: "auto" }}
         priority
@@ -43,6 +44,7 @@ export function DenkerLogo({
         alt="Denker"
         width={Math.round(height * 3.5)}
         height={height}
+        data-logo-tone="dark"
         className="hidden dark:block"
         style={{ height, width: "auto" }}
         priority
