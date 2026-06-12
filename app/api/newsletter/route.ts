@@ -42,7 +42,6 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json().catch(() => null);
   const email = body?.email;
-  const source: "waitlist" | "newsletter" = body?.source === "newsletter" ? "newsletter" : "waitlist";
 
   if (!email || typeof email !== "string" || !EMAIL_RE.test(email.trim())) {
     return NextResponse.json({ error: "A valid email is required" }, { status: 400 });
@@ -76,7 +75,6 @@ export async function POST(req: NextRequest) {
     }
 
     /* Send confirmation email */
-    const isNewsletter = source === "newsletter";
     const emailRes = await fetch(`${RESEND_API}/emails`, {
       method: "POST",
       headers: {
@@ -86,12 +84,8 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify({
         from: "Denker <team@denker.ai>",
         to: normalizedEmail,
-        subject: isNewsletter
-          ? "Welcome to the Denker Newsletter"
-          : "You're on the Denker waitlist!",
-        html: isNewsletter
-          ? newsletterWelcomeHtml(normalizedEmail)
-          : waitlistConfirmHtml(normalizedEmail),
+        subject: "Welcome to the Denker Newsletter",
+        html: newsletterWelcomeHtml(normalizedEmail),
       }),
     });
 
@@ -103,7 +97,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ ok: true });
   } catch (err) {
-    console.error("Waitlist handler error:", err);
+    console.error("Newsletter handler error:", err);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
@@ -174,35 +168,6 @@ function emailShell(content: string): string {
   </table>
 </body>
 </html>`;
-}
-
-function waitlistConfirmHtml(email: string): string {
-  const safe = escapeHtml(email);
-  const content = `
-    <h1 style="font-family:${FH};font-size:24px;font-weight:700;margin:0 0 20px;color:${E.text};line-height:1.3;">You're on the waitlist</h1>
-    <p style="font-family:${F};font-size:15px;color:${E.textSec};line-height:1.7;margin:0 0 28px;">Thanks for your interest in Denker. We're building one AI agent team and one canvas to direct work, review outputs, and move priorities forward.</p>
-    <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 28px;">
-      <tr><td style="background-color:${E.surface};border:1px solid ${E.surfaceBorder};border-radius:12px;padding:20px 24px;">
-        <p style="font-family:${F};font-size:11px;color:${E.textMuted};margin:0 0 6px;text-transform:uppercase;letter-spacing:0.08em;">Reserved for</p>
-        <p style="font-family:${F};font-size:16px;color:${E.text};margin:0;font-weight:600;"><a style="color:${E.text};text-decoration:none;">${safe}</a></p>
-      </td></tr>
-    </table>
-    <p style="font-family:${F};font-size:14px;color:${E.text};margin:0 0 14px;font-weight:600;">What happens next</p>
-    <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 28px;">
-      <tr><td style="width:20px;vertical-align:top;padding:4px 0;"><span style="display:inline-block;width:5px;height:5px;border-radius:50%;background:${E.accent};"></span></td>
-        <td style="font-family:${F};font-size:14px;color:${E.textSec};line-height:1.6;padding-bottom:10px;">We're rolling out access in waves over the coming weeks.</td></tr>
-      <tr><td style="width:20px;vertical-align:top;padding:4px 0;"><span style="display:inline-block;width:5px;height:5px;border-radius:50%;background:${E.accent};"></span></td>
-        <td style="font-family:${F};font-size:14px;color:${E.textSec};line-height:1.6;padding-bottom:10px;">You'll get an email the moment your spot opens.</td></tr>
-      <tr><td style="width:20px;vertical-align:top;padding:4px 0;"><span style="display:inline-block;width:5px;height:5px;border-radius:50%;background:${E.accent};"></span></td>
-        <td style="font-family:${F};font-size:14px;color:${E.textSec};line-height:1.6;">In the meantime, follow us on <a href="https://linkedin.com/company/denkerai" style="color:${E.accent};text-decoration:none;">LinkedIn</a> for updates.</td></tr>
-    </table>
-    <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 28px;"><tr><td align="center">
-      <a href="https://linkedin.com/company/denkerai" style="display:inline-block;background-color:${E.accent};color:#000;font-family:${F};font-size:14px;font-weight:600;text-decoration:none;padding:12px 28px;border-radius:99px;">Follow on LinkedIn &rarr;</a>
-    </td></tr></table>
-    <table width="100%" cellpadding="0" cellspacing="0"><tr><td style="border-top:1px solid ${E.divider};padding-top:20px;">
-      <p style="font-family:${F};font-size:13px;color:${E.textMuted};margin:0;">Reply to this email anytime &mdash; we read every one.</p>
-    </td></tr></table>`;
-  return emailShell(content);
 }
 
 function newsletterWelcomeHtml(email: string): string {
