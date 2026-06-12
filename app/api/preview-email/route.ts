@@ -91,81 +91,6 @@ function shell(content: string): string {
 </html>`;
 }
 
-/* ── Waitlist ───────────────────────────────────────────── */
-
-function waitlistHtml(email: string): string {
-  const safe = esc(email);
-  return shell(`
-    <h1 style="font-family:${FH};font-size:24px;font-weight:700;margin:0 0 20px;color:${C.text};line-height:1.3;">
-      You're on the waitlist
-    </h1>
-
-    <p style="font-family:${F};font-size:15px;color:${C.textSec};line-height:1.7;margin:0 0 28px;">
-      Thanks for your interest in Denker. We're building one AI agent team
-      and one canvas to direct work, review outputs, and move priorities
-      forward.
-    </p>
-
-    <!-- Glass card -->
-    <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 28px;">
-      <tr><td style="background-color:${C.surface};border:1px solid ${C.surfaceBorder};border-radius:12px;padding:20px 24px;">
-        <p style="font-family:${F};font-size:11px;color:${C.textMuted};margin:0 0 6px;text-transform:uppercase;letter-spacing:0.08em;">Reserved for</p>
-        <p style="font-family:${F};font-size:16px;color:${C.text};margin:0;font-weight:600;"><a style="color:${C.text};text-decoration:none;">${safe}</a></p>
-      </td></tr>
-    </table>
-
-    <p style="font-family:${F};font-size:14px;color:${C.text};margin:0 0 14px;font-weight:600;">
-      What happens next
-    </p>
-
-    <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 28px;">
-      <tr>
-        <td style="width:20px;vertical-align:top;padding:4px 0;">
-          <span style="display:inline-block;width:5px;height:5px;border-radius:50%;background:${C.accent};"></span>
-        </td>
-        <td style="font-family:${F};font-size:14px;color:${C.textSec};line-height:1.6;padding-bottom:10px;">
-          We're rolling out access in waves over the coming weeks.
-        </td>
-      </tr>
-      <tr>
-        <td style="width:20px;vertical-align:top;padding:4px 0;">
-          <span style="display:inline-block;width:5px;height:5px;border-radius:50%;background:${C.accent};"></span>
-        </td>
-        <td style="font-family:${F};font-size:14px;color:${C.textSec};line-height:1.6;padding-bottom:10px;">
-          You'll get an email the moment your spot opens.
-        </td>
-      </tr>
-      <tr>
-        <td style="width:20px;vertical-align:top;padding:4px 0;">
-          <span style="display:inline-block;width:5px;height:5px;border-radius:50%;background:${C.accent};"></span>
-        </td>
-        <td style="font-family:${F};font-size:14px;color:${C.textSec};line-height:1.6;">
-          In the meantime, follow us on
-          <a href="https://linkedin.com/company/denkerai" style="color:${C.accent};text-decoration:none;">LinkedIn</a>
-          for updates.
-        </td>
-      </tr>
-    </table>
-
-    <!-- CTA -->
-    <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 28px;">
-      <tr><td align="center">
-        <a href="https://linkedin.com/company/denkerai" style="display:inline-block;background-color:${C.accent};color:#000;font-family:${F};font-size:14px;font-weight:600;text-decoration:none;padding:12px 28px;border-radius:99px;">
-          Follow on LinkedIn &rarr;
-        </a>
-      </td></tr>
-    </table>
-
-    <table width="100%" cellpadding="0" cellspacing="0">
-      <tr><td style="border-top:1px solid ${C.divider};padding-top:20px;">
-        <p style="font-family:${F};font-size:13px;color:${C.textMuted};margin:0;">
-          Reply to this email anytime &mdash; we read every one.
-        </p>
-      </td></tr>
-    </table>
-  `);
-}
-
 /* ── Newsletter ─────────────────────────────────────────── */
 
 function newsletterHtml(email: string): string {
@@ -241,7 +166,7 @@ function newsletterHtml(email: string): string {
 /* ── Preview route ──────────────────────────────────────── */
 
 /**
- * GET /api/preview-email?type=waitlist|newsletter
+ * GET /api/preview-email                           (newsletter welcome preview)
  * GET /api/preview-email?slug=introducing-denker   (newsletter broadcast preview)
  */
 export async function GET(req: NextRequest) {
@@ -258,10 +183,7 @@ export async function GET(req: NextRequest) {
     });
   }
 
-  const type = req.nextUrl.searchParams.get("type") || "waitlist";
-  const html = type === "newsletter"
-    ? newsletterHtml("juan@denker.ai")
-    : waitlistHtml("juan@denker.ai");
+  const html = newsletterHtml("juan@denker.ai");
 
   return new NextResponse(html, {
     headers: { "Content-Type": "text/html" },

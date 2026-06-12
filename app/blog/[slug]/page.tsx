@@ -4,7 +4,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { LandingNav } from "@/components/landing-nav";
 import { LandingFooter } from "@/components/landing-footer";
-import { WaitlistForm } from "@/components/waitlist-form";
 import { getAllPosts, getPost, CATEGORY_LABELS, CATEGORY_COLORS } from "@/lib/newsletters";
 import type { NewsletterFeature, BlogPost } from "@/lib/newsletters";
 import { SITE_URL } from "@/lib/seo";
@@ -327,37 +326,20 @@ export default async function BlogPostPage({
           className="liquid-glass rounded-2xl border border-glass-stroke p-8 text-center sm:p-12"
           data-testid="post-cta"
         >
-          {p.cta.style === "button" ? (
-            <>
-              <h2 className="mb-3 font-satoshi text-2xl font-bold text-primary sm:text-3xl">
-                {isChangelog ? "Try it yourself" : "Ready to get started?"}
-              </h2>
-              <p className="mx-auto mb-8 max-w-md text-secondary">
-                No waitlist. No invite codes. Sign in with Google and your
-                workspace is ready in seconds.
-              </p>
-              <a
-                href={p.cta.url}
-                className="inline-flex items-center gap-2 rounded-full bg-accent px-8 py-3.5 text-base font-semibold text-black transition-opacity hover:opacity-90"
-                data-testid="post-cta-button"
-              >
-                {p.cta.text} <span aria-hidden="true">&rarr;</span>
-              </a>
-            </>
-          ) : (
-            <>
-              <h2 className="mb-3 font-satoshi text-2xl font-bold text-primary sm:text-3xl">
-                Ready to see it in action?
-              </h2>
-              <p className="mx-auto mb-8 max-w-md text-secondary">
-                We&apos;re rolling out access in waves. Join the waitlist and
-                be among the first to experience Denker.
-              </p>
-              <div className="mx-auto max-w-sm">
-                <WaitlistForm size="compact" />
-              </div>
-            </>
-          )}
+          <h2 className="mb-3 font-satoshi text-2xl font-bold text-primary sm:text-3xl">
+            {isChangelog ? "Try it yourself" : "Ready to get started?"}
+          </h2>
+          <p className="mx-auto mb-8 max-w-md text-secondary">
+            No invite codes. Download Denker for macOS and your workspace is
+            ready in minutes.
+          </p>
+          <a
+            href={p.cta.url}
+            className="inline-flex items-center gap-2 rounded-full bg-accent px-8 py-3.5 text-base font-semibold text-black transition-opacity hover:opacity-90"
+            data-testid="post-cta-button"
+          >
+            {p.cta.text} <span aria-hidden="true">&rarr;</span>
+          </a>
         </section>
 
         {/* Homepage internal link */}

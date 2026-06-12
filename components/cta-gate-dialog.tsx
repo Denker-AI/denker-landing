@@ -12,6 +12,7 @@ import {
 } from "@/lib/download-resolver";
 import { captureEvent, getAttributionProperties } from "@/lib/posthog";
 import { webAppAuthUrls } from "@/lib/web-app-auth";
+import { NewsletterForm } from "@/components/newsletter-form";
 
 /* ── Convenience hook ────────────────────────────────────────────── */
 
@@ -146,14 +147,18 @@ export function CtaGateDialog({
               ? "Welcome back"
               : isMobile
                 ? "Save your spot"
-                : "Start Denker"}
+                : isMac
+                  ? "Start Denker"
+                  : "Coming to your desktop"}
           </h2>
           <p className="mt-1 text-sm text-secondary">
             {isReturning
               ? "Sign in to pick up where you left off."
               : isMobile
                 ? "Denker runs on your Mac. Create your account now — we'll set it up when you're back on desktop."
-                : "Pick how you want to start."}
+                : isMac
+                  ? "Pick how you want to start."
+                  : "Denker is a macOS app today. Windows and Linux are next — subscribe and we'll email you the moment it's ready."}
           </p>
 
           <div className="mt-6 flex flex-col gap-3">
@@ -210,15 +215,9 @@ export function CtaGateDialog({
               </>
             ) : (
               <>
-                <a
-                  href={webAppAuthUrls.register}
-                  className="inline-flex h-11 w-full items-center justify-center rounded-full bg-accent text-sm font-bold text-canvas transition-opacity hover:opacity-80"
-                  data-testid="cta-gate-open-browser"
-                >
-                  Open in browser
-                </a>
+                <NewsletterForm />
                 <p className="text-center text-xs text-muted">
-                  macOS desktop app available · Windows &amp; Linux coming soon
+                  Already on a Mac? Visit <span className="font-semibold text-secondary">denker.ai</span> there to download.
                 </p>
               </>
             )}

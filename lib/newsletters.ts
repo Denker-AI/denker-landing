@@ -37,7 +37,6 @@ export interface BlogPost {
   cta: {
     text: string;
     url: string;
-    style?: "waitlist" | "button";
   };
   status: "draft" | "sent";
   sentAt?: string;
@@ -110,7 +109,6 @@ export const posts: BlogPost[] = [
     cta: {
       text: "Download for macOS",
       url: "https://www.denker.ai/download?utm_source=newsletter&utm_medium=email&utm_campaign=denker-on-your-desktop",
-      style: "button",
     },
     status: "draft",
   },
@@ -158,8 +156,7 @@ export const posts: BlogPost[] = [
     note: "If you were using app.denker.ai — your new home is space.denker.ai. The previous version will stay online until April 10.",
     cta: {
       text: "Get Started",
-      url: "https://space.denker.ai",
-      style: "button",
+      url: "https://www.denker.ai/download?utm_source=newsletter&utm_medium=email&utm_campaign=denker-is-live",
     },
     status: "draft",
   },
@@ -206,8 +203,7 @@ export const posts: BlogPost[] = [
     ],
     cta: {
       text: "Try it now",
-      url: "https://space.denker.ai",
-      style: "button",
+      url: "https://www.denker.ai/download?utm_source=newsletter&utm_medium=email&utm_campaign=your-ai-team-leveled-up",
     },
     status: "draft",
   },
@@ -259,8 +255,7 @@ export const posts: BlogPost[] = [
     note: "The magic isn't any one agent being smart — it's agents working together, each doing what it's good at, so you can stay focused on what only you can do. Still early days, but it's starting to feel like something real.",
     cta: {
       text: "Try it now",
-      url: "https://space.denker.ai",
-      style: "button",
+      url: "https://www.denker.ai/download?utm_source=newsletter&utm_medium=email&utm_campaign=autonomous-agent-teams-projects",
     },
     status: "draft",
   },
@@ -284,8 +279,7 @@ export const posts: BlogPost[] = [
     media: "/blog/assets/your-ai-team-leveled-up/use-any-ai.mp4",
     cta: {
       text: "Try it now",
-      url: "https://space.denker.ai",
-      style: "button",
+      url: "https://www.denker.ai/download?utm_source=newsletter&utm_medium=email&utm_campaign=multi-cli-support",
     },
     status: "draft",
   },
@@ -307,8 +301,7 @@ export const posts: BlogPost[] = [
     media: "/blog/assets/your-ai-team-leveled-up/tasks-run-themselves.mp4",
     cta: {
       text: "Try it now",
-      url: "https://space.denker.ai",
-      style: "button",
+      url: "https://www.denker.ai/download?utm_source=newsletter&utm_medium=email&utm_campaign=kanban-list-calendar-views",
     },
     status: "draft",
   },
@@ -330,8 +323,7 @@ export const posts: BlogPost[] = [
     media: "/blog/assets/your-ai-team-leveled-up/real-workspace.mp4",
     cta: {
       text: "Try it now",
-      url: "https://space.denker.ai",
-      style: "button",
+      url: "https://www.denker.ai/download?utm_source=newsletter&utm_medium=email&utm_campaign=rich-text-notes-and-comments",
     },
     status: "draft",
   },

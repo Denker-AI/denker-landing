@@ -16,6 +16,7 @@ import {
   type Device,
 } from "@/lib/download-resolver";
 import { captureEvent, getAttributionProperties } from "@/lib/posthog";
+import { NewsletterForm } from "@/components/newsletter-form";
 
 function triggerDownload(url: string): void {
   window.location.assign(url);
@@ -41,9 +42,9 @@ function getStatusLine(state: PageState): string {
     case "mac-failed":
       return "Couldn't reach our servers. Try again?";
     case "other-desktop":
-      return "Denker for macOS is ready. Windows and Linux are coming — use the web app in the meantime.";
+      return "Denker for macOS is ready. Windows and Linux are next — subscribe and we'll email you the moment it's ready.";
     case "mobile":
-      return "Best on a Mac. Open the web app on your phone, or come back from a desktop.";
+      return "Denker runs on your Mac. Subscribe and we'll send you a reminder for when you're back on desktop.";
   }
 }
 
@@ -130,7 +131,7 @@ export function DownloadClient() {
   const isNonMacDesktop = state.kind === "other-desktop";
   const isMobile = state.kind === "mobile";
 
-  /* Primary button props */
+  /* Primary button props — non-Mac devices get the newsletter form instead. */
   const primaryButton = (() => {
     if (isDetecting) {
       return { label: "Download for Mac", disabled: true, href: undefined, onClick: undefined };
@@ -155,7 +156,7 @@ export function DownloadClient() {
       return { label: "Try again", disabled: false, href: undefined, onClick: handleRetry };
     }
     /* other-desktop or mobile */
-    return { label: "Open in browser", disabled: false, href: "https://space.denker.ai", onClick: undefined };
+    return null;
   })();
 
   return (
@@ -183,15 +184,14 @@ export function DownloadClient() {
           {getStatusLine(state)}
         </p>
 
-        {/* Primary button */}
+        {/* Primary action — Mac states get a button, other devices the newsletter form */}
         <div className="mt-6">
-          {primaryButton.href ? (
+          {!primaryButton ? (
+            <NewsletterForm />
+          ) : primaryButton.href ? (
             <a
               href={primaryButton.href}
-              onClick={(event) => {
-                if (!primaryButton.onClick) return;
-                primaryButton.onClick();
-              }}
+              onClick={() => primaryButton.onClick?.()}
               className="inline-flex h-11 w-full items-center justify-center rounded-full bg-accent text-sm font-bold text-canvas transition-opacity hover:opacity-80"
               data-testid="download-primary-btn"
             >
@@ -214,19 +214,6 @@ export function DownloadClient() {
             </button>
           )}
         </div>
-
-        {/* Secondary link — shown when not on Mac or after detection */}
-        {(isNonMacDesktop || isMobile || isMacFailed) && (
-          <div className="mt-3">
-            <a
-              href="https://space.denker.ai"
-              className="inline-flex h-11 w-full items-center justify-center rounded-full border border-glass-stroke bg-glass-fill text-sm font-semibold text-primary transition-colors hover:border-glass-stroke-light"
-              data-testid="download-open-browser-btn"
-            >
-              Open in browser
-            </a>
-          </div>
-        )}
 
         {/* Tertiary link — extra escape hatch back to the marketing site */}
         {(isNonMacDesktop || isMobile || isMacFailed) && (
