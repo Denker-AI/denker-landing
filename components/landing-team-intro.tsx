@@ -182,8 +182,13 @@ function CursorBody({
       </svg>
       <div className="absolute left-3 top-3 flex flex-col items-start gap-1 leading-none">
         <span
-          className="whitespace-nowrap text-[10px] font-semibold"
-          style={{ color: style.color, textShadow: style.nameTextShadow }}
+          className="whitespace-nowrap text-[10px] font-semibold text-primary [text-shadow:0_1px_2px_rgba(255,255,255,0.85)] dark:text-[color:var(--cursor-color)] dark:[text-shadow:var(--cursor-name-shadow)]"
+          style={
+            {
+              "--cursor-color": style.color,
+              "--cursor-name-shadow": style.nameTextShadow,
+            } as React.CSSProperties
+          }
         >
           {style.name}
         </span>
@@ -229,7 +234,7 @@ function ShimmerCaption({ text }: { text: string }) {
     <span
       className={cn(
         "block w-max max-w-[min(260px,calc(100vw-32px))] italic",
-        "text-[12px] font-medium leading-snug text-white",
+        "text-[12px] font-medium leading-snug text-primary",
       )}
       style={{ textShadow: STATUS_TEXT_SHADOW }}
     >

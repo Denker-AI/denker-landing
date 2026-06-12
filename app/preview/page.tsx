@@ -57,7 +57,7 @@ function Frame({
 }) {
   return (
     <div
-      className={`flex flex-col overflow-hidden rounded-[10px] border border-glass-stroke bg-glass-fill shadow-frame backdrop-blur-glass ${className}`}
+      className={`liquid-glass flex flex-col overflow-hidden rounded-[10px] border border-glass-stroke ${className}`}
       style={style}
     >
       {children}
@@ -406,7 +406,7 @@ function MemoryMockup() {
       />
 
       {/* Frame chrome */}
-      <div className="absolute inset-3 flex flex-col overflow-hidden rounded-[10px] border border-glass-stroke bg-glass-fill shadow-frame backdrop-blur-glass">
+      <div className="liquid-glass absolute inset-3 flex flex-col overflow-hidden rounded-[10px] border border-glass-stroke">
         <FrameHeader title="Knowledge Graph" color="#64D2FF" agent="12 nodes" status="live" />
 
         {/* Graph area */}

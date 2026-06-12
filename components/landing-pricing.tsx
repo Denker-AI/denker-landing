@@ -153,8 +153,8 @@ function PricingCard({
       className={cn(
         "relative flex flex-col rounded-2xl border p-7",
         highlighted
-          ? "border-accent/30 bg-accent/[0.06] dark:bg-accent/[0.04]"
-          : "border-glass-stroke bg-surface shadow-glass-sm dark:bg-glass-fill",
+          ? "border-accent/30 bg-accent/[0.06] backdrop-blur-glass dark:bg-accent/[0.04]"
+          : "liquid-glass border-glass-stroke",
       )}
       style={highlighted ? { boxShadow: "0 0 48px rgba(21, 128, 61, 0.08), inset 0 1px 0 rgba(21, 128, 61, 0.10)" } : undefined}
       data-testid={`pricing-${name.toLowerCase()}`}

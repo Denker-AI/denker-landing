@@ -58,7 +58,7 @@ function StatCard({
   detail: string;
 }) {
   return (
-    <div className="rounded-2xl border border-glass-stroke bg-glass-fill p-6 backdrop-blur-glass">
+    <div className="liquid-glass rounded-2xl border border-glass-stroke p-6">
       <div className="text-xs font-semibold uppercase tracking-[0.18em] text-muted">
         {label}
       </div>
@@ -133,7 +133,7 @@ export default function TractionPage() {
             </div>
           </section>
 
-          <aside className="rounded-3xl border border-glass-stroke bg-glass-fill p-6 backdrop-blur-glass lg:sticky lg:top-28">
+          <aside className="liquid-glass rounded-3xl border border-glass-stroke p-6 lg:sticky lg:top-28">
             <div className="flex items-center justify-between">
               <span className="badge-section inline-flex">Definition</span>
               <span className="rounded-full bg-surface px-3 py-1 text-xs font-semibold text-secondary">
@@ -163,7 +163,7 @@ export default function TractionPage() {
         </div>
 
         <section className="mt-12 grid gap-6 lg:grid-cols-[1fr_1fr]">
-          <div className="rounded-3xl border border-glass-stroke bg-glass-fill p-7 backdrop-blur-glass">
+          <div className="liquid-glass rounded-3xl border border-glass-stroke p-7">
             <h2 className="font-satoshi text-2xl font-bold text-primary">
               Milestones
             </h2>
@@ -184,7 +184,7 @@ export default function TractionPage() {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-glass-stroke bg-glass-fill p-7 backdrop-blur-glass">
+          <div className="liquid-glass rounded-3xl border border-glass-stroke p-7">
             <h2 className="font-satoshi text-2xl font-bold text-primary">
               Evidence checklist
             </h2>
@@ -212,7 +212,7 @@ export default function TractionPage() {
           </div>
         </section>
 
-        <section className="mt-12 rounded-3xl border border-glass-stroke bg-glass-fill p-7 backdrop-blur-glass">
+        <section className="liquid-glass mt-12 rounded-3xl border border-glass-stroke p-7">
           <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div>
               <h2 className="font-satoshi text-2xl font-bold text-primary">

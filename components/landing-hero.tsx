@@ -36,7 +36,7 @@ function FloatingFrame({
       style={{ ...style, animation: `hero-fade-in 0.8s ease ${delay}s both` }}
     >
       <div style={{ animation: `hero-float 5s ease-in-out ${delay * 0.5}s infinite` }}>
-        <div className="flex flex-col overflow-hidden rounded-frame border border-glass-stroke bg-glass-fill shadow-frame backdrop-blur-glass">
+        <div className="liquid-glass flex flex-col overflow-hidden rounded-frame border border-glass-stroke">
           <div className="flex items-center gap-1.5 border-b border-glass-stroke-faint px-2 py-1.5">
             <div className={cn("h-1.5 w-1.5 rounded-full", color)} />
             <span className="truncate text-canvas-sm font-medium text-primary">{title}</span>
@@ -53,11 +53,14 @@ function FloatingFrame({
 
 function CursorLabel({ name, color }: { name: string; color: string }) {
   return (
-    <div className="flex items-baseline gap-0.5">
+    <div
+      className="flex items-baseline gap-0.5"
+      style={{ "--cursor-color": color } as React.CSSProperties}
+    >
       <svg width="10" height="14" viewBox="0 0 10 14" fill="none">
         <path d="M1 1L9 7L4.5 7.8L2.5 13L1 1Z" fill={color} />
       </svg>
-      <span className="text-[11px] font-semibold tracking-wide" style={{ color }}>
+      <span className="label-halo text-[11px] font-semibold tracking-wide text-primary dark:text-[color:var(--cursor-color)]">
         {name}
       </span>
     </div>
@@ -79,14 +82,29 @@ function SkeletonLines({ count, widths }: { count: number; widths?: number[] }) 
   );
 }
 
-function WorkflowDots() {
+function TaskBoardMini() {
+  const columns = [2, 3, 2];
   return (
-    <div className="flex items-center gap-1">
-      <div className="h-2 w-2 animate-pulse rounded-full bg-frame-workflow" />
-      <div className="h-px w-4 rounded bg-glass-fill-heavy" />
-      <div className="h-2 w-2 rounded-full border border-glass-stroke" />
-      <div className="h-px w-4 rounded bg-glass-fill-heavy" />
-      <div className="h-2 w-2 rounded-full border border-glass-stroke" />
+    <div className="flex gap-1">
+      {columns.map((count, i) => (
+        <div key={i} className="flex-1 space-y-1">
+          <div className="h-1 w-3/4 rounded bg-glass-fill-heavy" />
+          {Array.from({ length: count }).map((_, j) => (
+            <div key={j} className="h-3 rounded-sm border border-glass-stroke-faint bg-glass-fill-heavy" />
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function CodeLines() {
+  return (
+    <div className="space-y-1">
+      <div className="h-1.5 w-full rounded bg-blue-400/30" />
+      <div className="h-1.5 w-4/5 rounded bg-green-400/25" />
+      <div className="h-1.5 w-3/5 rounded bg-red-400/25" />
+      <div className="h-1.5 w-2/3 rounded bg-purple-400/20" />
     </div>
   );
 }
@@ -94,7 +112,7 @@ function WorkflowDots() {
 function HeroCanvas() {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-      {/* ── Top: Market Research + Aria (all screens) ── */}
+      {/* ── Market Research + Researcher (all screens) ── */}
       <FloatingFrame title="Market Research" color="bg-frame-search" status="Researcher" style={{ top: "15%", left: "2%", width: 178 }} delay={0.3}>
         <SkeletonLines count={3} widths={[100, 80, 55]} />
       </FloatingFrame>
@@ -104,59 +122,25 @@ function HeroCanvas() {
         </div>
       </div>
 
-      {/* ── Bottom: Deploy Pipeline + Kai (mobile only) ── */}
-      <div className="md:hidden">
-        <FloatingFrame title="Deploy Pipeline" color="bg-frame-workflow" status="running" style={{ bottom: "12%", right: "3%", width: 162 }} delay={0.9}>
-          <WorkflowDots />
-        </FloatingFrame>
-      </div>
-      <div className="absolute md:hidden" style={{ bottom: "22%", right: "18%", animation: "hero-fade-in 0.5s ease 1.9s both" }}>
-        <div style={{ animation: "hero-drift-2 8s ease-in-out 0.5s infinite" }}>
-          <CursorLabel name="Coder" color="#EF4444" />
-        </div>
-      </div>
-
-      {/* ── Desktop-only frames ── */}
+      {/* ── Bug Fixes + Coder (desktop only — collides with Market Research on mobile) ── */}
       <div className="hidden md:block">
-        <FloatingFrame title="Outreach Draft" color="bg-frame-email" status="Writer" style={{ top: "42%", left: "1%", width: 172 }} delay={0.7}>
-          <SkeletonLines count={4} widths={[100, 90, 100, 60]} />
+        <FloatingFrame title="Bug Fixes" color="bg-frame-code" status="Coder" style={{ top: "13%", right: "4%", width: 170 }} delay={0.5}>
+          <CodeLines />
         </FloatingFrame>
       </div>
-      <div className="hidden md:block">
-        <FloatingFrame title="Competitor Analysis" color="bg-frame-search" status="Analyst" style={{ bottom: "14%", left: "6%", width: 182 }} delay={1.1}>
-          <SkeletonLines count={3} widths={[85, 100, 70]} />
-        </FloatingFrame>
-      </div>
-      <div className="hidden md:block">
-        <FloatingFrame title="Feature Build" color="bg-frame-code" status="Coder" style={{ top: "13%", right: "4%", width: 170 }} delay={0.5}>
-          <SkeletonLines count={3} widths={[70, 100, 85]} />
-        </FloatingFrame>
-      </div>
-      <div className="hidden md:block">
-        <FloatingFrame title="Newsletter" color="bg-frame-email" status="Writer" style={{ top: "40%", right: "2%", width: 165 }} delay={0.9}>
-          <SkeletonLines count={3} widths={[100, 75, 90]} />
-        </FloatingFrame>
-      </div>
-      <div className="hidden md:block">
-        <FloatingFrame title="Deploy Pipeline" color="bg-frame-workflow" status="running" style={{ bottom: "10%", right: "3%", width: 162 }} delay={1.3}>
-          <WorkflowDots />
-        </FloatingFrame>
-      </div>
-
-      {/* ── Desktop-only cursors ── */}
       <div className="absolute hidden md:block" style={{ top: "26%", right: "13%", animation: "hero-fade-in 0.5s ease 1.9s both" }}>
         <div style={{ animation: "hero-drift-2 8s ease-in-out 0.5s infinite" }}>
           <CursorLabel name="Coder" color="#EF4444" />
         </div>
       </div>
-      <div className="absolute hidden lg:block" style={{ top: "55%", left: "22%", animation: "hero-fade-in 0.5s ease 2.2s both" }}>
+
+      {/* ── Task Board (all screens) ── */}
+      <FloatingFrame title="Task Board" color="bg-frame-workflow" status="3 agents" style={{ bottom: "12%", right: "3%", width: 182 }} delay={0.9}>
+        <TaskBoardMini />
+      </FloatingFrame>
+      <div className="absolute hidden lg:block" style={{ bottom: "24%", left: "18%", animation: "hero-fade-in 0.5s ease 2.2s both" }}>
         <div style={{ animation: "hero-drift-3 10s ease-in-out 1s infinite" }}>
           <CursorLabel name="Writer" color="#A78BFA" />
-        </div>
-      </div>
-      <div className="absolute hidden lg:block" style={{ top: "60%", right: "20%", animation: "hero-fade-in 0.5s ease 2.5s both" }}>
-        <div style={{ animation: "hero-drift-4 11s ease-in-out 2s infinite" }}>
-          <CursorLabel name="Analyst" color="#F59E0B" />
         </div>
       </div>
     </div>

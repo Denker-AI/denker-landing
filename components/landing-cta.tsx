@@ -78,7 +78,7 @@ export function LandingCta() {
         <div className="mx-auto grid max-w-5xl gap-5 md:grid-cols-2">
           {/* LinkedIn */}
           <div
-            className="flex flex-col rounded-2xl border border-glass-stroke bg-glass-fill p-6 backdrop-blur-glass sm:p-10"
+            className="liquid-glass flex flex-col rounded-2xl border border-glass-stroke p-6 sm:p-10"
             data-testid="community-linkedin"
           >
             {/* LinkedIn brand icon */}
@@ -104,7 +104,7 @@ export function LandingCta() {
 
           {/* Newsletter */}
           <div
-            className="flex flex-col rounded-2xl border border-glass-stroke bg-glass-fill p-6 backdrop-blur-glass sm:p-10"
+            className="liquid-glass flex flex-col rounded-2xl border border-glass-stroke p-6 sm:p-10"
             data-testid="community-newsletter"
           >
             {/* Denker symbol */}

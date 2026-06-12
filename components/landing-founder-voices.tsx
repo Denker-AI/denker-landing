@@ -68,7 +68,7 @@ function QuoteCard({ q }: { q: Quote }) {
       href={q.href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex h-44 w-[320px] shrink-0 flex-col rounded-2xl border border-glass-stroke bg-glass-fill p-5 backdrop-blur-glass transition-colors hover:border-glass-stroke-light"
+      className="liquid-glass group flex h-44 w-[320px] shrink-0 flex-col rounded-2xl border border-glass-stroke p-5 transition-colors hover:border-glass-stroke-light"
       data-testid="founder-voice-card"
     >
       <span

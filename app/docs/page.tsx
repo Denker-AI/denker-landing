@@ -73,7 +73,7 @@ export default function DocsHubPage() {
       >
         {DOCS_CARDS.map((card) => {
           const Icon = card.icon;
-          const sharedClassName = `group relative rounded-2xl border border-glass-stroke bg-glass-fill p-7 backdrop-blur-glass transition-all ${
+          const sharedClassName = `liquid-glass group relative rounded-2xl border border-glass-stroke p-7 transition-all ${
             card.comingSoon
               ? "cursor-default opacity-50"
               : "hover:border-glass-stroke-light hover:shadow-glass"

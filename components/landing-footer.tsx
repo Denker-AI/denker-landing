@@ -9,7 +9,7 @@ export function LandingFooter() {
     <footer className="px-4 pb-8 pt-4 sm:px-6 lg:px-12" data-testid="landing-footer">
       <div className="mx-auto max-w-5xl">
         {/* Main card */}
-        <div className="rounded-2xl border border-glass-stroke bg-glass-fill p-10 backdrop-blur-glass">
+        <div className="liquid-glass rounded-2xl border border-glass-stroke p-10">
           <div className="grid gap-10 md:grid-cols-[1fr_auto_auto]">
 
             {/* Left — brand */}

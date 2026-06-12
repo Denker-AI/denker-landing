@@ -26,7 +26,7 @@ function MiniFrame({
 }) {
   return (
     <div
-      className="flex flex-col overflow-hidden rounded-xl border border-glass-stroke bg-glass-fill shadow-glass backdrop-blur-glass"
+      className="liquid-glass flex flex-col overflow-hidden rounded-xl border border-glass-stroke"
       style={{ animation: `hero-float 5s ease-in-out ${floatDelay}s infinite` }}
     >
       <div className="flex items-center gap-1.5 border-b border-glass-stroke-faint px-2 py-1.5">

@@ -34,7 +34,7 @@ function PostCard({ post }: { post: BlogPost }) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group rounded-2xl border border-glass-stroke bg-glass-fill p-6 backdrop-blur-glass transition-all hover:border-glass-stroke-light hover:shadow-glass"
+      className="liquid-glass group rounded-2xl border border-glass-stroke p-6 transition-all hover:border-glass-stroke-light"
       data-testid={`blog-card-${post.slug}`}
       data-category={post.category}
     >

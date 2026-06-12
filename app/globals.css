@@ -24,8 +24,16 @@ html {
     --color-glass-stroke-light: rgba(0, 0, 0, 0.04);
     --color-glass-stroke-subtle: rgba(0, 0, 0, 0.03);
     --color-glass-stroke-faint: rgba(0, 0, 0, 0.02);
-    --shadow-glass: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.90);
-    --shadow-glass-sm: 0 2px 12px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.80);
+    --shadow-glass:
+      0 8px 32px rgba(0, 0, 0, 0.08),
+      0 1px 4px rgba(0, 0, 0, 0.05),
+      inset 0 1px 1px rgba(255, 255, 255, 0.95),
+      inset 0 -1px 1px rgba(255, 255, 255, 0.40),
+      inset 0 0 0 0.5px rgba(255, 255, 255, 0.60);
+    --shadow-glass-sm:
+      0 2px 12px rgba(0, 0, 0, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.90),
+      inset 0 0 0 0.5px rgba(255, 255, 255, 0.45);
 
     /* Text */
     --color-primary: rgba(0, 0, 0, 0.88);
@@ -75,8 +83,16 @@ html {
     --color-glass-stroke-light: rgba(255, 255, 255, 0.10);
     --color-glass-stroke-subtle: rgba(255, 255, 255, 0.06);
     --color-glass-stroke-faint: rgba(255, 255, 255, 0.03);
-    --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06), inset 0 0 20px rgba(255, 255, 255, 0.02);
-    --shadow-glass-sm: 0 4px 16px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    --shadow-glass:
+      0 12px 40px rgba(0, 0, 0, 0.45),
+      inset 0 1px 1px rgba(255, 255, 255, 0.12),
+      inset 0 -1px 1px rgba(255, 255, 255, 0.04),
+      inset 0 0 24px rgba(255, 255, 255, 0.03),
+      inset 0 0 0 0.5px rgba(255, 255, 255, 0.07);
+    --shadow-glass-sm:
+      0 4px 16px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 0 0 0.5px rgba(255, 255, 255, 0.05);
 
     /* Text — warmer, brighter (matched to Chardonnay) */
     --color-primary: rgba(255, 255, 255, 0.95);
@@ -133,6 +149,39 @@ body {
 
 /* Glass morphism blur utilities */
 @layer utilities {
+  /* Liquid glass surface — frosty, semi-transparent (Control Center style):
+     milky uniform base with a faint sheen, heavy blur, specular rim.
+     Compose with `border border-glass-stroke` and a rounding class. */
+  .liquid-glass {
+    background:
+      linear-gradient(
+        165deg,
+        rgba(255, 255, 255, 0.74) 0%,
+        rgba(255, 255, 255, 0.60) 45%,
+        rgba(255, 255, 255, 0.68) 100%
+      );
+    box-shadow: var(--shadow-glass);
+    -webkit-backdrop-filter: saturate(180%) blur(36px);
+    backdrop-filter: saturate(180%) blur(36px);
+  }
+  .dark .liquid-glass {
+    background:
+      linear-gradient(
+        165deg,
+        rgba(46, 46, 54, 0.66) 0%,
+        rgba(36, 36, 43, 0.55) 45%,
+        rgba(42, 42, 50, 0.60) 100%
+      );
+  }
+
+  /* Cursor/voice label halo — keeps small labels legible over glass */
+  .label-halo {
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.85);
+  }
+  .dark .label-halo {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.78), 0 0 7px rgba(0, 0, 0, 0.38), 0 0 1px rgba(255, 255, 255, 0.8);
+  }
+
   .backdrop-blur-glass {
     -webkit-backdrop-filter: saturate(180%) blur(40px);
     backdrop-filter: saturate(180%) blur(40px);
@@ -184,7 +233,7 @@ body {
     padding: 0.25rem 0.75rem;
     font-size: 0.75rem;
     color: var(--color-secondary);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    box-shadow: var(--shadow-glass-sm);
   }
 }
 

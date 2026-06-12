@@ -66,7 +66,7 @@ function MiniFrame({
 }) {
   return (
     <div
-      className="flex flex-col overflow-hidden rounded-xl border border-glass-stroke bg-glass-fill shadow-glass backdrop-blur-glass"
+      className="liquid-glass flex flex-col overflow-hidden rounded-xl border border-glass-stroke"
       style={{ animation: `hero-float 5s ease-in-out ${floatDelay}s infinite` }}
     >
       <div className="flex items-center gap-1.5 border-b border-glass-stroke-faint px-2 py-1.5">
@@ -98,11 +98,14 @@ function DemoSkeletonLines({ count, widths }: { count: number; widths?: number[]
 
 function DemoAgentCursor({ name, color }: { name: string; color: string }) {
   return (
-    <div className="pointer-events-none flex items-baseline gap-0.5">
+    <div
+      className="pointer-events-none flex items-baseline gap-0.5"
+      style={{ "--cursor-color": color } as React.CSSProperties}
+    >
       <svg width="10" height="14" viewBox="0 0 10 14" fill="none">
         <path d="M1 1L9 7L4.5 7.8L2.5 13L1 1Z" fill={color} />
       </svg>
-      <span className="text-[11px] font-semibold tracking-wide" style={{ color }}>
+      <span className="label-halo text-[11px] font-semibold tracking-wide text-primary dark:text-[color:var(--cursor-color)]">
         {name}
       </span>
     </div>
@@ -239,7 +242,7 @@ const BOARD_DATA: BoardColumn[] = [
 
 function TaskBoardVisual() {
   return (
-    <div className="flex h-full max-h-[560px] flex-col overflow-hidden rounded-2xl border border-glass-stroke bg-glass-fill shadow-glass" style={{ minHeight: 380 }}>
+    <div className="liquid-glass flex h-full max-h-[560px] flex-col overflow-hidden rounded-2xl border border-glass-stroke" style={{ minHeight: 380 }}>
       {/* Frame header */}
       <div className="flex items-center gap-2 border-b border-glass-stroke-faint px-3 py-2.5 sm:px-4">
         <span className="h-3 w-0.5 shrink-0 rounded-full bg-accent" />
@@ -308,7 +311,7 @@ function MemoryVisual() {
   const crossLinks = [[0, 1], [0, 2], [1, 2]] as const;
 
   return (
-    <div className="flex h-full max-h-[560px] flex-col overflow-hidden rounded-2xl border border-glass-stroke bg-glass-fill p-4 shadow-glass" style={{ minHeight: 380 }}>
+    <div className="liquid-glass flex h-full max-h-[560px] flex-col overflow-hidden rounded-2xl border border-glass-stroke p-4" style={{ minHeight: 380 }}>
       <div className="mb-2 flex items-center gap-2">
         <Icons.Network className="h-3.5 w-3.5 text-purple-400" />
         <span className="text-xs font-semibold text-secondary">Knowledge Graph</span>
@@ -505,14 +508,7 @@ function SpeakSummonShortcut() {
         </svg>
         {/* Voice indicator — offset from cursor by (+14, +18) like the real production layout */}
         <div className="absolute flex items-center gap-1.5 leading-none" style={{ left: 14, top: 18 }}>
-        <span
-          className="whitespace-nowrap text-[11px] font-semibold tracking-wide"
-          style={{
-            color: "#30D158",
-            textShadow:
-              "0 1px 2px rgba(0,0,0,0.78), 0 0 7px rgba(0,0,0,0.38), 0 0 1px rgba(255,255,255,0.8)",
-          }}
-        >
+        <span className="label-halo whitespace-nowrap text-[11px] font-semibold tracking-wide text-primary dark:text-[#30D158]">
           Denker
         </span>
         <div
@@ -549,7 +545,7 @@ function SpeakSummonShortcut() {
 
 function BentoCard({ className, children }: { className?: string; children: React.ReactNode }) {
   return (
-    <div className={cn("flex flex-col rounded-2xl border border-glass-stroke bg-glass-fill p-6 backdrop-blur-glass", className)}>
+    <div className={cn("liquid-glass flex flex-col rounded-2xl border border-glass-stroke p-6", className)}>
       {children}
     </div>
   );

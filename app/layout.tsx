@@ -88,8 +88,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`dark ${satoshi.variable}`} suppressHydrationWarning>
+    <html lang="en" className={satoshi.variable} suppressHydrationWarning>
       <head>
+        {/* Apply stored theme before paint — light is the default */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(localStorage.getItem('denker-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}",
+          }}
+        />
         <JsonLd />
         <script
           src="https://rankai.ai/apply.js"

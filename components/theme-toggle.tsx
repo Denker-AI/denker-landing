@@ -3,21 +3,28 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/cn";
 
+const THEME_STORAGE_KEY = "denker-theme";
+
+/* The `dark` class on <html> is the single source of truth (set pre-paint by
+ * the inline script in layout.tsx). Local state only mirrors it for the icon,
+ * so multiple toggle instances (desktop + mobile nav) never fight over it. */
 export function ThemeToggle() {
-  const [dark, setDark] = useState(true);
+  const [dark, setDark] = useState(false);
 
   useEffect(() => {
-    const root = document.documentElement;
-    if (dark) {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
-  }, [dark]);
+    setDark(document.documentElement.classList.contains("dark"));
+  }, []);
+
+  const toggle = () => {
+    const next = !document.documentElement.classList.contains("dark");
+    document.documentElement.classList.toggle("dark", next);
+    localStorage.setItem(THEME_STORAGE_KEY, next ? "dark" : "light");
+    setDark(next);
+  };
 
   return (
     <button
-      onClick={() => setDark((d) => !d)}
+      onClick={toggle}
       className="relative flex h-8 w-8 items-center justify-center text-muted transition-colors hover:text-primary"
       aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
       data-testid="theme-toggle"

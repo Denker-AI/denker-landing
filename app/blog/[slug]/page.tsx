@@ -89,7 +89,7 @@ function MediaBlock({ src, alt }: { src: string; alt: string }) {
 function FeatureCard({ feature }: { feature: NewsletterFeature }) {
   return (
     <div
-      className="rounded-2xl border border-glass-stroke bg-glass-fill p-6 backdrop-blur-glass sm:p-8"
+      className="liquid-glass rounded-2xl border border-glass-stroke p-6 sm:p-8"
       data-testid={`feature-${feature.title.toLowerCase().replace(/\s+/g, "-")}`}
     >
       <span
@@ -130,7 +130,7 @@ function RelatedPosts({ currentSlug, currentCategory }: { currentSlug: string; c
           <Link
             key={p.slug}
             href={`/blog/${p.slug}`}
-            className="group flex flex-col rounded-xl border border-glass-stroke bg-glass-fill p-4 backdrop-blur-glass transition-colors hover:border-glass-stroke-light"
+            className="liquid-glass group flex flex-col rounded-xl border border-glass-stroke p-4 transition-colors hover:border-glass-stroke-light"
           >
             <span className={`mb-2 self-start rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${CATEGORY_COLORS[p.category]}`}>
               {CATEGORY_LABELS[p.category]}
@@ -287,7 +287,7 @@ export default async function BlogPostPage({
         </header>
 
         {/* Intro */}
-        <div className="mb-12 rounded-2xl border border-glass-stroke bg-glass-fill p-6 backdrop-blur-glass sm:p-8">
+        <div className="liquid-glass mb-12 rounded-2xl border border-glass-stroke p-6 sm:p-8">
           <p
             className="text-base leading-relaxed text-secondary sm:text-lg"
             data-testid="post-intro"
@@ -324,7 +324,7 @@ export default async function BlogPostPage({
 
         {/* CTA */}
         <section
-          className="rounded-2xl border border-glass-stroke bg-glass-fill p-8 text-center backdrop-blur-glass sm:p-12"
+          className="liquid-glass rounded-2xl border border-glass-stroke p-8 text-center sm:p-12"
           data-testid="post-cta"
         >
           {p.cta.style === "button" ? (
