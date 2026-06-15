@@ -88,8 +88,8 @@ function generatePeerlistLaunchEmail(newsletter: Newsletter): string {
     }
   </style>
 </head>
-<body style="margin:0;padding:0;background-color:#ffffff;width:100%;">
-  <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;min-width:100%;background-color:#ffffff;">
+<body style="margin:0;padding:0;background-color:#f3f8f3;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f3f8f3;background-image:radial-gradient(circle at 18% 0%, rgba(58,248,140,0.22), transparent 34%),radial-gradient(circle at 85% 18%, rgba(255,255,255,0.92), transparent 34%),linear-gradient(180deg, #ddf8e5 0%, #f7faf5 52%, #eff6ef 100%);">
     <tr><td align="center" style="padding:16px 16px 8px;">
       <p style="font-family:${F};font-size:12px;color:#7f8b83;margin:0;">
         Email not displaying correctly? <a href="${viewInBrowserUrl}" style="color:#087a3b;text-decoration:underline;">View in browser</a>
