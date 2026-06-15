@@ -31,11 +31,140 @@ const C = {
   badgeBlueText: "#60A5FA",
 };
 
+const PEERLIST_ASSETS = `${SITE_URL}/blog/assets/denker-peerlist-launch`;
+const PEERLIST_URL = "https://peerlist.io/denker/project/denker";
+
 const BADGE_STYLES: Record<string, { bg: string; color: string }> = {
   green: { bg: C.badgeGreenBg, color: C.accent },
   amber: { bg: C.badgeAmberBg, color: C.badgeAmberText },
   blue: { bg: C.badgeBlueBg, color: C.badgeBlueText },
 };
+
+function peerlistDemoHtml({
+  title,
+  copy,
+  image,
+}: {
+  title: string;
+  copy: string;
+  image: string;
+}): string {
+  return `
+    <table width="100%" cellpadding="0" cellspacing="0" style="margin:30px 0 0;">
+      <tr><td>
+        <h2 style="font-family:${FH};font-size:21px;font-weight:700;color:#111713;margin:0 0 8px;line-height:1.2;">${title}</h2>
+        <p style="font-family:${F};font-size:15px;color:#53655a;margin:0 0 16px;line-height:1.65;">${copy}</p>
+        <img src="${PEERLIST_ASSETS}/${image}" alt="${title}" width="560" class="responsive-img"
+             style="display:block;width:560px;height:auto;max-width:100%;" />
+      </td></tr>
+    </table>`;
+}
+
+function generatePeerlistLaunchEmail(newsletter: Newsletter): string {
+  const viewInBrowserUrl = `${SITE_URL}/blog/${newsletter.slug}`;
+
+  return `<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${newsletter.subject}</title>
+  <style>
+    body, table, td, p, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; outline: none; text-decoration: none; }
+    @media only screen and (max-width: 620px) {
+      .wrapper { width: 100% !important; padding: 18px 10px 40px !important; }
+      .container { width: 100% !important; }
+      .content-area { padding: 28px 20px 30px !important; }
+      .responsive-img { width: 100% !important; height: auto !important; }
+      .primary-cta { display: block !important; text-align: center !important; }
+      .support-cta { display: block !important; text-align: center !important; }
+    }
+  </style>
+</head>
+<body style="margin:0;padding:0;background-color:#f3f8f3;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f3f8f3;background-image:radial-gradient(circle at 18% 0%, rgba(58,248,140,0.22), transparent 34%),radial-gradient(circle at 85% 18%, rgba(255,255,255,0.92), transparent 34%),linear-gradient(180deg, #ddf8e5 0%, #f7faf5 52%, #eff6ef 100%);">
+    <tr><td align="center" style="padding:16px 16px 8px;">
+      <p style="font-family:${F};font-size:12px;color:#7f8b83;margin:0;">
+        Email not displaying correctly? <a href="${viewInBrowserUrl}" style="color:#087a3b;text-decoration:underline;">View in browser</a>
+      </p>
+    </td></tr>
+
+    <tr><td align="center" class="wrapper" style="padding:24px 16px 52px;">
+      <table width="650" cellpadding="0" cellspacing="0" class="container" style="max-width:650px;width:100%;">
+        <tr><td align="center" style="padding:0 0 22px;">
+          <a href="${SITE_URL}" style="text-decoration:none;">
+            <img src="https://www.denker.ai/logo/logo-black.svg" alt="Denker" width="118" style="display:inline-block;width:118px;height:auto;opacity:0.86;" />
+          </a>
+        </td></tr>
+
+        <tr><td>
+          <table width="100%" cellpadding="0" cellspacing="0" style="border-radius:30px;overflow:hidden;background-color:rgba(255,255,255,0.76);box-shadow:0 28px 90px rgba(30,49,38,0.12);">
+            <tr><td class="content-area" style="padding:42px;">
+              <span style="display:inline-block;border-radius:99px;background-color:rgba(48,242,124,0.13);color:#087a3b;font-family:${F};font-size:12px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;padding:6px 11px;margin:0 0 14px;">Peerlist launch</span>
+              <h1 style="font-family:${FH};font-size:40px;font-weight:800;color:#111713;margin:0 0 8px;line-height:1.06;">${newsletter.heroTitle}</h1>
+              <p style="font-family:${FH};font-size:19px;font-weight:750;color:#1c7d45;margin:0 0 22px;line-height:1.35;">${newsletter.heroSubtitle}</p>
+              <p style="font-family:${F};font-size:15px;color:#53655a;line-height:1.68;margin:0 0 12px;">Today we launched Denker on Peerlist.</p>
+              <p style="font-family:${F};font-size:15px;color:#53655a;line-height:1.68;margin:0 0 28px;">Speak a task, keep your context, and watch agents execute in one shared workspace.</p>
+
+              <img src="${PEERLIST_ASSETS}/denker-launch-dashboard.png" alt="Denker live on Peerlist" width="566" class="responsive-img"
+                   style="display:block;width:566px;height:auto;max-width:100%;border-radius:18px;background-color:#ffffff;" />
+
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin:18px 0 34px;">
+                <tr>
+                  <td style="font-family:${F};font-size:14px;color:#53655a;line-height:1.45;">If you like the direction, help more builders find it.</td>
+                  <td align="right" style="padding-left:16px;">
+                    <a href="${PEERLIST_URL}" class="support-cta" style="display:inline-block;background-color:#30f27c;color:#07130a;font-family:${F};font-size:14px;font-weight:800;text-decoration:none;padding:13px 20px;border-radius:99px;white-space:nowrap;">Support on Peerlist</a>
+                  </td>
+                </tr>
+              </table>
+
+              ${peerlistDemoHtml({
+                title: "Speak to Denker",
+                copy: "Use voice input without opening another chat tab.",
+                image: "voice-input.gif",
+              })}
+              ${peerlistDemoHtml({
+                title: "Watch the task move",
+                copy: "Tasks, notes, and outputs stay visible as the workspace changes.",
+                image: "task-execution.gif",
+              })}
+
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin:34px 0 28px;background-color:rgba(255,255,255,0.50);border-radius:24px;">
+                <tr><td style="padding:20px 22px;">
+                  <p style="font-family:${F};font-size:15px;color:#53655a;line-height:1.68;margin:0 0 10px;"><strong style="color:#111713;">Voice first.</strong> Talk to the desktop app naturally.</p>
+                  <p style="font-family:${F};font-size:15px;color:#53655a;line-height:1.68;margin:0 0 10px;"><strong style="color:#111713;">Real execution.</strong> Agents run tasks in a shared workspace.</p>
+                  <p style="font-family:${F};font-size:15px;color:#53655a;line-height:1.68;margin:0;"><strong style="color:#111713;">Visible context.</strong> The work stays on screen.</p>
+                </td></tr>
+              </table>
+
+              <p style="font-family:${F};font-size:15px;color:#53655a;line-height:1.68;margin:0 0 30px;">Try it on real work. If it feels useful, supporting the Peerlist launch helps more builders find it.</p>
+
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr><td align="center">
+                  <a href="${newsletter.cta.url}" class="primary-cta" style="display:block;width:100%;background-color:#30f27c;color:#07130a;font-family:${F};font-size:17px;font-weight:900;text-decoration:none;padding:18px 0;border-radius:99px;">${newsletter.cta.text}</a>
+                  <a href="${PEERLIST_URL}" style="display:block;color:#087a3b;font-family:${F};font-size:14px;font-weight:800;text-decoration:none;margin-top:18px;">Support the Peerlist launch</a>
+                </td></tr>
+              </table>
+            </td></tr>
+          </table>
+        </td></tr>
+
+        <tr><td style="padding:24px 0 0;text-align:center;">
+          <p style="font-family:${F};font-size:12px;color:#8a958e;margin:0 0 6px;line-height:1.6;">Denker AI &middot; Hamburg, Germany</p>
+          <p style="font-family:${F};font-size:12px;margin:0;">
+            <a href="${SITE_URL}" style="color:#1c7d45;text-decoration:none;">denker.ai</a>
+            <span style="color:#8a958e;"> &nbsp;&middot;&nbsp; </span>
+            <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color:#8a958e;text-decoration:underline;">Unsubscribe</a>
+          </p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}
 
 function featureHtml(f: Newsletter["features"][number]): string {
   const badge = BADGE_STYLES[f.badgeColor] ?? BADGE_STYLES.green;
@@ -67,6 +196,10 @@ function featureHtml(f: Newsletter["features"][number]): string {
 }
 
 export function generateNewsletterEmail(newsletter: Newsletter): string {
+  if (newsletter.slug === "denker-peerlist-launch") {
+    return generatePeerlistLaunchEmail(newsletter);
+  }
+
   const featuresHtml = newsletter.features.map(featureHtml).join("\n");
   const viewInBrowserUrl = `${SITE_URL}/blog/${newsletter.slug}`;
 

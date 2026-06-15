@@ -28,9 +28,7 @@ function DemoVideo({
       <video
         src={src}
         poster={poster}
-        muted
-        autoPlay
-        loop
+        controls
         playsInline
         preload="metadata"
         className="mt-4 block w-full bg-[#111713] shadow-[0_18px_36px_rgba(35,50,41,0.13)]"
@@ -69,7 +67,7 @@ export function PeerlistLaunchPost() {
               The desktop interface for agent teams.
             </p>
 
-            <div className="mt-7 max-w-[560px] space-y-3 text-[15px] leading-relaxed text-[#53655a]">
+            <div className="mt-7 space-y-3 text-[15px] leading-relaxed text-[#53655a]">
               <p>Today we launched Denker on Peerlist.</p>
               <p>
                 Speak a task, keep your context, and watch agents execute in one shared
