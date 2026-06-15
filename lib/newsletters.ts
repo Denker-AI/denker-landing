@@ -64,6 +64,29 @@ export const CATEGORY_COLORS: Record<BlogCategory, string> = {
 export const posts: BlogPost[] = [
   /* ── Newsletters ──────────────────────────────────────── */
   {
+    slug: "denker-peerlist-launch",
+    category: "newsletter",
+    title: "Denker Is Live on Peerlist",
+    metaTitle: "Denker Is Live on Peerlist",
+    metaDescription:
+      "Denker is live on Peerlist. Watch voice input and task execution in the new Denker desktop app for macOS.",
+    subject: "Denker is live on Peerlist today",
+    previewText:
+      "Watch voice input and task execution in the new desktop app.",
+    date: "2026-06-15",
+    heroTitle: "Denker is live on Peerlist",
+    heroSubtitle: "The desktop interface for agent teams",
+    intro:
+      "Today we launched Denker on Peerlist. Speak a task, keep your context, and watch agents execute in one shared workspace.",
+    features: [],
+    media: "/blog/assets/denker-peerlist-launch/voice-input.mp4",
+    cta: {
+      text: "Download Denker for macOS",
+      url: "https://www.denker.ai/download?utm_source=newsletter&utm_medium=email&utm_campaign=denker-peerlist-launch",
+    },
+    status: "draft",
+  },
+  {
     slug: "denker-on-your-desktop",
     category: "newsletter",
     title: "Denker Is Now a Mac App",

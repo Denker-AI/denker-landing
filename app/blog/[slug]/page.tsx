@@ -8,6 +8,7 @@ import { getAllPosts, getPost, CATEGORY_LABELS, CATEGORY_COLORS } from "@/lib/ne
 import type { NewsletterFeature, BlogPost } from "@/lib/newsletters";
 import { SITE_URL } from "@/lib/seo";
 import { VideoLightbox } from "@/components/video-lightbox";
+import { PeerlistLaunchPost } from "@/components/peerlist-launch-post";
 
 export function generateStaticParams() {
   return getAllPosts().map((p) => ({ slug: p.slug }));
@@ -220,6 +221,20 @@ export default async function BlogPostPage({
 
   const isChangelog = p.category === "changelog";
   const videoId = p.media ? getYouTubeId(p.media) : null;
+
+  if (p.slug === "denker-peerlist-launch") {
+    return (
+      <>
+        <BlogPostSchema
+          slug={p.slug}
+          title={p.metaTitle ?? p.title}
+          description={p.metaDescription ?? p.previewText}
+          date={p.date}
+        />
+        <PeerlistLaunchPost />
+      </>
+    );
+  }
 
   return (
     <div
