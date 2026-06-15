@@ -100,7 +100,7 @@ function generatePeerlistLaunchEmail(newsletter: Newsletter): string {
       <table width="650" cellpadding="0" cellspacing="0" class="container" style="max-width:650px;width:100%;">
         <tr><td align="center" style="padding:0 0 22px;">
           <a href="${SITE_URL}" style="text-decoration:none;">
-            <img src="https://www.denker.ai/logo/logo-black.svg" alt="Denker" width="118" style="display:inline-block;width:118px;height:auto;opacity:0.86;" />
+            <img src="https://www.denker.ai/logo/logo-black.png" alt="Denker" width="118" style="display:inline-block;width:118px;height:auto;opacity:0.86;" />
           </a>
         </td></tr>
 
