@@ -9,18 +9,20 @@ const DOWNLOAD_URL =
   "https://www.denker.ai/download?utm_source=newsletter&utm_medium=email&utm_campaign=denker-peerlist-launch";
 
 function DemoVideo({
+  id,
   title,
   copy,
   src,
   poster,
 }: {
+  id: string;
   title: string;
   copy: string;
   src: string;
   poster: string;
 }) {
   return (
-    <section className="mt-9">
+    <section id={id} className="mt-9 scroll-mt-28">
       <h2 className="font-satoshi text-[22px] font-bold leading-tight tracking-normal text-[#111713] sm:text-2xl">
         {title}
       </h2>
@@ -100,12 +102,14 @@ export function PeerlistLaunchPost() {
             </div>
 
             <DemoVideo
+              id="voice-input-demo"
               title="Speak to Denker"
               copy="Use voice input without opening another chat tab."
               src={`${ASSET_BASE}/voice-input.mp4`}
               poster={`${ASSET_BASE}/voice-input.gif`}
             />
             <DemoVideo
+              id="task-execution-demo"
               title="Watch the task move"
               copy="Tasks, notes, and outputs stay visible as the workspace changes."
               src={`${ASSET_BASE}/task-execution.mp4`}

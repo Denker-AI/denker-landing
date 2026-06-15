@@ -44,18 +44,23 @@ function peerlistDemoHtml({
   title,
   copy,
   image,
+  href,
 }: {
   title: string;
   copy: string;
   image: string;
+  href: string;
 }): string {
   return `
     <table width="100%" cellpadding="0" cellspacing="0" style="margin:30px 0 0;">
       <tr><td>
         <h2 style="font-family:${FH};font-size:21px;font-weight:700;color:#111713;margin:0 0 8px;line-height:1.2;">${title}</h2>
         <p style="font-family:${F};font-size:15px;color:#53655a;margin:0 0 16px;line-height:1.65;">${copy}</p>
-        <img src="${PEERLIST_ASSETS}/${image}" alt="${title}" width="560" class="responsive-img"
-             style="display:block;width:560px;height:auto;max-width:100%;" />
+        <a href="${href}" style="display:block;text-decoration:none;">
+          <img src="${PEERLIST_ASSETS}/${image}" alt="${title}" width="560" class="responsive-img"
+               style="display:block;width:560px;height:auto;max-width:100%;" />
+        </a>
+        <a href="${href}" style="display:inline-block;color:#087a3b;font-family:${F};font-size:14px;font-weight:800;text-decoration:none;margin-top:12px;">Watch with sound</a>
       </td></tr>
     </table>`;
 }
@@ -124,11 +129,13 @@ function generatePeerlistLaunchEmail(newsletter: Newsletter): string {
                 title: "Speak to Denker",
                 copy: "Use voice input without opening another chat tab.",
                 image: "voice-input.gif",
+                href: `${viewInBrowserUrl}#voice-input-demo`,
               })}
               ${peerlistDemoHtml({
                 title: "Watch the task move",
                 copy: "Tasks, notes, and outputs stay visible as the workspace changes.",
                 image: "task-execution.gif",
+                href: `${viewInBrowserUrl}#task-execution-demo`,
               })}
 
               <table width="100%" cellpadding="0" cellspacing="0" style="margin:34px 0 28px;background-color:rgba(255,255,255,0.50);border-radius:24px;">
