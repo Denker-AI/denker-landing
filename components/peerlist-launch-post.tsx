@@ -49,7 +49,7 @@ export function PeerlistLaunchPost() {
       }}
     >
       <LandingNav />
-      <main className="mx-auto w-full max-w-[650px] px-4 pb-16 pt-32 sm:pt-36">
+      <main className="mx-auto w-full max-w-[729px] px-4 pb-16 pt-32 sm:pt-36">
         <div className="mb-6 text-center">
           <DenkerLogo variant="wordmark" height={30} className="justify-center opacity-85" />
         </div>
@@ -87,13 +87,13 @@ export function PeerlistLaunchPost() {
                 priority
               />
 
-              <div className="mt-4 flex items-center justify-between gap-4 border-t border-[#192c22]/10 pt-4 max-sm:block max-sm:text-center">
+              <div className="mt-4 flex items-center justify-between gap-4 pt-4 max-sm:block max-sm:text-center">
                 <p className="text-sm leading-snug text-[#53655a] max-sm:mb-3">
                   If you like the direction, help more builders find it.
                 </p>
                 <a
                   href={PEERLIST_URL}
-                  className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full bg-[#30f27c]/20 px-5 text-sm font-extrabold text-[#087a3b] shadow-[inset_0_0_0_1px_rgba(8,122,59,0.16)]"
+                  className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full bg-[#30f27c] px-5 text-sm font-extrabold text-[#07130a] shadow-[0_10px_22px_rgba(48,242,124,0.20)] max-sm:w-full"
                   data-testid="peerlist-support-link"
                 >
                   Support on Peerlist
@@ -137,23 +137,17 @@ export function PeerlistLaunchPost() {
             <div className="mt-8 text-center">
               <a
                 href={DOWNLOAD_URL}
-                className="inline-flex min-h-14 items-center justify-center rounded-full bg-[#30f27c] px-9 text-[17px] font-black text-[#07130a] shadow-[0_12px_26px_rgba(48,242,124,0.28)] max-sm:flex max-sm:w-full max-sm:px-5 max-sm:text-base"
+                className="flex min-h-14 w-full items-center justify-center rounded-full bg-[#30f27c] px-9 text-[17px] font-black text-[#07130a] shadow-[0_12px_26px_rgba(48,242,124,0.28)] max-sm:px-5 max-sm:text-base"
                 data-testid="download-denker-macos"
               >
                 Download Denker for macOS
               </a>
               <a
                 href={PEERLIST_URL}
-                className="mt-5 inline-block"
-                data-testid="peerlist-badge-link"
+                className="mt-5 flex w-full justify-center text-sm font-extrabold text-[#087a3b]"
+                data-testid="peerlist-secondary-link"
               >
-                <Image
-                  src={`${ASSET_BASE}/peerlist-launch-badge.png`}
-                  alt="Live on Peerlist Launchpad"
-                  width={490}
-                  height={144}
-                  className="mx-auto w-56 max-w-[86%]"
-                />
+                Support the Peerlist launch
               </a>
             </div>
           </div>
