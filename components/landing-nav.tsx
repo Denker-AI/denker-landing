@@ -34,7 +34,7 @@ function PeerlistBadge({
       target="_blank"
       rel="noreferrer"
       className={cn(
-        "inline-flex shrink-0 items-center overflow-hidden rounded-full transition-opacity hover:opacity-85",
+        "inline-flex shrink-0 items-center overflow-hidden rounded-full bg-white transition-opacity hover:opacity-85",
         className,
       )}
       aria-label="Denker on Peerlist"
