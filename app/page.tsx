@@ -32,7 +32,6 @@ export default function HomePage() {
           radial-gradient(ellipse 50% 40% at 60% 5%,  rgba(255,180,80,0.04) 0%, transparent 65%)
         `,
         backgroundSize: "100% 100%, 100% 100%, 100% 100%",
-        backgroundAttachment: "fixed, fixed, fixed",
       }}
     >
       <LandingNav />

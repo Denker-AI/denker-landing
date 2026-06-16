@@ -1,15 +1,21 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
-import { cn } from "@/lib/cn";
 import { FeaturesGrid } from "@/components/features-grid";
+import {
+  applyCursorTransform,
+  CursorOverlay,
+  HIDDEN,
+  IDENTITIES,
+  type CursorPosition,
+  type CursorPositionMap,
+  type CursorSlotRefs,
+  type Identity,
+  type SlotState,
+} from "@/components/landing-team-cursors";
 
 const AUDIO_VOLUME = 0.45;
 const AUDIO_START_OFFSET_SEC = 5;
-
-/* Lerp factor for cursor follow. */
-const LERP = 0.12;
 
 /* IO threshold at which the Meet Denker sequence starts. */
 const IO_THRESHOLD = 0.6;
@@ -17,68 +23,10 @@ const IO_THRESHOLD = 0.6;
 /* Delay between IO entry and sequence start. */
 const START_DELAY_MS = 200;
 
-/* Shimmer sweep cadence — per-character stagger + loop period. */
-const SHIMMER_PER_CHAR_MS = 80;
-const SHIMMER_LOOP_MS = 2800;
-const SHIMMER_HOLD_MS = 320;
-
-/* Fade in/out for individual cursor visibility. */
-const FADE_MS = 400;
-
 /* Margin from viewport edges when clamping cursor position. */
 const VIEWPORT_MARGIN = 8;
 
-/* ── Identity palette — matches real canvas AgentCursor ───────────── */
-
-type Identity = "denker" | "researcher" | "marketer";
-
-type IdentityStyle = {
-  name: string;
-  color: string;
-  /** Drop-shadow string applied to the arrow SVG. */
-  cursorFilter: string;
-  /** Text shadow for the colored agent name. */
-  nameTextShadow: string;
-  /** Offset from the visitor's mouse so cursors don't stack. */
-  offset: { x: number; y: number };
-};
-
-const IDENTITIES: Record<Identity, IdentityStyle> = {
-  denker: {
-    name: "Denker",
-    color: "#30D158",
-    cursorFilter:
-      "drop-shadow(0 1px 2px rgba(48,209,88,0.9)) drop-shadow(0 0 8px rgba(48,209,88,0.55))",
-    nameTextShadow:
-      "0 0 1px rgba(48,209,88,0.95), 0 1px 1px rgba(48,209,88,0.45)",
-    offset: { x: 20, y: 16 },
-  },
-  researcher: {
-    name: "Researcher",
-    color: "#60A5FA",
-    cursorFilter:
-      "drop-shadow(0 1px 2px rgba(96,165,250,0.9)) drop-shadow(0 0 8px rgba(96,165,250,0.55))",
-    nameTextShadow:
-      "0 0 1px rgba(96,165,250,0.95), 0 1px 1px rgba(96,165,250,0.45)",
-    offset: { x: 30, y: -30 },
-  },
-  marketer: {
-    name: "Marketer",
-    color: "#FF9F0A",
-    cursorFilter:
-      "drop-shadow(0 1px 2px rgba(255,159,10,0.9)) drop-shadow(0 0 8px rgba(255,159,10,0.55))",
-    nameTextShadow:
-      "0 0 1px rgba(255,159,10,0.95), 0 1px 1px rgba(255,159,10,0.45)",
-    offset: { x: -70, y: 20 },
-  },
-};
-
-const STATUS_TEXT_SHADOW =
-  "0 0 1px rgba(255,255,255,0.95), 0 1px 1px rgba(255,255,255,0.45)";
-
 /* ── Timeline ─────────────────────────────────────────────────────── */
-
-type SlotState = { visible: boolean; text: string };
 
 type Beat = {
   t: number;
@@ -86,8 +34,6 @@ type Beat = {
   researcher: SlotState;
   marketer: SlotState;
 };
-
-const HIDDEN: SlotState = { visible: false, text: "" };
 
 /* Denker's silent-follow state — visible cursor, no caption. Used from beat
  * 3 onward and as the resting state once the sequence ends. */
@@ -157,174 +103,6 @@ const IDLE_GAP_MS = 8000;
 const IDLE_HOLD_MS = 3500;
 const IDLE_KICKOFF_BREATH_MS = 800;
 
-/* ── Cursor body (canvas AgentCursor visual) ──────────────────────── */
-
-function CursorBody({
-  identity,
-  status,
-}: {
-  identity: Identity;
-  status: string;
-}) {
-  const style = IDENTITIES[identity];
-  return (
-    <div className="pointer-events-none relative">
-      <svg
-        className="absolute left-0 top-0"
-        width="10"
-        height="14"
-        viewBox="0 0 10 14"
-        fill="none"
-        style={{ filter: style.cursorFilter }}
-        aria-hidden="true"
-      >
-        <path d="M1 1L9 7L4.5 7.8L2.5 13L1 1Z" fill={style.color} />
-      </svg>
-      <div className="absolute left-3 top-3 flex flex-col items-start gap-1 leading-none">
-        <span
-          className="whitespace-nowrap text-[10px] font-semibold text-primary [text-shadow:0_1px_2px_rgba(255,255,255,0.85)] dark:text-[color:var(--cursor-color)] dark:[text-shadow:var(--cursor-name-shadow)]"
-          style={
-            {
-              "--cursor-color": style.color,
-              "--cursor-name-shadow": style.nameTextShadow,
-            } as React.CSSProperties
-          }
-        >
-          {style.name}
-        </span>
-        {status && <ShimmerCaption text={status} />}
-      </div>
-    </div>
-  );
-}
-
-/* ── Shimmer caption (per-char opacity sweep) ─────────────────────── */
-
-function ShimmerCaption({ text }: { text: string }) {
-  /* Tick drives the per-char opacity sweep without re-rendering text. */
-  const [tick, setTick] = useState(0);
-
-  useEffect(() => {
-    setTick(0);
-    let cancelled = false;
-    const loop = () => {
-      if (cancelled) return;
-      /* Bump tick to restart the staggered transitions, then again after the
-       * sweep finishes so the chars relax back to baseline. */
-      setTick((t) => t + 1);
-      const id = setTimeout(() => {
-        if (cancelled) return;
-        setTick((t) => t + 1);
-      }, SHIMMER_LOOP_MS - SHIMMER_HOLD_MS);
-      timersRef.current.push(id);
-    };
-    const timersRef = { current: [] as Array<ReturnType<typeof setTimeout>> };
-    loop();
-    const intervalId = setInterval(loop, SHIMMER_LOOP_MS);
-    return () => {
-      cancelled = true;
-      clearInterval(intervalId);
-      timersRef.current.forEach(clearTimeout);
-    };
-  }, [text]);
-
-  const chars = Array.from(text);
-
-  return (
-    <span
-      className={cn(
-        "block w-max max-w-[min(260px,calc(100vw-32px))] italic",
-        "text-[12px] font-medium leading-snug text-primary",
-      )}
-      style={{ textShadow: STATUS_TEXT_SHADOW }}
-    >
-      {chars.map((ch, i) => {
-        /* Alternate between baseline (0.9) and peak (1.0) so the eye reads
-         * a sweep travelling left-to-right across the line. */
-        const isPeak = tick % 2 === 1;
-        return (
-          <span
-            key={`${i}-${ch}`}
-            style={{
-              opacity: isPeak ? 1 : 0.9,
-              transition: `opacity 400ms ease-out`,
-              transitionDelay: `${i * SHIMMER_PER_CHAR_MS}ms`,
-            }}
-          >
-            {ch === " " ? " " : ch}
-          </span>
-        );
-      })}
-    </span>
-  );
-}
-
-/* ── Cursor slot ──────────────────────────────────────────────────── */
-
-function CursorSlot({
-  identity,
-  slot,
-  pos,
-}: {
-  identity: Identity;
-  slot: SlotState;
-  pos: { x: number; y: number };
-}) {
-  return (
-    <div
-      className="pointer-events-none absolute"
-      style={{
-        left: pos.x,
-        top: pos.y,
-        opacity: slot.visible ? 1 : 0,
-        transition: `opacity ${FADE_MS}ms ease-out`,
-      }}
-    >
-      <CursorBody identity={identity} status={slot.visible ? slot.text : ""} />
-    </div>
-  );
-}
-
-/* ── Cursor overlay (portal to body — page-wide fixed layer) ──────── */
-
-function CursorOverlay({
-  denker,
-  researcher,
-  marketer,
-  denkerPos,
-  researcherPos,
-  marketerPos,
-  replayKey,
-}: {
-  denker: SlotState;
-  researcher: SlotState;
-  marketer: SlotState;
-  denkerPos: { x: number; y: number };
-  researcherPos: { x: number; y: number };
-  marketerPos: { x: number; y: number };
-  replayKey: number;
-}) {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-  if (!mounted) return null;
-
-  return createPortal(
-    <div
-      key={replayKey}
-      className="pointer-events-none fixed inset-0"
-      style={{ zIndex: 60 }}
-      data-testid="meet-denker-cursors"
-    >
-      <CursorSlot identity="denker" slot={denker} pos={denkerPos} />
-      <CursorSlot identity="researcher" slot={researcher} pos={researcherPos} />
-      <CursorSlot identity="marketer" slot={marketer} pos={marketerPos} />
-    </div>,
-    document.body,
-  );
-}
-
 /* ── Main interactive section ─────────────────────────────────────── */
 
 function clampToViewport(x: number, y: number) {
@@ -344,10 +122,17 @@ function MeetDenkerStage() {
   const mouseRef = useRef({ x: 0, y: 0 });
   const hasMouseRef = useRef(false);
 
-  /* Slot positions — lerped each frame. */
-  const [denkerPos, setDenkerPos] = useState({ x: 0, y: 0 });
-  const [researcherPos, setResearcherPos] = useState({ x: 0, y: 0 });
-  const [marketerPos, setMarketerPos] = useState({ x: 0, y: 0 });
+  /* Slot positions are mutable because they update every animation frame. */
+  const positionsRef = useRef<CursorPositionMap>({
+    denker: { x: 0, y: 0 },
+    researcher: { x: 0, y: 0 },
+    marketer: { x: 0, y: 0 },
+  });
+  const slotRefs = useRef<CursorSlotRefs>({
+    denker: null,
+    researcher: null,
+    marketer: null,
+  });
 
   /* Slot visibility/text driven by the beat timeline. Denker starts hidden
    * (pre-first-mousemove) and flips to silent-follow on first mousemove. */
@@ -364,6 +149,27 @@ function MeetDenkerStage() {
   const audioPlayedRef = useRef(false);
   const [muted, setMuted] = useState(true);
   const [replayKey, setReplayKey] = useState(0);
+
+  const setCursorPosition = useCallback((identity: Identity, pos: CursorPosition) => {
+    positionsRef.current[identity] = pos;
+    const element = slotRefs.current[identity];
+    if (element) applyCursorTransform(element, pos);
+  }, []);
+
+  const setAllCursorPositions = useCallback((origin: CursorPosition) => {
+    setCursorPosition("denker", {
+      x: origin.x + IDENTITIES.denker.offset.x,
+      y: origin.y + IDENTITIES.denker.offset.y,
+    });
+    setCursorPosition("researcher", {
+      x: origin.x + IDENTITIES.researcher.offset.x,
+      y: origin.y + IDENTITIES.researcher.offset.y,
+    });
+    setCursorPosition("marketer", {
+      x: origin.x + IDENTITIES.marketer.offset.x,
+      y: origin.y + IDENTITIES.marketer.offset.y,
+    });
+  }, [setCursorPosition]);
 
   /* Touch/no-mouse fallback — seed mouseRef to a stable point in the lower
    * portion of the viewport so the cursor sequence has somewhere to play even
@@ -382,10 +188,7 @@ function MeetDenkerStage() {
       const cx = vw / 2;
       const cy = Math.max(120, Math.min(vh * 0.72, vh - 100));
       mouseRef.current = { x: cx, y: cy };
-      /* Snap cursor positions so they don't fly in from (0,0) on first frame. */
-      setDenkerPos({ x: cx + IDENTITIES.denker.offset.x, y: cy + IDENTITIES.denker.offset.y });
-      setResearcherPos({ x: cx + IDENTITIES.researcher.offset.x, y: cy + IDENTITIES.researcher.offset.y });
-      setMarketerPos({ x: cx + IDENTITIES.marketer.offset.x, y: cy + IDENTITIES.marketer.offset.y });
+      setAllCursorPositions({ x: cx, y: cy });
     };
     seedToViewportLower();
     window.addEventListener("resize", seedToViewportLower);
@@ -394,7 +197,7 @@ function MeetDenkerStage() {
       window.removeEventListener("resize", seedToViewportLower);
       window.removeEventListener("scroll", seedToViewportLower);
     };
-  }, []);
+  }, [setAllCursorPositions]);
 
   const playSound = useCallback(() => {
     try {
@@ -421,19 +224,7 @@ function MeetDenkerStage() {
       mouseRef.current = clamped;
       if (!hasMouseRef.current) {
         hasMouseRef.current = true;
-        /* Seed all three slots so they don't fly in from (0,0). */
-        const denkerOff = IDENTITIES.denker.offset;
-        const researcherOff = IDENTITIES.researcher.offset;
-        const marketerOff = IDENTITIES.marketer.offset;
-        setDenkerPos({ x: clamped.x + denkerOff.x, y: clamped.y + denkerOff.y });
-        setResearcherPos({
-          x: clamped.x + researcherOff.x,
-          y: clamped.y + researcherOff.y,
-        });
-        setMarketerPos({
-          x: clamped.x + marketerOff.x,
-          y: clamped.y + marketerOff.y,
-        });
+        setAllCursorPositions(clamped);
         /* Denker becomes visible silently. Sequence may overwrite caption
          * later when the visitor reaches the Meet Denker section. */
         setDenker((prev) => (prev.visible ? prev : DENKER_FOLLOW));
@@ -445,7 +236,7 @@ function MeetDenkerStage() {
     };
     window.addEventListener("mousemove", onMove);
     return () => window.removeEventListener("mousemove", onMove);
-  }, [playSound]);
+  }, [playSound, setAllCursorPositions]);
 
   /* rAF lerp loop — every cursor follows mouse + offset + organic drift.
    * Each agent has its own drift amplitude, frequency, phase, and lerp rate
@@ -464,17 +255,25 @@ function MeetDenkerStage() {
         x: m.x + off.x + Math.sin(t * d.freqX + d.phaseX) * d.ampX,
         y: m.y + off.y + Math.cos(t * d.freqY + d.phaseY) * d.ampY,
       });
-      setDenkerPos((p) => {
-        const tgt = computeTarget(IDENTITIES.denker.offset, DRIFT.denker);
-        return { x: p.x + (tgt.x - p.x) * DRIFT.denker.lerp, y: p.y + (tgt.y - p.y) * DRIFT.denker.lerp };
+      const denkerTgt = computeTarget(IDENTITIES.denker.offset, DRIFT.denker);
+      const denkerPos = positionsRef.current.denker;
+      setCursorPosition("denker", {
+        x: denkerPos.x + (denkerTgt.x - denkerPos.x) * DRIFT.denker.lerp,
+        y: denkerPos.y + (denkerTgt.y - denkerPos.y) * DRIFT.denker.lerp,
       });
-      setResearcherPos((p) => {
-        const tgt = computeTarget(IDENTITIES.researcher.offset, DRIFT.researcher);
-        return { x: p.x + (tgt.x - p.x) * DRIFT.researcher.lerp, y: p.y + (tgt.y - p.y) * DRIFT.researcher.lerp };
+
+      const researcherTgt = computeTarget(IDENTITIES.researcher.offset, DRIFT.researcher);
+      const researcherPos = positionsRef.current.researcher;
+      setCursorPosition("researcher", {
+        x: researcherPos.x + (researcherTgt.x - researcherPos.x) * DRIFT.researcher.lerp,
+        y: researcherPos.y + (researcherTgt.y - researcherPos.y) * DRIFT.researcher.lerp,
       });
-      setMarketerPos((p) => {
-        const tgt = computeTarget(IDENTITIES.marketer.offset, DRIFT.marketer);
-        return { x: p.x + (tgt.x - p.x) * DRIFT.marketer.lerp, y: p.y + (tgt.y - p.y) * DRIFT.marketer.lerp };
+
+      const marketerTgt = computeTarget(IDENTITIES.marketer.offset, DRIFT.marketer);
+      const marketerPos = positionsRef.current.marketer;
+      setCursorPosition("marketer", {
+        x: marketerPos.x + (marketerTgt.x - marketerPos.x) * DRIFT.marketer.lerp,
+        y: marketerPos.y + (marketerTgt.y - marketerPos.y) * DRIFT.marketer.lerp,
       });
       rafRef.current = requestAnimationFrame(tick);
     };
@@ -482,12 +281,7 @@ function MeetDenkerStage() {
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, []);
-
-  const clearIdleTimers = useCallback(() => {
-    idleTimersRef.current.forEach((id) => clearTimeout(id));
-    idleTimersRef.current = [];
-  }, []);
+  }, [setCursorPosition]);
 
   const clearBeatTimers = useCallback(() => {
     beatTimersRef.current.forEach((id) => clearTimeout(id));
@@ -674,10 +468,9 @@ function MeetDenkerStage() {
         denker={denker}
         researcher={researcher}
         marketer={marketer}
-        denkerPos={denkerPos}
-        researcherPos={researcherPos}
-        marketerPos={marketerPos}
         replayKey={replayKey}
+        slotRefs={slotRefs}
+        positionsRef={positionsRef}
       />
     </>
   );
