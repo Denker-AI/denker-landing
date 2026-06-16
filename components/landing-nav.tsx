@@ -34,7 +34,7 @@ function PeerlistBadge({
       target="_blank"
       rel="noreferrer"
       className={cn(
-        "inline-flex shrink-0 items-center overflow-hidden rounded-full bg-white transition-opacity hover:opacity-85",
+        "liquid-glass inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full transition-opacity hover:opacity-85",
         className,
       )}
       aria-label="Denker on Peerlist"
@@ -86,7 +86,7 @@ export function LandingNav() {
           </button>
         </nav>
         <PeerlistBadge
-          className="h-[50px] w-[206px]"
+          className="h-[50px] w-[230px] px-3"
           testId="nav-peerlist"
         />
       </div>
@@ -148,7 +148,7 @@ export function LandingNav() {
             >
               Start Now
             </button>
-            <PeerlistBadge className="mt-2 h-12 w-[240px] self-center" testId="nav-peerlist-mobile" />
+            <PeerlistBadge className="mt-2 h-12 w-[264px] self-center px-3" testId="nav-peerlist-mobile" />
           </div>
         )}
       </nav>
