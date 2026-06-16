@@ -14,6 +14,42 @@ const NAV_LINKS = [
   { href: "/#community", label: "Community", testId: "nav-community" },
 ];
 
+const PEERLIST_BADGE_SRC =
+  "https://peerlist.io/api/v1/projects/embed/PRJHDNDLJMEEPR78PI7MLDNMJQMOED?showUpvote=true&theme=light";
+const PEERLIST_BADGE_FALLBACK_SRC =
+  "/blog/assets/denker-peerlist-launch/peerlist-launch-badge.png";
+
+function PeerlistBadge({
+  className = "",
+  testId,
+}: {
+  className?: string;
+  testId: string;
+}) {
+  const [src, setSrc] = useState(PEERLIST_BADGE_SRC);
+
+  return (
+    <a
+      href="https://peerlist.io/denker/project/denker"
+      target="_blank"
+      rel="noreferrer"
+      className={cn(
+        "inline-flex shrink-0 items-center overflow-hidden rounded-full transition-opacity hover:opacity-85",
+        className,
+      )}
+      aria-label="Denker on Peerlist"
+      data-testid={testId}
+    >
+      <img
+        src={src}
+        alt="Denker on Peerlist"
+        className="h-full w-full object-contain"
+        onError={() => setSrc(PEERLIST_BADGE_FALLBACK_SRC)}
+      />
+    </a>
+  );
+}
+
 export function LandingNav() {
   const [open, setOpen] = useState(false);
   const { open: gateOpen, openGate, closeGate } = useCtaGate();
@@ -21,7 +57,7 @@ export function LandingNav() {
   return (
     <header className="fixed left-0 right-0 top-0 z-50 flex justify-center px-4 pt-4 sm:px-6 sm:pt-5" data-testid="landing-nav">
       {/* Desktop nav */}
-      <nav className="liquid-glass hidden items-center gap-1 rounded-full border border-glass-stroke px-3 py-2 md:flex">
+      <nav className="liquid-glass hidden items-center gap-1 rounded-full border border-glass-stroke px-3 py-2 lg:flex">
         <a href="/" className="flex items-center px-2 pr-5" data-testid="nav-logo">
           <DenkerLogo variant="wordmark" height={18} />
         </a>
@@ -47,10 +83,11 @@ export function LandingNav() {
         >
           Start Now
         </button>
+        <PeerlistBadge className="ml-1 h-8 w-[170px]" testId="nav-peerlist" />
       </nav>
 
       {/* Mobile nav */}
-      <nav className="flex w-full flex-col md:hidden">
+      <nav className="flex w-full flex-col lg:hidden">
         <div className="liquid-glass flex items-center justify-between rounded-full border border-glass-stroke px-4 py-2.5">
           <a href="/" data-testid="nav-logo-mobile">
             <DenkerLogo variant="wordmark" height={16} />
@@ -82,35 +119,33 @@ export function LandingNav() {
         </div>
 
         {/* Mobile dropdown */}
-        <div
-          className={cn(
-            "mt-2 flex flex-col gap-1 overflow-hidden rounded-2xl border border-glass-stroke bg-glass-fill-dense p-3 shadow-glass backdrop-blur-glass transition-all duration-200",
-            open ? "max-h-80 opacity-100" : "max-h-0 border-transparent p-0 opacity-0",
-          )}
-        >
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              onClick={() => setOpen(false)}
-              className="rounded-xl px-4 py-3 text-sm font-medium text-secondary transition-colors hover:bg-glass-fill-heavy hover:text-primary"
-              data-testid={`${link.testId}-mobile`}
+        {open && (
+          <div className="mt-2 flex flex-col gap-1 overflow-hidden rounded-2xl border border-glass-stroke bg-glass-fill-dense p-3 shadow-glass backdrop-blur-glass">
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className="rounded-xl px-4 py-3 text-sm font-medium text-secondary transition-colors hover:bg-glass-fill-heavy hover:text-primary"
+                data-testid={`${link.testId}-mobile`}
+              >
+                {link.label}
+              </a>
+            ))}
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false);
+                openGate();
+              }}
+              className="mt-1 flex h-11 items-center justify-center rounded-full bg-primary text-sm font-semibold text-canvas transition-opacity hover:opacity-80"
+              data-testid="nav-cta-mobile"
             >
-              {link.label}
-            </a>
-          ))}
-          <button
-            type="button"
-            onClick={() => {
-              setOpen(false);
-              openGate();
-            }}
-            className="mt-1 flex h-11 items-center justify-center rounded-full bg-primary text-sm font-semibold text-canvas transition-opacity hover:opacity-80"
-            data-testid="nav-cta-mobile"
-          >
-            Start Now
-          </button>
-        </div>
+              Start Now
+            </button>
+            <PeerlistBadge className="mt-2 h-12 w-[240px] self-center" testId="nav-peerlist-mobile" />
+          </div>
+        )}
       </nav>
       <CtaGateDialog open={gateOpen} onClose={closeGate} />
     </header>
