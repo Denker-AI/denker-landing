@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DenkerLogo } from "@/components/denker-logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { CtaGateDialog, useCtaGate } from "@/components/cta-gate-dialog";
@@ -14,8 +14,10 @@ const NAV_LINKS = [
   { href: "/#community", label: "Community", testId: "nav-community" },
 ];
 
-const PEERLIST_BADGE_SRC =
-  "https://peerlist.io/api/v1/projects/embed/PRJHDNDLJMEEPR78PI7MLDNMJQMOED?showUpvote=true&theme=light";
+type PeerlistTheme = "light" | "dark";
+
+const getPeerlistBadgeSrc = (theme: PeerlistTheme) =>
+  `https://peerlist.io/api/v1/projects/embed/PRJHDNDLJMEEPR78PI7MLDNMJQMOED?showUpvote=true&theme=${theme}`;
 const PEERLIST_BADGE_FALLBACK_SRC =
   "/blog/assets/denker-peerlist-launch/peerlist-launch-badge.png";
 
@@ -26,7 +28,25 @@ function PeerlistBadge({
   className?: string;
   testId: string;
 }) {
-  const [src, setSrc] = useState(PEERLIST_BADGE_SRC);
+  const [theme, setTheme] = useState<PeerlistTheme>("light");
+  const [failedTheme, setFailedTheme] = useState<PeerlistTheme | null>(null);
+  const src =
+    failedTheme === theme ? PEERLIST_BADGE_FALLBACK_SRC : getPeerlistBadgeSrc(theme);
+
+  useEffect(() => {
+    const syncTheme = () => {
+      setTheme(document.documentElement.classList.contains("dark") ? "dark" : "light");
+    };
+
+    syncTheme();
+    const observer = new MutationObserver(syncTheme);
+    observer.observe(document.documentElement, {
+      attributeFilter: ["class"],
+      attributes: true,
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <a
@@ -45,7 +65,7 @@ function PeerlistBadge({
           src={src}
           alt="Denker on Peerlist"
           className="h-full w-full scale-[1.04] object-contain"
-          onError={() => setSrc(PEERLIST_BADGE_FALLBACK_SRC)}
+          onError={() => setFailedTheme(theme)}
         />
       </span>
     </a>
