@@ -57,34 +57,39 @@ export function LandingNav() {
   return (
     <header className="fixed left-0 right-0 top-0 z-50 flex justify-center px-4 pt-4 sm:px-6 sm:pt-5" data-testid="landing-nav">
       {/* Desktop nav */}
-      <nav className="liquid-glass hidden items-center gap-1 rounded-full border border-glass-stroke px-3 py-2 lg:flex">
-        <a href="/" className="flex items-center px-2 pr-5" data-testid="nav-logo">
-          <DenkerLogo variant="wordmark" height={18} />
-        </a>
-
-        {NAV_LINKS.map((link) => (
-          <a
-            key={link.label}
-            href={link.href}
-            className="rounded-full px-3.5 py-1.5 text-sm text-secondary transition-colors hover:bg-glass-fill-heavy hover:text-primary"
-            data-testid={link.testId}
-          >
-            {link.label}
+      <div className="hidden items-center gap-3 lg:flex">
+        <nav className="liquid-glass flex items-center gap-1 rounded-full border border-glass-stroke px-3 py-2">
+          <a href="/" className="flex items-center px-2 pr-5" data-testid="nav-logo">
+            <DenkerLogo variant="wordmark" height={18} />
           </a>
-        ))}
 
-        <div className="mx-2 h-4 w-px bg-glass-stroke" />
-        <ThemeToggle />
-        <button
-          type="button"
-          onClick={openGate}
-          className="ml-1 inline-flex h-8 items-center rounded-full bg-primary px-5 text-sm font-semibold text-canvas transition-opacity hover:opacity-80"
-          data-testid="nav-cta"
-        >
-          Start Now
-        </button>
-        <PeerlistBadge className="ml-1 h-8 w-[170px]" testId="nav-peerlist" />
-      </nav>
+          {NAV_LINKS.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              className="rounded-full px-3.5 py-1.5 text-sm text-secondary transition-colors hover:bg-glass-fill-heavy hover:text-primary"
+              data-testid={link.testId}
+            >
+              {link.label}
+            </a>
+          ))}
+
+          <div className="mx-2 h-4 w-px bg-glass-stroke" />
+          <ThemeToggle />
+          <button
+            type="button"
+            onClick={openGate}
+            className="ml-1 inline-flex h-8 items-center rounded-full bg-primary px-5 text-sm font-semibold text-canvas transition-opacity hover:opacity-80"
+            data-testid="nav-cta"
+          >
+            Start Now
+          </button>
+        </nav>
+        <PeerlistBadge
+          className="h-[50px] w-[206px]"
+          testId="nav-peerlist"
+        />
+      </div>
 
       {/* Mobile nav */}
       <nav className="flex w-full flex-col lg:hidden">
