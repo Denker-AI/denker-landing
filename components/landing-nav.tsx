@@ -40,12 +40,14 @@ function PeerlistBadge({
       aria-label="Denker on Peerlist"
       data-testid={testId}
     >
-      <img
-        src={src}
-        alt="Denker on Peerlist"
-        className="h-full w-full object-contain"
-        onError={() => setSrc(PEERLIST_BADGE_FALLBACK_SRC)}
-      />
+      <span className="flex h-full w-full overflow-hidden rounded-full">
+        <img
+          src={src}
+          alt="Denker on Peerlist"
+          className="h-full w-full scale-[1.04] object-contain"
+          onError={() => setSrc(PEERLIST_BADGE_FALLBACK_SRC)}
+        />
+      </span>
     </a>
   );
 }
