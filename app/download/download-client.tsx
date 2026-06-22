@@ -16,6 +16,7 @@ import {
   type Device,
 } from "@/lib/download-resolver";
 import { captureEvent, getAttributionProperties } from "@/lib/posthog";
+import { webAppAuthUrls } from "@/lib/web-app-auth";
 import { NewsletterForm } from "@/components/newsletter-form";
 
 function triggerDownload(url: string): void {
@@ -214,6 +215,18 @@ export function DownloadClient() {
             </button>
           )}
         </div>
+
+        {isMacDownloading && (
+          <div className="mt-3">
+            <a
+              href={webAppAuthUrls.desktopRegister}
+              className="inline-flex h-11 w-full items-center justify-center rounded-full border border-glass-stroke bg-glass-fill text-sm font-semibold text-primary transition-colors hover:border-glass-stroke-light"
+              data-testid="download-create-account-link"
+            >
+              Create account
+            </a>
+          </div>
+        )}
 
         {/* Tertiary link — extra escape hatch back to the marketing site */}
         {(isNonMacDesktop || isMobile || isMacFailed) && (

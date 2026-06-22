@@ -38,10 +38,9 @@ export function PostHogProvider() {
   }, []);
 
   // Stitch the anonymous landing session to the app session by appending
-  // ?ph=<distinct_id> to outbound links pointing at space.denker.ai. Runs on
-  // mousedown so normal, middle-, and cmd-clicks all see the rewritten href.
+  // ?ph=<distinct_id> to outbound links pointing at space.denker.ai.
   useEffect(() => {
-    function rewriteAppLinks(event: MouseEvent) {
+    function rewriteAppLink(event: Event) {
       const anchor = (event.target as Element | null)?.closest?.("a");
       if (!(anchor instanceof HTMLAnchorElement)) return;
       let url: URL;
@@ -57,8 +56,14 @@ export function PostHogProvider() {
       url.searchParams.set(PH_PARAM, id);
       anchor.href = url.toString();
     }
-    document.addEventListener("mousedown", rewriteAppLinks, { capture: true });
-    return () => document.removeEventListener("mousedown", rewriteAppLinks, { capture: true });
+    document.addEventListener("pointerdown", rewriteAppLink, { capture: true });
+    document.addEventListener("click", rewriteAppLink, { capture: true });
+    document.addEventListener("auxclick", rewriteAppLink, { capture: true });
+    return () => {
+      document.removeEventListener("pointerdown", rewriteAppLink, { capture: true });
+      document.removeEventListener("click", rewriteAppLink, { capture: true });
+      document.removeEventListener("auxclick", rewriteAppLink, { capture: true });
+    };
   }, []);
 
   return (
