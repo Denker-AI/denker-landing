@@ -1,376 +1,337 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-html {
-  scroll-behavior: smooth;
-  overscroll-behavior: none;
+/* Only apply hover: styles on hover-capable devices at the desktop breakpoint
+   (>=lg / 1024px). This removes all hover effects on mobile and tablet, and
+   avoids sticky/left-over hover states on touch screens. */
+@custom-variant hover {
+  @media (hover: hover) and (min-width: 64rem) {
+    &:hover {
+      @slot;
+    }
+  }
 }
 
-@layer base {
-  :root {
-    /* Canvas — clean, neutral white */
-    --color-canvas: #F5F5F7;
-    --color-surface: #FFFFFF;
-    --color-elevated: #FFFFFF;
-    --color-accent: #16a34a;
-    --color-canvas-dot: rgba(0, 0, 0, 0.10);
+:root {
+  --background: #ffffff;
+  --foreground: #111113;
+}
 
-    /* Glass — light mode (clean, translucent) */
-    --color-glass-fill: rgba(255, 255, 255, 0.55);
-    --color-glass-stroke: rgba(0, 0, 0, 0.06);
-    --color-glass-fill-heavy: rgba(0, 0, 0, 0.03);
-    --color-glass-fill-dense: rgba(255, 255, 255, 0.88);
-    --color-glass-stroke-light: rgba(0, 0, 0, 0.04);
-    --color-glass-stroke-subtle: rgba(0, 0, 0, 0.03);
-    --color-glass-stroke-faint: rgba(0, 0, 0, 0.02);
-    --shadow-glass:
-      0 8px 32px rgba(0, 0, 0, 0.08),
-      0 1px 4px rgba(0, 0, 0, 0.05),
-      inset 0 1px 1px rgba(255, 255, 255, 0.95),
-      inset 0 -1px 1px rgba(255, 255, 255, 0.40),
-      inset 0 0 0 0.5px rgba(255, 255, 255, 0.60);
-    --shadow-glass-sm:
-      0 2px 12px rgba(0, 0, 0, 0.05),
-      inset 0 1px 0 rgba(255, 255, 255, 0.90),
-      inset 0 0 0 0.5px rgba(255, 255, 255, 0.45);
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
 
-    /* Text */
-    --color-primary: rgba(0, 0, 0, 0.88);
-    --color-secondary: rgba(0, 0, 0, 0.50);
-    --color-muted: rgba(0, 0, 0, 0.30);
-    --color-subtle: rgba(0, 0, 0, 0.18);
+  /* Denker brand palette (from Figma) */
+  --color-primary-50: #effbf3;
+  /* No 200 step was defined in the palette handed off from Figma — the FAQ
+     card's active-state border referenced `border-primary-200` anyway,
+     which silently no-ops without a matching token (falls back to
+     currentColor). Interpolated between 50 and 400 to fill the gap. */
+  --color-primary-200: #bfe6cd;
+  --color-primary-400: #4abf73;
+  --color-primary-600: #1b9847;
+  --color-primary-700: #157938;
+  --color-primary-800: #0f5c2a;
+  --color-grey-950: #111113;
+  --color-grey-900: #1d1d1f;
+  --color-grey-800: #2c2c2e;
+  --color-grey-700: #3d3d40;
+  --color-grey-500: #6e6e73;
+  --color-grey-400: #98989d;
+  --color-grey-300: #a1a1a6;
+  --color-grey-200: #d1d1d6;
+  --color-grey-150: #dcdce1;
+  --color-grey-100: #e5e5e7;
+  --color-grey-50: #f5f5f7;
 
-    /* Status */
-    --color-danger: #FF3B30;
-    --color-danger-light: #FF6259;
-    --color-success: #16a34a;
-    --color-warning: #d97706;
+  /* Elevation/MD · button hover (from Figma) */
+  --shadow-btn-hover: 0 4px 8px -2px rgba(10, 22, 40, 0.1),
+    0 0 2px 0 rgba(10, 22, 40, 0.06);
 
-    /* Frame types */
-    --color-frame-code: #007AFF;
-    --color-frame-search: #AF52DE;
-    --color-frame-email: #FF2D55;
-    --color-frame-workflow: #FF9500;
-    --color-frame-conversation: #16a34a;
-
-    /* Page gradient — warm ambient blobs */
-    --gradient-page-overlay:
-      radial-gradient(ellipse 60% 50% at 15% 25%, rgba(58, 248, 140, 0.08) 0%, transparent 70%),
-      radial-gradient(ellipse 55% 45% at 85% 65%, rgba(96, 165, 250, 0.07) 0%, transparent 70%),
-      radial-gradient(ellipse 45% 40% at 70% 8%,  rgba(167, 139, 250, 0.06) 0%, transparent 65%);
-
-    /* Input bar + voice pill (light) */
-    --input-bar-fill: rgba(245, 245, 247, 0.94);
-    --input-bar-drop: 0 4px 14px rgba(0, 0, 0, 0.10);
-    --voice-pill-bg: rgba(255, 255, 255, 0.55);
-    --voice-pill-stroke: rgba(0, 0, 0, 0.06);
-    --voice-pill-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
-  }
-
-  .dark {
-    --color-canvas: #0F1115;
-    --color-surface: #1C1C22;
-    --color-elevated: #2C2C34;
-    --color-accent: #3AF88C;
-    --color-canvas-dot: rgba(255, 255, 255, 0.08);
-
-    /* Glass — dark mode (warm, 3-tier) */
-    --color-glass-fill: rgba(255, 255, 255, 0.08);
-    --color-glass-stroke: rgba(255, 255, 255, 0.12);
-    --color-glass-fill-heavy: rgba(255, 255, 255, 0.16);
-    --color-glass-fill-dense: rgba(15, 17, 21, 0.94);
-    --color-glass-stroke-light: rgba(255, 255, 255, 0.10);
-    --color-glass-stroke-subtle: rgba(255, 255, 255, 0.06);
-    --color-glass-stroke-faint: rgba(255, 255, 255, 0.03);
-    --shadow-glass:
-      0 12px 40px rgba(0, 0, 0, 0.45),
-      inset 0 1px 1px rgba(255, 255, 255, 0.12),
-      inset 0 -1px 1px rgba(255, 255, 255, 0.04),
-      inset 0 0 24px rgba(255, 255, 255, 0.03),
-      inset 0 0 0 0.5px rgba(255, 255, 255, 0.07);
-    --shadow-glass-sm:
-      0 4px 16px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08),
-      inset 0 0 0 0.5px rgba(255, 255, 255, 0.05);
-
-    /* Text — warmer, brighter (matched to Chardonnay) */
-    --color-primary: rgba(255, 255, 255, 0.95);
-    --color-secondary: rgba(255, 255, 255, 0.75);
-    --color-muted: rgba(255, 255, 255, 0.45);
-    --color-subtle: rgba(255, 255, 255, 0.30);
-
-    --color-danger: #FF453A;
-    --color-danger-light: #FF6961;
-    --color-success: #3AF88C;
-    --color-warning: #FFD60A;
-
-    --color-frame-code: #0A84FF;
-    --color-frame-search: #BF5AF2;
-    --color-frame-email: #FF375F;
-    --color-frame-workflow: #FFD60A;
-    --color-frame-conversation: #3AF88C;
-
-    /* Page gradient — warm ambient blobs with color-mix */
-    --gradient-page-overlay:
-      radial-gradient(ellipse 60% 50% at 15% 25%, rgba(58, 248, 140, 0.10) 0%, transparent 70%),
-      radial-gradient(ellipse 55% 45% at 85% 65%, rgba(96, 165, 250, 0.08) 0%, transparent 70%),
-      radial-gradient(ellipse 45% 40% at 70% 8%,  rgba(167, 139, 250, 0.07) 0%, transparent 65%),
-      radial-gradient(ellipse 50% 40% at 40% 80%, rgba(244, 114, 182, 0.05) 0%, transparent 65%);
-
-    /* Input bar + voice pill (dark) */
-    --input-bar-fill: rgba(20, 20, 22, 0.92);
-    --input-bar-drop: 0 8px 24px rgba(0, 0, 0, 0.55);
-    --voice-pill-bg: var(--color-glass-fill);
-    --voice-pill-stroke: var(--color-glass-stroke);
-    --voice-pill-shadow:
-      0 0 0 1px rgba(48, 209, 88, 0.15) inset,
-      0 0 14px 2px rgba(48, 209, 88, 0.18),
-      0 4px 12px rgba(0, 0, 0, 0.35);
-  }
+  --font-heading: "Satoshi", var(--font-sans);
+  --font-body: var(--font-roboto), var(--font-sans);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 }
 
 body {
-  margin: 0;
-  min-height: 100vh;
-  background-color: var(--color-canvas);
-  color: var(--color-primary);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
 }
 
-/* Thin scrollbars */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-muted) transparent;
-}
-*::-webkit-scrollbar { width: 6px; height: 6px; }
-*::-webkit-scrollbar-track { background: transparent; }
-*::-webkit-scrollbar-thumb { background: var(--color-muted); border-radius: 3px; }
-
-/* Glass morphism blur utilities */
-@layer utilities {
-  /* Liquid glass surface — frosty, semi-transparent (Control Center style):
-     milky uniform base with a faint sheen, heavy blur, specular rim.
-     Compose with `border border-glass-stroke` and a rounding class. */
-  .liquid-glass {
-    background:
-      linear-gradient(
-        165deg,
-        rgba(255, 255, 255, 0.74) 0%,
-        rgba(255, 255, 255, 0.60) 45%,
-        rgba(255, 255, 255, 0.68) 100%
-      );
-    box-shadow: var(--shadow-glass);
-    -webkit-backdrop-filter: saturate(180%) blur(36px);
-    backdrop-filter: saturate(180%) blur(36px);
-  }
-  .dark .liquid-glass {
-    background:
-      linear-gradient(
-        165deg,
-        rgba(46, 46, 54, 0.66) 0%,
-        rgba(36, 36, 43, 0.55) 45%,
-        rgba(42, 42, 50, 0.60) 100%
-      );
-  }
-
-  /* Cursor/voice label halo — keeps small labels legible over glass */
-  .label-halo {
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.85);
-  }
-  .dark .label-halo {
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.78), 0 0 7px rgba(0, 0, 0, 0.38), 0 0 1px rgba(255, 255, 255, 0.8);
-  }
-
-  .backdrop-blur-glass {
-    -webkit-backdrop-filter: saturate(180%) blur(40px);
-    backdrop-filter: saturate(180%) blur(40px);
-  }
-  .backdrop-blur-glass-sm {
-    -webkit-backdrop-filter: saturate(160%) blur(25px);
-    backdrop-filter: saturate(160%) blur(25px);
-  }
-
-  /* Canvas miniature typography */
-  .text-canvas-2xs { font-size: 7px; line-height: 1.2; }
-  .text-canvas-xs  { font-size: 8px; line-height: 1.2; }
-  .text-canvas-sm  { font-size: 9px; line-height: 1.3; }
-  .text-canvas-base { font-size: 10px; line-height: 1.4; }
-
-  /* Section heading tokens */
-  .text-section-heading {
-    font-family: var(--font-satoshi), sans-serif;
-    font-weight: 900;
-    letter-spacing: -0.025em;
-    color: var(--color-primary);
-    font-size: 1.875rem;   /* text-3xl */
-    line-height: 1.05;
-  }
-  @media (min-width: 640px) {
-    .text-section-heading { font-size: 3rem; }    /* sm:text-5xl */
-  }
-  @media (min-width: 1024px) {
-    .text-section-heading { font-size: 3.75rem; }  /* lg:text-6xl */
-  }
-
-  .text-section-label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-muted);
-  }
-
-  /* Section badge — glass pill label */
-  .badge-section {
-    display: inline-flex;
-    align-items: center;
-    border-radius: 9999px;
-    border: 0.5px solid var(--color-glass-stroke);
-    background: var(--color-glass-fill);
-    -webkit-backdrop-filter: saturate(180%) blur(40px);
-    backdrop-filter: saturate(180%) blur(40px);
-    padding: 0.25rem 0.75rem;
-    font-size: 0.75rem;
-    color: var(--color-secondary);
-    box-shadow: var(--shadow-glass-sm);
+/* Smooth in-page scrolling for anchor links (e.g. the header/footer "Features"
+   link jumping to #features), disabled when the user prefers reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
   }
 }
 
-/* Hero animations */
-@keyframes hero-fade-in {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0);   }
+/* CardCarousel card sizing — discrete per-breakpoint values (not fluid
+   scaling), since each breakpoint has its own fixed height. Width is
+   per-card via the --card-w-* custom properties set inline; height is the
+   same across every card so it's hardcoded here. Breakpoints match
+   Tailwind's default sm (640px) / md (768px). */
+.carousel-card-width {
+  width: var(--card-w-mobile);
 }
-
-@keyframes hero-float {
-  0%, 100% { transform: translateY(0);   }
-  50%       { transform: translateY(-5px); }
-}
-
-@keyframes hero-drift-1 {
-  0%, 100% { transform: translate(0, 0);       }
-  25%       { transform: translate(12px, -8px); }
-  50%       { transform: translate(5px, -16px); }
-  75%       { transform: translate(-8px, -6px); }
-}
-
-@keyframes hero-drift-2 {
-  0%, 100% { transform: translate(0, 0);        }
-  30%       { transform: translate(-10px, 8px);  }
-  60%       { transform: translate(8px, 16px);   }
-  80%       { transform: translate(-5px, 5px);   }
-}
-
-@keyframes hero-drift-3 {
-  0%, 100% { transform: translate(0, 0);       }
-  35%       { transform: translate(-8px, 12px); }
-  65%       { transform: translate(10px, 6px);  }
-  85%       { transform: translate(-4px, -8px); }
-}
-
-@keyframes hero-drift-4 {
-  0%, 100% { transform: translate(0, 0);       }
-  20%       { transform: translate(6px, -10px); }
-  55%       { transform: translate(-12px, 4px); }
-  80%       { transform: translate(4px, 8px);   }
-}
-
-/* Manifesto section */
-@keyframes timeline-draw {
-  from { height: 0; }
-  to   { height: 100%; }
-}
-
-@keyframes statement-rise {
-  from { opacity: 0; transform: translateY(28px); filter: blur(4px); }
-  to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
-}
-
-@keyframes label-fade {
-  from { opacity: 0; transform: translateX(-8px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes subtext-rise {
-  from { opacity: 0; transform: translateY(16px); filter: blur(6px); }
-  to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
-}
-
-@keyframes tomorrow-pulse {
-  0%, 100% { text-shadow: 0 0 0px rgba(58, 248, 140, 0); }
-  50%       { text-shadow: 0 0 40px rgba(58, 248, 140, 0.4), 0 0 80px rgba(58, 248, 140, 0.15); }
-}
-
-@keyframes dot-pop {
-  from { transform: scale(0); opacity: 0; }
-  to   { transform: scale(1); opacity: 1; }
-}
-
-@keyframes line-grow {
-  from { transform: scaleX(0); opacity: 0; }
-  to   { transform: scaleX(1); opacity: 1; }
-}
-
-@keyframes shimmer {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-/* Founder voices marquee */
-@keyframes marquee-left {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-@keyframes marquee-right {
-  from { transform: translateX(-50%); }
-  to   { transform: translateX(0); }
-}
-.marquee-left  { animation: marquee-left  60s linear infinite; }
-.marquee-right { animation: marquee-right 60s linear infinite; }
-.marquee-row:hover .marquee-left,
-.marquee-row:hover .marquee-right { animation-play-state: paused; }
-
-/* ── Denker compact pill: rotating comet glow during onboarding ───── */
-@property --denker-runner-angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-@keyframes denker-pill-runner-rotate {
-  to {
-    --denker-runner-angle: 360deg;
+@media (min-width: 640px) {
+  .carousel-card-width {
+    width: var(--card-w-tablet);
   }
 }
-.denker-pill-runner {
-  background: conic-gradient(
-    from var(--denker-runner-angle, 0deg),
-    transparent 0deg,
-    rgba(48, 209, 88, 0) 200deg,
-    rgba(48, 209, 88, 0.6) 280deg,
-    rgba(48, 209, 88, 1) 320deg,
-    rgba(48, 209, 88, 0.6) 340deg,
-    transparent 360deg
+@media (min-width: 768px) {
+  .carousel-card-width {
+    width: var(--card-w-desktop);
+  }
+}
+
+.carousel-card-height {
+  height: 192px;
+}
+@media (min-width: 640px) {
+  .carousel-card-height {
+    height: 360px;
+  }
+}
+@media (min-width: 768px) {
+  .carousel-card-height {
+    height: 495px;
+  }
+}
+
+/* Hero dashboard mockup radius — responsive, all four corners.
+   Uses a dedicated class (rather than Tailwind's rounded-[...] arbitrary
+   value) because that combination wasn't compiling correctly here. */
+.hero-dashboard-radius {
+  border-radius: 20px;
+}
+@media (min-width: 640px) {
+  .hero-dashboard-radius {
+    border-radius: 24px;
+  }
+}
+@media (min-width: 768px) {
+  .hero-dashboard-radius {
+    border-radius: 32px;
+  }
+}
+
+/* TrustBadges integrations grid — 2/3/4/5 columns across mobile, tablet,
+   768–1080px, and 1080px+. Uses a dedicated class (rather than an arbitrary
+   `min-[1080px]:` Tailwind variant) because that variant compiled into the
+   cascade in the wrong order relative to `md:`, so `md:grid-cols-4` kept
+   winning even above 1080px — the same class of bug as the hero radius
+   above, just with a custom breakpoint instead of a directional radius. */
+.trustbadges-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (min-width: 640px) {
+  .trustbadges-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (min-width: 768px) {
+  .trustbadges-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1080px) {
+  .trustbadges-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+/* The trailing "More than 500+ integrations" card: with 14 integration
+   cards ahead of it, both the 2-column (mobile) and 4-column (768–1080px)
+   layouts leave it as the sole occupant of a gap at the end of the last
+   row — span 2 columns in those ranges so it fills the gap instead of
+   leaving a slot empty. At 3 and 5 columns (tablet, 1080px+) it already
+   lands as the natural last item, so it stays a single column there.
+
+   At every width, aspect-ratio is overridden to stretch (height: 100%)
+   instead of using the `aspect-video` Tailwind utility on the same element:
+   aspect-video sizes off the card's own box, so (a) when spanning 2 columns
+   its doubled width would make it disproportionately tall, and (b) even at
+   a single column, its 3-line copy needs a few px more than aspect-video's
+   16:9 height allows, leaving it ~4px shorter than its aspect-video
+   row-mates (visibly misaligned). Stretching to 100% instead makes it
+   match the row's actual height in every case — driven by its own content
+   when it's alone in the row (mobile), or by the aspect-video siblings
+   sharing that row otherwise. !important is needed to beat aspect-video's
+   utility-layer specificity. Every range is bounded (min+max, or the final
+   one unbounded above) so exactly one block is ever active. */
+.trustbadges-more-card {
+  grid-column: span 2 / span 2;
+  aspect-ratio: auto !important;
+  height: 100%;
+}
+@media (min-width: 640px) and (max-width: 767px) {
+  .trustbadges-more-card {
+    grid-column: span 1 / span 1;
+  }
+}
+@media (min-width: 768px) and (max-width: 1079px) {
+  .trustbadges-more-card {
+    grid-column: span 2 / span 2;
+  }
+}
+@media (min-width: 1080px) {
+  .trustbadges-more-card {
+    grid-column: span 1 / span 1;
+  }
+}
+
+/* FAQ section: heading + card list switch from stacked to side-by-side at
+   1080px instead of Tailwind's md (768px) — a custom breakpoint, so a
+   dedicated class again avoids the arbitrary-variant cascade-order bug
+   documented above. */
+.faq-layout {
+  flex-direction: column;
+}
+@media (min-width: 1080px) {
+  .faq-layout {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+/* Pricing cards: stacked on mobile, Free + Pro side-by-side with Max spanning
+   full width beneath them from 640–1080px, then a plain 3-across grid at
+   1080px+. Custom 1080px breakpoint, so a dedicated class again avoids the
+   arbitrary-variant cascade-order bug documented above. */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+@media (min-width: 640px) {
+  .pricing-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .pricing-grid > .pricing-max {
+    grid-column: 1 / -1;
+  }
+}
+@media (min-width: 1080px) {
+  .pricing-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .pricing-grid > .pricing-max {
+    grid-column: auto;
+  }
+}
+
+/* Reach Out: the social-links grid and the newsletter block stack vertically
+   (tablet structure) all the way up to 1080px, then sit side by side. Custom
+   1080px breakpoint, so dedicated classes again avoid the arbitrary-variant
+   cascade-order bug documented above. */
+.reach-out-layout {
+  flex-direction: column;
+}
+.reach-out-newsletter {
+  width: 100%;
+  gap: 2.5rem;
+}
+@media (min-width: 1080px) {
+  .reach-out-layout {
+    flex-direction: row;
+    align-items: stretch;
+  }
+  .reach-out-newsletter {
+    width: 430px;
+    gap: 0;
+    justify-content: space-between;
+  }
+}
+
+/* CTA card background — a tall, top-centered radial glow fading from dark
+   green through primary green out to white at the edges (from Figma). Kept
+   as a dedicated class since the multi-stop gradient is unwieldy as a
+   Tailwind arbitrary value. */
+.cta-radial-glow {
+  background-image: radial-gradient(
+    120% 100% at 50% 0%,
+    #093217 0%,
+    #0d4c23 12%,
+    #12652f 25%,
+    #1b9847 50%,
+    #38a55e 56%,
+    #54b275 62%,
+    #71bf8c 69%,
+    #8dcca3 75%,
+    #c6e5d1 87%,
+    #ffffff 100%
   );
-  animation: denker-pill-runner-rotate 3s linear infinite;
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  padding: 1.5px;
-  border-radius: 9999px;
 }
 
-@keyframes voice-bar {
-  0%, 100% { transform: scaleY(0.35); }
-  50%      { transform: scaleY(1); }
+/* CTA card height and decorative image position/size — "tablet" runs the
+   full 640–1079px band (not Tailwind's sm→md 640–768px split) so it stays
+   consistent with the custom 1080px breakpoint used elsewhere on this page
+   (TrustBadges, FAQ); "desktop" starts fresh at 1080px. Dedicated classes
+   for the same cascade-order reason as those. */
+.cta-card-height {
+  height: 470px;
+}
+@media (min-width: 640px) and (max-width: 1079px) {
+  .cta-card-height {
+    height: 500px;
+  }
+}
+@media (min-width: 1080px) {
+  .cta-card-height {
+    height: auto;
+  }
 }
 
-@keyframes voice-bar-real {
-  0%, 100% { transform: scaleY(0.3); }
-  20%      { transform: scaleY(0.85); }
-  40%      { transform: scaleY(0.5); }
-  60%      { transform: scaleY(1); }
-  80%      { transform: scaleY(0.65); }
+.cta-image-left {
+  width: 200px;
+  max-width: none;
+  bottom: calc(-2% - 33px);
+  left: -20%;
+}
+@media (min-width: 640px) and (max-width: 1079px) {
+  .cta-image-left {
+    width: 300px;
+    bottom: calc(-2% - 60px);
+    left: -8%;
+  }
+}
+@media (min-width: 1080px) {
+  .cta-image-left {
+    width: 315px;
+    bottom: calc(-2% - 60px);
+    left: -3%;
+  }
+}
+@media (min-width: 1280px) {
+  .cta-image-left {
+    width: 360px;
+  }
+}
+
+.cta-image-right {
+  width: 240px;
+  max-width: none;
+  bottom: calc(-2% - 33px);
+  right: -20%;
+}
+@media (min-width: 640px) and (max-width: 1079px) {
+  .cta-image-right {
+    width: 355px;
+    bottom: calc(-2% - 60px);
+    right: -8%;
+  }
+}
+@media (min-width: 1080px) {
+  .cta-image-right {
+    width: 375px;
+    bottom: calc(-2% - 60px);
+    right: -3%;
+  }
+}
+@media (min-width: 1280px) {
+  .cta-image-right {
+    width: 420px;
+  }
 }

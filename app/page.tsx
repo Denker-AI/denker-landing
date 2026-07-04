@@ -1,54 +1,36 @@
-import type { Metadata } from "next";
-import { DEFAULT_OG_IMAGE } from "@/lib/seo";
-import { LandingNav } from "@/components/landing-nav";
-import { ScrollButton } from "@/components/scroll-button";
-import { LandingHero } from "@/components/landing-hero";
-import { LandingManifesto } from "@/components/landing-manifesto";
-import { LandingTeamIntro } from "@/components/landing-team-intro";
+import { Header } from "@/components/Header";
+import { Hero } from "@/components/Hero";
+import { BuiltInPublic } from "@/components/BuiltInPublic";
+import { VideoWalkthrough } from "@/components/Video";
+import { WhatDenkerCanDo } from "@/components/WhatDenkerCanDo";
+import { BuiltForFounders } from "@/components/BuiltForFounders";
+import { WhyDenkerAI } from "@/components/WhyDenkerAI";
+import { TrustBadges } from "@/components/TrustBadges";
+import { Testimonials } from "@/components/Testimonials";
+import { Pricing } from "@/components/Pricing";
+import { ReachOut } from "@/components/ReachOut";
+import { FAQ } from "@/components/FAQ";
+import { CTABanner, Footer } from "@/components/Footer";
 
-import { LandingFeatures } from "@/components/landing-features";
-import { LandingFounderVoices } from "@/components/landing-founder-voices";
-import { LandingPricing } from "@/components/landing-pricing";
-import { LandingCta } from "@/components/landing-cta";
-import { LandingFinalCta } from "@/components/landing-final-cta";
-import { LandingFooter } from "@/components/landing-footer";
-
-export const metadata: Metadata = {
-  alternates: { canonical: "/" },
-  openGraph: {
-    url: "https://www.denker.ai/",
-    images: [DEFAULT_OG_IMAGE],
-  },
-};
-
-export default function HomePage() {
+export default function Home() {
   return (
-    <div
-      className="min-h-screen bg-canvas"
-      style={{
-        backgroundImage: `
-          radial-gradient(ellipse 65% 55% at 15% 20%, rgba(58,248,140,0.07) 0%, transparent 70%),
-          radial-gradient(ellipse 55% 45% at 80% 60%, rgba(255,200,50,0.05) 0%, transparent 70%),
-          radial-gradient(ellipse 50% 40% at 60% 5%,  rgba(255,180,80,0.04) 0%, transparent 65%)
-        `,
-        backgroundSize: "100% 100%, 100% 100%, 100% 100%",
-      }}
-    >
-      <LandingNav />
-      <main>
-      <LandingHero />
-      <LandingManifesto />
-
-      <LandingTeamIntro />
-
-      <LandingFeatures />
-      <LandingFounderVoices />
-      <LandingPricing />
-      <LandingCta />
-      <LandingFinalCta />
+    <>
+      <Header />
+      <main className="flex flex-1 flex-col">
+        <Hero />
+        <BuiltInPublic />
+        <VideoWalkthrough />
+        <WhatDenkerCanDo />
+        <BuiltForFounders />
+        <WhyDenkerAI />
+        <TrustBadges />
+        <Testimonials />
+        <Pricing />
+        <ReachOut />
+        <FAQ />
+        <CTABanner />
       </main>
-      <LandingFooter />
-      <ScrollButton />
-    </div>
+      <Footer />
+    </>
   );
 }

@@ -1,0 +1,6 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Frame 71">
+<path d="M0 24C0 10.7452 10.7452 0 24 0V0C37.2548 0 48 10.7452 48 24V24C48 37.2548 37.2548 48 24 48V48C10.7452 48 0 37.2548 0 24V24Z" fill="var(--fill-0, #FF6154)"/>
+<path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M27.6 25L20.8 25.0002V17.8002H27.6C29.5882 17.8002 31.2 19.4118 31.2 21.4C31.2 23.3882 29.5882 25 27.6 25ZM27.6 13H16V37H20.8V29.8002H27.6C32.2392 29.8002 36 26.0392 36 21.4C36 16.7608 32.2392 13 27.6 13Z" fill="var(--fill-0, white)"/>
+</g>
+</svg>
