@@ -5819,8 +5819,10 @@ body {
   z-index: 18;
   display: flex;
   /* Wide enough for six ported columns at production's min-w-[120px]:
-     6 * 120 + 5 * 6 + 2 * 8 = 766px. */
-  width: min(800px, 76%);
+     6 * 120 + 5 * 6 + 2 * 8 = 766px. Below that the columns' min-width
+     beats the flex-1 split, the board clips on the right, and the
+     --taskboard-column-width calc above stops matching the real layout. */
+  width: min(800px, 84%);
   height: min(430px, 58%);
   max-height: none;
   min-height: 0;

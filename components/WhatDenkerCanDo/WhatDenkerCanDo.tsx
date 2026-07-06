@@ -103,7 +103,9 @@ const CONTROLS_HEIGHT = 56;
 const CONTROLS_FRAME_GAP_MOBILE = 32;
 const CONTROLS_FRAME_GAP_DESKTOP = 40;
 const CONTROLS_MIN_BOTTOM = 16;
-const FEATURE_SLIDE_INTERVAL_MS = 3600;
+/* Matches the 4.6s taskboard choreography (see taskboard-* keyframes in
+   globals.css) so the completion toast finishes before the slide advances. */
+const TASKBOARD_DEMO_MOTION_MS = 4600;
 const FIRST_DEMO_MOTION_MS = 4200;
 const SUMMARY_DEMO_MOTION_MS = 4600;
 const GMAIL_DEMO_MOTION_MS = 4600;
@@ -1029,7 +1031,7 @@ export function WhatDenkerCanDo() {
         setFirstDemoStarted(true);
         setFirstDemoCompleted(false);
       }
-    }, FEATURE_SLIDE_INTERVAL_MS);
+    }, TASKBOARD_DEMO_MOTION_MS + DEMO_FINAL_HOLD_MS);
 
     return () => window.clearTimeout(id);
   }, [active, dragging, playing]);

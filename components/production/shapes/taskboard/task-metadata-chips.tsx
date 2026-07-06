@@ -230,7 +230,7 @@ export function TaskMetadataRow({
 
   return (
     <div
-      className={cn("flex flex-wrap items-center gap-1.5", className)}
+      className={cn("flex items-center gap-2 flex-wrap", className)}
       data-testid="task-metadata-row"
     >
       <TicketChip ticket={task.ticket} className={chipSize} />
