@@ -1199,23 +1199,28 @@ body {
   /* Side composition (Apple pattern): browser stays tall and left; the
      side copy for this slide occupies the empty top-right instead of
      overlapping this frame (see [data-copy-layout="side"] in
-     WhatDenkerCanDo.tsx). */
-  top: 10%;
+     WhatDenkerCanDo.tsx). Top matches the side copy's top (5.3%, same
+     rendered line as the centered copy on other slides) — bottom stays
+     ~94%, so height grows to fill the extra room. */
+  top: 5.3%;
   left: 4.5%;
   z-index: 2;
   width: min(620px, 53%);
-  height: min(660px, 84%);
+  height: min(660px, 88.7%);
   transform-origin: 42% 45%;
   animation-name: what-denker-summary-browser;
 }
 
 .what-denker-summary-frame {
-  /* Right column, sitting below the side copy block. */
-  top: 26%;
+  /* Right column, sitting below the side copy block. Top leaves a >=32px
+     gap below the copy's rendered bottom edge (copy top 5.3% + ~96px of
+     3-line copy at max-width 36%, plus 32px gap ≈ 26.7% at the 1440px/
+     600px-card reference) instead of touching it; bottom stays ~84%. */
+  top: 26.7%;
   right: 4%;
   z-index: 4;
   width: min(450px, 36%);
-  height: min(430px, 58%);
+  height: min(430px, 57.3%);
   overflow: hidden;
   color: #111113;
   transform-origin: 70% 38%;
@@ -2961,12 +2966,16 @@ body {
   }
 
   .what-denker-summary-bubble-writing {
-    top: 88% !important;
+    /* Vertically centered over the article browser (top 22% / bottom 80%,
+       mid 51%) instead of sitting near the bottom of the card. */
+    top: 48.8% !important;
     left: 10%;
   }
 
   .what-denker-summary-bubble-done {
-    top: 57%;
+    /* Sits clearly above the stacked summary frame (frame top 48% in the
+       final state) so both the bubble and the frame are visible at once. */
+    top: 36%;
     left: 10%;
   }
 

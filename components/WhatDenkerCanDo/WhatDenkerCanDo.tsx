@@ -1285,7 +1285,7 @@ export function WhatDenkerCanDo() {
                                 ? "final"
                                 : playing
                                   ? "playing"
-                                  : "hidden"
+                                  : "final"
                           }
                         />
                       )}
@@ -1298,7 +1298,7 @@ export function WhatDenkerCanDo() {
                                 ? "final"
                                 : playing
                                   ? "playing"
-                                  : "hidden"
+                                  : "final"
                           }
                         />
                       )}
@@ -1312,7 +1312,7 @@ export function WhatDenkerCanDo() {
                                 ? "final"
                                 : playing
                                   ? "playing"
-                                  : "hidden"
+                                  : "final"
                           }
                         />
                       )}
