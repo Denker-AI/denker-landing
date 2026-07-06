@@ -51,6 +51,7 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { DenkerCursorBubble } from "@/components/production/cursors/denker-cursor-bubble";
+import { MemoryGraphMotion } from "@/components/WhatDenkerCanDo/MemoryGraphMotion";
 import { Icons } from "@/components/production/ui/icons";
 import { AgentAvatarPreview } from "@/components/production/ui/agent-avatar-preview";
 import { FrameFooter } from "@/components/production/shapes/shared/frame-footer";
@@ -103,6 +104,7 @@ const FEATURE_SLIDE_INTERVAL_MS = 3600;
 const FIRST_DEMO_MOTION_MS = 4200;
 const SUMMARY_DEMO_MOTION_MS = 4600;
 const GMAIL_DEMO_MOTION_MS = 4600;
+const GRAPH_DEMO_MOTION_MS = 4600;
 const DEMO_FINAL_HOLD_MS = 500;
 const GITHUB_PROMPT = "Open GitHub page";
 const GITHUB_TYPING_START_MS = 720;
@@ -1001,6 +1003,7 @@ export function WhatDenkerCanDo() {
   const [firstDemoCompleted, setFirstDemoCompleted] = useState(false);
   const [summaryDemoCompleted, setSummaryDemoCompleted] = useState(false);
   const [gmailDemoCompleted, setGmailDemoCompleted] = useState(false);
+  const [graphDemoCompleted, setGraphDemoCompleted] = useState(false);
   const [controlsMode, setControlsMode] = useState<ControlsMode>("hidden");
   const [controlsTop, setControlsTop] = useState<number | null>(null);
   // The settled offset is fully derived from active+geo; dragOffset is a
@@ -1020,6 +1023,8 @@ export function WhatDenkerCanDo() {
       setSummaryDemoCompleted(false);
     } else if (index === 2) {
       setGmailDemoCompleted(false);
+    } else if (index === 4) {
+      setGraphDemoCompleted(false);
     }
   };
 
@@ -1061,7 +1066,7 @@ export function WhatDenkerCanDo() {
   }, []);
 
   useEffect(() => {
-    if (!playing || dragging || active < 3) return;
+    if (!playing || dragging || active !== 3) return;
 
     const next = (active + 1) % slides.length;
     const id = window.setTimeout(() => {
@@ -1132,6 +1137,22 @@ export function WhatDenkerCanDo() {
       GMAIL_DEMO_MOTION_MS + DEMO_FINAL_HOLD_MS
     );
 
+    return () => {
+      window.clearTimeout(completeId);
+      window.clearTimeout(advanceId);
+    };
+  }, [active, dragging, playing]);
+
+  useEffect(() => {
+    if (!playing || active !== 4 || dragging) return;
+    const completeId = window.setTimeout(() => {
+      setGraphDemoCompleted(true);
+    }, GRAPH_DEMO_MOTION_MS);
+    const advanceId = window.setTimeout(() => {
+      setFirstDemoStarted(true);
+      setFirstDemoCompleted(false);
+      setActive(0);
+    }, GRAPH_DEMO_MOTION_MS + DEMO_FINAL_HOLD_MS);
     return () => {
       window.clearTimeout(completeId);
       window.clearTimeout(advanceId);
@@ -1314,6 +1335,19 @@ export function WhatDenkerCanDo() {
                         />
                       )}
                       {slide.id === 3 && <ProductionTaskboardSurface active={isActive} />}
+                      {slide.id === 4 && (
+                        <MemoryGraphMotion
+                          state={
+                            !isActive
+                              ? "hidden"
+                              : graphDemoCompleted
+                                ? "final"
+                                : playing
+                                  ? "playing"
+                                  : "hidden"
+                          }
+                        />
+                      )}
                       <p
                         aria-hidden={!isActive}
                         className={cn(
