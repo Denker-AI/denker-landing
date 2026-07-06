@@ -44,7 +44,7 @@ const CELLS: { id: string; beatWidth: string; aspectRatio?: string; node: ReactN
       // for the review cell
       <div style={{ position: "relative", height: 130 }}>
         <DenkerCursorBubble className="!static !translate-x-0 !animate-none">
-          Scheduling your debrief…
+          Done, task is complete
         </DenkerCursorBubble>
       </div>
     ),

@@ -237,7 +237,7 @@ export function HereMedia({
             </div>
             <div className="hero-production-final-cursor">
               <DenkerCursorBubble className="hero-production-final-cursor-bubble">
-                Scheduling your debrief…
+                Done, task is complete
               </DenkerCursorBubble>
             </div>
           </div>
@@ -314,18 +314,16 @@ export function HeroVoiceListeningIndicator({
         } as CSSProperties
       }
     >
-      {!staticMode && (
-        <AgentCursorArrow
-          color={DENKER_GREEN}
-          className="hero-production-voice-cursor"
-          mode="glass"
-          shape="soft"
-          liquidLevel={0.36}
-          width={15}
-          height={19}
-          position="absolute"
-        />
-      )}
+      <AgentCursorArrow
+        color={DENKER_GREEN}
+        className="hero-production-voice-cursor"
+        mode="glass"
+        shape="soft"
+        liquidLevel={0.36}
+        width={15}
+        height={19}
+        position="absolute"
+      />
       <div className="hero-production-voice-expand-shell">
         <VoiceListeningGlass
           className="hero-production-voice-indicator hero-production-voice-glass"
