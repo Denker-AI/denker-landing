@@ -656,10 +656,14 @@ body {
    in the slide's side-composed layout (see .what-denker-summary-browser /
    .what-denker-summary-frame above). Mobile always keeps the centered
    treatment (data-copy-layout is only "side" on slide id 1, and this rule
-   is gated to >=768px). Only overrides position/width/alignment — the
-   Tailwind `translate-y-0` / `-translate-y-2` utilities (native CSS
-   `translate` property) keep driving the active/inactive fade untouched;
-   `left`/`right` here simply replace the default `left-1/2` centering. */
+   is gated to >=768px).
+   Tailwind v4 utilities set `translate` (not `transform`) as one shorthand
+   per class — `-translate-x-1/2` and `translate-y-0`/`-translate-y-2` each
+   write BOTH axes of that shorthand, so whichever utility wins the cascade
+   drives x AND y. Our higher-specificity attribute selector must therefore
+   replicate the y-axis fade itself (translateY(0) active / translateY(-8px)
+   inactive, matching -translate-y-2 = -0.5rem) instead of relying on the
+   Tailwind utility for y once we've dropped the x-centering. */
 @media (min-width: 768px) {
   .what-denker-feature-copy[data-copy-layout="side"] {
     top: 10%;
@@ -668,6 +672,11 @@ body {
     width: auto;
     max-width: 36%;
     text-align: left;
+    translate: 0 -8px;
+  }
+
+  .what-denker-feature-copy[data-copy-layout="side"].translate-y-0 {
+    translate: 0 0;
   }
 }
 

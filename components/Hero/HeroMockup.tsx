@@ -121,17 +121,20 @@ const HERO_INTRO_SEQUENCE_MS = 18_000;
 const HERO_SEQUENCE_MS = 23_000;
 
 /**
- * User-approved final flat-lay slots (Phase 1 gate, 2026-07-06), in the
- * 1480x590 `.hero-production-final-layout` coordinate space. These are the
- * settled rest positions the Phase 2 timeline animates into; keep in sync
- * with the `.hero-production-final-*` rules in globals.css.
+ * User-approved final flat-lay slots (Phase 1 gate, 2026-07-06), stated for
+ * the canonical 1181-1599px breakpoint of `.hero-production-final-layout`
+ * (stage width 1320). Proportions follow Apple's visionOS finale measured
+ * against the MacBook width (phone 21%, book/iPad 72%); voice plays the
+ * Watch (bottom-left under the book), cursor bubble plays the Vision Pro
+ * (bottom-right). Other breakpoints scale these in globals.css - keep the
+ * `.hero-production-final-*` media blocks in sync.
  */
 export const FINAL_SLOTS = {
-  macbookTopDown: { top: -75, left: -56, width: 800, scale: 0.94 },
-  teamFrame: { top: 112, left: 702, width: 290, height: 590, scale: 0.38 },
-  bookFrame: { top: -18, left: 858, width: 760, height: 560, scale: 0.6 },
-  voice: { top: 342, left: 1080, scale: 0.9 },
-  cursorBubble: { top: 392, left: 690, scale: 0.92 },
+  macbookTopDown: { top: -28, left: 8, width: 720, scale: 0.76 },
+  teamFrame: { top: 140, left: 669, width: 290, height: 590, scale: 0.396 },
+  bookFrame: { top: -20, left: 898, width: 760, height: 530, scale: 0.518 },
+  voice: { top: 288, left: 925, scale: 0.82 },
+  cursorBubble: { top: 280, left: 1150, scale: 0.9 },
 } as const;
 export type HeroPlayback = "playing" | "stopped" | "ended";
 
