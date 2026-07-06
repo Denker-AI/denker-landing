@@ -5040,11 +5040,12 @@ body {
   height: auto;
   flex: none;
   overflow: hidden;
-  border-radius: 14px;
+  /* books have near-square corners, not app-icon rounding */
+  border-radius: 3px;
   background: rgba(255, 255, 255, 0.06);
   box-shadow:
-    0 18px 36px rgba(0, 0, 0, 0.2),
-    0 0 0 1px rgba(17, 17, 19, 0.05);
+    0 6px 16px rgba(0, 0, 0, 0.22),
+    0 0 0 1px rgba(17, 17, 19, 0.06);
 }
 
 .hero-production-book-image {
