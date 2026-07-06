@@ -605,9 +605,22 @@ body {
   content: "";
 }
 
+/* Left-dock the heading to the shared content-left margin (matches the
+   carousel's contentLeftMargin() and every other section), instead of
+   centering it above a centered card. */
 .what-denker-heading-align {
   width: var(--what-denker-feature-card-width);
-  margin-left: calc((100vw - var(--what-denker-feature-card-width)) / 2);
+  margin-left: 24px;
+}
+@media (min-width: 640px) {
+  .what-denker-heading-align {
+    margin-left: 40px;
+  }
+}
+@media (min-width: 768px) {
+  .what-denker-heading-align {
+    margin-left: max(80px, calc((100vw - 1280px) / 2));
+  }
 }
 
 .what-denker-feature-card {
@@ -702,14 +715,20 @@ body {
    design width and scaled as one unit by --gallery-fg-scale (tied to tile
    height), so proportions and text read identically across breakpoints while
    only the cropped background area changes. */
+/* MOBILE (base, < 734px): Apple's visionOS phones don't shrink the landscape
+   tile — they switch to a PORTRAIT card and show a readable crop of the most
+   important region. So on mobile every gallery card is the same portrait size
+   (phone-width × tall), the foreground is kept at a readable scale (NOT
+   shrunk-to-fit), and each card is nudged by its own --gallery-mob-tx/ty so
+   the part that matters sits in view while the rest crops away. */
 .gallery-card {
-  --gallery-fg-scale: 0.6;
-  width: var(--gcard-w-mobile, min(260px, calc(100vw - 72px)));
+  --gallery-fg-scale: 0.74;
+  width: min(340px, calc(100vw - 40px));
 }
 
 .gallery-card-tile {
   width: 100%;
-  height: 316px;
+  height: 470px;
   background: #0b1715;
   isolation: isolate;
 }
@@ -741,11 +760,16 @@ body {
 }
 .gallery-card-foreground > * {
   flex: none;
-  transform: scale(var(--gallery-fg-scale));
+  /* Mobile: scale for readability, then nudge the important region into the
+     portrait viewport via each card's --gallery-mob-tx/ty (default 0). */
+  transform: translate(var(--gallery-mob-tx, 0px), var(--gallery-mob-ty, 0px))
+    scale(var(--gallery-fg-scale));
   transform-origin: center center;
 }
 
-/* Tablet (Apple tile height 416) */
+/* Tablet+ (>= 734px): back to the LANDSCAPE unequal-width gallery — fixed
+   tile height, per-card width from --gcard-w-*, foreground centered with no
+   mobile nudge. */
 @media (min-width: 734px) {
   .gallery-card {
     --gallery-fg-scale: 0.88;
@@ -753,6 +777,9 @@ body {
   }
   .gallery-card-tile {
     height: 416px;
+  }
+  .gallery-card-foreground > * {
+    transform: scale(var(--gallery-fg-scale));
   }
 }
 
@@ -3919,13 +3946,20 @@ body {
 }
 
 .hero-production-stage-logo {
-  top: 60%;
+  top: 55%;
   animation-name: hero-production-stage-logo;
 }
 
 .hero-production-stage-logo .hero-production-onboarding-liquid-shell {
-  width: clamp(112px, 9.6vw, 148px);
-  height: clamp(112px, 9.6vw, 148px);
+  /* hero-scale opener: ~18% of stage width (Apple Siri glow is 30% but a wide
+     glow; our round bubble reads best a touch smaller) */
+  width: clamp(200px, 18vw, 268px);
+  height: clamp(200px, 18vw, 268px);
+}
+
+.hero-production-stage-logo .hero-production-onboarding-mark {
+  width: 128px;
+  height: 128px;
 }
 
 .hero-production-onboarding-intro {
@@ -4331,7 +4365,7 @@ body {
 .hero-production-stage-voice {
   left: 50%;
   z-index: 30;
-  top: 53%;
+  top: 55%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -4387,8 +4421,9 @@ body {
 }
 
 .hero-production-stage-desktop .hero-macbook-front {
-  width: min(100%, 58vw);
-  max-width: 880px;
+  /* Apple's MacBook solo beat is 36% of the stage width */
+  width: min(100%, 37vw);
+  max-width: 545px;
   margin-inline: auto;
 }
 
@@ -4917,6 +4952,11 @@ body {
   animation: hero-production-voice-bubble-expand var(--hero-production-cycle)
     cubic-bezier(0.17, 1.02, 0.22, 1) 1 both;
   animation-play-state: var(--hero-production-play-state);
+  transform-origin: center center;
+}
+
+.hero-production-stage-voice .hero-production-voice-anchor {
+  transform: scale(2);
   transform-origin: center center;
 }
 
