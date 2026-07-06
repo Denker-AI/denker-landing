@@ -239,7 +239,7 @@ export function Testimonials() {
                         src={testimonial.avatar}
                         alt={testimonial.name}
                         draggable={false}
-                        className="size-9 shrink-0 rounded-full object-cover md:size-10"
+                        className="size-9 shrink-0 rounded-full object-cover object-[center_30%] md:size-10"
                       />
                       <figcaption className="flex flex-col gap-1">
                         <span className="font-heading text-base font-semibold text-grey-950 md:text-lg">
