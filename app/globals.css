@@ -4867,9 +4867,8 @@ body {
   min-height: 0;
   align-items: stretch;
   justify-content: center;
-  /* equal ~42px measured glass->card distance on all four edges:
-     header adds 35.8px (+8), footer 28.9px (+15), sides bare (52) */
-  padding: 8px 52px 15px;
+  /* thin, Apple-like content margin: sides slightly wider than top/bottom */
+  padding: 8px 18px 10px;
   animation: hero-production-html-content var(--hero-production-cycle)
     linear 1 both;
   animation-play-state: var(--hero-production-play-state);
@@ -4905,7 +4904,7 @@ body {
   grid-template-columns: clamp(48px, 3.9vw, 58px) minmax(0, 1fr);
   align-items: center;
   gap: clamp(0.7rem, 1vw, 0.95rem);
-  border-radius: 14px;
+  border-radius: 16px;
   padding: 0;
   background:
     linear-gradient(180deg, rgba(245, 245, 247, 0.82), rgba(255, 255, 255, 0));
@@ -5704,23 +5703,19 @@ body {
 }
 
 
-/* CTA card background — a tall, top-centered radial glow fading from dark
-   green through primary green out to white at the edges (from Figma). Kept
-   as a dedicated class since the multi-stop gradient is unwieldy as a
-   Tailwind arbitrary value. */
+/* CTA card background — a top-centered radial glow: deep green at the top
+   fading to the brand green (primary-600) across the card. It stays green all
+   the way to the edges (no white fade) so the rounded card keeps defined
+   corners against the white page instead of melting into it. Kept as a
+   dedicated class since the multi-stop gradient is unwieldy as a Tailwind
+   arbitrary value. */
 .cta-radial-glow {
   background-image: radial-gradient(
-    120% 100% at 50% 0%,
-    #093217 0%,
-    #0d4c23 12%,
-    #12652f 25%,
-    #1b9847 50%,
-    #38a55e 56%,
-    #54b275 62%,
-    #71bf8c 69%,
-    #8dcca3 75%,
-    #c6e5d1 87%,
-    #ffffff 100%
+    120% 130% at 50% 0%,
+    #0a3a1c 0%,
+    #0f5528 32%,
+    #16803c 64%,
+    #1b9847 100%
   );
 }
 
