@@ -16,12 +16,6 @@ export type DemoTaskStatus =
 
 export type DemoTaskPriority = "urgent" | "high" | "medium" | "low";
 
-export interface ShipState {
-  label: string;
-  variant: "neutral" | "blue" | "amber" | "red" | "green" | "purple";
-  icon?: "check" | "x" | "spinner";
-}
-
 export interface DemoTask {
   id: string;
   ticket: string;
@@ -30,11 +24,8 @@ export interface DemoTask {
   priority: DemoTaskPriority;
   agent: string;
   agentColor: string;
-  due: string;
-  dueOverdue?: boolean;
   comments: number;
   commentsAgentAuthored?: boolean;
-  ship: ShipState | null;
 }
 
 export interface DemoColumn {

@@ -174,9 +174,7 @@ const taskboardColumns: DemoColumn[] = [
         agent: "Denker",
         agentColor: "#3af88c",
         priority: "low",
-        due: "8 Jul",
         comments: 1,
-        ship: { label: "Plan", variant: "neutral" },
       },
     ],
   },
@@ -191,9 +189,7 @@ const taskboardColumns: DemoColumn[] = [
         agent: "Coder",
         agentColor: "#60a5fa",
         priority: "medium",
-        due: "Today",
         comments: 2,
-        ship: { label: "WIP", variant: "blue" },
       },
     ],
   },
@@ -208,9 +204,7 @@ const taskboardColumns: DemoColumn[] = [
         agent: "Canvas",
         agentColor: "#f472b6",
         priority: "high",
-        due: "Today",
         comments: 4,
-        ship: { label: "Pushed", variant: "amber" },
       },
     ],
   },
@@ -225,9 +219,7 @@ const taskboardColumns: DemoColumn[] = [
         agent: "Release",
         agentColor: "#ff453a",
         priority: "urgent",
-        due: "Today",
         comments: 1,
-        ship: { label: "Fix", variant: "amber" },
       },
     ],
   },
@@ -242,9 +234,7 @@ const taskboardColumns: DemoColumn[] = [
         agent: "QA",
         agentColor: "#a78bfa",
         priority: "medium",
-        due: "Today",
         comments: 3,
-        ship: { label: "#630", variant: "neutral" },
       },
     ],
   },
@@ -875,7 +865,7 @@ function GmailReplySurface({ pastedReply }: { pastedReply: string }) {
 }
 
 function ProductionTaskboardSurface({ active }: { active: boolean }) {
-  const movingTask: DemoTask = { ...completedTask, due: "Done", ship: { label: "Merged", variant: "purple" } };
+  const movingTask: DemoTask = { ...completedTask };
 
   return (
     <div
@@ -950,7 +940,7 @@ function ProductionTaskboardSurface({ active }: { active: boolean }) {
       </div>
 
       <DenkerCursorBubble
-        className="taskboard-agent-cursor taskboard-agent-cursor-runtime"
+        className="taskboard-agent-cursor taskboard-agent-cursor-coder"
         name="Coder"
         color="#5AC8FA"
         maxWidthPx={230}

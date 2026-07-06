@@ -4,16 +4,15 @@
  *
  * Source (read-only reference):
  *   denker-dolcetto/frontend/src/components/shapes/taskboard-frame/task-metadata-chips.tsx
- *   denker-dolcetto/frontend/src/components/shapes/taskboard-frame/ship-status-chip.tsx
  *
  * Stripped for static display only: no store/API types, no click handlers,
- * no note previews. `ShipStatusChip` is folded in here (its dolcetto file is
- * mostly resolution logic) as a small static sub-component.
+ * no note previews. No ship-status chip or due-date chip — the demo cards
+ * match production's ticket · agent · comments metadata row exactly.
  */
 
 import { cn } from "@/lib/cn";
 import { Icons } from "@/components/production/ui/icons";
-import type { DemoTaskPriority, DemoTaskStatus, ShipState } from "./types";
+import type { DemoTaskPriority, DemoTaskStatus } from "./types";
 
 /* ── Canonical color maps (mirrors dolcetto's STATUS_DOT_COLORS / PRIORITY_BORDER_CLASSES) ── */
 
@@ -120,31 +119,6 @@ export function CommentBadge({
   );
 }
 
-/** Calendar icon + relative due date text, red if overdue. */
-export function DueDateChip({
-  label,
-  isOverdue,
-  className,
-}: {
-  label: string;
-  isOverdue?: boolean;
-  className?: string;
-}) {
-  return (
-    <span
-      className={cn(
-        "inline-flex items-center gap-0.5",
-        isOverdue ? "text-danger" : "text-muted",
-        className,
-      )}
-      data-testid="due-date-chip"
-    >
-      <Icons.Calendar className="h-2.5 w-2.5" />
-      <span>{label}</span>
-    </span>
-  );
-}
-
 /** Monospace ticket number display. */
 export function TicketChip({
   ticket,
@@ -163,69 +137,17 @@ export function TicketChip({
   );
 }
 
-/* ── Ship status chip (folded in from dolcetto's ship-status-chip.tsx) ──── */
-
-type ShipVariant = "neutral" | "blue" | "amber" | "red" | "green" | "purple";
-
-const SHIP_VARIANT_CLASSES: Record<ShipVariant, string> = {
-  // dolcetto's source references `bg-glass-fill-faint`, which isn't a real
-  // token there either (nearest defined fill is `glass-fill`) — using the
-  // real token rather than porting the dead class name.
-  neutral: "border-glass-stroke-faint bg-glass-fill text-muted",
-  blue: "border-status-selected/40 bg-status-selected/15 text-status-selected",
-  amber: "border-warning/40 bg-warning/15 text-warning",
-  red: "border-danger/40 bg-danger/15 text-danger",
-  green: "border-success/40 bg-success/15 text-success",
-  // No dedicated status-merged token; --color-accent-purple is the nearest match.
-  purple: "border-accent-purple/40 bg-accent-purple/15 text-accent-purple",
-};
-
-/** Static ship-code / PR / merge status chip (demo data drives label + variant directly). */
-export function ShipStatusChip({
-  state,
-  className,
-}: {
-  state: ShipState | null;
-  className?: string;
-}) {
-  if (!state) return null;
-
-  return (
-    <span
-      className={cn(
-        // Same tiny scale as the rest of the metadata row (production's
-        // ship chip is a quiet tinted mini-pill, not a bold bordered
-        // button) — minimal padding, no fixed height.
-        "inline-flex items-center gap-0.5 rounded px-1 py-px text-appkit-mini font-medium",
-        SHIP_VARIANT_CLASSES[state.variant],
-        className,
-      )}
-      data-testid="ship-status-chip"
-    >
-      {state.icon === "spinner" && (
-        <Icons.Loader className="h-2 w-2 animate-spin" />
-      )}
-      {state.icon === "check" && <Icons.Check className="h-2 w-2" />}
-      {state.icon === "x" && <Icons.X className="h-2 w-2" />}
-      <span>{state.label}</span>
-    </span>
-  );
-}
-
-/** Full metadata row for a demo task — ticket, due date, agent, comments, ship status. */
+/** Full metadata row for a demo task — ticket, agent, comments. */
 export function TaskMetadataRow({
   task,
   className,
 }: {
   task: {
     ticket: string;
-    due: string;
-    dueOverdue?: boolean;
     agent: string;
     agentColor: string;
     comments: number;
     commentsAgentAuthored?: boolean;
-    ship: ShipState | null;
   };
   className?: string;
 }) {
@@ -237,11 +159,6 @@ export function TaskMetadataRow({
       data-testid="task-metadata-row"
     >
       <TicketChip ticket={task.ticket} className={chipSize} />
-      <DueDateChip
-        label={task.due}
-        isOverdue={task.dueOverdue}
-        className={chipSize}
-      />
       <AgentChip
         name={task.agent}
         color={task.agentColor}
@@ -252,7 +169,6 @@ export function TaskMetadataRow({
         isAgentAuthored={task.commentsAgentAuthored}
         className={chipSize}
       />
-      <ShipStatusChip state={task.ship} />
     </div>
   );
 }

@@ -6064,15 +6064,15 @@ body {
   animation-timing-function: cubic-bezier(0.45, 0, 0.25, 1);
 }
 
-.what-denker-taskboard-shell[data-active="true"] .taskboard-agent-cursor-runtime {
-  animation-name: taskboard-cursor-runtime;
+.what-denker-taskboard-shell[data-active="true"] .taskboard-agent-cursor-coder {
+  animation-name: taskboard-cursor-coder;
 }
 
 .what-denker-taskboard-shell[data-active="true"] .taskboard-agent-cursor-research {
   animation-name: taskboard-cursor-research;
 }
 
-@keyframes taskboard-cursor-runtime {
+@keyframes taskboard-cursor-coder {
   0% { opacity: 0; left: 21%; top: 58%; }
   12% { opacity: 1; }
   48% { left: 30%; top: 66%; }

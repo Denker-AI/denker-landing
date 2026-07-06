@@ -7,7 +7,7 @@
  *
  * Layout (verbatim from production):
  *   Line 1: [status dot] Title
- *   Line 2: ticket # · due date · agent · comment count · ship status
+ *   Line 2: ticket # · agent · comment count
  *
  * Left border = priority color. No status/priority text (column and border
  * convey those). Stripped for static display: drag-and-drop, stores
