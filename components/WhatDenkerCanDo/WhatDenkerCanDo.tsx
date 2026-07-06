@@ -1208,7 +1208,7 @@ export function WhatDenkerCanDo() {
     <section
       ref={sectionRef}
       id="features"
-      className="relative isolate flex min-h-svh w-full flex-col items-center overflow-x-clip bg-grey-900 pt-14 pb-36 md:pt-20 md:pb-36"
+      className="section-panel relative isolate flex w-full flex-col items-center overflow-x-clip bg-grey-900 py-20 md:py-24"
       data-name="Section - What denker can do?"
       data-theme="dark"
     >
@@ -1320,7 +1320,7 @@ export function WhatDenkerCanDo() {
                         aria-hidden={!isActive}
                         data-copy-layout={slide.id === 1 ? "side" : "centered"}
                         className={cn(
-                          "what-denker-feature-copy absolute top-9 left-1/2 z-30 w-[min(560px,calc(100%-64px))] -translate-x-1/2 whitespace-pre-line text-center font-sans text-[17px] leading-[22px] font-semibold text-white transition-[opacity,transform] duration-300 sm:text-[24px] sm:leading-[28px] md:top-12 md:text-[28px] md:leading-[32px]",
+                          "what-denker-feature-copy absolute top-6 left-1/2 z-30 w-[min(560px,calc(100%-64px))] -translate-x-1/2 whitespace-pre-line text-center font-sans text-[17px] leading-[22px] font-semibold text-white transition-[opacity,transform] duration-300 sm:text-[24px] sm:leading-[28px] md:top-8 md:text-[28px] md:leading-[32px]",
                           isActive
                             ? "translate-y-0 opacity-100"
                             : "-translate-y-2 opacity-0"
