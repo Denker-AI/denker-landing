@@ -7,9 +7,49 @@ Status: Approved approach (Option B — JS timeline), pending spec review
 
 Replace the current 23s CSS-keyframe hero choreography with a 14s Motion-driven
 timeline that matches the motion quality of Apple's visionOS hero video
-(https://www.apple.com/os/visionos/), while keeping all existing presentational
-components. The old choreography system is removed entirely — no legacy
-keyframes coexist with the new system.
+(https://www.apple.com/os/visionos/). The presentational components are kept as
+the basis but each must pass a static quality review (and be fixed where needed)
+BEFORE any motion is added. The old choreography system and all dead components
+are removed entirely — no legacy code coexists with the new system.
+
+## Process phases (order is a hard constraint)
+
+1. **Phase 0 — Sweep.** Delete dead components and dead CSS (verified list
+   below). Nothing visual changes; build stays green.
+2. **Phase 1 — Component quality gate.** Render each of the six hero
+   components statically at its final-design size, screenshot each, and get
+   user approval component-by-component. Known issues to fix during this
+   phase (from user review):
+   - MacBook mockup: current `HeroDesktopFocusDisplay` CSS-drawn shell looks
+     poor; needs a redesign (higher-quality device rendering or better asset).
+   - Book Notes frame: layout/content "not quite right"; revisit proportions,
+     typography, and cover treatment against the production app.
+   - Team frame: size and proportions are off; re-derive from the production
+     app's actual dimensions.
+   - Logo bubble, voice indicator, cursor bubble: review, expected mostly OK.
+   No motion work starts until all six are approved.
+3. **Phase 2 — Motion.** Build the Motion timeline per the beat sheet below on
+   top of the approved components.
+
+## Phase 0 sweep list (verified by import audit, 2026-07-06)
+
+Dead — only self-referential imports, delete:
+- `components/production/canvas/space-switcher.tsx`
+- `components/production/canvas/space-switcher-glass.ts`
+- `components/production/canvas/space-switcher-compact-initial.tsx`
+- `components/production/canvas/space-switcher-compact-anchor.ts`
+- `components/production/canvas/use-space-switcher-hover-expansion.ts`
+- `components/production/ui/context-menu.tsx` (used only by space-switcher)
+- `components/production/ui/project-avatar.tsx` (used only by space-switcher)
+- `components/production/lib/home-project-colors.ts` (used only by space-switcher)
+- All dead choreography CSS in `app/globals.css` (see Architecture section)
+- After Phase 1: audit `public/images/hero/` for assets orphaned by the
+  component redesigns
+
+Keep (in use elsewhere): `agent-dock.tsx`, `agent-avatar-preview.tsx`,
+`use-auth.ts`, `dicebear-styles.ts`, `desktop-mode-store.ts`,
+`project-store.ts` (WhatDenkerCanDo / frame internals), `ColorBends.tsx`
+(hero background).
 
 ## Reference data (measured from Apple's hero video)
 
@@ -133,6 +173,16 @@ that anchors the finale. No component is rendered twice.
 - `prefers-reduced-motion`: render the final still immediately.
 - SSR: stage server-renders in final-layout state; the timeline takes over on
   hydration (no flash; crawlers see the finished hero).
+
+## Component quality criteria (Phase 1 gate)
+
+Each component is approved against:
+- Proportions match the production app (measure, don't eyeball).
+- Readable at its beat size from the beat sheet (e.g. Team frame at 24% of a
+  ~2500px stage) and at its final-slot size.
+- Glass/token styling consistent with the dark production surface set already
+  established in the landing page.
+- No CSS-drawn approximations where a real asset exists (MacBook rule).
 
 ## Testing / verification
 
