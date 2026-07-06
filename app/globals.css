@@ -2472,9 +2472,6 @@ body {
    demos: keyframes are paused until the layer enters "playing", and the
    "final" state pins everything to its end values via animation-fill-mode
    plus the [data-motion-state="final"] overrides below. */
-.what-denker-graph-motion {
-  --graph-cycle: 4.6s;
-}
 
 .memory-graph-edges {
   position: absolute;
