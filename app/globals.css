@@ -4810,7 +4810,9 @@ body {
   min-height: 0;
   align-items: stretch;
   justify-content: center;
-  padding: clamp(0.7rem, 1vw, 0.9rem);
+  /* equal ~42px measured glass->card distance on all four edges:
+     header adds 35.8px (+8), footer 28.9px (+15), sides bare (52) */
+  padding: 8px 52px 15px;
   animation: hero-production-html-content var(--hero-production-cycle)
     linear 1 both;
   animation-play-state: var(--hero-production-play-state);
@@ -5623,28 +5625,6 @@ body {
   }
 }
 
-/* Reach Out: the social-links grid and the newsletter block stack vertically
-   (tablet structure) all the way up to 1080px, then sit side by side. Custom
-   1080px breakpoint, so dedicated classes again avoid the arbitrary-variant
-   cascade-order bug documented above. */
-.reach-out-layout {
-  flex-direction: column;
-}
-.reach-out-newsletter {
-  width: 100%;
-  gap: 2.5rem;
-}
-@media (min-width: 1080px) {
-  .reach-out-layout {
-    flex-direction: row;
-    align-items: stretch;
-  }
-  .reach-out-newsletter {
-    width: 430px;
-    gap: 0;
-    justify-content: space-between;
-  }
-}
 
 /* CTA card background — a tall, top-centered radial glow fading from dark
    green through primary green out to white at the edges (from Figma). Kept
@@ -5807,20 +5787,18 @@ body {
   flex-direction: column;
   gap: 0;
   overflow: visible;
-  border: 1px solid rgba(245, 247, 250, 0.08);
-  border-radius: 20px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.018) 48%, rgba(0, 0, 0, 0.12)),
-    rgba(18, 21, 28, 0.86);
-  box-shadow:
-    0 30px 76px rgba(0, 0, 0, 0.34),
-    0 12px 30px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  /* Real production taskboard renders as one continuous liquid-glass sheet
+     (frosted, wallpaper showing through) rather than an opaque dark panel.
+     The `liquid-glass` class (same one the hero/input-bar shells use) plus
+     `surfaceRoleClassName("frame")`'s `denker-glass-frame` now own the
+     surface treatment (background, border, border-radius, box-shadow,
+     backdrop-filter) on the JSX element — this rule used to hand-roll its
+     own much more opaque background/border/shadow/blur here, which is what
+     made the board look like a flat dark rectangle instead of glass. Only
+     geometry stays in this rule now. */
   color: rgba(255, 255, 255, 0.95);
   padding: 0;
   transform: translateX(-50%);
-  -webkit-backdrop-filter: blur(26px) saturate(1.35);
-  backdrop-filter: blur(26px) saturate(1.35);
 }
 
 .taskboard-moving-task {
