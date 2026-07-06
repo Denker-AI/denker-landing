@@ -6,6 +6,11 @@ import { CarouselArrows } from "@/components/ui/CarouselArrows";
 import { Container } from "@/components/ui/Container";
 import { FadeIn } from "@/components/ui/FadeIn";
 
+// Order matters: the grid fills column-by-column into two rows (top row = even
+// indices, bottom row = odd), so this list is interleaved long/short on purpose.
+// It keeps every short quote diagonally isolated — no two short quotes ever sit
+// beside each other (same row) or stacked (same column), which avoids sparse,
+// empty-looking patches.
 const testimonials = [
   {
     name: "Amir Mirmehrkar",
@@ -13,14 +18,9 @@ const testimonials = [
     text: "I am more visual, it hits home.I had chaneges in repeating context.\nOver and over. Across tools. Across teammates.\nEvery new doc. Every new sprint.\nRe-explaining the same product assumptions, goals, constraints.",
   },
   {
-    name: "Adefisan Emmanuel",
-    avatar: "/images/testimonials/adefisan-emmanuel.jpg",
-    text: "The double-control shortcut for screen captures sounds incredibly smooth, Juan! It completely removes the friction of explaining context to AI agents.",
-  },
-  {
-    name: "Ahmed Ali",
-    avatar: "/images/testimonials/ahmed-ali.jpg",
-    text: "Demo > explanation, always. Tools like this make it easier to show real value instead of just describing it",
+    name: "Joey Zhu",
+    avatar: "/images/testimonials/joey-zhu.jpg",
+    text: "UI is so good, like an artpiece.",
   },
   {
     name: "Manas Rohilla",
@@ -28,9 +28,14 @@ const testimonials = [
     text: "This is some crazy product you\ngot 🫡",
   },
   {
-    name: "Joey Zhu",
-    avatar: "/images/testimonials/joey-zhu.jpg",
-    text: "UI is so good, like an artpiece.",
+    name: "Adefisan Emmanuel",
+    avatar: "/images/testimonials/adefisan-emmanuel.jpg",
+    text: "The double-control shortcut for screen captures sounds incredibly smooth, Juan! It completely removes the friction of explaining context to AI agents.",
+  },
+  {
+    name: "Sophie Laurent",
+    avatar: "/images/testimonials/sophie-laurent.png",
+    text: "The ability to understand what's on my screen and provide context-aware assistance saves me a surprising amount of time every day. It feels less like a chatbot and more like a teammate.",
   },
   {
     name: "Mohammad Ashad",
@@ -43,19 +48,19 @@ const testimonials = [
     text: "soo powerful!!",
   },
   {
+    name: "Daniel Müller",
+    avatar: "/images/testimonials/daniel-muller.png",
+    text: "From research and documentation to coordinating tasks across the team, Denker helps us stay focused on building instead of managing repetitive work.",
+  },
+  {
     name: "Alex Carter",
     avatar: "/images/testimonials/alex-carter.png",
     text: "Denker has become part of my daily workflow. Instead of jumping between tools, I can research competitors, summarize content, and move ideas forward from one place.",
   },
   {
-    name: "Sophie Laurent",
-    avatar: "/images/testimonials/sophie-laurent.png",
-    text: "The ability to understand what's on my screen and provide context-aware assistance saves me a surprising amount of time every day. It feels less like a chatbot and more like a teammate.",
-  },
-  {
-    name: "Daniel Müller",
-    avatar: "/images/testimonials/daniel-muller.png",
-    text: "From research and documentation to coordinating tasks across the team, Denker helps us stay focused on building instead of managing repetitive work.",
+    name: "Ahmed Ali",
+    avatar: "/images/testimonials/ahmed-ali.jpg",
+    text: "Demo > explanation, always. Tools like this make it easier to show real value instead of just describing it",
   },
 ];
 
