@@ -1318,6 +1318,7 @@ export function WhatDenkerCanDo() {
                       )}
                       <p
                         aria-hidden={!isActive}
+                        data-copy-layout={slide.id === 1 ? "side" : "centered"}
                         className={cn(
                           "what-denker-feature-copy absolute top-9 left-1/2 z-30 w-[min(560px,calc(100%-64px))] -translate-x-1/2 whitespace-pre-line text-center font-sans text-[17px] leading-[22px] font-semibold text-white transition-[opacity,transform] duration-300 sm:text-[24px] sm:leading-[28px] md:top-12 md:text-[28px] md:leading-[32px]",
                           isActive

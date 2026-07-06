@@ -7,7 +7,7 @@ import { FadeIn } from "@/components/ui/FadeIn";
 const integrations = [
   { name: "Google", logo: "/logos/google.svg" },
   { name: "Gmail", logo: "/logos/gmail.svg" },
-  { name: "Out look", logo: "/logos/outlook.svg" },
+  { name: "Outlook", logo: "/logos/outlook.svg" },
   { name: "Google Calendar", logo: "/logos/google-calendar.svg" },
   { name: "Google Drive", logo: "/logos/google-drive.svg" },
   { name: "Twitter X", logo: "/logos/x.svg" },
@@ -25,7 +25,7 @@ const integrations = [
 export function TrustBadges() {
   return (
     <section
-      className="flex w-full flex-col items-center bg-white px-6 py-16 sm:px-10 md:px-20 md:py-20"
+      className="section-tint flex w-full flex-col items-center px-6 py-16 sm:px-10 md:px-20 md:py-20"
       data-name="Section - Built in Public. Trusted by Builders."
       data-theme="light"
     >
@@ -46,7 +46,7 @@ export function TrustBadges() {
           {integrations.map((integration, i) => (
             <div
               key={i}
-              className="flex aspect-auto h-full flex-col items-center justify-center gap-3 rounded-[20px] sm:rounded-[24px] md:rounded-[32px] border border-grey-100 bg-white p-6"
+              className="flex aspect-auto h-full flex-col items-center justify-center gap-3 rounded-[20px] sm:rounded-[24px] md:rounded-[32px] bg-white p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]"
             >
               <img src={integration.logo} alt="" className="size-10" />
               <p className="w-full text-center font-heading text-base font-medium text-grey-500">
@@ -54,7 +54,7 @@ export function TrustBadges() {
               </p>
             </div>
           ))}
-          <div className="trustbadges-more-card flex aspect-video flex-col items-center justify-center rounded-[20px] sm:rounded-[24px] md:rounded-[32px] border border-grey-100 bg-white p-6">
+          <div className="trustbadges-more-card flex aspect-video flex-col items-center justify-center rounded-[20px] sm:rounded-[24px] md:rounded-[32px] bg-white p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
             <p className="text-center font-heading text-base font-normal leading-6 text-grey-950">
               More than 500+ integrations are available
             </p>

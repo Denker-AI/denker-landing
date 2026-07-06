@@ -11,8 +11,8 @@ import { useDragScroll } from "@/lib/useDragScroll";
 const navLinks = [
   { label: "Features", href: "#features" },
   { label: "Pricing", href: "#pricing" },
-  { label: "Community", href: "#reach-out" },
   { label: "FAQ", href: "#faq" },
+  { label: "Community", href: "#reach-out" },
   { label: "Blog", href: "https://www.denker.ai/blog" },
 ].map((link) => ({ ...link, external: link.href.startsWith("http") }));
 

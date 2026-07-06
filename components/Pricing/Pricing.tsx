@@ -22,10 +22,12 @@ const maxFeatures = [
   "Beta features",
 ];
 
-const cliChips = [
+// `invert` flips white-fill logos (built for dark UIs) to dark so they stay
+// visible on the light chips.
+const cliChips: { label: string; icon: string; invert?: boolean }[] = [
   { label: "Claude Code", icon: "/logos/claude-logo.svg" },
   { label: "Codex", icon: "/logos/codex-color.svg" },
-  { label: "OpenCode", icon: "/logos/opencode.svg" },
+  { label: "OpenCode", icon: "/logos/opencode.svg", invert: true },
 ];
 
 export function Pricing() {
@@ -34,32 +36,32 @@ export function Pricing() {
   return (
     <section
       id="pricing"
-      className="flex w-full scroll-mt-28 flex-col items-center gap-20 bg-grey-950 px-6 py-16 sm:px-10 md:px-20 md:py-20"
+      className="flex w-full scroll-mt-28 flex-col items-center gap-20 bg-white px-6 py-16 sm:px-10 md:px-20 md:py-20"
       data-name="Section - Pricing"
-      data-theme="dark"
+      data-theme="light"
     >
       <Container className="flex flex-col items-center gap-20">
       <div className="flex w-full flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-col gap-3 text-white">
+        <div className="flex flex-col gap-3 text-grey-950">
           <BlurText
             as="h2"
             className="font-heading text-3xl font-bold md:text-[40px] md:leading-[48px]"
             text="More progress. One workspace."
           />
-          <FadeIn as="p" delay={0.1} className="font-heading text-xl font-medium text-white">
+          <FadeIn as="p" delay={0.1} className="font-heading text-xl font-medium text-grey-500">
             Start free. Pay for what your agents actually need.
           </FadeIn>
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="font-heading text-xl font-medium text-white">Monthly</span>
+          <span className="font-heading text-xl font-medium text-grey-950">Monthly</span>
           <button
             type="button"
             role="switch"
             aria-checked={yearly}
             onClick={() => setYearly((v) => !v)}
             className={`relative h-7 w-12 shrink-0 rounded-full transition-colors duration-300 ease-in-out ${
-              yearly ? "bg-primary-600" : "bg-grey-700"
+              yearly ? "bg-primary-600" : "bg-grey-200"
             }`}
           >
             <span
@@ -68,36 +70,36 @@ export function Pricing() {
               }`}
             />
           </button>
-          <span className="font-heading text-xl font-medium text-white">Yearly</span>
+          <span className="font-heading text-xl font-medium text-grey-950">Yearly</span>
         </div>
       </div>
 
       <FadeIn delay={0.2} className="pricing-grid w-full">
         {/* Free */}
-        <div className="flex flex-col gap-8 rounded-[20px] sm:rounded-[24px] md:rounded-[32px] border border-grey-800 bg-grey-900 p-8">
+        <div className="flex flex-col gap-8 rounded-[20px] sm:rounded-[24px] md:rounded-[32px] bg-grey-50 p-8">
           <div className="flex flex-1 flex-col gap-6">
             <div className="flex flex-col gap-3">
               <p className="font-heading text-sm font-medium text-grey-500">FREE</p>
               <div className="flex items-baseline gap-1">
-                <span className="font-heading text-4xl font-bold text-white">€0</span>
+                <span className="font-heading text-4xl font-bold text-grey-950">€0</span>
                 <span className="font-body text-base text-grey-500">/forever</span>
               </div>
             </div>
-            <p className="font-body text-base text-grey-500">
+            <p className="min-h-12 font-body text-base text-grey-500">
               Try the desktop app. No credit card needed.
             </p>
-            <div className="h-px w-full bg-grey-800" />
+            <div className="h-px w-full bg-grey-150" />
             <ul className="flex flex-col gap-3">
               {freeFeatures.map((f) => (
-                <li key={f} className="flex items-center gap-2 font-body text-base text-white">
-                  <Check className="size-6 shrink-0 text-primary-400" />
+                <li key={f} className="flex items-center gap-2 font-body text-base text-grey-950">
+                  <Check className="size-6 shrink-0 text-primary-600" />
                   {f}
                 </li>
               ))}
             </ul>
-            <div className="flex gap-2 rounded-xl bg-grey-950 p-3">
+            <div className="flex gap-2 rounded-xl bg-white p-3">
               <Info className="size-6 shrink-0 text-grey-500" />
-              <p className="font-body text-base text-white">
+              <p className="font-body text-base text-grey-950">
                 AI tokens not included — requires your own CLI subscription
                 (Claude Code, Codex, or OpenCode)
               </p>
@@ -105,7 +107,7 @@ export function Pricing() {
           </div>
           <a
             href={LOGIN_URL}
-            className="flex h-12 w-full items-center justify-center rounded-full border border-grey-700 bg-grey-900 font-body text-lg font-medium text-white transition-colors hover:bg-grey-800"
+            className="flex h-12 w-full items-center justify-center rounded-full bg-white font-body text-lg font-medium text-grey-950 transition-colors hover:bg-grey-50"
           >
             Get Started
           </a>
@@ -136,7 +138,7 @@ export function Pricing() {
                 )}
               </div>
             </div>
-            <p className="font-body text-base text-white">
+            <p className="min-h-12 font-body text-base text-white">
               Your full team. Unlimited projects. Persistent memory.
             </p>
             <div className="h-px w-full bg-white/30" />
@@ -158,23 +160,23 @@ export function Pricing() {
         </div>
 
         {/* Max */}
-        <div className="pricing-max relative flex flex-col gap-8 rounded-[20px] sm:rounded-[24px] md:rounded-[32px] border border-grey-800 bg-grey-900 p-8">
-          <span className="absolute right-5 top-5 rounded-full bg-primary-600 px-4 py-2 font-heading text-sm font-medium text-grey-100">
+        <div className="pricing-max relative flex flex-col gap-8 rounded-[20px] sm:rounded-[24px] md:rounded-[32px] bg-grey-50 p-8">
+          <span className="absolute right-5 top-5 rounded-full bg-primary-600 px-4 py-2 font-heading text-sm font-medium text-white">
             Coming Soon
           </span>
           <div className="flex flex-1 flex-col gap-6">
             <div className="flex flex-col gap-3">
               <p className="font-heading text-sm font-medium text-grey-500">MAX</p>
-              <span className="font-heading text-4xl font-bold text-white">TBD</span>
+              <span className="font-heading text-4xl font-bold text-grey-950">TBD</span>
             </div>
-            <p className="font-body text-base text-grey-500">
+            <p className="min-h-12 font-body text-base text-grey-500">
               Cloud execution with persistent agents. Coming soon.
             </p>
-            <div className="h-px w-full bg-grey-800" />
+            <div className="h-px w-full bg-grey-150" />
             <ul className="flex flex-col gap-3">
               {maxFeatures.map((f) => (
-                <li key={f} className="flex items-center gap-2 font-body text-base text-white">
-                  <Check className="size-6 shrink-0 text-primary-400" />
+                <li key={f} className="flex items-center gap-2 font-body text-base text-grey-950">
+                  <Check className="size-6 shrink-0 text-primary-600" />
                   {f}
                 </li>
               ))}
@@ -182,7 +184,7 @@ export function Pricing() {
           </div>
           <button
             disabled
-            className="h-12 w-full rounded-full border border-grey-700 bg-grey-900 font-body text-lg font-medium text-white opacity-70"
+            className="h-12 w-full rounded-full bg-white font-body text-lg font-medium text-grey-400"
           >
             Coming Soon
           </button>
@@ -197,20 +199,20 @@ export function Pricing() {
           {cliChips.map((chip) => (
             <span
               key={chip.label}
-              className="flex items-center gap-2 rounded-full bg-grey-900 px-4 py-2 font-heading text-sm font-medium text-white"
+              className="flex items-center gap-2 rounded-full bg-grey-50 px-4 py-2 font-heading text-sm font-medium text-grey-950"
             >
               {chip.icon ? (
-                <img src={chip.icon} alt="" className="size-5" />
+                <img src={chip.icon} alt="" className={`size-5${chip.invert ? " invert" : ""}`} />
               ) : (
-                <span className="size-2 rounded-full bg-primary-400" />
+                <span className="size-2 rounded-full bg-primary-600" />
               )}
               {chip.label}
             </span>
           ))}
-          <span className="flex items-center gap-2 rounded-full bg-grey-900 px-4 py-2 font-heading text-sm font-medium text-grey-500">
-            <img src="/logos/openrouter.svg" alt="" className="size-5 opacity-50" />
+          <span className="flex items-center gap-2 rounded-full bg-grey-50 px-4 py-2 font-heading text-sm font-medium text-grey-500">
+            <img src="/logos/openrouter.svg" alt="" className="size-5 invert opacity-60" />
             OpenRouter
-            <span className="rounded-full bg-primary-800/40 px-2 py-0.5 font-heading text-xs font-medium text-primary-400/70">
+            <span className="rounded-full bg-primary-50 px-2 py-0.5 font-heading text-xs font-medium text-primary-600">
               Coming Soon
             </span>
           </span>

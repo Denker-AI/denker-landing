@@ -1,0 +1,1379 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - navigation "Primary navigation" [ref=e4]:
+        - link "Denker home" [ref=e5] [cursor=pointer]:
+          - /url: "#top"
+        - generic [ref=e7]:
+          - link "Features" [ref=e8] [cursor=pointer]:
+            - /url: "#features"
+          - link "Pricing" [ref=e9] [cursor=pointer]:
+            - /url: "#pricing"
+          - link "Community" [ref=e10] [cursor=pointer]:
+            - /url: "#reach-out"
+          - link "FAQ" [ref=e11] [cursor=pointer]:
+            - /url: "#faq"
+          - link "Blog" [ref=e12] [cursor=pointer]:
+            - /url: https://www.denker.ai/blog
+        - link "Get Started" [ref=e14] [cursor=pointer]:
+          - /url: https://space.denker.ai/auth/login?intent=desktop&next=https%3A%2F%2Fspace.denker.ai%2Fauth%2Fdesktop-handoff
+      - navigation:
+        - generic:
+          - link:
+            - /url: "#top"
+          - link:
+            - /url: "#features"
+            - text: Features
+          - link:
+            - /url: "#pricing"
+            - text: Pricing
+          - link:
+            - /url: "#reach-out"
+            - text: Community
+          - link:
+            - /url: "#faq"
+            - text: FAQ
+          - link:
+            - /url: https://www.denker.ai/blog
+            - text: Blog
+          - link:
+            - /url: https://space.denker.ai/auth/login?intent=desktop&next=https%3A%2F%2Fspace.denker.ai%2Fauth%2Fdesktop-handoff
+            - text: Get Started
+        - button [disabled]:
+          - img
+        - button [disabled]:
+          - img
+  - main [ref=e15]:
+    - generic [ref=e16]:
+      - generic:
+        - generic:
+          - link "#1 project of the week on Peerlist":
+            - /url: https://peerlist.io/denker/project/denker
+            - generic:
+              - generic: "#1 Project of the week"
+              - generic:
+                - strong: Peerlist
+                - emphasis: Launch
+            - generic "180 upvotes":
+              - generic: "180"
+          - link "Denker on Product Hunt":
+            - /url: https://www.producthunt.com/products/denker?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-denker
+            - img "Denker - Your AI coworker that follows where you work | Product Hunt"
+      - generic [ref=e17]:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - img
+                - img
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - img
+                - generic: Your Team
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Denker
+                    - generic: GPT 5.5
+                - generic:
+                  - generic:
+                    - generic: Analyst
+                    - generic: Claude Opus 4.8
+                - generic:
+                  - generic:
+                    - generic: Assistant
+                    - generic: Minimax M3
+                - generic:
+                  - generic:
+                    - generic: Coder
+                    - generic: Claude Fable 5
+                - generic:
+                  - generic:
+                    - generic: Designer
+                    - generic: Claude Sonnet 5
+                - generic:
+                  - generic:
+                    - generic: HR
+                    - generic: GPT 5.4 Mini
+                - generic:
+                  - generic:
+                    - generic: Marketer
+                    - generic: Claude Haiku 5
+                - generic:
+                  - generic:
+                    - generic: Researcher
+                    - generic: Claude Opus 4.8
+                - generic:
+                  - generic:
+                    - generic: Sales
+                    - generic: GPT 5.2
+                - generic:
+                  - generic:
+                    - generic: Writer
+                    - generic: Minimax M3
+        - generic:
+          - generic:
+            - img
+            - generic:
+              - generic:
+                - generic:
+                  - generic: Denker
+                  - generic:
+                    - generic:
+                      - img
+                    - generic:
+                      - img
+        - generic:
+          - generic:
+            - img
+            - generic:
+              - generic:
+                - generic:
+                  - img
+                  - generic: Book Notes
+                  - generic:
+                    - generic: Denker
+                - generic:
+                  - article:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Capture system
+                              - heading [level=3]: Getting Things Done
+                          - generic:
+                            - generic: Key takeaway
+                            - paragraph: Move every open loop out of your head and into a trusted system, so attention can return to the work instead of remembering the work.
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Focus architecture
+                              - heading [level=3]: Deep Work
+                          - generic:
+                            - generic: Key takeaway
+                            - paragraph: Treat concentration as a scheduled resource. Protect the session first, then decide what work deserves it.
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: System design
+                              - heading [level=3]: Atomic Habits
+                          - generic:
+                            - generic: Key takeaway
+                            - paragraph: Make the better action easier to start. Small environmental changes compound when the system removes friction before motivation is needed.
+                - generic:
+                  - generic:
+                    - button:
+                      - img
+                    - button:
+                      - img
+                  - generic:
+                    - button:
+                      - img
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - img
+                    - generic: Your Team
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic: Denker
+                        - generic: GPT 5.5
+                    - generic:
+                      - generic:
+                        - generic: Analyst
+                        - generic: Claude Opus 4.8
+                    - generic:
+                      - generic:
+                        - generic: Assistant
+                        - generic: Minimax M3
+                    - generic:
+                      - generic:
+                        - generic: Coder
+                        - generic: Claude Fable 5
+                    - generic:
+                      - generic:
+                        - generic: Designer
+                        - generic: Claude Sonnet 5
+                    - generic:
+                      - generic:
+                        - generic: HR
+                        - generic: GPT 5.4 Mini
+                    - generic:
+                      - generic:
+                        - generic: Marketer
+                        - generic: Claude Haiku 5
+                    - generic:
+                      - generic:
+                        - generic: Researcher
+                        - generic: Claude Opus 4.8
+                    - generic:
+                      - generic:
+                        - generic: Sales
+                        - generic: GPT 5.2
+                    - generic:
+                      - generic:
+                        - generic: Writer
+                        - generic: Minimax M3
+                  - generic:
+                    - generic:
+                      - button:
+                        - img
+                      - button:
+                        - img
+                    - generic:
+                      - button:
+                        - img
+            - generic:
+              - generic:
+                - img
+                - generic:
+                  - generic:
+                    - generic:
+                      - img
+                      - generic: Book Notes
+                      - generic:
+                        - generic: Denker
+                    - generic:
+                      - article:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic: Capture system
+                                  - heading [level=3]: Getting Things Done
+                              - generic:
+                                - generic: Key takeaway
+                                - paragraph: Move every open loop out of your head and into a trusted system, so attention can return to the work instead of remembering the work.
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic: Focus architecture
+                                  - heading [level=3]: Deep Work
+                              - generic:
+                                - generic: Key takeaway
+                                - paragraph: Treat concentration as a scheduled resource. Protect the session first, then decide what work deserves it.
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic: System design
+                                  - heading [level=3]: Atomic Habits
+                              - generic:
+                                - generic: Key takeaway
+                                - paragraph: Make the better action easier to start. Small environmental changes compound when the system removes friction before motivation is needed.
+                    - generic:
+                      - generic:
+                        - button:
+                          - img
+                        - button:
+                          - img
+                      - generic:
+                        - button:
+                          - img
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic: Denker
+                      - generic:
+                        - generic:
+                          - img
+                        - generic:
+                          - img
+        - button "Stop hero animation" [pressed] [ref=e18]:
+          - img [ref=e19]
+      - generic:
+        - generic:
+          - link:
+            - /url: https://space.denker.ai/auth/login?intent=desktop&next=https%3A%2F%2Fspace.denker.ai%2Fauth%2Fdesktop-handoff
+            - text: Get Started
+          - link:
+            - /url: "#features"
+            - text: Learn More
+      - generic [ref=e22]:
+        - paragraph [ref=e23]: For Founders, Builders, and Thinkers.
+        - heading "Your AI coworker that follows where you work." [level=1] [ref=e24]
+        - paragraph [ref=e25]:
+          - generic [ref=e26]: Never again follow every AI conversation manually.
+          - generic [ref=e27]: Let your AI co-worker follow you.
+    - generic [ref=e28]:
+      - generic [ref=e29]:
+        - heading "Explore what Denker can do." [level=2] [ref=e31]
+        - generic [ref=e34]:
+          - generic [ref=e36]:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img
+                    - img
+                    - generic:
+                      - generic: Denker-AI
+                      - generic: /
+                      - strong: denker-dolcetto
+                    - generic:
+                      - img
+                      - generic: Type / to search
+                  - generic:
+                    - generic: Code
+                    - generic: Issues
+                    - generic: Pull requests
+                    - generic: Agents
+                    - generic: Actions
+                    - generic: Projects
+                    - generic: Wiki
+                  - generic:
+                    - complementary:
+                      - generic: Actions
+                      - generic: All workflows
+                      - generic: Build & Publish Desktop App
+                      - generic: CI
+                      - generic: Dependabot Updates
+                      - generic: Dependency Graph
+                      - generic: Deploy Preview
+                      - generic: Deploy Production
+                      - generic: Release
+                    - main:
+                      - generic:
+                        - generic:
+                          - heading [level=3]: All workflows
+                          - paragraph: Showing runs from all workflows
+                        - generic: Filter workflow runs
+                      - generic:
+                        - generic:
+                          - strong: 1,688 workflow runs
+                          - generic: Workflow
+                          - generic: Event
+                          - generic: Status
+                        - article:
+                          - generic:
+                            - heading [level=4]: "fix(canvas): debounce focus frame chrome reveal"
+                            - paragraph: "Release #125 · Commit ac95225 pushed by janez1201"
+                          - generic: main
+                          - generic:
+                            - generic: 38 minutes ago
+                            - generic: 18m 57s
+                          - generic: ...
+                        - article:
+                          - generic:
+                            - heading [level=4]: Add Dolcetto media demo route (#630)
+                            - paragraph: "Release #124 · Commit b429de4 pushed by janez1201"
+                          - generic: main
+                          - generic:
+                            - generic: Today at 2:43 PM
+                            - generic: 20m 57s
+                          - generic: ...
+                        - article:
+                          - generic:
+                            - heading [level=4]: Add Dolcetto media demo route
+                            - paragraph: "CI #836 · Pull request #630 synchronized by janez1201"
+                          - generic: codex/os26-chrome-memory
+                          - generic:
+                            - generic: Today at 2:29 PM
+                            - generic: 4m 39s
+                          - generic: ...
+                        - article:
+                          - generic:
+                            - heading [level=4]: Fix onboarding media replay and managed runtime deploy env (#629)
+                            - paragraph: "Release #123 · Commit 5a4a30b pushed by janez1201"
+                          - generic: main
+                          - generic:
+                            - generic: Jul 4, 10:38 PM GMT+2
+                            - generic: 21m 30s
+                          - generic: ...
+                        - article:
+                          - generic:
+                            - heading [level=4]: Fix onboarding frame chrome flicker, completion persistence, and autoplay
+                            - paragraph: "Release #122 · Commit 83f72b0 pushed by janez1201"
+                          - generic: main
+                          - generic:
+                            - generic: Jul 4, 3:41 PM GMT+2
+                            - generic: 16m 49s
+                          - generic: ...
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - button:
+                        - img
+                  - textbox
+                  - button:
+                    - img
+              - generic:
+                - img
+                - generic [ref=e37]:
+                  - generic [ref=e38]: Denker
+                  - generic [ref=e40]: Opening GitHub page...
+              - generic:
+                - img
+                - generic [ref=e41]:
+                  - generic [ref=e42]: Denker
+                  - generic [ref=e44]: GitHub page is opened
+            - paragraph [ref=e45]: Give Denker a task. It opens apps, clicks, and types — like you would.
+          - generic [ref=e47]:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic: A
+                      - strong: NTLER
+                    - navigation:
+                      - generic: Locations
+                      - generic: Resources
+                      - generic: Portfolio
+                      - generic: Investors
+                      - generic: About
+                    - button: Apply
+                  - article:
+                    - generic:
+                      - generic: Share article
+                      - strong: in
+                      - strong: x
+                    - paragraph: It doesn't matter what sector or vertical you're entering, your startup is going to have to deal with competition. Your business idea should be a game changer in some way.
+                    - heading [level=3]: Why focus on what your competitors are doing?
+                    - paragraph: Knowing your competition is as important as knowing your own business and your customers. A competitor analysis helps you understand where rivals' strengths and weaknesses lie.
+                    - paragraph: You can do a competitive analysis at any point in time, and it will be relevant. It should be an ongoing process as your startup grows.
+                    - heading [level=3]: Who are your competitors, anyway?
+                    - paragraph: Start by identifying which companies solve a similar problem, serve the same customer segment, or use a comparable approach.
+              - generic:
+                - generic:
+                  - generic:
+                    - img
+                    - generic: Competitor Analysis - Antler Guide Summary
+                    - generic:
+                      - img
+                      - generic: Denker
+                    - button:
+                      - img
+                    - button:
+                      - img
+                  - main:
+                    - heading [level=4]: How To Do A Competitor Analysis
+                    - paragraph: 3 qualifying questions to identify real competitors
+                    - generic:
+                      - generic:
+                        - strong: "01"
+                        - generic: Who
+                        - paragraph: Do they target the same customer segment?
+                      - generic:
+                        - strong: "02"
+                        - generic: What
+                        - paragraph: Do they solve a similar problem?
+                      - generic:
+                        - strong: "03"
+                        - generic: How
+                        - paragraph: Is their solution approach comparable?
+                    - generic:
+                      - heading [level=5]: Competitor matrix - what to track
+                      - generic:
+                        - generic:
+                          - generic: Category
+                          - generic: Data Points
+                        - generic:
+                          - strong: Business Overview
+                          - generic: Founding date, team size, revenue, customer count
+                        - generic:
+                          - strong: GTM / Acquisition
+                          - generic: Awareness, sentiment, acquisition channels
+                        - generic:
+                          - strong: Product Offering
+                          - generic: Pricing, features, sales model
+                        - generic:
+                          - strong: SWOT Analysis
+                          - generic: Strengths, weaknesses, opportunities, threats
+                    - generic:
+                      - heading [level=5]: Where to find competitor data
+                      - generic:
+                        - generic:
+                          - generic: Source
+                          - generic: What You Get
+                        - generic:
+                          - strong: LinkedIn
+                          - generic: Employee count, team growth, similar pages
+                  - generic:
+                    - generic:
+                      - button:
+                        - img
+                      - button:
+                        - img
+                      - button:
+                        - img
+                    - generic:
+                      - button:
+                        - img
+                      - button:
+                        - img
+                    - generic:
+                      - button:
+                        - img
+              - generic:
+                - img
+                - generic [ref=e48]:
+                  - generic [ref=e49]: Denker
+                  - generic [ref=e51]: Reading article and creating summary...
+              - generic:
+                - img
+                - generic [ref=e52]:
+                  - generic [ref=e53]: Denker
+                  - generic [ref=e55]: Summary frame presented - covers the 3 qualifying questions, competitor matrix categories, data sources table, and revenue estimation formula.
+            - paragraph [ref=e56]: Results land right where you're working. Not in another tab.
+          - generic [ref=e58]:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic: Gmail
+                        - img
+                      - generic: +
+                    - generic:
+                      - img
+                      - img
+                      - img
+                      - generic:
+                        - img
+                        - generic: https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfJmVQjsw
+                      - img
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img
+                        - strong: Gmail
+                      - generic:
+                        - img
+                        - generic: Search mail
+                        - img
+                      - generic:
+                        - img
+                        - img
+                        - img
+                    - generic:
+                      - complementary:
+                        - button:
+                          - img
+                          - text: Compose
+                        - navigation:
+                          - generic:
+                            - img
+                            - emphasis: Inbox
+                            - strong: "565"
+                          - generic:
+                            - img
+                            - emphasis: Starred
+                          - generic:
+                            - img
+                            - emphasis: Snoozed
+                          - generic:
+                            - img
+                            - emphasis: Sent
+                          - generic:
+                            - img
+                            - emphasis: Drafts
+                            - strong: "2"
+                          - generic:
+                            - img
+                            - emphasis: Purchases
+                            - strong: "28"
+                          - generic:
+                            - img
+                            - emphasis: More
+                        - generic:
+                          - text: Labels
+                          - strong: +
+                      - main:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - img
+                              - img
+                              - img
+                              - img
+                              - img
+                              - img
+                            - generic:
+                              - strong: 1 of 777
+                              - img
+                              - img
+                              - img
+                          - generic:
+                            - generic:
+                              - img
+                              - img
+                            - generic:
+                              - heading [level=3]: Questions About Denker Pro Before Purchasing
+                              - generic: Inbox x
+                            - generic:
+                              - generic:
+                                - strong: Raj Vamja
+                                - text: <work.rajvamja@gmail.com>to me
+                              - generic:
+                                - time: 16:39 (18 hours ago)
+                                - img
+                                - img
+                                - img
+                                - img
+                            - article:
+                              - paragraph: Hi Denker Team,
+                              - paragraph: I've been exploring Denker over the past few days and I'm impressed with how it handles research and workflow automation.
+                              - paragraph: "Before upgrading to the Pro plan, I have a few questions:"
+                              - list:
+                                - listitem: Does Denker work with tools like Slack, Notion, GitHub, and Google Drive?
+                                - listitem: Are there any limits on voice interactions or AI tasks in the Pro plan?
+                                - listitem: Can I use Denker across multiple devices with a single subscription?
+                                - listitem: Is there a team plan available for startups with 5-10 members?
+                                - listitem: What happens to my saved context and AI history if I upgrade from the free plan?
+                              - paragraph: Looking forward to your response.
+                              - paragraph: Thanks,
+                              - paragraph:
+                                - strong: Lucas Martin
+                                - text: Founder, Nova Labs
+                            - generic:
+                              - generic:
+                                - strong: Raj Vamja
+                                - generic: (work.rajvamja@gmail.com)
+                              - generic:
+                                - img
+                                - generic: Describe your message
+                                - img
+                                - img
+                              - generic:
+                                - button:
+                                  - text: Send
+                                  - img
+                                - generic: Aa
+                                - img
+                                - img
+                                - img
+                                - img
+                                - img
+                                - img
+                                - img
+                                - img
+                      - complementary:
+                        - generic:
+                          - generic: "31"
+                        - img
+                        - img
+                        - img
+                        - img
+              - generic:
+                - img
+                - generic [ref=e59]:
+                  - generic [ref=e60]: Denker
+                  - generic [ref=e62]: "Paste Text : Hi Raj, thanks for the email, the pro plan provides"
+            - paragraph [ref=e63]: Denker writes straight into the input of any app.
+          - generic [ref=e65]:
+            - generic [ref=e66]:
+              - generic [ref=e67]:
+                - img [ref=e69]
+                - generic [ref=e70]: Task Board
+                - button [ref=e71]:
+                  - img [ref=e72]
+                - button [ref=e74]:
+                  - img [ref=e75]
+              - generic [ref=e78]:
+                - generic [ref=e79]:
+                  - generic [ref=e80]:
+                    - generic [ref=e82]: Backlog
+                    - generic [ref=e83]: "1"
+                    - img [ref=e85]
+                  - generic [ref=e87]:
+                    - paragraph [ref=e90]: Turn homepage notes into onboarding checklist
+                    - generic [ref=e92]:
+                      - generic [ref=e93]: DEN-101
+                      - generic [ref=e96]: Denker
+                      - generic [ref=e97]:
+                        - img [ref=e98]
+                        - generic [ref=e100]: "1"
+                - generic [ref=e101]:
+                  - generic [ref=e102]:
+                    - generic [ref=e104]: Todo
+                    - generic [ref=e105]: "1"
+                    - img [ref=e107]
+                  - generic [ref=e109]:
+                    - paragraph [ref=e112]: Create signed local-dev smoke test runbook
+                    - generic [ref=e114]:
+                      - generic [ref=e115]: DEN-118
+                      - generic [ref=e118]: Coder
+                      - generic [ref=e119]:
+                        - img [ref=e120]
+                        - generic [ref=e122]: "2"
+                - generic [ref=e123]:
+                  - generic [ref=e124]:
+                    - generic [ref=e126]: In Progress
+                    - generic [ref=e127]: "1"
+                  - generic [ref=e129]:
+                    - paragraph [ref=e132]: Wire taskboard demo to new-user desktop seed data
+                    - generic [ref=e134]:
+                      - generic [ref=e135]: DEN-126
+                      - generic [ref=e138]: Canvas
+                      - generic [ref=e139]:
+                        - img [ref=e140]
+                        - generic [ref=e142]: "4"
+                - generic [ref=e143]:
+                  - generic [ref=e144]:
+                    - generic [ref=e146]: Blocked
+                    - generic [ref=e147]: "1"
+                  - generic [ref=e149]:
+                    - paragraph [ref=e152]: Wait for notarized desktop build artifact
+                    - generic [ref=e154]:
+                      - generic [ref=e155]: DEN-133
+                      - generic [ref=e158]: Release
+                      - generic [ref=e159]:
+                        - img [ref=e160]
+                        - generic [ref=e162]: "1"
+                - generic [ref=e163]:
+                  - generic [ref=e164]:
+                    - generic [ref=e166]: In Review
+                    - generic [ref=e167]: "1"
+                  - generic [ref=e169]:
+                    - paragraph [ref=e172]: Verify desktop toast handoff after workflow completion
+                    - generic [ref=e174]:
+                      - generic [ref=e175]: DEN-142
+                      - generic [ref=e178]: QA
+                      - generic [ref=e179]:
+                        - img [ref=e180]
+                        - generic [ref=e182]: "3"
+                - generic [ref=e184]:
+                  - generic [ref=e186]: Done
+                  - generic [ref=e187]:
+                    - generic [ref=e188]: "0"
+                    - generic [ref=e189]: "1"
+              - generic [ref=e191]:
+                - generic [ref=e192]:
+                  - button [ref=e193]:
+                    - img [ref=e194]
+                  - button [ref=e197]:
+                    - img [ref=e198]
+                  - button [ref=e200]:
+                    - img [ref=e201]
+                - button [ref=e205]:
+                  - img [ref=e206]
+              - generic:
+                - generic:
+                  - generic:
+                    - paragraph: Verify desktop toast handoff after workflow completion
+                  - generic:
+                    - generic:
+                      - generic: DEN-142
+                      - generic:
+                        - generic: QA
+                      - generic:
+                        - img
+                        - generic: "3"
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img
+                    - generic: Completed
+                  - img
+                - generic:
+                  - img
+                  - generic:
+                    - strong: Task completed
+                    - paragraph: Verify desktop toast handoff after workflow completion
+                    - generic: Denker
+                - generic: View
+              - generic [ref=e210]:
+                - img [ref=e211]
+                - generic [ref=e214]:
+                  - generic [ref=e215]: Coder
+                  - generic [ref=e217]: Opening PR for DEN-118
+              - generic [ref=e218]:
+                - img [ref=e219]
+                - generic [ref=e222]:
+                  - generic [ref=e223]: Research
+                  - generic [ref=e225]: Drafting competitor notes for DEN-101
+            - paragraph [ref=e226]: A team of agents, working in parallel — each on its own task.
+          - generic [ref=e228]:
+            - generic:
+              - generic:
+                - generic:
+                  - img
+                  - generic: Denker Knowledge Graph
+                  - generic:
+                    - generic: Denker
+                  - button:
+                    - img
+                  - button:
+                    - img
+                - generic:
+                  - generic:
+                    - img
+                    - generic: Search nodes…
+                  - img
+                  - generic:
+                    - emphasis: Denker AI
+                  - generic:
+                    - emphasis: Context-aware AI workspace
+                  - generic:
+                    - emphasis: Why/How/What positioning
+                  - generic:
+                    - emphasis: Reduce doing-everything-yourself bottlenecks
+                  - generic:
+                    - emphasis: Founders, solo builders, and small teams
+                  - generic:
+                    - emphasis: jane
+                  - generic:
+                    - emphasis: Onboarding context saved
+                  - generic:
+                    - generic:
+                      - img
+                    - generic:
+                      - img
+                    - generic:
+                      - img
+                  - generic:
+                    - img
+                    - generic [ref=e229]:
+                      - generic [ref=e230]: Denker
+                      - generic [ref=e232]: "Searching memory: onboarding context…"
+                - generic:
+                  - generic:
+                    - button:
+                      - img
+                    - button:
+                      - img
+                    - button:
+                      - img
+                  - generic:
+                    - button:
+                      - img
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                        - generic:
+                          - heading [level=4]: Denker AI
+                          - generic: Company
+                      - paragraph: The project/company being onboarded. Public research and canvas frames describe it as an AI workflow automation / agent workspace product.
+                      - generic:
+                        - button:
+                          - img
+                          - text: Edit
+                        - button:
+                          - img
+                          - text: Delete
+                      - generic:
+                        - generic:
+                          - img
+                          - text: Related (2)
+                        - generic:
+                          - generic:
+                            - generic:
+                              - img
+                            - generic:
+                              - paragraph: Why/How/What positioning
+                              - paragraph: "“Denker AI's positioning direction is: Why = good work starts when intent is captured clearly; How = stay close to workflow and preserve context; What = a context-aware AI workspace…”"
+                              - generic:
+                                - generic: 86%
+                                - generic: session_extraction
+                          - generic:
+                            - generic:
+                              - img
+                            - generic:
+                              - paragraph: Context-aware AI workspace
+                              - paragraph: “Denker AI's product vision is a context-aware AI workspace / agent team that keeps context intact as work moves from intent to execution.”
+                              - generic:
+                                - generic: 82%
+                                - generic: session_extraction
+            - paragraph [ref=e233]: Everything remembered — in a memory graph you can actually see.
+      - generic:
+        - generic:
+          - button "Go to slide 1"
+          - button "Go to slide 2"
+          - button "Go to slide 3"
+          - button "Go to slide 4"
+          - button "Go to slide 5"
+        - button "Play carousel":
+          - img
+    - generic [ref=e236]:
+      - heading "Built for Founders & Product Builders" [level=2] [ref=e237]
+      - generic [ref=e240]:
+        - generic [ref=e243]:
+          - paragraph [ref=e244]: Don't Write Everything Yourself.
+          - paragraph [ref=e245]: Let Denker write, refine, summarize, and even send messages while you stay focused on building.
+        - generic [ref=e248]:
+          - paragraph [ref=e249]: Don't Just Type. Talk.
+          - paragraph [ref=e250]: Use your voice to brainstorm ideas, assign tasks, and collaborate naturally with your AI coworker.
+        - generic [ref=e253]:
+          - paragraph [ref=e254]: AI That Works Where You Work.
+          - paragraph [ref=e255]: Denker understands your screen and helps you without making you switch between apps or copy context.
+        - generic [ref=e258]:
+          - paragraph [ref=e259]: Stop Explaining Yourself.
+          - paragraph [ref=e260]: Denker remembers your context and ongoing work, so every conversation picks up exactly where you left off.
+        - generic [ref=e263]:
+          - paragraph [ref=e264]: Keep Track of Everything.
+          - paragraph [ref=e265]: Denker remembers your ongoing work, conversations, and tasks, so you never lose context.
+      - generic [ref=e267]:
+        - button "Previous" [disabled] [ref=e268]:
+          - img [ref=e269]
+        - button "Next" [ref=e271]:
+          - img [ref=e272]
+    - generic [ref=e276]:
+      - heading "Why Denker AI?" [level=2] [ref=e277]
+      - generic [ref=e280]:
+        - generic [ref=e283]:
+          - paragraph [ref=e284]: Understands Your Screen
+          - paragraph [ref=e285]: Denker understands what's on your screen, giving it the context needed to help without constant explanations.
+        - generic [ref=e288]:
+          - paragraph [ref=e289]: Works Across Your Workflow
+          - paragraph [ref=e290]: From research and planning to documentation and execution, Denker works across the tools you already use.
+        - generic [ref=e293]:
+          - paragraph [ref=e294]: Remembers Your Context
+          - paragraph [ref=e295]: Conversations, ongoing tasks, and workflows stay connected, so you don't have to repeat yourself.
+        - generic [ref=e298]:
+          - paragraph [ref=e299]: Dynamic AI Interfaces
+          - paragraph [ref=e300]: Denker generates interactive interfaces tailored to your task instead of limiting you to plain text responses.
+        - generic [ref=e303]:
+          - paragraph [ref=e304]: Knowledge Graph
+          - paragraph [ref=e305]: Denker builds a living knowledge graph that remembers your conversations, tasks, and context, so you never have to start from scratch.
+      - generic [ref=e307]:
+        - button "Previous" [disabled] [ref=e308]:
+          - img [ref=e309]
+        - button "Next" [ref=e311]:
+          - img [ref=e312]
+    - generic [ref=e315]:
+      - generic [ref=e316]:
+        - heading "Built in Public. Trusted by Builders." [level=2] [ref=e317]
+        - paragraph [ref=e318]: Explore Denker across the platforms where founders and product builders discover, collaborate, and contribute.
+      - generic [ref=e319]:
+        - paragraph [ref=e321]: Google
+        - paragraph [ref=e323]: Gmail
+        - paragraph [ref=e325]: Outlook
+        - paragraph [ref=e327]: Google Calendar
+        - paragraph [ref=e329]: Google Drive
+        - paragraph [ref=e331]: Twitter X
+        - paragraph [ref=e333]: Google Sheet
+        - paragraph [ref=e335]: Notion
+        - paragraph [ref=e337]: Slack
+        - paragraph [ref=e339]: Google Docs
+        - paragraph [ref=e341]: Linear
+        - paragraph [ref=e343]: GitHub
+        - paragraph [ref=e345]: Google Task
+        - paragraph [ref=e347]: Salesforce
+        - paragraph [ref=e349]: More than 500+ integrations are available
+    - generic [ref=e351]:
+      - heading "Loved by Builders" [level=2] [ref=e352]
+      - generic [ref=e355]:
+        - generic [ref=e356]:
+          - figure [ref=e357]:
+            - img [ref=e358]
+            - generic [ref=e359]:
+              - generic [ref=e360]: Amir Mirmehrkar
+              - paragraph [ref=e361]: I am more visual, it hits home.I had chaneges in repeating context. Over and over. Across tools. Across teammates. Every new doc. Every new sprint. Re-explaining the same product assumptions, goals, constraints.
+          - figure [ref=e362]:
+            - img [ref=e363]
+            - generic [ref=e364]:
+              - generic [ref=e365]: Joey Zhu
+              - paragraph [ref=e366]: UI is so good, like an artpiece.
+          - figure [ref=e367]:
+            - img [ref=e368]
+            - generic [ref=e369]:
+              - generic [ref=e370]: Manas Rohilla
+              - paragraph [ref=e371]: This is some crazy product you got 🫡
+          - figure [ref=e372]:
+            - img [ref=e373]
+            - generic [ref=e374]:
+              - generic [ref=e375]: Adefisan Emmanuel
+              - paragraph [ref=e376]: The double-control shortcut for screen captures sounds incredibly smooth, Juan! It completely removes the friction of explaining context to AI agents.
+          - figure [ref=e377]:
+            - img [ref=e378]
+            - generic [ref=e379]:
+              - generic [ref=e380]: Sophie Laurent
+              - paragraph [ref=e381]: The ability to understand what's on my screen and provide context-aware assistance saves me a surprising amount of time every day. It feels less like a chatbot and more like a teammate.
+          - figure [ref=e382]:
+            - img [ref=e383]
+            - generic [ref=e384]:
+              - generic [ref=e385]: Mohammad Ashad
+              - paragraph [ref=e386]: It hits home.
+          - figure [ref=e387]:
+            - img [ref=e388]
+            - generic [ref=e389]:
+              - generic [ref=e390]: Leon Roth
+              - paragraph [ref=e391]: soo powerful!!
+          - figure [ref=e392]:
+            - img [ref=e393]
+            - generic [ref=e394]:
+              - generic [ref=e395]: Daniel Müller
+              - paragraph [ref=e396]: From research and documentation to coordinating tasks across the team, Denker helps us stay focused on building instead of managing repetitive work.
+          - figure [ref=e397]:
+            - img [ref=e398]
+            - generic [ref=e399]:
+              - generic [ref=e400]: Alex Carter
+              - paragraph [ref=e401]: Denker has become part of my daily workflow. Instead of jumping between tools, I can research competitors, summarize content, and move ideas forward from one place.
+          - figure [ref=e402]:
+            - img [ref=e403]
+            - generic [ref=e404]:
+              - generic [ref=e405]: Ahmed Ali
+              - paragraph [ref=e406]: Demo > explanation, always. Tools like this make it easier to show real value instead of just describing it
+        - generic [ref=e407]:
+          - figure "Amir Mirmehrkar I am more visual, it hits home.I had chaneges in repeating context. Over and over. Across tools. Across teammates. Every new doc. Every new sprint. Re-explaining the same product assumptions, goals, constraints." [ref=e408]:
+            - img "Amir Mirmehrkar" [ref=e409]
+            - generic [ref=e410]:
+              - generic [ref=e411]: Amir Mirmehrkar
+              - paragraph [ref=e412]: I am more visual, it hits home.I had chaneges in repeating context. Over and over. Across tools. Across teammates. Every new doc. Every new sprint. Re-explaining the same product assumptions, goals, constraints.
+          - figure "Joey Zhu UI is so good, like an artpiece." [ref=e413]:
+            - img "Joey Zhu" [ref=e414]
+            - generic [ref=e415]:
+              - generic [ref=e416]: Joey Zhu
+              - paragraph [ref=e417]: UI is so good, like an artpiece.
+          - figure "Manas Rohilla This is some crazy product you got 🫡" [ref=e418]:
+            - img "Manas Rohilla" [ref=e419]
+            - generic [ref=e420]:
+              - generic [ref=e421]: Manas Rohilla
+              - paragraph [ref=e422]: This is some crazy product you got 🫡
+          - figure "Adefisan Emmanuel The double-control shortcut for screen captures sounds incredibly smooth, Juan! It completely removes the friction of explaining context to AI agents." [ref=e423]:
+            - img "Adefisan Emmanuel" [ref=e424]
+            - generic [ref=e425]:
+              - generic [ref=e426]: Adefisan Emmanuel
+              - paragraph [ref=e427]: The double-control shortcut for screen captures sounds incredibly smooth, Juan! It completely removes the friction of explaining context to AI agents.
+          - figure "Sophie Laurent The ability to understand what's on my screen and provide context-aware assistance saves me a surprising amount of time every day. It feels less like a chatbot and more like a teammate." [ref=e428]:
+            - img "Sophie Laurent" [ref=e429]
+            - generic [ref=e430]:
+              - generic [ref=e431]: Sophie Laurent
+              - paragraph [ref=e432]: The ability to understand what's on my screen and provide context-aware assistance saves me a surprising amount of time every day. It feels less like a chatbot and more like a teammate.
+          - figure "Mohammad Ashad It hits home." [ref=e433]:
+            - img "Mohammad Ashad" [ref=e434]
+            - generic [ref=e435]:
+              - generic [ref=e436]: Mohammad Ashad
+              - paragraph [ref=e437]: It hits home.
+          - figure "Leon Roth soo powerful!!" [ref=e438]:
+            - img "Leon Roth" [ref=e439]
+            - generic [ref=e440]:
+              - generic [ref=e441]: Leon Roth
+              - paragraph [ref=e442]: soo powerful!!
+          - figure "Daniel Müller From research and documentation to coordinating tasks across the team, Denker helps us stay focused on building instead of managing repetitive work." [ref=e443]:
+            - img "Daniel Müller" [ref=e444]
+            - generic [ref=e445]:
+              - generic [ref=e446]: Daniel Müller
+              - paragraph [ref=e447]: From research and documentation to coordinating tasks across the team, Denker helps us stay focused on building instead of managing repetitive work.
+          - figure "Alex Carter Denker has become part of my daily workflow. Instead of jumping between tools, I can research competitors, summarize content, and move ideas forward from one place." [ref=e448]:
+            - img "Alex Carter" [ref=e449]
+            - generic [ref=e450]:
+              - generic [ref=e451]: Alex Carter
+              - paragraph [ref=e452]: Denker has become part of my daily workflow. Instead of jumping between tools, I can research competitors, summarize content, and move ideas forward from one place.
+          - figure "Ahmed Ali Demo > explanation, always. Tools like this make it easier to show real value instead of just describing it" [ref=e453]:
+            - img "Ahmed Ali" [ref=e454]
+            - generic [ref=e455]:
+              - generic [ref=e456]: Ahmed Ali
+              - paragraph [ref=e457]: Demo > explanation, always. Tools like this make it easier to show real value instead of just describing it
+        - generic [ref=e458]:
+          - figure [ref=e459]:
+            - img [ref=e460]
+            - generic [ref=e461]:
+              - generic [ref=e462]: Amir Mirmehrkar
+              - paragraph [ref=e463]: I am more visual, it hits home.I had chaneges in repeating context. Over and over. Across tools. Across teammates. Every new doc. Every new sprint. Re-explaining the same product assumptions, goals, constraints.
+          - figure [ref=e464]:
+            - img [ref=e465]
+            - generic [ref=e466]:
+              - generic [ref=e467]: Joey Zhu
+              - paragraph [ref=e468]: UI is so good, like an artpiece.
+          - figure [ref=e469]:
+            - img [ref=e470]
+            - generic [ref=e471]:
+              - generic [ref=e472]: Manas Rohilla
+              - paragraph [ref=e473]: This is some crazy product you got 🫡
+          - figure [ref=e474]:
+            - img [ref=e475]
+            - generic [ref=e476]:
+              - generic [ref=e477]: Adefisan Emmanuel
+              - paragraph [ref=e478]: The double-control shortcut for screen captures sounds incredibly smooth, Juan! It completely removes the friction of explaining context to AI agents.
+          - figure [ref=e479]:
+            - img [ref=e480]
+            - generic [ref=e481]:
+              - generic [ref=e482]: Sophie Laurent
+              - paragraph [ref=e483]: The ability to understand what's on my screen and provide context-aware assistance saves me a surprising amount of time every day. It feels less like a chatbot and more like a teammate.
+          - figure [ref=e484]:
+            - img [ref=e485]
+            - generic [ref=e486]:
+              - generic [ref=e487]: Mohammad Ashad
+              - paragraph [ref=e488]: It hits home.
+          - figure [ref=e489]:
+            - img [ref=e490]
+            - generic [ref=e491]:
+              - generic [ref=e492]: Leon Roth
+              - paragraph [ref=e493]: soo powerful!!
+          - figure [ref=e494]:
+            - img [ref=e495]
+            - generic [ref=e496]:
+              - generic [ref=e497]: Daniel Müller
+              - paragraph [ref=e498]: From research and documentation to coordinating tasks across the team, Denker helps us stay focused on building instead of managing repetitive work.
+          - figure [ref=e499]:
+            - img [ref=e500]
+            - generic [ref=e501]:
+              - generic [ref=e502]: Alex Carter
+              - paragraph [ref=e503]: Denker has become part of my daily workflow. Instead of jumping between tools, I can research competitors, summarize content, and move ideas forward from one place.
+          - figure [ref=e504]:
+            - img [ref=e505]
+            - generic [ref=e506]:
+              - generic [ref=e507]: Ahmed Ali
+              - paragraph [ref=e508]: Demo > explanation, always. Tools like this make it easier to show real value instead of just describing it
+      - generic [ref=e510]:
+        - button "Previous" [ref=e511]:
+          - img [ref=e512]
+        - button "Next" [ref=e514]:
+          - img [ref=e515]
+    - generic [ref=e518]:
+      - generic [ref=e519]:
+        - generic [ref=e520]:
+          - heading "More progress. One workspace." [level=2] [ref=e521]
+          - paragraph [ref=e522]: Start free. Pay for what your agents actually need.
+        - generic [ref=e523]:
+          - generic [ref=e524]: Monthly
+          - switch [ref=e525]
+          - generic [ref=e527]: Yearly
+      - generic [ref=e528]:
+        - generic [ref=e529]:
+          - generic [ref=e530]:
+            - generic [ref=e531]:
+              - paragraph [ref=e532]: FREE
+              - generic [ref=e533]:
+                - generic [ref=e534]: €0
+                - generic [ref=e535]: /forever
+            - paragraph [ref=e536]: Try the desktop app. No credit card needed.
+            - list [ref=e538]:
+              - listitem [ref=e539]:
+                - img [ref=e540]
+                - text: 2 projects
+              - listitem [ref=e542]:
+                - img [ref=e543]
+                - text: 5 spaces
+              - listitem [ref=e545]:
+                - img [ref=e546]
+                - text: Basic memory
+              - listitem [ref=e548]:
+                - img [ref=e549]
+                - text: Community support
+            - generic [ref=e551]:
+              - img [ref=e552]
+              - paragraph [ref=e554]: AI tokens not included — requires your own CLI subscription (Claude Code, Codex, or OpenCode)
+          - link "Get Started" [ref=e555] [cursor=pointer]:
+            - /url: https://space.denker.ai/auth/login?intent=desktop&next=https%3A%2F%2Fspace.denker.ai%2Fauth%2Fdesktop-handoff
+        - generic [ref=e556]:
+          - generic [ref=e557]: ● Most Popular ●
+          - generic [ref=e558]:
+            - generic [ref=e559]:
+              - paragraph [ref=e560]: PRO
+              - generic [ref=e562]:
+                - generic [ref=e563]: €19
+                - generic [ref=e564]: / month
+            - paragraph [ref=e565]: Your full team. Unlimited projects. Persistent memory.
+            - list [ref=e567]:
+              - listitem [ref=e568]:
+                - img [ref=e569]
+                - text: Everything in Free, plus
+              - listitem [ref=e571]:
+                - img [ref=e572]
+                - text: Unlimited projects
+              - listitem [ref=e574]:
+                - img [ref=e575]
+                - text: Unlimited spaces
+              - listitem [ref=e577]:
+                - img [ref=e578]
+                - text: Knowledge graph memory
+              - listitem [ref=e580]:
+                - img [ref=e581]
+                - text: Priority support
+          - link "Get Started" [ref=e583] [cursor=pointer]:
+            - /url: https://space.denker.ai/auth/login?intent=desktop&next=https%3A%2F%2Fspace.denker.ai%2Fauth%2Fdesktop-handoff
+        - generic [ref=e584]:
+          - generic [ref=e585]: Coming Soon
+          - generic [ref=e586]:
+            - generic [ref=e587]:
+              - paragraph [ref=e588]: MAX
+              - generic [ref=e589]: TBD
+            - paragraph [ref=e590]: Cloud execution with persistent agents. Coming soon.
+            - list [ref=e592]:
+              - listitem [ref=e593]:
+                - img [ref=e594]
+                - text: Everything in Pro, plus
+              - listitem [ref=e596]:
+                - img [ref=e597]
+                - text: 24/7 cloud execution
+              - listitem [ref=e599]:
+                - img [ref=e600]
+                - text: Unlimited memory
+              - listitem [ref=e602]:
+                - img [ref=e603]
+                - text: Beta features
+          - button "Coming Soon" [disabled] [ref=e605]
+      - generic [ref=e606]:
+        - paragraph [ref=e607]: POWERED BY YOUR CLI SUBSCRIPTION
+        - generic [ref=e608]:
+          - generic [ref=e609]: Claude Code
+          - generic [ref=e610]: Codex
+          - generic [ref=e611]: OpenCode
+          - generic [ref=e612]:
+            - text: OpenRouter
+            - generic [ref=e613]: Coming Soon
+        - paragraph [ref=e614]: All plans include the canvas, real-time agent visibility, and tool connections. Cancel anytime.
+    - generic [ref=e616]:
+      - heading "Frequently Asked Questions" [level=2] [ref=e617]
+      - generic [ref=e618]:
+        - generic [ref=e619]:
+          - button "What is Denker?" [expanded] [ref=e620]:
+            - generic [ref=e621]: What is Denker?
+            - img [ref=e623]
+          - paragraph [ref=e627]: Denker is an AI coworker designed for founders and product builders. It helps you research, analyze, automate, and complete everyday work through natural voice or text interactions.
+        - generic [ref=e629]:
+          - button "How is Denker different from ChatGPT or other AI assistants?" [ref=e630]:
+            - generic [ref=e631]: How is Denker different from ChatGPT or other AI assistants?
+            - img [ref=e633]
+          - paragraph [ref=e635]: Unlike traditional AI assistants that mainly answer questions, Denker is built to help you get work done. It understands context, works across your tools, and assists with research, analysis, and task execution.
+        - generic [ref=e637]:
+          - button "What kind of tasks can Denker help with?" [ref=e638]:
+            - generic [ref=e639]: What kind of tasks can Denker help with?
+            - img [ref=e641]
+          - paragraph [ref=e643]: Denker can help with competitor research, product planning, SEO analysis, documentation, workflow automation, and many other day-to-day tasks that founders and builders perform.
+        - generic [ref=e645]:
+          - button "Can I interact with Denker using voice?" [ref=e646]:
+            - generic [ref=e647]: Can I interact with Denker using voice?
+            - img [ref=e649]
+          - paragraph [ref=e651]: Absolutely. You can communicate with Denker using either voice or text, making it easy to switch between conversations and hands-free workflows.
+        - generic [ref=e653]:
+          - button "Does Denker work with my existing tools?" [ref=e654]:
+            - generic [ref=e655]: Does Denker work with my existing tools?
+            - img [ref=e657]
+          - paragraph [ref=e659]: Yes. Denker integrates with the tools you already use, helping you stay in your existing workflow instead of forcing you to learn a new one.
+        - generic [ref=e661]:
+          - button "Is my data secure?" [ref=e662]:
+            - generic [ref=e663]: Is my data secure?
+            - img [ref=e665]
+          - generic:
+            - generic:
+              - paragraph [ref=e667]: Yes. Your privacy and security are a priority. Denker is designed to work with your tasks while giving you control over your data and permissions. You decide what Denker can access and how it assists your workflow.
+              - link "Learn more at privacy Page" [ref=e668] [cursor=pointer]:
+                - /url: https://www.denker.ai/privacy
+        - generic [ref=e670]:
+          - button "Is Denker free to use?" [ref=e671]:
+            - generic [ref=e672]: Is Denker free to use?
+            - img [ref=e674]
+          - generic:
+            - generic:
+              - paragraph [ref=e676]: Yes. You can get started with Denker for free and explore its core capabilities. As your needs grow, premium plans unlock more advanced features, higher usage limits, and additional integrations.
+              - link "View Pricing Plan" [ref=e677] [cursor=pointer]:
+                - /url: "#pricing"
+        - generic [ref=e679]:
+          - button "How do I get started?" [ref=e680]:
+            - generic [ref=e681]: How do I get started?
+            - img [ref=e683]
+          - generic:
+            - generic:
+              - paragraph [ref=e685]: Getting started is simple. Download Denker, sign in, and start giving tasks using voice or text. Within minutes, Denker is ready to help you research, analyze, and execute work.
+              - link "Download Denker" [ref=e686] [cursor=pointer]:
+                - /url: https://github.com/chauhannikunj1328/Denker-Website/releases/download/v1.0.0/Denker_latest_universal.dmg
+    - generic [ref=e690]:
+      - generic [ref=e691]:
+        - heading "Reach Out" [level=2] [ref=e692]
+        - paragraph [ref=e693]: Find Denker across the platforms where founders and product builders connect — or subscribe for practical founder tips.
+      - generic [ref=e694]:
+        - link "WhatsApp" [ref=e695] [cursor=pointer]:
+          - /url: https://bit.ly/denkerai
+          - img [ref=e696]
+        - link "LinkedIn" [ref=e698] [cursor=pointer]:
+          - /url: https://www.linkedin.com/company/denkerai/
+          - img [ref=e699]
+        - link "X" [ref=e701] [cursor=pointer]:
+          - /url: https://x.com/Denker_AI
+          - img [ref=e702]
+        - link "YouTube" [ref=e704] [cursor=pointer]:
+          - /url: https://www.youtube.com/@DenkerAI
+          - img [ref=e705]
+        - link "TikTok" [ref=e707] [cursor=pointer]:
+          - /url: https://www.tiktok.com/@denkerai
+          - img [ref=e708]
+        - link "Email" [ref=e710] [cursor=pointer]:
+          - /url: mailto:jane@denker.ai
+          - img [ref=e711]
+      - generic [ref=e714]:
+        - textbox "name@company.com" [ref=e715]
+        - button "Join" [ref=e716]
+    - generic [ref=e719]:
+      - generic [ref=e720]:
+        - heading "Built in Public. Trusted by Builders." [level=2] [ref=e721]
+        - paragraph [ref=e722]: Explore Denker across the platforms where founders and product builders discover, collaborate, and contribute.
+      - generic [ref=e723]:
+        - link "Get Started" [ref=e724] [cursor=pointer]:
+          - /url: https://space.denker.ai/auth/login?intent=desktop&next=https%3A%2F%2Fspace.denker.ai%2Fauth%2Fdesktop-handoff
+        - link "Download Denker" [ref=e725] [cursor=pointer]:
+          - /url: https://github.com/chauhannikunj1328/Denker-Website/releases/download/v1.0.0/Denker_latest_universal.dmg
+  - contentinfo [ref=e726]:
+    - generic [ref=e727]:
+      - generic [ref=e728]:
+        - generic [ref=e729]:
+          - img "Denker" [ref=e731]
+          - paragraph [ref=e732]: Work smarter with an AI coworker that researches, analyzes, and executes tasks across your favorite tools. Built for founders and product builders who want to get more done with less effort.
+          - generic [ref=e733]:
+            - link "LinkedIn" [ref=e734] [cursor=pointer]:
+              - /url: https://www.linkedin.com/company/denkerai/
+              - img [ref=e735]
+            - link "X" [ref=e737] [cursor=pointer]:
+              - /url: https://x.com/Denker_AI
+              - img [ref=e738]
+            - link "YouTube" [ref=e740] [cursor=pointer]:
+              - /url: https://www.youtube.com/@DenkerAI
+              - img [ref=e741]
+            - link "TikTok" [ref=e743] [cursor=pointer]:
+              - /url: https://www.tiktok.com/@denkerai
+              - img [ref=e744]
+            - link "WhatsApp" [ref=e746] [cursor=pointer]:
+              - /url: https://bit.ly/denkerai
+              - img [ref=e747]
+            - link "Email" [ref=e749] [cursor=pointer]:
+              - /url: mailto:jane@denker.ai
+              - img [ref=e750]
+        - generic [ref=e752]:
+          - generic [ref=e753]:
+            - paragraph [ref=e754]: Pages
+            - generic [ref=e755]:
+              - link "Home" [ref=e756] [cursor=pointer]:
+                - /url: "#"
+              - link "Features" [ref=e757] [cursor=pointer]:
+                - /url: "#features"
+              - link "Pricing" [ref=e758] [cursor=pointer]:
+                - /url: "#pricing"
+              - link "Docs" [ref=e759] [cursor=pointer]:
+                - /url: https://www.denker.ai/docs
+              - link "Blog" [ref=e760] [cursor=pointer]:
+                - /url: https://www.denker.ai/blog
+              - link "Traction" [ref=e761] [cursor=pointer]:
+                - /url: https://www.denker.ai/traction
+              - link "Community" [ref=e762] [cursor=pointer]:
+                - /url: "#reach-out"
+          - generic [ref=e763]:
+            - paragraph [ref=e764]: Information
+            - generic [ref=e765]:
+              - link "Contact" [ref=e766] [cursor=pointer]:
+                - /url: "#"
+              - link "Privacy" [ref=e767] [cursor=pointer]:
+                - /url: https://www.denker.ai/privacy
+              - link "Terms of use" [ref=e768] [cursor=pointer]:
+                - /url: https://www.denker.ai/terms
+              - link "Cookies" [ref=e769] [cursor=pointer]:
+                - /url: "#"
+      - paragraph [ref=e771]: © 2026 Denker AI. All rights reserved.
+      - paragraph [ref=e772]: Denker
+  - button "Open Next.js Dev Tools" [ref=e778] [cursor=pointer]:
+    - img [ref=e779]
+  - alert [ref=e782]

@@ -1,8 +1,9 @@
 import Image from "next/image";
 import {
-  ChatCircle,
-  Envelope,
+  EnvelopeSimple,
   LinkedinLogo,
+  TiktokLogo,
+  WhatsappLogo,
   XLogo,
   YoutubeLogo,
 } from "@phosphor-icons/react/dist/ssr";
@@ -24,19 +25,21 @@ const infoLinks = [
   { label: "Cookies", href: "#" },
 ];
 
-// Social links — destinations mirror the Reach Out section.
+// Social links — filled brand-colour round buttons, mirroring the Reach Out
+// section (same platforms, order, and destinations).
 const socialLinks = [
-  { label: "LinkedIn", href: "https://www.linkedin.com/company/denkerai/", Icon: LinkedinLogo },
-  { label: "X (Twitter)", href: "https://x.com/Denker_AI", Icon: XLogo },
-  { label: "YouTube", href: "https://www.youtube.com/@DenkerAI", Icon: YoutubeLogo },
-  { label: "Email", href: "mailto:jane@denker.ai", Icon: Envelope },
-  { label: "Message us", href: "#reach-out", Icon: ChatCircle },
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/denkerai/", Icon: LinkedinLogo, color: "#0A66C2" },
+  { label: "X", href: "https://x.com/Denker_AI", Icon: XLogo, color: "#000000" },
+  { label: "YouTube", href: "https://www.youtube.com/@DenkerAI", Icon: YoutubeLogo, color: "#FF0000" },
+  { label: "TikTok", href: "https://www.tiktok.com/@denkerai", Icon: TiktokLogo, color: "#000000" },
+  { label: "WhatsApp", href: "https://bit.ly/denkerai", Icon: WhatsappLogo, color: "#25D366" },
+  { label: "Email", href: "mailto:jane@denker.ai", Icon: EnvelopeSimple, color: "#6E6E73" },
 ];
 
 export function Footer() {
   return (
     <footer
-      className="flex w-full flex-col items-center border-t border-[#E8E8ED] bg-white px-6 pt-8 pb-0 sm:px-10 md:px-20"
+      className="section-tint flex w-full flex-col items-center border-t border-[#E8E8ED] px-6 pt-8 pb-0 sm:px-10 md:px-20"
       data-name="Section - Footer"
       data-theme="light"
     >
@@ -58,8 +61,8 @@ export function Footer() {
               and product builders who want to get more done with less
               effort.
             </p>
-            <div className="flex items-center gap-4">
-              {socialLinks.map(({ label, href, Icon }) => {
+            <div className="flex flex-wrap items-center gap-2.5">
+              {socialLinks.map(({ label, href, Icon, color }) => {
                 const external = href.startsWith("http");
                 return (
                   <a
@@ -68,9 +71,10 @@ export function Footer() {
                     aria-label={label}
                     target={external ? "_blank" : undefined}
                     rel={external ? "noopener noreferrer" : undefined}
-                    className="text-grey-950 transition-colors hover:text-primary-600"
+                    style={{ backgroundColor: color }}
+                    className="flex size-10 items-center justify-center rounded-full text-white transition-[transform,box-shadow] hover:-translate-y-0.5 hover:shadow-md"
                   >
-                    <Icon weight="regular" size={24} />
+                    <Icon weight="fill" className="size-[18px]" />
                   </a>
                 );
               })}
@@ -131,7 +135,7 @@ export function Footer() {
             of the glyphs. */}
         <p
           aria-hidden
-          className="h-[0.7em] w-full overflow-hidden text-center font-heading text-[29.83cqw] leading-none font-bold whitespace-nowrap text-grey-50 select-none"
+          className="h-[0.7em] w-full overflow-hidden text-center font-heading text-[29.83cqw] leading-none font-bold whitespace-nowrap text-white select-none"
         >
           Denker
         </p>

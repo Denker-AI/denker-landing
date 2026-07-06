@@ -649,6 +649,102 @@ body {
     0 8px 28px rgba(0, 0, 0, 0.42);
 }
 
+/* Side composition (Apple pattern) — desktop/tablet only, summary slide
+   (id 1) only. The Tailwind utilities on the <p> center it top-and-wide by
+   default (data-copy-layout="centered"); this variant moves the copy into
+   the empty top-right region instead of overlapping the tall left browser
+   in the slide's side-composed layout (see .what-denker-summary-browser /
+   .what-denker-summary-frame above). Mobile always keeps the centered
+   treatment (data-copy-layout is only "side" on slide id 1, and this rule
+   is gated to >=768px). Only overrides position/width/alignment — the
+   Tailwind `translate-y-0` / `-translate-y-2` utilities (native CSS
+   `translate` property) keep driving the active/inactive fade untouched;
+   `left`/`right` here simply replace the default `left-1/2` centering. */
+@media (min-width: 768px) {
+  .what-denker-feature-copy[data-copy-layout="side"] {
+    top: 10%;
+    left: 60%;
+    right: 4%;
+    width: auto;
+    max-width: 36%;
+    text-align: left;
+  }
+}
+
+/* ── visionOS gallery cards (unequal-width) ──────────────────────────────
+   Apple's LIVE visionOS "spatial experiences" gallery is not uniform: tiles
+   share one HEIGHT per breakpoint but each card carries its own WIDTH, so the
+   row reads wide → narrow → wide. Width comes from the --gcard-w-* custom
+   properties set inline by galleryWidthVars(); height is the fixed ladder
+   below (316 → 416 → 452). Each foreground UI is authored at its own desktop
+   design width and scaled as one unit by --gallery-fg-scale (tied to tile
+   height), so proportions and text read identically across breakpoints while
+   only the cropped background area changes. */
+.gallery-card {
+  --gallery-fg-scale: 0.6;
+  width: var(--gcard-w-mobile, min(260px, calc(100vw - 72px)));
+}
+
+.gallery-card-tile {
+  width: 100%;
+  height: 316px;
+  background: #0b1715;
+  isolation: isolate;
+}
+
+/* Gentle edge darkening for depth — much lighter than the motion section's
+   .what-denker-photo-vignette (which is tuned for overlaid white captions);
+   here the caption sits below the tile and the foreground is a bright panel. */
+.gallery-card-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  background:
+    radial-gradient(125% 90% at 50% 42%, transparent 46%, rgba(0, 0, 0, 0.22) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0%, transparent 22%);
+}
+
+/* Flex-centre the foreground so components of different natural widths (a wide
+   report vs. a narrow voice picker) all sit centred; the child is scaled as a
+   unit rather than the container forcing a single design width. */
+.gallery-card-foreground {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.gallery-card-foreground > * {
+  flex: none;
+  transform: scale(var(--gallery-fg-scale));
+  transform-origin: center center;
+}
+
+/* Tablet (Apple tile height 416) */
+@media (min-width: 734px) {
+  .gallery-card {
+    --gallery-fg-scale: 0.88;
+    width: var(--gcard-w-tablet, 644px);
+  }
+  .gallery-card-tile {
+    height: 416px;
+  }
+}
+
+/* Desktop (Apple tile height 452) */
+@media (min-width: 1120px) {
+  .gallery-card {
+    --gallery-fg-scale: 1;
+    width: var(--gcard-w-desktop, 696px);
+  }
+  .gallery-card-tile {
+    height: 452px;
+  }
+}
+
 .what-denker-motion-layer {
   position: absolute;
   inset: 0;
@@ -682,7 +778,8 @@ body {
 }
 
 .what-denker-motion-browser {
-  top: 17%;
+  /* Shared stage: component top aligned to 20% across all slides. */
+  top: 20%;
   width: min(690px, calc(100% - 112px));
   aspect-ratio: 16 / 9;
   transform-origin: 50% 40%;
@@ -1076,21 +1173,26 @@ body {
 }
 
 .what-denker-summary-browser {
-  top: 8%;
+  /* Side composition (Apple pattern): browser stays tall and left; the
+     side copy for this slide occupies the empty top-right instead of
+     overlapping this frame (see [data-copy-layout="side"] in
+     WhatDenkerCanDo.tsx). */
+  top: 10%;
   left: 4.5%;
   z-index: 2;
   width: min(620px, 53%);
-  height: min(660px, 90%);
+  height: min(660px, 84%);
   transform-origin: 42% 45%;
   animation-name: what-denker-summary-browser;
 }
 
 .what-denker-summary-frame {
-  top: 19%;
-  right: 4.5%;
+  /* Right column, sitting below the side copy block. */
+  top: 26%;
+  right: 4%;
   z-index: 4;
-  width: min(450px, 39%);
-  height: min(430px, 59%);
+  width: min(450px, 36%);
+  height: min(430px, 58%);
   overflow: hidden;
   color: #111113;
   transform-origin: 70% 38%;
@@ -1151,11 +1253,13 @@ body {
 
 .what-denker-gmail-browser {
   position: absolute;
-  top: 18%;
+  /* Shared stage: top 20%, shrunk from 88%->80% width so it no longer
+     reads oversized vs. its sibling slides. */
+  top: 20%;
   left: 50%;
   z-index: 3;
-  width: min(920px, 88%);
-  height: min(560px, 76%);
+  width: min(920px, 80%);
+  height: min(560px, 66%);
   transform-origin: 50% 44%;
   animation: what-denker-gmail-browser var(--motion-cycle) cubic-bezier(0.22, 1, 0.36, 1) 1 both;
   animation-play-state: var(--motion-play-state);
@@ -2475,13 +2579,17 @@ body {
 
 .what-denker-memory-shell {
   position: absolute;
-  top: 50%;
+  /* Center-anchored box: top-edge = top% - height%/2. Shared stage wants
+     top-edge 20% / bottom-edge 82% at height 62%, so the center sits at
+     51% (not 50%) — see .what-denker-memory-panel-wrap below, which must
+     match so the two stay aligned. */
+  top: 51%;
   left: 6%;
   z-index: 18;
   display: flex;
   flex-direction: column;
   width: min(620px, 62%);
-  height: min(430px, 60%);
+  height: min(430px, 62%);
   transform: translateY(-50%) scale(0.97);
   opacity: 0;
   animation: memory-shell-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -2603,11 +2711,13 @@ body {
    widths). */
 .what-denker-memory-panel-wrap {
   position: absolute;
-  top: 50%;
+  /* Matches .what-denker-memory-shell's center-anchoring (top: 51% at
+     height 62% -> top-edge 20%, bottom-edge 82%). */
+  top: 51%;
   right: 6%;
   z-index: 19;
   width: min(300px, 28%);
-  height: min(430px, 60%);
+  height: min(430px, 62%);
   border-radius: var(--radius-frame);
   overflow: hidden;
   transform: translateY(-50%);
@@ -2722,9 +2832,12 @@ body {
 
 @media (max-width: 767px) {
   .what-denker-motion-browser {
-    top: 18%;
+    /* Mobile shared stage: top 22% (below the taller mobile copy band).
+       Explicit height (not aspect-ratio) so it lands at the shared
+       bottom band instead of wherever 4:3 happens to land. */
+    top: 22%;
     width: min(560px, calc(100% - 28px));
-    aspect-ratio: 4 / 3;
+    height: 50%;
   }
 
   .what-denker-website-surface {
@@ -2806,17 +2919,21 @@ body {
   }
 
   .what-denker-summary-browser {
-    top: 14%;
+    /* Mobile: side composition reverts to the shared centered-copy stage
+       (top 22%) like every other slide. */
+    top: 22%;
     left: 4%;
     width: 88%;
-    height: 78%;
+    height: 58%;
   }
 
   .what-denker-summary-frame {
-    top: 40%;
+    /* Stacked below the browser (kept from the original stacked look),
+       aligned to the shared bottom band. */
+    top: 48%;
     right: 5%;
     width: 82%;
-    height: 45%;
+    height: 40%;
     border-radius: 16px;
   }
 
@@ -2835,9 +2952,9 @@ body {
   }
 
   .what-denker-gmail-browser {
-    top: 23%;
+    top: 22%;
     width: 90%;
-    height: 72%;
+    height: 64%;
   }
 
   .what-denker-gmail-bubble-paste {
@@ -4534,6 +4651,23 @@ body {
   animation: none;
 }
 
+.hero-production-final-cursor {
+  position: absolute;
+  top: 392px;
+  left: 690px;
+  z-index: 6;
+  filter: drop-shadow(0 18px 38px rgba(0, 0, 0, 0.55));
+  transform: translateZ(88px) scale(0.92);
+  transform-origin: top left;
+}
+
+.hero-production-final-cursor .hero-production-final-cursor-bubble {
+  position: static;
+  transform: none;
+  animation: none;
+  opacity: 1;
+}
+
 .hero-production-final-voice
   .hero-production-voice-glass
   [data-testid="voice-control-group"] {
@@ -5888,7 +6022,9 @@ body {
   --taskboard-column-gap: 6px;
   --taskboard-column-width: calc((100% - (var(--taskboard-padding) * 2) - (var(--taskboard-column-gap) * 5)) / 6);
   position: absolute;
-  top: 25%;
+  /* Shared stage: top 20% (was 25% — started too low), height grown to
+     62% so the bottom lands with the rest of the slides (~82%). */
+  top: 20%;
   left: 50%;
   z-index: 18;
   display: flex;
@@ -5897,7 +6033,7 @@ body {
      beats the flex-1 split, the board clips on the right, and the
      --taskboard-column-width calc above stops matching the real layout. */
   width: min(800px, 84%);
-  height: min(430px, 58%);
+  height: min(430px, 62%);
   max-height: none;
   min-height: 0;
   flex-direction: column;
@@ -6111,11 +6247,12 @@ body {
 
 @media (max-width: 767px) {
   .what-denker-taskboard-shell {
-    top: 27%;
+    /* Mobile shared stage: top 22%, explicit height 56% (grown from the
+       old 4:3-aspect-derived ~44% — it read too small vs. its siblings). */
+    top: 22%;
     width: min(360px, calc(100% - 44px));
-    height: auto;
-    max-height: 62%;
-    aspect-ratio: 4 / 3;
+    height: 56%;
+    max-height: none;
     border-radius: 15px;
   }
 

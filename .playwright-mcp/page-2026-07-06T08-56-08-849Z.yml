@@ -1,0 +1,762 @@
+- generic [active] [ref=e1]:
+  - complementary "Choose country or region" [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]: Wähle ein anderes Land oder eine andere Region, um Inhalte für deinen Standort zu sehen und online einzukaufen.
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - button " Deutschland " [ref=e7]:
+            - generic [ref=e8]:
+              - generic [ref=e9]: 
+              - generic [ref=e10]: Deutschland
+            - text: 
+          - text: 
+        - button "Weiter" [ref=e11] [cursor=pointer]
+        - button "Auswahlmenü für Land oder Region schließen" [ref=e12] [cursor=pointer]:
+          - img [ref=e13]
+  - navigation "Global" [ref=e17]:
+    - list [ref=e19]:
+      - listitem [ref=e20]:
+        - link "Apple" [ref=e21] [cursor=pointer]:
+          - /url: /
+          - generic:
+            - img
+          - generic: Apple
+      - listitem [ref=e22]:
+        - generic [ref=e24]:
+          - list [ref=e26]:
+            - listitem [ref=e27]:
+              - link "Store" [ref=e28] [cursor=pointer]:
+                - /url: /us/shop/goto/store
+                - generic [ref=e29]:
+                  - generic:
+                    - img
+                  - generic: Store
+            - listitem:
+              - button "Store menu":
+                - generic:
+                  - img
+          - list [ref=e31]:
+            - listitem [ref=e32]:
+              - link "Mac" [ref=e33] [cursor=pointer]:
+                - /url: /mac/
+                - generic [ref=e34]:
+                  - generic:
+                    - img
+                  - generic: Mac
+            - listitem:
+              - button "Mac menu":
+                - generic:
+                  - img
+          - list [ref=e36]:
+            - listitem [ref=e37]:
+              - link "iPad" [ref=e38] [cursor=pointer]:
+                - /url: /ipad/
+                - generic [ref=e39]:
+                  - generic:
+                    - img
+                  - generic: iPad
+            - listitem:
+              - button "iPad menu":
+                - generic:
+                  - img
+          - list [ref=e41]:
+            - listitem [ref=e42]:
+              - link "iPhone" [ref=e43] [cursor=pointer]:
+                - /url: /iphone/
+                - generic [ref=e44]:
+                  - generic:
+                    - img
+                  - generic: iPhone
+            - listitem:
+              - button "iPhone menu":
+                - generic:
+                  - img
+          - list [ref=e46]:
+            - listitem [ref=e47]:
+              - link "Watch" [ref=e48] [cursor=pointer]:
+                - /url: /watch/
+                - generic [ref=e49]:
+                  - generic:
+                    - img
+                  - generic: Watch
+            - listitem:
+              - button "Watch menu":
+                - generic:
+                  - img
+          - list [ref=e51]:
+            - listitem [ref=e52]:
+              - link "Vision" [ref=e53] [cursor=pointer]:
+                - /url: /apple-vision-pro/
+                - generic [ref=e54]:
+                  - generic:
+                    - img
+                  - generic: Vision
+            - listitem:
+              - button "Vision menu":
+                - generic:
+                  - img
+          - list [ref=e56]:
+            - listitem [ref=e57]:
+              - link "AirPods" [ref=e58] [cursor=pointer]:
+                - /url: /airpods/
+                - generic [ref=e59]:
+                  - generic:
+                    - img
+                  - generic: AirPods
+            - listitem:
+              - button "AirPods menu":
+                - generic:
+                  - img
+          - list [ref=e61]:
+            - listitem [ref=e62]:
+              - link "TV and Home" [ref=e63] [cursor=pointer]:
+                - /url: /tv-home/
+                - generic [ref=e64]:
+                  - generic:
+                    - img
+                  - generic: TV & Home
+            - listitem:
+              - button "TV and Home menu":
+                - generic:
+                  - img
+          - list [ref=e66]:
+            - listitem [ref=e67]:
+              - link "Entertainment" [ref=e68] [cursor=pointer]:
+                - /url: /entertainment/
+                - generic [ref=e69]:
+                  - generic:
+                    - img
+                  - generic: Entertainment
+            - listitem:
+              - button "Entertainment menu":
+                - generic:
+                  - img
+          - list [ref=e71]:
+            - listitem [ref=e72]:
+              - link "Accessories" [ref=e73] [cursor=pointer]:
+                - /url: /us/shop/goto/buy_accessories
+                - generic [ref=e74]:
+                  - generic:
+                    - img
+                  - generic: Accessories
+            - listitem:
+              - button "Accessories menu":
+                - generic:
+                  - img
+          - list [ref=e76]:
+            - listitem [ref=e77]:
+              - link "Support" [ref=e78] [cursor=pointer]:
+                - /url: https://support.apple.com/?cid=gn-ols-home-hp-tab
+                - generic [ref=e79]:
+                  - generic:
+                    - img
+                  - generic: Support
+            - listitem:
+              - button "Support menu":
+                - generic:
+                  - img
+      - listitem [ref=e80]:
+        - button "Search apple.com" [ref=e81] [cursor=pointer]:
+          - generic:
+            - img
+      - listitem [ref=e82]:
+        - button "Shopping Bag" [ref=e84] [cursor=pointer]:
+          - generic:
+            - img
+  - navigation "Local":
+    - generic [ref=e86]:
+      - list [ref=e87]:
+        - listitem [ref=e88]:
+          - link "Overview" [ref=e89] [cursor=pointer]:
+            - /url: /os/?version=no-hero
+            - generic [ref=e90]: Overview
+        - listitem [ref=e91]:
+          - link "iOS" [ref=e92] [cursor=pointer]:
+            - /url: /os/ios/?version=no-hero
+            - generic [ref=e93]: iOS
+        - listitem [ref=e94]:
+          - link "macOS" [ref=e95] [cursor=pointer]:
+            - /url: /os/macos/?version=no-hero
+            - generic [ref=e96]: macOS
+        - listitem [ref=e97]:
+          - link "iPadOS" [ref=e98] [cursor=pointer]:
+            - /url: /os/ipados/?version=no-hero
+            - generic [ref=e99]: iPadOS
+        - listitem [ref=e100]:
+          - link "watchOS" [ref=e101] [cursor=pointer]:
+            - /url: /os/watchos/?version=no-hero
+            - generic [ref=e102]: watchOS
+        - listitem [ref=e103]:
+          - link "visionOS" [disabled] [ref=e104]:
+            - generic [ref=e105]: visionOS
+        - listitem [ref=e106]:
+          - link "Apple Intelligence" [ref=e107] [cursor=pointer]:
+            - /url: /apple-intelligence/
+            - img [ref=e109]
+            - generic [ref=e111]: Apple Intelligence
+      - generic:
+        - button [disabled]
+        - button [disabled]
+  - main [ref=e112]:
+    - generic [ref=e113]:
+      - img "A multicolor glowing wave appears on the screen and is replaced by Siri AI responses to queries on five products, including iPhone 17 Pro, Deep Blue, showing a Siri AI-generated calendar update, Apple Vision Pro, showing Siri focusing on an item in a living room in response to user's visual focus, Apple Watch Series 11, 46mm Space Gray, showing Siri glowing with rotating lights, MacBook Pro 14-inch, Space Black, showing a Visual Intelligence demo featuring a screenshot of olive focaccia from an email and query for Siri about the image, and iPad Pro 11, Space Black, showing the Siri app displaying an active Siri AI conversation and previous conversations in sidebar, finally animation returns to iPhone and zooms out to show all products featuring Siri and the relevant content" [ref=e116]
+      - generic [ref=e119]:
+        - button
+    - generic [ref=e120]:
+      - heading "Explore what’s new for visionOS 27." [level=2] [ref=e123]
+      - generic [ref=e124]:
+        - generic [ref=e125]:
+          - button "Play explore what’s new for visionOS gallery" [ref=e129] [cursor=pointer]:
+            - img [ref=e131]
+          - tablist "Highlights tablist" [ref=e137]:
+            - link "New Siri AI":
+              - /url: "#highlights-gallery-item-1"
+              - generic: New Siri AI
+            - link "Visual Intelligence" [ref=e138] [cursor=pointer]:
+              - /url: "#highlights-gallery-item-2"
+              - generic [ref=e139]: Visual Intelligence
+            - link "Next-generation Apple Intelligence" [ref=e140] [cursor=pointer]:
+              - /url: "#highlights-gallery-item-3"
+              - generic [ref=e141]: Next-generation Apple Intelligence
+            - link "Siri app" [ref=e142] [cursor=pointer]:
+              - /url: "#highlights-gallery-item-4"
+              - generic [ref=e143]: Siri app
+            - link "Spatial Mac previewing" [ref=e144] [cursor=pointer]:
+              - /url: "#highlights-gallery-item-5"
+              - generic [ref=e145]: Spatial Mac previewing
+            - link "Spatial scene panorama" [ref=e146] [cursor=pointer]:
+              - /url: "#highlights-gallery-item-6"
+              - generic [ref=e147]: Spatial scene panorama
+        - list [ref=e150] [cursor=pointer]:
+          - listitem [ref=e151]:
+            - generic [ref=e152]:
+              - paragraph [ref=e153]:
+                - text: New Siri AI. An even more capable AI assistant with expanded intelligence to be more helpful every day.
+                - superscript [ref=e154]:
+                  - link "Footnote 1" [ref=e155]:
+                    - /url: "#footnote-1"
+                    - text: "1"
+              - img "Animation of Apple Vision Pro being used in a living room, Messages conversation open to the left, Siri hovering over a bar counter in front of the user, Siri lights up to process a query and generates an answer in a window above itself" [ref=e157]
+          - listitem [ref=e160]:
+            - generic [ref=e161]:
+              - paragraph [ref=e162]:
+                - text: Visual Intelligence on Apple Vision Pro lets you ask Siri about virtually anything just by looking at it.
+                - superscript [ref=e163]:
+                  - link "Footnote 2" [ref=e164]:
+                    - /url: "#footnote-2"
+                    - text: "2"
+              - img "Animation of Apple Vision Pro view, Siri shines with rotating lights then moves down in the field as a conversation with Siri about hiking boots fitting in a backpack opens above it, the conversation hovers to the left of a pair of hiking boots and other outdoor gear" [ref=e166]
+          - listitem [ref=e169]:
+            - generic [ref=e170]:
+              - paragraph [ref=e171]:
+                - text: Next-generation Apple Intelligence enhances the apps you use most.
+                - superscript [ref=e172]:
+                  - link "Footnote 3" [ref=e173]:
+                    - /url: "#footnote-3"
+                    - text: "3"
+              - 'img "Apple Vision Pro view of Image Playground being used, image of yellow cabin on top of hill being modified, prompt below image reads: Describe a change" [ref=e176]'
+          - listitem [ref=e177]:
+            - generic [ref=e178]:
+              - paragraph [ref=e179]: All-new Siri app. All your conversations with Siri AI — all in one place.
+              - img "Animation of Apple Vision Pro view of several round app icons, icons disappear and several conversations with Siri take their place, one of these is expanded to show an active query for Siri and a response" [ref=e181]
+          - listitem [ref=e184]:
+            - generic [ref=e185]:
+              - paragraph [ref=e186]: Bring 3D models from Mac into your space to preview and edit them.
+              - img "Animation of Apple Vision Pro view, MacBook Pro sits on a surface with 3D models projected behind it, models show a cafe service counter with two people standing behind it, as the models move down, the color of the tile behind the counter changes" [ref=e188]
+          - listitem [ref=e191]:
+            - generic [ref=e192]:
+              - paragraph [ref=e193]: Turn your panorama into a spatial scene and set it as your new personal Environment.
+              - img "Animation of a person wearing Apple Vision Pro, they step toward a curved panorama of rocky green cliffs with a stream cutting through them and blue sky stretching beyond the cliffs" [ref=e195]
+    - generic [ref=e198]:
+      - generic [ref=e201]:
+        - heading "Siri AI on Apple Vision Pro" [level=2] [ref=e202]
+        - paragraph [ref=e203]:
+          - text: Your AI assistant.
+          - text: More personal. More powerful.
+        - paragraph [ref=e205]:
+          - text: Siri AI is powered by Apple Intelligence and more helpful than ever.
+          - superscript [ref=e206]:
+            - link "Footnote 1" [ref=e207] [cursor=pointer]:
+              - /url: "#footnote-1"
+              - text: "1"
+          - text: Get more done and express your creativity in new ways with richer answers, natural conversations, and a new, dedicated app.
+        - generic [ref=e209]: Siri AI coming in English later this year.
+      - list "Siri AI gallery" [ref=e213]:
+        - listitem [ref=e214]:
+          - generic [ref=e215]:
+            - heading "Just ask Siri AI." [level=3] [ref=e216]
+            - paragraph [ref=e217]: Powered by Apple Intelligence, Siri AI is your conversational AI assistant with entirely new capabilities on Apple Vision Pro. Brainstorm vacations, explore new spatial experiences, and engage in natural, back-and-forth conversations. You can pin a visualization of Siri anywhere in your space and speak to Siri just by looking at it.
+          - img "Apple Vision Pro view of a report on the left and a query for Siri with responses on the right" [ref=e221]
+        - listitem [ref=e222]:
+          - generic [ref=e223]:
+            - heading "Siri understands your personal context." [level=3] [ref=e224]
+            - paragraph [ref=e225]: Siri AI can find relevant answers to what you’re looking for just by asking. Search for a photo from years ago to turn it into a spatial scene, ask Siri to suggest the perfect Environment to unwind in, or pull up an article you started reading on another Apple device.
+          - img "Query for Siri AI to retrieve recent vacation photos, text overlays photo grid" [ref=e229]
+        - listitem [ref=e230]:
+          - generic [ref=e231]:
+            - heading "Take action in more apps." [level=3] [ref=e232]
+            - paragraph [ref=e233]: Siri AI can take actions in apps like Messages, Music, Reminders, and more based on what you’re doing in the moment. Quickly edit a message you just sent or summarize an article you have open in Safari.
+          - img "Screen with Siri AI requests for actions in several apps" [ref=e237]
+        - listitem [ref=e238]:
+          - generic [ref=e239]:
+            - heading "Tap into broad world knowledge." [level=3] [ref=e240]
+            - paragraph [ref=e241]: Ask about virtually any topic that’s on your mind, from trivia about the movie you’re watching to live sports stats and spatial game recommendations. Siri AI can reference information online to give you detailed, up-to-date insights.
+          - img "Screen with starry night sky and overlay of text of query to Siri AI, Siri, why do stars twinkle in the sky?" [ref=e245]
+        - listitem [ref=e246]:
+          - generic [ref=e247]:
+            - heading "Introducing the Siri app." [level=3] [ref=e248]
+            - paragraph [ref=e249]: A dedicated app brings together all your conversations in one place, so you can ask a question on your iPhone and pick up where you left off in your Apple Vision Pro. You can also pin conversations for easy access or start a new one.
+          - img "Siri app windows on a screen show multiple topics with a Search box above them" [ref=e253]
+        - listitem [ref=e254]:
+          - generic [ref=e255]:
+            - heading "Ask Siri about anything you see." [level=3] [ref=e256]
+            - paragraph [ref=e257]:
+              - text: When you’re wearing Apple Vision Pro, Siri sees what you see. Use Visual Intelligence to learn more about anything in your physical or digital space and take action instantly.
+              - superscript [ref=e258]:
+                - link "Footnote 2" [ref=e259] [cursor=pointer]:
+                  - /url: "#footnote-2"
+                  - text: "2"
+          - img "Answer to a query for Siri about packing camping essentials hovers above Siri Orb on left side of screen, hiking boots, ropes, backpack, water bottle, and head lamp sit on table on right side of screen" [ref=e263]
+        - listitem [ref=e264]:
+          - generic [ref=e265]:
+            - heading "Write with Siri virtually anywhere you type." [level=3] [ref=e266]
+            - paragraph [ref=e267]: Siri AI can now generate a draft from scratch or provide feedback on what you’ve written. Just describe what you need in your own words.
+          - img "Apple Vision Pro view, a document regarding photography practices is open and Siri writing prompts hover to the side of it, prompts include Proofread, Rewrite, and How does this sound?" [ref=e271]
+        - listitem [ref=e272]:
+          - generic [ref=e273]:
+            - heading "Customize how Siri sounds." [level=3] [ref=e274]
+            - paragraph [ref=e275]:
+              - text: Pick a voice, then customize expressivity and pace until it clicks for you.
+              - superscript [ref=e276]:
+                - link "Footnote 4" [ref=e277] [cursor=pointer]:
+                  - /url: "#footnote-4"
+                  - text: "4"
+          - 'img "Characteristics of voice written against a black background, text reads: Pitch, speed, tone, accent" [ref=e281]'
+    - generic [ref=e282]:
+      - generic [ref=e285]:
+        - heading "Apple Intelligence in apps" [level=2] [ref=e286]
+        - paragraph [ref=e287]: Helpful in all the right places.
+        - paragraph [ref=e289]:
+          - text: Express yourself through images, save time with Safari, and get more done with Apple Intelligence seamlessly integrated into your everyday apps and experiences.
+          - superscript [ref=e290]:
+            - link "Footnote 3" [ref=e291] [cursor=pointer]:
+              - /url: "#footnote-3"
+              - text: "3"
+      - list "Apple Intelligence gallery" [ref=e295]:
+        - listitem [ref=e296]:
+          - generic [ref=e297]:
+            - heading "Safari works smarter for you." [level=3] [ref=e298]
+            - paragraph [ref=e299]: Now your bookmarks and Reading List can be automatically grouped into topics, so related pages are easier to find.
+          - img "Apple Vision Pro with Safari open, Reading List grouped by topics visible" [ref=e303]
+        - listitem [ref=e304]:
+          - generic [ref=e305]:
+            - heading "Fix passwords with a tap." [level=3] [ref=e306]
+            - paragraph [ref=e307]: The Passwords app alerts you to security issues and can update weak or compromised passwords for you without the hassle.
+          - img "Screen showing password fix feature for five passwords with examples of status, including security upgraded and signing in" [ref=e311]
+        - listitem [ref=e312]:
+          - generic [ref=e313]:
+            - heading "Express more with Image Playground." [level=3] [ref=e314]
+            - paragraph [ref=e315]: Create unique, high-quality images in just about any style, including photorealistic. Modify and transform your images by typing or talking for endless possibilities.
+          - img "Gallery of images in a range of styles created with Image Playground." [ref=e319]
+    - generic [ref=e320]:
+      - generic [ref=e323]:
+        - heading "Spatial experiences" [level=2] [ref=e324]
+        - paragraph [ref=e325]: Give what you love even more space.
+        - paragraph [ref=e327]: Explore new ways to immerse yourself in your apps and content. And transform your space with stunning Environments.
+      - list "Spatial experiences gallery" [ref=e331]:
+        - listitem [ref=e332]:
+          - generic [ref=e333]:
+            - heading "Turn panoramas into spatial scenes." [level=3] [ref=e334]
+            - paragraph [ref=e335]: Turn your panoramas into spatial scenes with rich depth and realism. Use them as your Environment to step back into your favorite moments anytime.
+          - generic [ref=e337]:
+            - img "Animation of a person wearing Apple Vision Pro, they step toward a curved panorama of rocky green cliffs with a stream cutting through them and blue sky stretching beyond the cliffs" [ref=e338]
+            - generic [ref=e341]:
+              - button
+        - listitem [ref=e342]:
+          - generic [ref=e343]:
+            - heading "New curved windows." [level=3] [ref=e344]
+            - paragraph [ref=e345]: Windows with curvature let you comfortably see more content. Now your favorite apps, including Safari, Freeform, and Multiview on Apple TV, wrap around you so everything has room to breathe.
+          - generic [ref=e347]:
+            - img "Apple Vision Pro view of a curved Safari window about hotels, additional curved windows appear on either side, the view rotates to the right to bring new curved windows into view" [ref=e348]
+            - generic [ref=e351]:
+              - button
+        - listitem [ref=e352]:
+          - generic [ref=e353]:
+            - heading "Spatially preview your Mac." [level=3] [ref=e354]
+            - paragraph [ref=e355]: Preview and edit 3D models from your Mac directly in your space. Bring designs from Mac Virtual Display into the world around you to refine materials, adjust colors, and make intricate edits in real time.
+          - img "Apple Vision Pro view, MacBook Pro sits on a surface with 3D models projected behind it, models show a cafe service counter with two people standing behind it" [ref=e359]
+        - listitem [ref=e360]:
+          - generic [ref=e361]:
+            - heading "Quick Look updates." [level=3] [ref=e362]
+            - paragraph [ref=e363]: New Quick Look enhancements let you override materials to view wireframes and UV maps. You can also add annotations directly to your 3D models, keeping you and your team in sync on the latest feedback.
+          - img "Apple Vision Pro view showing a Quick Look notification window referencing a USDZ file of a chair, a wireframe of a chair is visible behind the window" [ref=e367]
+        - listitem [ref=e368]:
+          - generic [ref=e369]:
+            - heading "New Environment — Thórsmörk." [level=3] [ref=e370]
+            - paragraph [ref=e371]: Transform your space into an Icelandic aurora, featuring dynamic, shifting hues.
+          - img "Apple Vision Pro view of an Icelandic Environment, snowy mountains and the Northern Lights sit against a dark background" [ref=e375]
+    - generic [ref=e376]:
+      - generic [ref=e379]:
+        - heading "OS improvements" [level=2] [ref=e380]
+        - paragraph [ref=e381]: Every little detail makes it all delightful.
+        - paragraph [ref=e383]: Discover tons of refinements that make your Apple Vision Pro even more responsive, reliable, and delightful to use.
+      - list "OS improvements gallery" [ref=e387]:
+        - listitem [ref=e388]:
+          - generic [ref=e389]:
+            - heading "Expand notifications with your eyes." [level=3] [ref=e390]
+            - paragraph [ref=e391]: Quickly preview your notifications just by using your eyes. Simply look at a notification when it appears to expand it and take further action.
+          - generic [ref=e393]:
+            - img "Apple Vision Pro view of a photography still of a bouquet against a dark background, as the view zooms out, an iMessage conversation appears over the photograph, and text preview and a QWERTY keyboard appears at the bottom of the view" [ref=e394]
+            - generic [ref=e397]:
+              - button
+        - listitem [ref=e398]:
+          - generic [ref=e399]:
+            - heading "New look for Control Center." [level=3] [ref=e400]
+            - paragraph [ref=e401]: Your most important controls are now easier to access. Notifications and playback, core controls, and Environments are organized into three distinct areas, so you can find exactly what you need at a glance.
+          - img "Apple Vision Pro view with three windows open, left to right, Date and Time with media player control, Connectivity controls, and display settings" [ref=e405]
+        - listitem [ref=e406]:
+          - generic [ref=e407]:
+            - heading "Faster Wi‑Fi connection." [level=3] [ref=e408]
+            - paragraph [ref=e409]:
+              - text: Apple Vision Pro now starts and connects to Wi‑Fi up to three times faster, so you can step into your favorite content the moment you put it on.
+              - superscript [ref=e410]:
+                - link "Footnote 5" [ref=e411] [cursor=pointer]:
+                  - /url: "#footnote-5"
+                  - text: "5"
+          - img "Blue Wi-Fi icon with a blue streak behind it signifying faster connection" [ref=e415]
+    - generic [ref=e417]:
+      - heading "visionOS 27 features And so much more." [level=2] [ref=e419]:
+        - generic [ref=e420]: visionOS 27 features
+        - text: And so much more.
+      - generic [ref=e421]:
+        - generic [ref=e425]:
+          - heading "Updated Dwell Control." [level=3] [ref=e426]
+          - paragraph [ref=e427]: Dwell Control offers an entirely new way to make selections using just your eyes. Instead of waiting for a timer to complete, you can simply glance up at a selection marker to confirm your choice instantly. This more intuitive interaction gives Dwell Control users faster, more natural navigation throughout visionOS, making it easier than ever to get things done.
+        - generic [ref=e431]:
+          - heading "Reality Composer Pro 3." [level=3] [ref=e432]
+          - paragraph [ref=e433]: With a single tool, you can create game assets with advanced simulation, character animation, and dynamic lights. Then use Script Graph to build game logic without writing any code.
+        - generic [ref=e437]:
+          - heading "Freeform." [level=3] [ref=e438]
+          - paragraph [ref=e439]: Easily group and manage your Freeform boards. Create folders to keep your workspace tidy, and view your Freeform objects together as a spatial group.
+        - generic [ref=e443]:
+          - heading "Faster Messages sync." [level=3] [ref=e444]
+          - paragraph [ref=e445]: Missed-messages notifications and unread count sync more quickly and reliably across your Apple devices.
+        - generic [ref=e449]:
+          - heading "New widgets." [level=3] [ref=e450]
+          - paragraph [ref=e451]: Customize your space with a new extra-small widget size for your favorite apps. And place the new Mac Virtual Display widget anywhere to instantly connect to your Mac with a tap — even when it’s closed.
+        - generic [ref=e455]:
+          - heading "Web Environments." [level=3] [ref=e456]
+          - paragraph [ref=e457]: Safari now supports fully immersive web experiences. Developers can render 360° backgrounds that completely surround your physical space and make browsing more immersive.
+    - generic [ref=e462]:
+      - img "Apple Software Developers Kit icon" [ref=e464]
+      - heading "Developers will love visionOS 27, too." [level=2] [ref=e465]
+      - paragraph [ref=e466]:
+        - link "Learn more about developing for visionOS" [ref=e467] [cursor=pointer]:
+          - /url: https://developer.apple.com/visionos/
+          - text: Learn more about developing for visionOS
+          - generic [ref=e468]: 
+    - generic [ref=e473]:
+      - heading "Explore Apple Vision Pro." [level=2] [ref=e475]
+      - paragraph [ref=e476]:
+        - link "Learn more, Apple Vision Pro" [ref=e477] [cursor=pointer]:
+          - /url: /apple-vision-pro/
+          - text: Learn more about Apple Vision Pro
+          - generic [ref=e478]: 
+  - contentinfo "Apple Footer" [ref=e479]:
+    - generic [ref=e480]:
+      - heading "Apple Footer" [level=2] [ref=e481]
+      - region "Footnotes" [ref=e482]:
+        - list [ref=e483]:
+          - listitem [ref=e484]: Siri AI will be available In beta later this year and requires an Apple Intelligence–enabled device set to a supported language. Available in English to start. Siri AI will not initially be available in the EU on iOS, iPadOS and watchOS.
+          - listitem [ref=e485]: Available on compatible iPhone, iPad, Mac, and Apple Vision Pro models with device language set to a supported English variant.
+          - listitem [ref=e486]: Apple Intelligence on iOS 27, iPadOS 27, macOS 27, watchOS 27, and visionOS 27 is available on all iPhone 16 models and later, iPhone 15 Pro, iPhone 15 Pro Max, iPad mini (A17 Pro), iPad models with M1 and later, MacBook Neo (A18 Pro), Mac models with M1 and later, Apple Vision Pro with M2 and later, Apple Watch Series 9 and later, Apple Watch Ultra 2 and later, and Apple Watch SE 3 when paired with an Apple Intelligence–enabled iPhone nearby, with Siri and device language set to Chinese (Simplified), Chinese (Traditional), Danish, Dutch, English, French, German, Italian, Japanese, Korean, Norwegian, Portuguese, Spanish, Swedish, Turkish, or Vietnamese. Some features may not be available in all regions or languages. Some devices may not be available in all regions.
+          - listitem [ref=e487]: Available on iPhone 17 Pro, iPhone 17 Pro Max, iPhone Air, iPad models with M4 and later and at least 12GB of unified memory, Mac models with M3 and later and at least 12GB of unified memory, and Apple Vision Pro (M5).
+          - listitem [ref=e488]: Testing conducted by Apple in April and May 2026 using Apple Vision Pro (M2) with visionOS 26.4 and prerelease visionOS 27. System tested from first unlock after reboot to Apple TV app launch and appearance of content. Performance varies based on configuration, settings, content, usage, software versions, environmental conditions, and other factors.
+        - list [ref=e489]:
+          - listitem [ref=e490]: Features are subject to change. Some features, applications, and services may not be available in all regions or all languages.
+      - navigation "Breadcrumbs" [ref=e491]:
+        - link "Apple" [ref=e492] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e493]: 
+          - generic [ref=e494]: Apple
+        - generic [ref=e495]:
+          - list:
+            - listitem [ref=e496]:
+              - link "Operating Systems" [ref=e497] [cursor=pointer]:
+                - /url: /os/
+            - listitem [ref=e498]: visionOS 27
+      - navigation "Apple Directory" [ref=e499]:
+        - generic [ref=e500]:
+          - generic:
+            - heading "Shop and Learn" [level=3] [ref=e501]:
+              - generic [ref=e502]: Shop and Learn
+            - list [ref=e503]:
+              - listitem [ref=e504]:
+                - link "Store" [ref=e505] [cursor=pointer]:
+                  - /url: /us/shop/goto/store
+              - listitem [ref=e506]:
+                - link "Mac" [ref=e507] [cursor=pointer]:
+                  - /url: /mac/
+              - listitem [ref=e508]:
+                - link "iPad" [ref=e509] [cursor=pointer]:
+                  - /url: /ipad/
+              - listitem [ref=e510]:
+                - link "iPhone" [ref=e511] [cursor=pointer]:
+                  - /url: /iphone/
+              - listitem [ref=e512]:
+                - link "Watch" [ref=e513] [cursor=pointer]:
+                  - /url: /watch/
+              - listitem [ref=e514]:
+                - link "Vision" [ref=e515] [cursor=pointer]:
+                  - /url: /apple-vision-pro/
+              - listitem [ref=e516]:
+                - link "AirPods" [ref=e517] [cursor=pointer]:
+                  - /url: /airpods/
+              - listitem [ref=e518]:
+                - link "TV & Home" [ref=e519] [cursor=pointer]:
+                  - /url: /tv-home/
+              - listitem [ref=e520]:
+                - link "AirTag" [ref=e521] [cursor=pointer]:
+                  - /url: /airtag/
+              - listitem [ref=e522]:
+                - link "Accessories" [ref=e523] [cursor=pointer]:
+                  - /url: /us/shop/goto/buy_accessories
+              - listitem [ref=e524]:
+                - link "Gift Cards" [ref=e525] [cursor=pointer]:
+                  - /url: /us/shop/goto/giftcards
+          - generic:
+            - heading "Apple Wallet" [level=3] [ref=e526]:
+              - generic [ref=e527]: Apple Wallet
+            - list [ref=e528]:
+              - listitem [ref=e529]:
+                - link "Wallet" [ref=e530] [cursor=pointer]:
+                  - /url: /wallet/
+              - listitem [ref=e531]:
+                - link "Apple Card" [ref=e532] [cursor=pointer]:
+                  - /url: /apple-card/
+              - listitem [ref=e533]:
+                - link "Apple Pay" [ref=e534] [cursor=pointer]:
+                  - /url: /apple-pay/
+              - listitem [ref=e535]:
+                - link "Apple Cash" [ref=e536] [cursor=pointer]:
+                  - /url: /apple-cash/
+        - generic [ref=e537]:
+          - generic:
+            - heading "Account" [level=3] [ref=e538]:
+              - generic [ref=e539]: Account
+            - list [ref=e540]:
+              - listitem [ref=e541]:
+                - link "Manage Your Apple Account" [ref=e542] [cursor=pointer]:
+                  - /url: https://account.apple.com/
+              - listitem [ref=e543]:
+                - link "Apple Store Account" [ref=e544] [cursor=pointer]:
+                  - /url: /us/shop/goto/account
+              - listitem [ref=e545]:
+                - link "iCloud.com" [ref=e546] [cursor=pointer]:
+                  - /url: https://www.icloud.com
+          - generic:
+            - heading "Entertainment" [level=3] [ref=e547]:
+              - generic [ref=e548]: Entertainment
+            - list [ref=e549]:
+              - listitem [ref=e550]:
+                - link "Apple One" [ref=e551] [cursor=pointer]:
+                  - /url: /apple-one/
+              - listitem [ref=e552]:
+                - link "Apple TV" [ref=e553] [cursor=pointer]:
+                  - /url: /apple-tv/
+              - listitem [ref=e554]:
+                - link "Apple Music" [ref=e555] [cursor=pointer]:
+                  - /url: /apple-music/
+              - listitem [ref=e556]:
+                - link "Apple Arcade" [ref=e557] [cursor=pointer]:
+                  - /url: /apple-arcade/
+              - listitem [ref=e558]:
+                - link "Apple Fitness+" [ref=e559] [cursor=pointer]:
+                  - /url: /apple-fitness-plus/
+              - listitem [ref=e560]:
+                - link "Apple News+" [ref=e561] [cursor=pointer]:
+                  - /url: /apple-news/
+              - listitem [ref=e562]:
+                - link "Apple Podcasts" [ref=e563] [cursor=pointer]:
+                  - /url: /apple-podcasts/
+              - listitem [ref=e564]:
+                - link "Apple Books" [ref=e565] [cursor=pointer]:
+                  - /url: /apple-books/
+              - listitem [ref=e566]:
+                - link "App Store" [ref=e567] [cursor=pointer]:
+                  - /url: /app-store/
+        - generic [ref=e568]:
+          - generic:
+            - heading "Apple Store" [level=3] [ref=e569]:
+              - generic [ref=e570]: Apple Store
+            - list [ref=e571]:
+              - listitem [ref=e572]:
+                - link "Find a Store" [ref=e573] [cursor=pointer]:
+                  - /url: /retail/
+              - listitem [ref=e574]:
+                - link "Genius Bar" [ref=e575] [cursor=pointer]:
+                  - /url: /retail/geniusbar/
+              - listitem [ref=e576]:
+                - link "Today at Apple" [ref=e577] [cursor=pointer]:
+                  - /url: /today/
+              - listitem [ref=e578]:
+                - link "Group Reservations" [ref=e579] [cursor=pointer]:
+                  - /url: /today/groups/
+              - listitem [ref=e580]:
+                - link "Apple Camp" [ref=e581] [cursor=pointer]:
+                  - /url: /today/camp/
+              - listitem [ref=e582]:
+                - link "Apple Store App" [ref=e583] [cursor=pointer]:
+                  - /url: https://apps.apple.com/us/app/apple-store/id375380948
+              - listitem [ref=e584]:
+                - link "Certified Refurbished" [ref=e585] [cursor=pointer]:
+                  - /url: /us/shop/goto/special_deals
+              - listitem [ref=e586]:
+                - link "Apple Trade In" [ref=e587] [cursor=pointer]:
+                  - /url: /us/shop/goto/trade_in
+              - listitem [ref=e588]:
+                - link "Financing" [ref=e589] [cursor=pointer]:
+                  - /url: /us/shop/goto/payment_plan
+              - listitem [ref=e590]:
+                - link "Carrier Deals at Apple" [ref=e591] [cursor=pointer]:
+                  - /url: /us/shop/goto/buy_iphone/carrier_offers
+              - listitem [ref=e592]:
+                - link "Order Status" [ref=e593] [cursor=pointer]:
+                  - /url: /us/shop/goto/order/list
+              - listitem [ref=e594]:
+                - link "Shopping Help" [ref=e595] [cursor=pointer]:
+                  - /url: /us/shop/goto/help
+        - generic [ref=e596]:
+          - generic:
+            - heading "For Business" [level=3] [ref=e597]:
+              - generic [ref=e598]: For Business
+            - list [ref=e599]:
+              - listitem [ref=e600]:
+                - link "Apple and Business" [ref=e601] [cursor=pointer]:
+                  - /url: /business/
+              - listitem [ref=e602]:
+                - link "Shop for Business" [ref=e603] [cursor=pointer]:
+                  - /url: /retail/business/
+          - generic:
+            - heading "For Education" [level=3] [ref=e604]:
+              - generic [ref=e605]: For Education
+            - list [ref=e606]:
+              - listitem [ref=e607]:
+                - link "Apple and Education" [ref=e608] [cursor=pointer]:
+                  - /url: /education/
+              - listitem [ref=e609]:
+                - link "Shop for K-12" [ref=e610] [cursor=pointer]:
+                  - /url: /education/k12/how-to-buy/
+              - listitem [ref=e611]:
+                - link "Shop for College" [ref=e612] [cursor=pointer]:
+                  - /url: /us/shop/goto/educationrouting
+          - generic:
+            - heading "For Healthcare" [level=3] [ref=e613]:
+              - generic [ref=e614]: For Healthcare
+            - list [ref=e615]:
+              - listitem [ref=e616]:
+                - link "Apple and Healthcare" [ref=e617] [cursor=pointer]:
+                  - /url: /healthcare/
+          - generic:
+            - heading "For Government" [level=3] [ref=e618]:
+              - generic [ref=e619]: For Government
+            - list [ref=e620]:
+              - listitem [ref=e621]:
+                - link "Apple and Government" [ref=e622] [cursor=pointer]:
+                  - /url: /government/
+              - listitem [ref=e623]:
+                - link "Shop for Veterans and Military" [ref=e624] [cursor=pointer]:
+                  - /url: /us/shop/goto/eppstore/veteransandmilitary
+              - listitem [ref=e625]:
+                - link "Shop for State and Local Employees" [ref=e626] [cursor=pointer]:
+                  - /url: /us_epp_67909/store
+              - listitem [ref=e627]:
+                - link "Shop for Federal Employees" [ref=e628] [cursor=pointer]:
+                  - /url: /us_epp_55499/store
+        - generic [ref=e629]:
+          - generic:
+            - heading "Apple Values" [level=3] [ref=e630]:
+              - generic [ref=e631]: Apple Values
+            - list [ref=e632]:
+              - listitem [ref=e633]:
+                - link "Accessibility" [ref=e634] [cursor=pointer]:
+                  - /url: /accessibility/
+              - listitem [ref=e635]:
+                - link "Education" [ref=e636] [cursor=pointer]:
+                  - /url: /education-initiative/
+              - listitem [ref=e637]:
+                - link "Environment" [ref=e638] [cursor=pointer]:
+                  - /url: /environment/
+              - listitem [ref=e639]:
+                - link "Inclusion and Diversity" [ref=e640] [cursor=pointer]:
+                  - /url: /diversity/
+              - listitem [ref=e641]:
+                - link "Privacy" [ref=e642] [cursor=pointer]:
+                  - /url: /privacy/
+              - listitem [ref=e643]:
+                - link "Racial Equity and Justice" [ref=e644] [cursor=pointer]:
+                  - /url: /racial-equity-justice-initiative/
+              - listitem [ref=e645]:
+                - link "Supply Chain Innovation" [ref=e646] [cursor=pointer]:
+                  - /url: /supply-chain/
+          - generic:
+            - heading "About Apple" [level=3] [ref=e647]:
+              - generic [ref=e648]: About Apple
+            - list [ref=e649]:
+              - listitem [ref=e650]:
+                - link "Newsroom" [ref=e651] [cursor=pointer]:
+                  - /url: /newsroom/
+              - listitem [ref=e652]:
+                - link "Apple Leadership" [ref=e653] [cursor=pointer]:
+                  - /url: /leadership/
+              - listitem [ref=e654]:
+                - link "Career Opportunities" [ref=e655] [cursor=pointer]:
+                  - /url: /careers/us/
+              - listitem [ref=e656]:
+                - link "Investors" [ref=e657] [cursor=pointer]:
+                  - /url: https://investor.apple.com/
+              - listitem [ref=e658]:
+                - link "Ethics & Compliance" [ref=e659] [cursor=pointer]:
+                  - /url: /compliance/
+              - listitem [ref=e660]:
+                - link "Events" [ref=e661] [cursor=pointer]:
+                  - /url: /apple-events/
+              - listitem [ref=e662]:
+                - link "Contact Apple" [ref=e663] [cursor=pointer]:
+                  - /url: /contact/
+      - generic [ref=e664]:
+        - generic [ref=e665]:
+          - text: "More ways to shop:"
+          - link "Find an Apple Store" [ref=e666] [cursor=pointer]:
+            - /url: /retail/
+          - text: or
+          - link "other retailer" [ref=e667] [cursor=pointer]:
+            - /url: https://locate.apple.com/
+          - text: near you.
+          - generic [ref=e668]:
+            - text: Or call
+            - link "1-800-MY-APPLE" [ref=e669] [cursor=pointer]:
+              - /url: tel:1-800-692-7753
+            - text: (1-800-692-7753).
+        - generic [ref=e670]:
+          - generic [ref=e671]:
+            - generic [ref=e672]: Copyright © 2026 Apple Inc. All rights reserved.
+            - list [ref=e673]:
+              - listitem [ref=e674]:
+                - link "Privacy Policy" [ref=e675] [cursor=pointer]:
+                  - /url: /legal/privacy/
+              - listitem [ref=e676]:
+                - link "Terms of Use" [ref=e677] [cursor=pointer]:
+                  - /url: /legal/internet-services/terms/site.html
+              - listitem [ref=e678]:
+                - link "Sales and Refunds" [ref=e679] [cursor=pointer]:
+                  - /url: /us/shop/goto/help/sales_refunds
+              - listitem [ref=e680]:
+                - link "Legal" [ref=e681] [cursor=pointer]:
+                  - /url: /legal/
+              - listitem [ref=e682]:
+                - link "Site Map" [ref=e683] [cursor=pointer]:
+                  - /url: /sitemap/
+          - link "United States. Choose your country or region" [ref=e685] [cursor=pointer]:
+            - /url: /choose-country-region/
+            - text: United States

@@ -22,8 +22,8 @@ export default function Home() {
         <TrustBadges />
         <Testimonials />
         <Pricing />
-        <ReachOut />
         <FAQ />
+        <ReachOut />
         <CTABanner />
       </main>
       <Footer />

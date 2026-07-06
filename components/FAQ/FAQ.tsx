@@ -75,36 +75,42 @@ export function FAQ() {
             see globals.css) to leave room for the heading beside it — below
             that it stacks under the heading, so it should fill the full
             width instead of staying capped at 720px. */}
-        <FadeIn delay={0.1} className="flex w-full min-[1080px]:max-w-[720px] flex-col gap-2">
+        <FadeIn delay={0.1} className="flex w-full min-[1080px]:max-w-[720px] flex-col gap-2.5">
           {faqs.map((faq, i) => {
             const isOpen = openIndex === i;
             return (
               <div
                 key={faq.question}
-                className={`group w-full rounded-[20px] sm:rounded-[24px] md:rounded-[32px] border p-8 transition-colors ${
-                  isOpen
-                    ? "border-primary-200 bg-gradient-to-br from-white to-primary-50"
-                    : "border-grey-150 bg-white hover:border-primary-200 hover:bg-gradient-to-br hover:from-white hover:to-primary-50"
+                className={`group w-full rounded-2xl px-6 transition-colors ${
+                  isOpen ? "bg-primary-50" : "bg-grey-50 hover:bg-grey-100"
                 }`}
               >
                 <button
                   type="button"
                   onClick={() => setOpenIndex(isOpen ? null : i)}
                   aria-expanded={isOpen}
-                  className="flex w-full items-start justify-between gap-6 text-left"
+                  className="flex w-full items-center justify-between gap-5 py-5 text-left"
                 >
-                  <p
-                    className={`font-heading text-2xl font-bold transition-colors ${
+                  <span
+                    className={`font-heading text-lg font-semibold transition-colors ${
                       isOpen ? "text-primary-600" : "text-grey-950 group-hover:text-primary-600"
                     }`}
                   >
                     {faq.question}
-                  </p>
-                  {isOpen ? (
-                    <Minus className="size-8 shrink-0 text-primary-600" />
-                  ) : (
-                    <Plus className="size-8 shrink-0 text-primary-600" />
-                  )}
+                  </span>
+                  <span
+                    className={`flex size-7 shrink-0 items-center justify-center rounded-full transition-colors ${
+                      isOpen
+                        ? "bg-primary-600 text-white"
+                        : "bg-grey-100 text-grey-700 group-hover:bg-grey-150"
+                    }`}
+                  >
+                    {isOpen ? (
+                      <Minus weight="bold" className="size-4" />
+                    ) : (
+                      <Plus weight="bold" className="size-4" />
+                    )}
+                  </span>
                 </button>
 
                 {/* Collapsible answer — height animates via the grid
@@ -120,7 +126,7 @@ export function FAQ() {
                     }`}
                   >
                     {faq.answer && (
-                      <p className="pt-2 font-heading text-base font-medium leading-6 text-grey-950">
+                      <p className="font-body text-[15px] leading-7 text-grey-500">
                         {faq.answer}
                       </p>
                     )}
@@ -129,11 +135,12 @@ export function FAQ() {
                         variant="primary"
                         href={faq.cta.href}
                         tabIndex={isOpen ? 0 : -1}
-                        className="mt-6 h-10 px-4 text-base"
+                        className="mt-5 h-10 px-4 text-base"
                       >
                         {faq.cta.label}
                       </Button>
                     )}
+                    <div className="pb-5" />
                   </div>
                 </div>
               </div>

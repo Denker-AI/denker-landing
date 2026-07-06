@@ -19,6 +19,7 @@ import {
   surfaceRoleClassName,
 } from "@/components/production/ui/surface-contract";
 import { AgentCursorArrow } from "@/components/production/cursors/agent-cursor-arrow";
+import { DenkerCursorBubble } from "@/components/production/cursors/denker-cursor-bubble";
 import { VoiceListeningGlass } from "@/components/production/cursors/voice-listening-glass";
 import { FrameFooter } from "@/components/production/shapes/shared/frame-footer";
 import { FrameHeader } from "@/components/production/shapes/shared/frame-header";
@@ -118,6 +119,20 @@ const DENKER_SYMBOL_PATH =
 const DENKER_GREEN = "#30D158";
 const HERO_INTRO_SEQUENCE_MS = 18_000;
 const HERO_SEQUENCE_MS = 23_000;
+
+/**
+ * User-approved final flat-lay slots (Phase 1 gate, 2026-07-06), in the
+ * 1480x590 `.hero-production-final-layout` coordinate space. These are the
+ * settled rest positions the Phase 2 timeline animates into; keep in sync
+ * with the `.hero-production-final-*` rules in globals.css.
+ */
+export const FINAL_SLOTS = {
+  macbookTopDown: { top: -75, left: -56, width: 800, scale: 0.94 },
+  teamFrame: { top: 112, left: 702, width: 290, height: 590, scale: 0.38 },
+  bookFrame: { top: -18, left: 858, width: 760, height: 560, scale: 0.6 },
+  voice: { top: 342, left: 1080, scale: 0.9 },
+  cursorBubble: { top: 392, left: 690, scale: 0.92 },
+} as const;
 export type HeroPlayback = "playing" | "stopped" | "ended";
 
 export function HereMedia({
@@ -216,6 +231,11 @@ export function HereMedia({
             </div>
             <div className="hero-production-final-voice">
               <HeroVoiceListeningIndicator staticMode />
+            </div>
+            <div className="hero-production-final-cursor">
+              <DenkerCursorBubble className="hero-production-final-cursor-bubble">
+                Scheduling your debrief…
+              </DenkerCursorBubble>
             </div>
           </div>
         </div>
