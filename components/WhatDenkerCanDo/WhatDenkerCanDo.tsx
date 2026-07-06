@@ -250,13 +250,24 @@ function controlsFrameGap() {
   return window.innerWidth >= 768 ? CONTROLS_FRAME_GAP_DESKTOP : CONTROLS_FRAME_GAP_MOBILE;
 }
 
-// Center every active card in the viewport. Apple's carousel does not change
-// alignment at the first/last slide; keeping one rule avoids the visible jump
-// that made some slides look wider or pushed to the edge.
+// Content-left margin shared with every other section (a max-w-1280 container
+// with responsive side padding: 24 / 40 / 80). Keeping the motion carousel on
+// this same edge — instead of centering a big hero card — makes "Explore what
+// Denker can do" line up with Built for Founders and the rest of the page
+// (Apple keeps its highlights carousel near the left margin, not centered).
+function contentLeftMargin(viewportWidth: number) {
+  if (viewportWidth >= 768) return Math.max(80, (viewportWidth - 1280) / 2);
+  if (viewportWidth >= 640) return 40;
+  return 24;
+}
+
+// Left-dock the active card to the content margin (Apple gallery flow) rather
+// than centering it. The same rule applies to every slide, so navigating keeps
+// the active card pinned to the left edge with the next slides peeking right.
 function targetOffsetFor(index: number, geo: Geometry | null) {
   if (!geo) return 0;
-  const { cardWidth, stride, viewportWidth } = geo;
-  return index * stride - (viewportWidth - cardWidth) / 2;
+  const { stride, viewportWidth } = geo;
+  return index * stride - contentLeftMargin(viewportWidth);
 }
 
 function WebsiteOpeningMotion({
@@ -998,8 +1009,13 @@ export function WhatDenkerCanDo() {
 
   const selectSlide = (index: number) => {
     setActive(index);
-    restartDemoForSlide(index);
-    setPlaying(true);
+    // While playing, jumping to a slide restarts its demo. While paused, a
+    // jump should just reveal that slide's final state (handled by each
+    // slide's `!playing` → "final" ternary) without resuming playback — so
+    // the user can stop, click through, and inspect each finished layout.
+    if (playing) {
+      restartDemoForSlide(index);
+    }
   };
 
   const togglePlayback = () => {
