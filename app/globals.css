@@ -3881,9 +3881,9 @@ body {
 }
 
 .hero-production-stage-agent-reveal {
-  --agent-reveal-width: clamp(390px, 34vw, 540px);
-  --agent-reveal-height: clamp(500px, 41vw, 620px);
-  --agent-reveal-half-height: clamp(250px, 20.5vw, 310px);
+  --agent-reveal-width: clamp(300px, 24vw, 360px);
+  --agent-reveal-height: clamp(612px, 49vw, 735px);
+  --agent-reveal-half-height: clamp(306px, 24.5vw, 367px);
   --agent-reveal-top-edge: clamp(340px, 43svh, 410px);
   --agent-reveal-voice-scale-x: 0.377;
   --agent-reveal-voice-scale-y: 0.074;
@@ -4034,7 +4034,7 @@ body {
 
 .hero-production-agent-list {
   gap: clamp(0.05rem, 0.18vw, 0.14rem);
-  padding: clamp(0.9rem, 1.8vw, 1.55rem) clamp(2rem, 3vw, 3.25rem) 0;
+  padding: clamp(0.9rem, 1.8vw, 1.55rem) clamp(1.2rem, 1.7vw, 1.7rem) 0;
 }
 
 .hero-production-agent-row {
@@ -4296,10 +4296,11 @@ body {
 
 .hero-production-final-agent-shell {
   --hero-final-agent-scale: 0.38;
-  --agent-reveal-width: 350px;
+  /* iPhone body ratio (~0.49 w/h) */
+  --agent-reveal-width: 290px;
   --agent-reveal-height: 590px;
   top: 112px;
-  left: 690px;
+  left: 702px;
   z-index: 4;
   width: var(--agent-reveal-width);
   height: var(--agent-reveal-height);
@@ -4353,14 +4354,16 @@ body {
 .hero-production-final-agent-shell
   .hero-production-agent-reveal-frame
   .hero-production-agent-list {
-  gap: clamp(0.14rem, 0.32vw, 0.32rem);
-  padding-top: clamp(0.68rem, 1vw, 0.95rem);
+  /* production-like air: taller pitch, tighter inline padding for the narrow
+     phone-ratio frame; overflowing rows crop behind the footer like the app */
+  gap: clamp(0.3rem, 0.5vw, 0.5rem);
+  padding: clamp(0.8rem, 1.1vw, 1rem) 1.1rem 0;
 }
 
 .hero-production-final-agent-shell
   .hero-production-agent-reveal-frame
   .hero-production-agent-row {
-  min-height: clamp(39px, 2.8vw, 46px);
+  min-height: 52px;
 }
 
 .hero-production-final-book {
@@ -5778,9 +5781,9 @@ body {
 }
 
 .hero-production-cinema .hero-production-stage-agent-reveal {
-  --agent-reveal-width: clamp(390px, 34vw, 540px);
-  --agent-reveal-height: clamp(500px, 41vw, 620px);
-  --agent-reveal-half-height: clamp(250px, 20.5vw, 310px);
+  --agent-reveal-width: clamp(300px, 24vw, 360px);
+  --agent-reveal-height: clamp(612px, 49vw, 735px);
+  --agent-reveal-half-height: clamp(306px, 24.5vw, 367px);
   --agent-reveal-top-edge: clamp(340px, 43svh, 410px);
   top: calc(var(--agent-reveal-top-edge) + var(--agent-reveal-half-height)) !important;
   width: var(--agent-reveal-width) !important;
@@ -5972,6 +5975,46 @@ body {
 
 .what-denker-taskboard-shell[data-active="true"] [data-status="done"] {
   animation: taskboard-done-dropzone 4.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Parallel-agent cursors on the taskboard slide: two extra agents drift
+   between columns while the existing Denker toast/card motion plays, making
+   "working in parallel" literal. Animation only runs while the taskboard
+   shell is active (same data-active flag the shell already uses). */
+.taskboard-agent-cursor {
+  position: absolute;
+  z-index: 30;
+  opacity: 0;
+}
+
+.what-denker-taskboard-shell[data-active="true"] .taskboard-agent-cursor {
+  animation-duration: 6s;
+  animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(0.45, 0, 0.25, 1);
+}
+
+.what-denker-taskboard-shell[data-active="true"] .taskboard-agent-cursor-runtime {
+  animation-name: taskboard-cursor-runtime;
+}
+
+.what-denker-taskboard-shell[data-active="true"] .taskboard-agent-cursor-research {
+  animation-name: taskboard-cursor-research;
+}
+
+@keyframes taskboard-cursor-runtime {
+  0% { opacity: 0; left: 24%; top: 46%; }
+  12% { opacity: 1; }
+  48% { left: 38%; top: 52%; }
+  82% { opacity: 1; left: 41%; top: 40%; }
+  100% { opacity: 0; left: 41%; top: 40%; }
+}
+
+@keyframes taskboard-cursor-research {
+  0% { opacity: 0; left: 10%; top: 66%; }
+  16% { opacity: 1; }
+  55% { left: 16%; top: 50%; }
+  86% { opacity: 1; left: 13%; top: 58%; }
+  100% { opacity: 0; left: 13%; top: 58%; }
 }
 
 @media (max-width: 900px) {
