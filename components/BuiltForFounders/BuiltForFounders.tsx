@@ -40,7 +40,11 @@ const cards: CarouselCard[] = [
 export function BuiltForFounders() {
   return (
     <div data-name="Section - Built for Founders & Product Builders">
-      <CardCarousel heading="Built for Founders & Product Builders" cards={cards} />
+      <CardCarousel
+        heading="Built for Founders & Product Builders"
+        cards={cards}
+        theme="dark"
+      />
     </div>
   );
 }

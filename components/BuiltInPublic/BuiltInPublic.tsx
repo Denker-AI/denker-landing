@@ -15,7 +15,7 @@ type BuiltInPublicCard = {
 const cards: BuiltInPublicCard[] = [
   {
     label: "Peerlist",
-    href: "https://peerlist.io/company/denker_ai",
+    href: "https://peerlist.io/denker/project/denker",
     icon: "/images/built-in-public/peerlist-icon.svg",
     content: (
       <Image

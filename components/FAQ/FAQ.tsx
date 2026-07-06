@@ -59,6 +59,7 @@ export function FAQ() {
 
   return (
     <section
+      id="faq"
       className="flex w-full flex-col items-center bg-white px-6 py-16 sm:px-10 md:px-20 md:py-20"
       data-name="Section - FAQ's"
       data-theme="light"

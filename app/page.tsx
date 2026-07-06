@@ -1,7 +1,5 @@
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
-import { BuiltInPublic } from "@/components/BuiltInPublic";
-import { VideoWalkthrough } from "@/components/Video";
 import { WhatDenkerCanDo } from "@/components/WhatDenkerCanDo";
 import { BuiltForFounders } from "@/components/BuiltForFounders";
 import { WhyDenkerAI } from "@/components/WhyDenkerAI";
@@ -18,8 +16,6 @@ export default function Home() {
       <Header />
       <main className="flex flex-1 flex-col">
         <Hero />
-        <BuiltInPublic />
-        <VideoWalkthrough />
         <WhatDenkerCanDo />
         <BuiltForFounders />
         <WhyDenkerAI />

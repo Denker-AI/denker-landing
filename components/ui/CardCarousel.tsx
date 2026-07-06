@@ -62,9 +62,11 @@ function targetOffsetFor(index: number, geo: Geometry | null) {
 export function CardCarousel({
   heading,
   cards,
+  theme = "light",
 }: {
   heading: string;
   cards: CarouselCard[];
+  theme?: "light" | "dark";
 }) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const deckRef = useRef<HTMLDivElement>(null);
@@ -78,6 +80,7 @@ export function CardCarousel({
   const settledOffset = targetOffsetFor(active, geo);
   const offset = dragOffset ?? settledOffset;
   const dragging = dragOffset !== null;
+  const isDark = theme === "dark";
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
@@ -137,13 +140,19 @@ export function CardCarousel({
 
   return (
     <section
-      className="flex w-full flex-col items-center bg-white px-6 py-16 sm:px-10 md:px-20 md:py-20"
-      data-theme="light"
+      className={cn(
+        "flex w-full flex-col items-center px-6 py-16 sm:px-10 md:px-20 md:py-20",
+        isDark ? "bg-grey-900" : "bg-white"
+      )}
+      data-theme={theme}
     >
       <Container className="flex flex-col items-start gap-14">
         <BlurText
           as="h2"
-          className="font-heading text-3xl font-bold text-grey-950 md:text-[40px] md:leading-[48px]"
+          className={cn(
+            "font-heading text-3xl font-bold md:text-[40px] md:leading-[48px]",
+            isDark ? "text-white" : "text-grey-950"
+          )}
           text={heading}
         />
 
@@ -193,10 +202,20 @@ export function CardCarousel({
                   )}
                 </div>
                 <div className="flex flex-col gap-1">
-                  <p className="font-heading text-2xl font-bold text-grey-950 md:text-[32px] md:leading-[40px]">
+                  <p
+                    className={cn(
+                      "font-heading text-2xl font-bold md:text-[32px] md:leading-[40px]",
+                      isDark ? "text-white" : "text-grey-950"
+                    )}
+                  >
                     {card.title}
                   </p>
-                  <p className="font-heading text-lg font-medium leading-7 text-grey-500">
+                  <p
+                    className={cn(
+                      "font-heading text-lg font-medium leading-7",
+                      isDark ? "text-grey-300" : "text-grey-500"
+                    )}
+                  >
                     {card.body}
                   </p>
                 </div>
@@ -212,7 +231,12 @@ export function CardCarousel({
             aria-label="Previous"
             onClick={() => step(-1)}
             disabled={active === 0}
-            className="flex h-10 w-[52px] items-center justify-center rounded-full border border-grey-150 bg-white text-primary-600 transition-colors hover:bg-grey-50 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-white"
+            className={cn(
+              "flex h-10 w-[52px] items-center justify-center rounded-full border transition-colors disabled:cursor-not-allowed disabled:opacity-40",
+              isDark
+                ? "border-white/12 bg-white/8 text-white hover:bg-white/12 disabled:hover:bg-white/8"
+                : "border-grey-150 bg-white text-primary-600 hover:bg-grey-50 disabled:hover:bg-white"
+            )}
           >
             <CaretLeft className="size-5" />
           </button>
@@ -221,7 +245,12 @@ export function CardCarousel({
             aria-label="Next"
             onClick={() => step(1)}
             disabled={active === cards.length - 1}
-            className="flex h-10 w-[52px] items-center justify-center rounded-full border border-grey-150 bg-white text-primary-600 transition-colors hover:bg-grey-50 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-white"
+            className={cn(
+              "flex h-10 w-[52px] items-center justify-center rounded-full border transition-colors disabled:cursor-not-allowed disabled:opacity-40",
+              isDark
+                ? "border-white/12 bg-white/8 text-white hover:bg-white/12 disabled:hover:bg-white/8"
+                : "border-grey-150 bg-white text-primary-600 hover:bg-grey-50 disabled:hover:bg-white"
+            )}
           >
             <CaretRight className="size-5" />
           </button>
