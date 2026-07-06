@@ -320,8 +320,8 @@ export function HeroVoiceListeningIndicator({
         mode="glass"
         shape="soft"
         liquidLevel={0.36}
-        width={15}
-        height={19}
+        width={17}
+        height={22}
         position="absolute"
       />
       <div className="hero-production-voice-expand-shell">

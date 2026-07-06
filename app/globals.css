@@ -797,8 +797,9 @@ body {
 }
 
 .what-denker-motion-browser {
-  /* Shared stage: component top aligned to 20% across all slides. */
-  top: 20%;
+  /* Shared stage: component top aligned to 22% across all slides (copy sits
+     at md:top-8 ≈ 5%, keeping clear air between title and frame). */
+  top: 22%;
   width: min(690px, calc(100% - 112px));
   aspect-ratio: 16 / 9;
   transform-origin: 50% 40%;
@@ -1272,9 +1273,9 @@ body {
 
 .what-denker-gmail-browser {
   position: absolute;
-  /* Shared stage: top 20%, shrunk from 88%->80% width so it no longer
+  /* Shared stage: top 22%, shrunk from 88%->80% width so it no longer
      reads oversized vs. its sibling slides. */
-  top: 20%;
+  top: 22%;
   left: 50%;
   z-index: 3;
   width: min(920px, 80%);
@@ -2599,10 +2600,10 @@ body {
 .what-denker-memory-shell {
   position: absolute;
   /* Center-anchored box: top-edge = top% - height%/2. Shared stage wants
-     top-edge 20% / bottom-edge 82% at height 62%, so the center sits at
-     51% (not 50%) — see .what-denker-memory-panel-wrap below, which must
+     top-edge 22% / bottom-edge 84% at height 62%, so the center sits at
+     53% (not 50%) — see .what-denker-memory-panel-wrap below, which must
      match so the two stay aligned. */
-  top: 51%;
+  top: 53%;
   left: 6%;
   z-index: 18;
   display: flex;
@@ -2730,9 +2731,9 @@ body {
    widths). */
 .what-denker-memory-panel-wrap {
   position: absolute;
-  /* Matches .what-denker-memory-shell's center-anchoring (top: 51% at
-     height 62% -> top-edge 20%, bottom-edge 82%). */
-  top: 51%;
+  /* Matches .what-denker-memory-shell's center-anchoring (top: 53% at
+     height 62% -> top-edge 22%, bottom-edge 84%). */
+  top: 53%;
   right: 6%;
   z-index: 19;
   width: min(300px, 28%);
@@ -4728,7 +4729,7 @@ body {
 
   .hero-production-final-voice {
     --hero-final-voice-scale: 1;
-    left: 808px;
+    left: 844px;
     top: 268px;
   }
 
@@ -4771,7 +4772,7 @@ body {
 
   .hero-production-final-voice {
     --hero-final-voice-scale: 1.15;
-    left: 904px;
+    left: 954px;
     top: 292px;
   }
 
@@ -4809,7 +4810,7 @@ body {
 
   .hero-production-final-voice {
     --hero-final-voice-scale: 1.1;
-    left: 827px;
+    left: 876px;
     top: 288px;
   }
 
@@ -6059,9 +6060,9 @@ body {
   --taskboard-column-gap: 6px;
   --taskboard-column-width: calc((100% - (var(--taskboard-padding) * 2) - (var(--taskboard-column-gap) * 5)) / 6);
   position: absolute;
-  /* Shared stage: top 20% (was 25% — started too low), height grown to
-     62% so the bottom lands with the rest of the slides (~82%). */
-  top: 20%;
+  /* Shared stage: top 22% (was 25% — started too low), height grown to
+     62% so the bottom lands with the rest of the slides (~84%). */
+  top: 22%;
   left: 50%;
   z-index: 18;
   display: flex;
