@@ -3946,7 +3946,7 @@ body {
 }
 
 .hero-production-stage-logo {
-  top: 55%;
+  top: 61%;
   animation-name: hero-production-stage-logo;
 }
 
@@ -4160,7 +4160,7 @@ body {
   --agent-reveal-width: clamp(300px, 24vw, 360px);
   --agent-reveal-height: clamp(612px, 49vw, 735px);
   --agent-reveal-half-height: clamp(306px, 24.5vw, 367px);
-  --agent-reveal-top-edge: clamp(340px, 43svh, 410px);
+  --agent-reveal-top-edge: clamp(220px, 30svh, 285px);
   --agent-reveal-voice-scale-x: 0.377;
   --agent-reveal-voice-scale-y: 0.074;
   position: absolute;
@@ -4387,7 +4387,7 @@ body {
   /* stage holds the frame at its authentic 560x400 layout size; the glass is
      transform-scaled to Apple's solo-iPad proportion (23.5% width, ratio 1.41),
      which shrinks radius, header, and content uniformly */
-  --html-frame-top-edge: clamp(240px, 30svh, 280px);
+  --html-frame-top-edge: clamp(285px, 35svh, 330px);
   z-index: 29;
   top: var(--html-frame-top-edge);
   bottom: auto;
@@ -4408,7 +4408,7 @@ body {
 
 .hero-production-stage-desktop {
   z-index: 31;
-  top: 58%;
+  top: 69%;
   width: min(1560px, 76vw);
   aspect-ratio: 16 / 9;
   animation-duration: var(--hero-production-cycle);
@@ -6079,7 +6079,7 @@ body {
   --agent-reveal-width: clamp(300px, 24vw, 360px);
   --agent-reveal-height: clamp(612px, 49vw, 735px);
   --agent-reveal-half-height: clamp(306px, 24.5vw, 367px);
-  --agent-reveal-top-edge: clamp(340px, 43svh, 410px);
+  --agent-reveal-top-edge: clamp(220px, 30svh, 285px);
   top: calc(var(--agent-reveal-top-edge) + var(--agent-reveal-half-height)) !important;
   width: var(--agent-reveal-width) !important;
   height: var(--agent-reveal-height) !important;

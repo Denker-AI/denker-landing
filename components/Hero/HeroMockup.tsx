@@ -138,12 +138,12 @@ const HERO_SEQUENCE_MS = 23_000;
  * the finale assembles everything into FINAL_SLOTS. Order = playback order.
  */
 export const SOLO_BEATS = {
-  logo: { widthPct: 18, centerXPct: 50, appleRef: "Siri glow 30%" },
-  teamFrame: { widthPct: 21, centerXPct: 50, appleRef: "iPhone 21%" },
-  voice: { widthPct: 19, centerXPct: 50, appleRef: "Vision Pro 29%" },
-  cursorBubble: { widthPct: 11, centerXPct: 50, appleRef: "Watch 9.7%" },
-  macbookFront: { widthPct: 37, centerXPct: 50, centerYPct: 57, appleRef: "MacBook 36%" },
-  bookFrame: { widthPct: 25.5, centerXPct: 50, appleRef: "iPad 23.5%" },
+  logo: { widthPct: 18, centerXPct: 50, centerYPct: 55, appleRef: "Siri glow 30% @54.5%" },
+  teamFrame: { widthPct: 21, centerXPct: 50, centerYPct: 69, appleRef: "iPhone 21% @68.7%" },
+  voice: { widthPct: 19, centerXPct: 50, centerYPct: 55, appleRef: "Vision Pro 29% @56.2%" },
+  cursorBubble: { widthPct: 11, centerXPct: 50, centerYPct: 58, appleRef: "Watch 9.7% @57.9%" },
+  macbookFront: { widthPct: 37, centerXPct: 50, centerYPct: 68, appleRef: "MacBook 36% @67.7%" },
+  bookFrame: { widthPct: 25.5, centerXPct: 50, centerYPct: 59, appleRef: "iPad 23.5% @59.3%" },
 } as const;
 
 export const FINAL_SLOTS = {
