@@ -4515,7 +4515,8 @@ body {
 
 .hero-production-stage-desktop .hero-macbook {
   height: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 2040 / 1919;
+  margin-inline: auto;
 }
 
 .hero-production-stage-final {
@@ -4578,17 +4579,6 @@ body {
 
 .hero-macbook-device {
   object-fit: contain;
-}
-
-.hero-macbook-screen {
-  position: absolute;
-  overflow: hidden;
-  border-radius: 1.2% / 2%;
-}
-
-.hero-macbook-screen-image {
-  object-fit: cover;
-  object-position: center top;
 }
 
 .hero-production-final-layout {
