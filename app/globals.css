@@ -2448,9 +2448,15 @@ body {
   animation: none;
 }
 
+/* This bubble is transient (fades in and back out mid-cycle per its own
+   keyframe, unlike the other slides' persistent "done" bubbles) — it must
+   stay hidden in the "final" hold, matching the opacity it already
+   animated to at 100%. Forcing opacity: 1 here (as if it were a "done"
+   bubble) made it visibly reappear right as the slide settled into its
+   final hold, i.e. the bubble looked like it played twice. */
 .what-denker-gmail-motion[data-motion-state="final"] .what-denker-gmail-bubble-paste {
-  opacity: 1;
-  transform: translate(-22px, 0) scale(1);
+  opacity: 0;
+  transform: translate(-2px, -14px) scale(0.98);
   animation: none;
 }
 
@@ -4081,13 +4087,14 @@ body {
 }
 
 .hero-production-stage-html {
-  --html-frame-top-edge: clamp(290px, 36svh, 330px);
+  /* Apple's solo iPad: 23.5% of stage width, device ratio 1.41 */
+  --html-frame-top-edge: clamp(330px, 40svh, 370px);
   z-index: 29;
   top: var(--html-frame-top-edge);
   bottom: auto;
   display: flex;
-  width: min(700px, 50vw);
-  height: clamp(480px, 44vw, 580px);
+  width: min(355px, 24.6vw);
+  height: clamp(240px, 17.4vw, 252px);
   min-height: 0;
   justify-content: center;
   overflow: visible;
@@ -4772,6 +4779,9 @@ body {
   z-index: 1;
   width: 100%;
   height: 100%;
+  /* device-scale shrink: inner layout computes at ~560x400 then zooms to the
+     Apple-proportioned stage, so density reads like a real iPad at distance */
+  zoom: 0.633;
   border-color: transparent !important;
   border-radius: inherit;
   background:
@@ -4794,6 +4804,53 @@ body {
 
 .hero-production-stage-html .hero-production-html::before {
   display: none;
+}
+
+/* zoom scales px but not vw/svh units - pin the solo book layout to px so it
+   lays out at the ~560x400 logical size the zoom expects */
+.hero-production-stage-html .hero-production-book-row {
+  min-height: 0;
+  height: 80px;
+  overflow: hidden;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 12px;
+  padding: 0;
+}
+
+.hero-production-stage-html .hero-production-book-list {
+  gap: 8px;
+}
+
+.hero-production-stage-html .hero-production-takeaway-card {
+  padding: 16px;
+}
+
+.hero-production-stage-html .hero-production-book-takeaway {
+  gap: 4px;
+}
+
+.hero-production-stage-html .hero-production-html-title {
+  font-size: 16px;
+  line-height: 1.05;
+}
+
+.hero-production-stage-html .hero-production-html-copy {
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+.hero-production-stage-html .hero-production-html-kicker {
+  margin-bottom: 1px;
+  font-size: 9px;
+}
+
+.hero-production-stage-html .hero-production-takeaway-label {
+  margin-bottom: 2px;
+  font-size: 7.5px;
+}
+
+.hero-production-stage-html .hero-production-takeaway-copy-block {
+  padding: 6px 9px;
 }
 
 .hero-production-stage-html .hero-production-html [data-frame-header="true"] {
@@ -5626,6 +5683,27 @@ body {
 }
 
 
+/* Apple-style neutral tint section background — authentic apple.com light
+   grey (#f5f5f7, the same grey Apple uses behind its light sections), not a
+   warm beige. Used on the "Why Denker AI", "Trust Badges" and "Loved by
+   Builders" band and on the footer.
+
+   The gradient is vertically SYMMETRIC (the #f5f5f7 grey at the top and bottom
+   edges, a hair lighter #fbfbfd through the middle) on purpose: those sections
+   stack directly on top of each other, so a top-to-bottom ramp would leave a
+   visible step at every seam. With matching edges, each seam is #f5f5f7
+   meeting #f5f5f7 and the band reads as one continuous surface, while still
+   carrying a subtle Apple-like sheen rather than a flat fill. */
+.section-tint {
+  background-image: linear-gradient(
+    180deg,
+    #f5f5f7 0%,
+    #fbfbfd 50%,
+    #f5f5f7 100%
+  );
+}
+
+
 /* CTA card background — a tall, top-centered radial glow fading from dark
    green through primary green out to white at the edges (from Figma). Kept
    as a dedicated class since the multi-stop gradient is unwieldy as a
@@ -5644,77 +5722,6 @@ body {
     #c6e5d1 87%,
     #ffffff 100%
   );
-}
-
-/* CTA card height and decorative image position/size — "tablet" runs the
-   full 640–1079px band (not Tailwind's sm→md 640–768px split) so it stays
-   consistent with the custom 1080px breakpoint used elsewhere on this page
-   (TrustBadges, FAQ); "desktop" starts fresh at 1080px. Dedicated classes
-   for the same cascade-order reason as those. */
-.cta-card-height {
-  height: 470px;
-}
-@media (min-width: 640px) and (max-width: 1079px) {
-  .cta-card-height {
-    height: 500px;
-  }
-}
-@media (min-width: 1080px) {
-  .cta-card-height {
-    height: auto;
-  }
-}
-
-.cta-image-left {
-  width: 200px;
-  max-width: none;
-  bottom: calc(-2% - 33px);
-  left: -20%;
-}
-@media (min-width: 640px) and (max-width: 1079px) {
-  .cta-image-left {
-    width: 300px;
-    bottom: calc(-2% - 60px);
-    left: -8%;
-  }
-}
-@media (min-width: 1080px) {
-  .cta-image-left {
-    width: 315px;
-    bottom: calc(-2% - 60px);
-    left: -3%;
-  }
-}
-@media (min-width: 1280px) {
-  .cta-image-left {
-    width: 360px;
-  }
-}
-
-.cta-image-right {
-  width: 240px;
-  max-width: none;
-  bottom: calc(-2% - 33px);
-  right: -20%;
-}
-@media (min-width: 640px) and (max-width: 1079px) {
-  .cta-image-right {
-    width: 355px;
-    bottom: calc(-2% - 60px);
-    right: -8%;
-  }
-}
-@media (min-width: 1080px) {
-  .cta-image-right {
-    width: 375px;
-    bottom: calc(-2% - 60px);
-    right: -3%;
-  }
-}
-@media (min-width: 1280px) {
-  .cta-image-right {
-    width: 420px;
-  }
 }
 
 .hero-viewport-section .hero-production-cinema {
@@ -5828,7 +5835,9 @@ body {
   z-index: 11;
   display: block;
   width: min(270px, calc(100% - 24px));
-  border: 1px solid rgba(245, 247, 250, 0.09);
+  /* Small glass surface with shadow only — no outline/border (matches the
+     production toast, which has no visible stroke). */
+  border: none;
   border-radius: 16px;
   background:
     linear-gradient(180deg, rgba(58, 248, 140, 0.08), rgba(58, 248, 140, 0.02)),
