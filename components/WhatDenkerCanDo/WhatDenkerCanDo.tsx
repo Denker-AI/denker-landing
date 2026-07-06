@@ -68,27 +68,27 @@ const slides = [
   {
     id: 0,
     background: "/images/what-denker-can-do/backgrounds/downloaded-patrick-teal-architecture.jpg",
-    copy: "Open any app instantly and get straight to work.",
+    copy: "Give Denker a task. It opens apps,\nclicks, and types — like you would.",
   },
   {
     id: 1,
     background: "/images/what-denker-can-do/backgrounds/downloaded-blue-ink-marble.jpg",
-    copy: "Turn long research into clear, structured reports.",
+    copy: "Results land right where you're working.\nNot in another tab.",
   },
   {
     id: 2,
     background: "/images/what-denker-can-do/backgrounds/downloaded-teal-motion-lines.jpg",
-    copy: "Draft Gmail replies\nusing the full email thread.",
+    copy: "Denker writes straight into\nthe input of any app.",
   },
   {
     id: 3,
     background: "/images/what-denker-can-do/backgrounds/downloaded-cyan-architecture-lines.jpg",
-    copy: "Build a team of AI specialists for every workflow.",
+    copy: "A team of agents, working in parallel —\neach on its own task.",
   },
   {
     id: 4,
     background: "/images/what-denker-can-do/backgrounds/downloaded-cyan-black-fluid.jpg",
-    copy: "Coordinate agents, priorities, and tasks from one workspace.",
+    copy: "Everything remembered — in a memory\ngraph you can actually see.",
   },
 ];
 
@@ -1227,7 +1227,7 @@ export function WhatDenkerCanDo() {
         <div className="relative left-1/2 w-screen -translate-x-1/2">
           <BlurText
             as="h2"
-            className="what-denker-heading-align apple-section-heading text-[28px] leading-[31px] font-semibold text-white min-[520px]:text-[32px] min-[520px]:leading-[35px] min-[761px]:text-[36px] min-[761px]:leading-[39px] min-[901px]:text-[38px] min-[901px]:leading-[41px] min-[1181px]:text-[42px] min-[1181px]:leading-[44px]"
+            className="what-denker-heading-align apple-section-heading text-[28px] leading-[31px] font-semibold text-white min-[520px]:text-[32px] min-[520px]:leading-[35px] min-[761px]:text-[36px] min-[761px]:leading-[39px] min-[901px]:text-[38px] min-[901px]:leading-[41px] min-[1181px]:text-[48px] min-[1181px]:leading-[52px]"
             text="Explore what Denker can do."
           />
         </div>
@@ -1248,7 +1248,7 @@ export function WhatDenkerCanDo() {
               onPointerUp={onPointerUp}
               onPointerCancel={onPointerUp}
               className={cn(
-                "flex w-max cursor-grab gap-4 select-none active:cursor-grabbing",
+                "flex w-max cursor-grab gap-5 select-none active:cursor-grabbing",
                 !dragging && "transition-transform duration-500 ease-out"
               )}
               style={{ transform: `translateX(${-offset}px)` }}
@@ -1313,11 +1313,11 @@ export function WhatDenkerCanDo() {
                           }
                         />
                       )}
-                      {slide.id === 4 && <ProductionTaskboardSurface active={isActive} />}
+                      {slide.id === 3 && <ProductionTaskboardSurface active={isActive} />}
                       <p
                         aria-hidden={!isActive}
                         className={cn(
-                          "what-denker-feature-copy absolute top-9 left-1/2 z-30 w-[min(560px,calc(100%-64px))] -translate-x-1/2 whitespace-pre-line text-center font-sans text-[18px] leading-[23px] font-semibold text-white transition-[opacity,transform] duration-300 md:top-12 md:text-[22px] md:leading-[27px]",
+                          "what-denker-feature-copy absolute top-9 left-1/2 z-30 w-[min(560px,calc(100%-64px))] -translate-x-1/2 whitespace-pre-line text-center font-sans text-[17px] leading-[22px] font-semibold text-white transition-[opacity,transform] duration-300 sm:text-[24px] sm:leading-[28px] md:top-12 md:text-[28px] md:leading-[32px]",
                           isActive
                             ? "translate-y-0 opacity-100"
                             : "-translate-y-2 opacity-0"
