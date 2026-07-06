@@ -50,11 +50,7 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { AgentCursorArrow } from "@/components/production/cursors/agent-cursor-arrow";
-import {
-  cursorGlassStyle,
-  cursorTextShadow,
-} from "@/components/production/cursors/agent-cursor-glass";
+import { DenkerCursorBubble } from "@/components/production/cursors/denker-cursor-bubble";
 import { Icons } from "@/components/production/ui/icons";
 import { AgentAvatarPreview } from "@/components/production/ui/agent-avatar-preview";
 import { FrameFooter } from "@/components/production/shapes/shared/frame-footer";
@@ -108,7 +104,6 @@ const FIRST_DEMO_MOTION_MS = 4200;
 const SUMMARY_DEMO_MOTION_MS = 4600;
 const GMAIL_DEMO_MOTION_MS = 4600;
 const DEMO_FINAL_HOLD_MS = 500;
-const DENKER_GREEN = "#3AF88C";
 const GITHUB_PROMPT = "Open GitHub page";
 const GITHUB_TYPING_START_MS = 720;
 const GITHUB_TYPING_STEP_MS = 48;
@@ -370,12 +365,12 @@ function WebsiteOpeningMotion({
         </div>
       </form>
 
-      <DenkerAgentCursorBubble className="what-denker-motion-bubble-start">
+      <DenkerCursorBubble className="what-denker-motion-bubble-start">
         Opening GitHub page...
-      </DenkerAgentCursorBubble>
-      <DenkerAgentCursorBubble className="what-denker-motion-bubble-done">
+      </DenkerCursorBubble>
+      <DenkerCursorBubble className="what-denker-motion-bubble-done">
         GitHub page is opened
-      </DenkerAgentCursorBubble>
+      </DenkerCursorBubble>
     </div>
   );
 }
@@ -478,13 +473,13 @@ function SummaryResearchMotion({
       <div className="what-denker-summary-frame">
         <SummaryFrameSurface />
       </div>
-      <DenkerAgentCursorBubble className="what-denker-summary-bubble-writing">
+      <DenkerCursorBubble className="what-denker-summary-bubble-writing">
         Reading article and creating summary...
-      </DenkerAgentCursorBubble>
-      <DenkerAgentCursorBubble className="what-denker-summary-bubble-done">
+      </DenkerCursorBubble>
+      <DenkerCursorBubble className="what-denker-summary-bubble-done">
         Summary frame presented - covers the 3 qualifying questions, competitor
         matrix categories, data sources table, and revenue estimation formula.
-      </DenkerAgentCursorBubble>
+      </DenkerCursorBubble>
     </div>
   );
 }
@@ -675,9 +670,9 @@ function GmailReplyMotion({
       <div className="what-denker-gmail-browser">
         <GmailReplySurface pastedReply={displayedReply} />
       </div>
-      <DenkerAgentCursorBubble className="what-denker-gmail-bubble-paste">
+      <DenkerCursorBubble className="what-denker-gmail-bubble-paste">
         {GMAIL_BUBBLE_TEXT}
-      </DenkerAgentCursorBubble>
+      </DenkerCursorBubble>
     </div>
   );
 }
@@ -991,53 +986,6 @@ function TaskboardKanbanCard({
         <span className="taskboard-ship-chip">{task.ship}</span>
       </div>
     </article>
-  );
-}
-
-function DenkerAgentCursorBubble({
-  children,
-  className,
-}: {
-  children: string;
-  className?: string;
-}) {
-  const agentTextShadow = cursorTextShadow(DENKER_GREEN);
-  return (
-    <div className={cn("what-denker-motion-bubble", className)}>
-      <AgentCursorArrow
-        color={DENKER_GREEN}
-        mode="glass"
-        shape="soft"
-        liquidLevel={0.3}
-        width={17}
-        height={22}
-        position="relative"
-      />
-      <div
-        className={cn(
-          "denker-agent-cursor-bubble pointer-events-auto absolute left-3 top-3",
-          "flex w-max max-w-[340px] shrink-0 flex-col items-start gap-1",
-          "whitespace-pre-wrap break-words [overflow-wrap:anywhere]",
-          "border px-3 py-2 text-appkit-caption font-medium leading-snug"
-        )}
-        style={cursorGlassStyle(DENKER_GREEN)}
-        data-cursor-tone="normal"
-        data-testid="agent-cursor-bubble"
-      >
-        <span
-          className="text-appkit-mini font-semibold leading-none text-[var(--agent-cursor-name-color)]"
-          style={{ textShadow: agentTextShadow }}
-          data-testid="agent-cursor-name"
-        >
-          Denker
-        </span>
-        <div className="flex w-full min-w-0 items-start gap-1">
-          <div className="min-w-0 flex-1" data-testid="agent-cursor-content">
-            {children}
-          </div>
-        </div>
-      </div>
-    </div>
   );
 }
 
