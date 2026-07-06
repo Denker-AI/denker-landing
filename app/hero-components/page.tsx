@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { DenkerCursorBubble } from "@/components/production/cursors/denker-cursor-bubble";
 import { HeroMacBook } from "@/components/Hero/HeroMacBook";
 import { HeroMacBookFront } from "@/components/Hero/HeroMacBookFront";
 import {
@@ -35,7 +36,19 @@ const CELLS: { id: string; beatWidth: string; aspectRatio?: string; node: ReactN
     node: <ProductionAgentFrame />,
   },
   { id: "voice", beatWidth: "18%", node: <HeroVoiceListeningIndicator staticMode /> },
-  // cursor bubble cell added in Task 7 when the component exists
+  {
+    id: "cursor-bubble",
+    beatWidth: "10%",
+    node: (
+      // the production class is animation-driven and absolute; pin it static
+      // for the review cell
+      <div style={{ position: "relative", height: 130 }}>
+        <DenkerCursorBubble className="!static !translate-x-0 !animate-none">
+          Scheduling your debrief…
+        </DenkerCursorBubble>
+      </div>
+    ),
+  },
   { id: "macbook-front-solo", beatWidth: "36%", node: <HeroMacBookFront /> },
   { id: "macbook-topdown-finale", beatWidth: "36%", node: <HeroMacBook /> },
   { id: "book", beatWidth: "30%", aspectRatio: "760 / 520", node: <ProductionHtmlFrame /> },
