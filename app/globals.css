@@ -2532,44 +2532,18 @@ body {
   text-align: center;
 }
 
-.memory-graph-detail {
-  position: absolute;
-  right: 7%;
-  bottom: 30%;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 12px 16px;
-  border-radius: 14px;
-  background: rgba(8, 18, 26, 0.78);
-  border: 1px solid rgba(58, 248, 140, 0.35);
-  color: rgba(255, 255, 255, 0.88);
-  font-size: 12.5px;
-  opacity: 0;
-  transform: translateY(8px);
-  animation: memory-detail-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: 3.3s;
-  animation-play-state: var(--motion-play-state);
-}
-
-.memory-graph-detail strong {
-  font-size: 13.5px;
-  color: #3af88c;
-}
-
 .what-denker-graph-bubble {
   position: absolute;
   left: 12%;
   bottom: 16%;
   opacity: 0;
   animation: memory-detail-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: 3.7s;
+  animation-delay: 2.5s;
   animation-play-state: var(--motion-play-state);
 }
 
 .what-denker-graph-motion[data-motion-state="final"] .memory-graph-edges line,
 .what-denker-graph-motion[data-motion-state="final"] .memory-graph-node,
-.what-denker-graph-motion[data-motion-state="final"] .memory-graph-detail,
 .what-denker-graph-motion[data-motion-state="final"] .what-denker-graph-bubble {
   animation-duration: 0s;
   animation-delay: 0s;
@@ -4107,13 +4081,13 @@ body {
 }
 
 .hero-production-stage-html {
-  --html-frame-top-edge: clamp(360px, 47svh, 440px);
+  --html-frame-top-edge: clamp(290px, 36svh, 330px);
   z-index: 29;
   top: var(--html-frame-top-edge);
   bottom: auto;
   display: flex;
-  width: min(940px, 88vw);
-  height: clamp(640px, 58vw, 780px);
+  width: min(700px, 50vw);
+  height: clamp(480px, 44vw, 580px);
   min-height: 0;
   justify-content: center;
   overflow: visible;
@@ -4779,8 +4753,8 @@ body {
   right: 5.4%;
   bottom: auto;
   z-index: 22;
-  width: 760px;
-  height: 520px;
+  width: 560px;
+  height: 400px;  /* iPad body ratio 1.40 */
   box-shadow:
     0 0 0 13px rgba(126, 137, 153, 0.14),
     0 0 0 14px rgba(245, 247, 250, 0.026),
@@ -4862,15 +4836,15 @@ body {
   display: flex;
   height: max-content;
   flex-direction: column;
-  gap: clamp(0.7rem, 1.15vw, 1.05rem);
+  gap: clamp(0.5rem, 0.8vw, 0.75rem);
 }
 
 .hero-production-book-row {
   display: grid;
-  min-height: clamp(144px, 18svh, 190px);
-  grid-template-columns: clamp(82px, 6.8vw, 112px) minmax(0, 1fr);
+  min-height: clamp(104px, 12.5svh, 132px);
+  grid-template-columns: clamp(60px, 4.8vw, 80px) minmax(0, 1fr);
   align-items: center;
-  gap: clamp(1rem, 1.8vw, 1.6rem);
+  gap: clamp(0.8rem, 1.2vw, 1.1rem);
   border-radius: 16px;
   padding: clamp(0.45rem, 0.75vw, 0.65rem);
   background:
@@ -4926,18 +4900,18 @@ body {
   margin-bottom: 0.22rem;
   color: #157938 !important;
   font-family: var(--macos-frame-font-family);
-  font-size: clamp(10px, 0.88vw, 12px);
+  font-size: clamp(9px, 0.8vw, 11px);
   font-weight: 650;
   letter-spacing: 0;
   line-height: 1.2;
 }
 
 .hero-production-html-title {
-  max-width: 470px;
+  max-width: none;
   margin: 0;
   font-family: "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont,
     "Helvetica Neue", Arial, sans-serif;
-  font-size: clamp(21px, 1.9vw, 30px);
+  font-size: clamp(17px, 1.5vw, 22px);
   font-weight: 720;
   letter-spacing: 0;
   line-height: 1.02;
@@ -4963,13 +4937,13 @@ body {
 }
 
 .hero-production-html-copy {
-  max-width: 490px;
+  max-width: none;
   margin: 0;
   display: -webkit-box;
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-  font-size: clamp(11px, 0.98vw, 13px);
+  font-size: clamp(10px, 0.9vw, 12px);
   font-weight: 500;
   letter-spacing: 0;
   line-height: 1.38;
@@ -6002,19 +5976,19 @@ body {
 }
 
 @keyframes taskboard-cursor-runtime {
-  0% { opacity: 0; left: 24%; top: 46%; }
+  0% { opacity: 0; left: 21%; top: 58%; }
   12% { opacity: 1; }
-  48% { left: 38%; top: 52%; }
-  82% { opacity: 1; left: 41%; top: 40%; }
-  100% { opacity: 0; left: 41%; top: 40%; }
+  48% { left: 30%; top: 66%; }
+  82% { opacity: 1; left: 35%; top: 60%; }
+  100% { opacity: 0; left: 35%; top: 60%; }
 }
 
 @keyframes taskboard-cursor-research {
-  0% { opacity: 0; left: 10%; top: 66%; }
+  0% { opacity: 0; left: 3%; top: 72%; }
   16% { opacity: 1; }
-  55% { left: 16%; top: 50%; }
-  86% { opacity: 1; left: 13%; top: 58%; }
-  100% { opacity: 0; left: 13%; top: 58%; }
+  55% { left: 8%; top: 62%; }
+  86% { opacity: 1; left: 5%; top: 68%; }
+  100% { opacity: 0; left: 5%; top: 68%; }
 }
 
 @media (max-width: 900px) {

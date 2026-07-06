@@ -770,7 +770,7 @@ export function ProductionHtmlFrame() {
       <ProductionFrame className="hero-production-html">
         <FrameHeader
           title="Book Notes"
-          icon={Icons.BookOpen}
+          icon={Icons.Book}
           accentColor="bg-accent"
           agentName="Denker"
           data-testid="landing-production-html-header"
