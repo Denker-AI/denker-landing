@@ -183,7 +183,7 @@ const taskboardColumns: DemoColumn[] = [
         ticket: "DEN-118",
         title: "Create signed local-dev smoke test runbook",
         status: "todo",
-        agent: "Runtime",
+        agent: "Coder",
         agentColor: "#60a5fa",
         priority: "medium",
         due: "Today",
@@ -874,7 +874,7 @@ function ProductionTaskboardSurface({ active }: { active: boolean }) {
 
   return (
     <div
-      className={cn(surfaceRoleClassName("frame"), "what-denker-taskboard-shell")}
+      className={cn(surfaceRoleClassName("frame"), "liquid-glass what-denker-taskboard-shell border")}
       aria-hidden="true"
       data-active={active ? "true" : undefined}
       {...surfaceRoleAttributes("frame", {
@@ -943,6 +943,23 @@ function ProductionTaskboardSurface({ active }: { active: boolean }) {
         </div>
         <div className="taskboard-toast-action">View</div>
       </div>
+
+      <DenkerCursorBubble
+        className="taskboard-agent-cursor taskboard-agent-cursor-runtime"
+        name="Coder"
+        color="#5AC8FA"
+        maxWidthPx={230}
+      >
+        Opening PR for DEN-118
+      </DenkerCursorBubble>
+      <DenkerCursorBubble
+        className="taskboard-agent-cursor taskboard-agent-cursor-research"
+        name="Research"
+        color="#B7A6FF"
+        maxWidthPx={230}
+      >
+        Drafting competitor notes for DEN-101
+      </DenkerCursorBubble>
     </div>
   );
 }

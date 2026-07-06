@@ -193,17 +193,20 @@ export function ShipStatusChip({
   return (
     <span
       className={cn(
-        "inline-flex h-5 items-center gap-1 rounded border px-1.5 text-appkit-mini font-medium",
+        // Same tiny scale as the rest of the metadata row (production's
+        // ship chip is a quiet tinted mini-pill, not a bold bordered
+        // button) — minimal padding, no fixed height.
+        "inline-flex items-center gap-0.5 rounded px-1 py-px text-appkit-mini font-medium",
         SHIP_VARIANT_CLASSES[state.variant],
         className,
       )}
       data-testid="ship-status-chip"
     >
       {state.icon === "spinner" && (
-        <Icons.Loader className="h-2.5 w-2.5 animate-spin" />
+        <Icons.Loader className="h-2 w-2 animate-spin" />
       )}
-      {state.icon === "check" && <Icons.Check className="h-2.5 w-2.5" />}
-      {state.icon === "x" && <Icons.X className="h-2.5 w-2.5" />}
+      {state.icon === "check" && <Icons.Check className="h-2 w-2" />}
+      {state.icon === "x" && <Icons.X className="h-2 w-2" />}
       <span>{state.label}</span>
     </span>
   );

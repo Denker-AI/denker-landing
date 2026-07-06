@@ -70,14 +70,8 @@ export function MemoryGraphMotion({
           <em>{node.label}</em>
         </span>
       ))}
-      <div className="memory-graph-detail">
-        <strong>Onboarding context saved</strong>
-        <span>Positioning doc — saved from chat</span>
-        <span>Investor update draft — Frame</span>
-        <span>Taskboard DEN-126 — shipped</span>
-      </div>
       <DenkerCursorBubble className="what-denker-graph-bubble">
-        Saved to memory. Hover any node to see exactly what Denker keeps.
+        Searching memory: onboarding context…
       </DenkerCursorBubble>
     </div>
   );

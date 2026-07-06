@@ -45,7 +45,13 @@ export function KanbanColumn({
   return (
     <div
       className={cn(
-        "flex min-w-[120px] flex-1 flex-col rounded-control border border-glass-stroke-faint bg-surface/30",
+        // Production's real taskboard renders columns with no border or
+        // per-column fill — they float directly on the shared liquid-glass
+        // board sheet (dolcetto's kanban-column source does carry
+        // `border-glass-stroke-faint bg-surface/30`, but that combination is
+        // visually imperceptible there; ported as-is it reads as a visible
+        // box on the landing page, which doesn't match the real product).
+        "flex min-w-[120px] flex-1 flex-col rounded-control",
         className,
       )}
       data-testid={`kanban-column-${status}`}

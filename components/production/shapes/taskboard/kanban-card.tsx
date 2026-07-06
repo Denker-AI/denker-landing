@@ -30,7 +30,10 @@ export function KanbanCard({ task, className }: KanbanCardProps) {
   return (
     <div
       className={cn(
-        "kanban-card rounded border-l-2 bg-elevated/60 px-2 py-1.5",
+        // Production cards have no visible fill — they sit transparently on
+        // the shared glass board, defined only by the priority left-border
+        // and their content (verified against a production screenshot).
+        "kanban-card rounded border-l-2 px-2 py-1.5",
         borderClass,
         className,
       )}
