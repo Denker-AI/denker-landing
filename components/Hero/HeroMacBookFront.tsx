@@ -12,7 +12,8 @@ export function HeroMacBookFront({ className }: { className?: string }) {
           src="/images/hero/denker-desktop-screenshot.jpg"
           alt=""
           fill
-          sizes="(max-width: 767px) 92vw, 56vw"
+          sizes="(max-width: 767px) 92vw, 74vw"
+          quality={90}
           className="hero-macbook-front-display"
           priority
         />

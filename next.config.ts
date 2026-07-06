@@ -7,6 +7,11 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.join(__dirname),
   },
+  images: {
+    // Hero device mockups render under perspective transforms, so they need
+    // higher-quality variants than the default 75.
+    qualities: [75, 90],
+  },
 };
 
 export default nextConfig;
