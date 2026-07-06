@@ -11,6 +11,7 @@ import {
   type ReactNode,
 } from "react";
 import Image from "next/image";
+import { HeroMacBook } from "@/components/Hero/HeroMacBook";
 import { Icons } from "@/components/production/ui/icons";
 import {
   surfaceRoleAttributes,
@@ -198,12 +199,12 @@ export function HereMedia({
         </div>
 
         <div className="hero-production-stage-desktop" aria-hidden>
-          <HeroDesktopFocusDisplay />
+          <HeroMacBook />
         </div>
 
         <div className="hero-production-stage-final" aria-hidden>
           <div className="hero-production-final-layout">
-            <HeroFinalTopDownMacBook className="hero-production-final-desktop" />
+            <HeroMacBook className="hero-production-final-desktop" />
             <div className="hero-production-final-agent-shell">
               <div className="hero-production-agent-reveal-glass">
                 <ProductionAgentFrame className="hero-production-agent-reveal-frame hero-production-final-agent" />
@@ -746,30 +747,6 @@ export function ProductionAgentFrame({ className }: { className?: string }) {
         data-testid="landing-production-agent-footer"
       />
     </ProductionFrame>
-  );
-}
-
-export function HeroFinalTopDownMacBook({ className }: { className?: string }) {
-  return (
-    <div className={cn("hero-production-final-topdown", className)}>
-      <Image
-        src="/images/hero/denker-macbook-physical-tight-opaque.png"
-        alt=""
-        fill
-        sizes="(max-width: 767px) 82vw, 44vw"
-        className="hero-production-final-topdown-image"
-      />
-    </div>
-  );
-}
-
-export function HeroDesktopFocusDisplay({ className }: { className?: string }) {
-  return (
-    <div className={cn("hero-production-desktop-macbook", className)}>
-      <div className="hero-production-desktop-macbook-shell">
-        <div className="hero-production-desktop-screen" aria-hidden="true" />
-      </div>
-    </div>
   );
 }
 

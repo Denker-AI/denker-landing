@@ -566,11 +566,8 @@ body {
    canvases, but shrink earlier on narrower browser widths like Apple's
    product carousels so adjacent context and page chrome still have room. */
 #features {
-  --what-denker-feature-card-width: min(
-    calc(100vw - 48px),
-    clamp(300px, min(86vw, 56svh), 430px)
-  );
-  --what-denker-feature-frame-height: clamp(420px, calc(100svh - 364px), 500px);
+  --what-denker-feature-card-width: min(calc(100vw - 48px), 340px);
+  --what-denker-feature-frame-height: clamp(440px, 64svh, 500px);
 }
 
 #features::before {
@@ -4516,68 +4513,9 @@ body {
   backface-visibility: hidden;
 }
 
-.hero-production-stage-desktop .hero-production-desktop-macbook {
+.hero-production-stage-desktop .hero-macbook {
   height: 100%;
   aspect-ratio: 16 / 9;
-}
-
-.hero-production-stage-desktop .hero-production-desktop-macbook-shell {
-  --hero-desktop-case-x: clamp(10px, 1.15vw, 16px);
-  --hero-desktop-case-y: clamp(10px, 1.05vw, 15px);
-  --hero-desktop-notch-width: clamp(84px, 10vw, 138px);
-  --hero-desktop-notch-height: clamp(18px, 2.1vw, 29px);
-  overflow: visible;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: clamp(20px, 2vw, 30px);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.13), transparent 4%),
-    linear-gradient(180deg, #15171a 0%, #07080a 62%, #030304 100%);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.12) inset,
-    0 -28px 60px rgba(0, 0, 0, 0.72) inset,
-    0 40px 100px rgba(0, 0, 0, 0.58);
-}
-
-.hero-production-stage-desktop .hero-production-desktop-macbook-shell::before {
-  position: absolute;
-  top: var(--hero-desktop-case-y);
-  left: 50%;
-  z-index: 5;
-  width: var(--hero-desktop-notch-width);
-  height: var(--hero-desktop-notch-height);
-  border-radius: 0 0 clamp(13px, 1.25vw, 18px) clamp(13px, 1.25vw, 18px);
-  background:
-    radial-gradient(circle at 50% 45%, rgba(70, 74, 82, 0.68) 0 3px, transparent 4px),
-    linear-gradient(180deg, #020304 0%, #090a0c 100%);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.08) inset,
-    0 10px 18px rgba(0, 0, 0, 0.28);
-  content: "";
-  pointer-events: none;
-  transform: translateX(-50%);
-}
-
-.hero-production-stage-desktop .hero-production-desktop-screen {
-  inset: var(--hero-desktop-case-y) var(--hero-desktop-case-x);
-  width: auto;
-  height: auto;
-  clip-path: none;
-  border: 0.5px solid rgba(255, 255, 255, 0.12);
-  border-radius: clamp(14px, 1.35vw, 22px);
-  background:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.08)),
-    url("/images/hero/denker-desktop-screenshot.jpg") center 38% / cover no-repeat,
-    #111113;
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.08),
-    0 24px 60px rgba(0, 0, 0, 0.42),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16),
-    inset 0 -20px 42px rgba(0, 0, 0, 0.24);
-  animation: hero-production-stage-desktop-screen var(--hero-production-cycle)
-    linear 1 both;
-  animation-play-state: var(--hero-production-play-state);
-  transform: translateZ(2px);
-  will-change: opacity, filter;
 }
 
 .hero-production-stage-final {
@@ -4633,43 +4571,24 @@ body {
     inset 0 -28px 60px rgba(0, 0, 0, 0.18);
 }
 
-.hero-production-desktop-macbook {
+.hero-macbook {
   position: relative;
-  width: 100%;
   aspect-ratio: 2040 / 1919;
-  transform-style: preserve-3d;
 }
 
-.hero-production-desktop-macbook-shell {
-  position: absolute;
-  inset: 0;
-  transform-style: preserve-3d;
+.hero-macbook-device {
+  object-fit: contain;
 }
 
-.hero-production-desktop-screen {
+.hero-macbook-screen {
   position: absolute;
-  left: 5.7%;
-  top: 4.75%;
-  z-index: 2;
-  width: 88.8%;
-  height: 35.9%;
   overflow: hidden;
-  border-radius: 12px 12px 2px 2px;
-  clip-path: polygon(0.4% 0%, 99.7% 0%, 96.8% 100%, 3.2% 100%);
-  background: #111113;
-  transform: translateZ(2px);
+  border-radius: 1.2% / 2%;
 }
 
-.hero-production-desktop-screen::after {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  content: "";
-  background:
-    linear-gradient(100deg, rgba(255, 255, 255, 0.18), transparent 17% 78%, rgba(255, 255, 255, 0.1)),
-    linear-gradient(180deg, transparent 72%, rgba(0, 0, 0, 0.18));
-  mix-blend-mode: screen;
-  opacity: 0.32;
+.hero-macbook-screen-image {
+  object-fit: cover;
+  object-position: center top;
 }
 
 .hero-production-final-layout {
@@ -4701,12 +4620,6 @@ body {
   filter: drop-shadow(0 34px 78px rgba(0, 0, 0, 0.68));
   transform: translateZ(22px) scale(var(--hero-final-desktop-scale));
   transform-origin: top left;
-}
-
-.hero-production-final-topdown-image {
-  object-fit: contain;
-  object-position: center;
-  pointer-events: none;
 }
 
 .hero-production-final-agent-shell {
@@ -5751,19 +5664,6 @@ body {
     filter: blur(0) brightness(0.96) saturate(0.98)
       drop-shadow(0 28px 68px rgba(0, 0, 0, 0.48));
     transform: translate(-50%, -30%) translateZ(148px) scale(0.58);
-  }
-}
-
-@keyframes hero-production-stage-desktop-screen {
-  0%,
-  73.8% {
-    opacity: 1;
-    filter: none;
-  }
-  75%,
-  100% {
-    opacity: 0;
-    filter: blur(0) brightness(0.72);
   }
 }
 

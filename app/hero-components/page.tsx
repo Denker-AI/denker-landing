@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
+import { HeroMacBook } from "@/components/Hero/HeroMacBook";
 import {
-  HeroDesktopFocusDisplay,
-  HeroFinalTopDownMacBook,
   HeroVoiceListeningIndicator,
   OnboardingDenkerIntro,
   ProductionAgentFrame,
@@ -20,14 +19,10 @@ import {
 // - "book" (ProductionHtmlFrame): the inner `.hero-production-html` frame has
 //   its own intrinsic size (width: 760px; height: 520px) so no extra wrapper
 //   sizing is required — the glass bubble around it sizes to fit.
-// - "macbook-topdown" (HeroFinalTopDownMacBook): the component is a bare div
-//   with a Next/Image `fill`, normally sized by `.hero-production-final-desktop`
-//   or `.hero-production-final-topdown` stage/final-layout ancestors. Standalone
-//   it has no intrinsic size, so the wrapper sets aspectRatio "2040 / 1919"
-//   (the source image's natural pixel dimensions).
-// - "logo" (OnboardingDenkerIntro), "macbook-current" (HeroDesktopFocusDisplay),
-//   and "voice" (HeroVoiceListeningIndicator) all carry their own intrinsic
-//   sizing (fixed clamp() square, `aspect-ratio: 2040/1919`, and
+// - "macbook" (HeroMacBook): carries its own intrinsic sizing
+//   (`aspect-ratio: 2040 / 1919`) and renders without a wrapper aspect ratio.
+// - "logo" (OnboardingDenkerIntro) and "voice" (HeroVoiceListeningIndicator)
+//   also carry their own intrinsic sizing (fixed clamp() square and
 //   `width: max-content` respectively) and render without a wrapper aspect ratio.
 
 const CELLS: { id: string; beatWidth: string; aspectRatio?: string; node: ReactNode }[] = [
@@ -40,17 +35,7 @@ const CELLS: { id: string; beatWidth: string; aspectRatio?: string; node: ReactN
   },
   { id: "voice", beatWidth: "18%", node: <HeroVoiceListeningIndicator staticMode /> },
   // cursor bubble cell added in Task 7 when the component exists
-  {
-    id: "macbook-current",
-    beatWidth: "36%",
-    node: <HeroDesktopFocusDisplay />,
-  },
-  {
-    id: "macbook-topdown",
-    beatWidth: "36%",
-    aspectRatio: "2040 / 1919",
-    node: <HeroFinalTopDownMacBook />,
-  },
+  { id: "macbook", beatWidth: "36%", node: <HeroMacBook /> },
   { id: "book", beatWidth: "30%", aspectRatio: "760 / 520", node: <ProductionHtmlFrame /> },
 ];
 
