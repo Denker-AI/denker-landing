@@ -1,9 +1,8 @@
 "use client";
 
-import { CaretLeft, CaretRight } from "@phosphor-icons/react/dist/ssr";
-import { cn } from "@/lib/cn";
-import { useDeckCarousel } from "@/lib/useDeckCarousel";
+import { useCallback, useEffect, useRef } from "react";
 import { BlurText } from "@/components/ui/BlurText";
+import { CarouselArrows } from "@/components/ui/CarouselArrows";
 import { Container } from "@/components/ui/Container";
 import { FadeIn } from "@/components/ui/FadeIn";
 
@@ -12,7 +11,6 @@ const testimonials = [
     name: "Amir Mirmehrkar",
     avatar: "/images/testimonials/amir-mirmehrkar.jpg",
     text: "I am more visual, it hits home.I had chaneges in repeating context.\nOver and over. Across tools. Across teammates.\nEvery new doc. Every new sprint.\nRe-explaining the same product assumptions, goals, constraints.",
-    autoHeight: true,
   },
   {
     name: "Adefisan Emmanuel",
@@ -61,13 +59,145 @@ const testimonials = [
   },
 ];
 
+// The strip renders three identical copies of the testimonial grid back-to-back
+// inside a native overflow-x container. We keep the scroll position parked in the
+// middle copy: whenever it drifts more than half a copy-width away, we snap it back
+// by exactly one copy-width (an identical position, so the jump is invisible). That
+// makes the arrows — and trackpad / drag — scroll rightward forever with no end.
+const COPIES = 3;
+
 export function Testimonials() {
-  const { wrapperRef, deckRef, offset, dragging, step, isFirst, isLast, pointerHandlers } =
-    useDeckCarousel(testimonials.length);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const rowRef = useRef<HTMLDivElement>(null);
+  const settleTimer = useRef<number | undefined>(undefined);
+  const rafRef = useRef<number | undefined>(undefined);
+  const drag = useRef({ startX: 0, startScroll: 0, active: false });
+
+  // Animate scrollLeft ourselves with rAF instead of native `scrollTo({behavior:
+  // "smooth"})` — the page's global scroll controller swallows smooth scrolls on
+  // nested containers, but direct scrollLeft writes (what we tween here) work.
+  const animateTo = useCallback((track: HTMLDivElement, to: number) => {
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    const from = track.scrollLeft;
+    const distance = to - from;
+    if (Math.abs(distance) < 1) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      track.scrollLeft = to;
+      return;
+    }
+    const duration = 460;
+    const start = performance.now();
+    const ease = (t: number) => 1 - Math.pow(1 - t, 3);
+    const tick = (now: number) => {
+      const p = Math.min(1, (now - start) / duration);
+      track.scrollLeft = from + distance * ease(p);
+      if (p < 1) rafRef.current = requestAnimationFrame(tick);
+    };
+    rafRef.current = requestAnimationFrame(tick);
+  }, []);
+
+  // Distance between the start of one copy and the next (grid width + gap).
+  const getWrap = useCallback(() => {
+    const row = rowRef.current;
+    if (!row || row.children.length < 2) return 0;
+    const a = row.children[0].getBoundingClientRect();
+    const b = row.children[1].getBoundingClientRect();
+    return b.left - a.left;
+  }, []);
+
+  // Keep scrollLeft parked within [0.5, 1.5] copy-widths of the middle copy.
+  const settle = useCallback(() => {
+    const track = trackRef.current;
+    const wrap = getWrap();
+    if (!track || wrap <= 0) return;
+    let s = track.scrollLeft;
+    while (s < wrap * 0.5) s += wrap;
+    while (s > wrap * 1.5) s -= wrap;
+    if (Math.abs(s - track.scrollLeft) > 0.5) track.scrollLeft = s;
+  }, [getWrap]);
+
+  // Center on the middle copy on mount and whenever the track resizes.
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const center = () => {
+      const wrap = getWrap();
+      if (wrap > 0) track.scrollLeft = wrap;
+    };
+    const ro = new ResizeObserver(center);
+    ro.observe(track);
+    return () => ro.disconnect();
+  }, [getWrap]);
+
+  useEffect(
+    () => () => {
+      window.clearTimeout(settleTimer.current);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    },
+    []
+  );
+
+  const onScroll = useCallback(() => {
+    window.clearTimeout(settleTimer.current);
+    settleTimer.current = window.setTimeout(settle, 120);
+  }, [settle]);
+
+  const scrollByPage = useCallback(
+    (dir: number) => {
+      const track = trackRef.current;
+      const wrap = getWrap();
+      if (!track || wrap <= 0) return;
+      // Columns are evenly spaced across the whole track (the inter-copy gap
+      // equals the column gap), so one column stride is exactly wrap / columns.
+      const columns = Math.ceil(testimonials.length / 2);
+      const stride = wrap / columns;
+      // Re-park to the middle copy instantly first, so repeated clicks always
+      // start from center and never march into a hard scroll edge.
+      let s = track.scrollLeft;
+      while (s < wrap * 0.5) s += wrap;
+      while (s > wrap * 1.5) s -= wrap;
+      if (Math.abs(s - track.scrollLeft) > 0.5) track.scrollLeft = s;
+      // Advance by however many whole columns are visible and land exactly on a
+      // column boundary — never a half-cut card.
+      const perView = Math.max(1, Math.floor(track.clientWidth / stride));
+      const currentColumn = Math.round(track.scrollLeft / stride);
+      const target = (currentColumn + dir * perView) * stride;
+      animateTo(track, target);
+    },
+    [getWrap, animateTo]
+  );
+
+  // Click-drag for mouse users; touch and trackpad use native scrolling.
+  const onPointerDown = useCallback((e: React.PointerEvent) => {
+    if (e.pointerType !== "mouse") return;
+    const track = trackRef.current;
+    if (!track) return;
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    drag.current = { startX: e.clientX, startScroll: track.scrollLeft, active: true };
+    track.setPointerCapture(e.pointerId);
+  }, []);
+
+  const onPointerMove = useCallback((e: React.PointerEvent) => {
+    if (!drag.current.active) return;
+    const track = trackRef.current;
+    if (!track) return;
+    track.scrollLeft = drag.current.startScroll - (e.clientX - drag.current.startX);
+  }, []);
+
+  const endDrag = useCallback(
+    (e: React.PointerEvent) => {
+      if (!drag.current.active) return;
+      drag.current.active = false;
+      const track = trackRef.current;
+      if (track?.hasPointerCapture(e.pointerId)) track.releasePointerCapture(e.pointerId);
+      settle();
+    },
+    [settle]
+  );
 
   return (
     <section
-      className="flex w-full flex-col items-center bg-white px-6 py-16 sm:px-10 md:px-20 md:py-20"
+      className="section-tint flex w-full flex-col items-center px-6 py-16 sm:px-10 md:px-20 md:py-20"
       data-name="Section - Testimonials"
       data-theme="light"
     >
@@ -78,65 +208,52 @@ export function Testimonials() {
           text="Loved by Builders"
         />
 
-        {/* No overflow clipping anywhere in this chain — neighboring cards
-            render at full size and bleed past the 1280px container into the
-            page's outer margins instead of being cut off. Same deck
-            mechanics as CardCarousel (see useDeckCarousel). */}
+        {/* Two-row grid that fills column-by-column, scrolling horizontally with a
+            seamless infinite wrap (see COPIES note above). No card chrome — items
+            sit directly on the white section, Apple "And so much more" style. */}
         <FadeIn delay={0.15} className="w-full">
-        <div ref={wrapperRef} className="relative w-full">
           <div
-            ref={deckRef}
-            {...pointerHandlers}
-            className={cn(
-              "flex w-max cursor-grab gap-2 select-none active:cursor-grabbing",
-              !dragging && "transition-transform duration-500 ease-out"
-            )}
-            style={{ transform: `translateX(${-offset}px)` }}
+            ref={trackRef}
+            onScroll={onScroll}
+            onPointerDown={onPointerDown}
+            onPointerMove={onPointerMove}
+            onPointerUp={endDrag}
+            onPointerCancel={endDrag}
+            className="w-full cursor-grab overflow-x-auto select-none active:cursor-grabbing [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
-            {testimonials.map((testimonial) => (
-              <div
-                key={testimonial.name}
-                className="flex h-auto w-[280px] shrink-0 select-none flex-col justify-between gap-8 rounded-2xl border border-grey-150 bg-grey-50 p-6 sm:w-[380px] md:w-[435px]"
-              >
-                <p className="whitespace-pre-line font-heading text-lg font-medium leading-7 text-grey-700 sm:text-xl sm:leading-8 md:text-2xl md:leading-[32px]">
-                  {testimonial.text}
-                </p>
-                <div className="flex shrink-0 items-center gap-3">
-                  <img
-                    src={testimonial.avatar}
-                    alt={testimonial.name}
-                    draggable={false}
-                    className="size-10 shrink-0 rounded-lg object-cover sm:size-11 md:size-12"
-                  />
-                  <p className="font-heading text-base font-medium text-grey-950 sm:text-lg md:text-xl">
-                    {testimonial.name}
-                  </p>
+            <div ref={rowRef} className="flex w-max gap-x-10">
+              {Array.from({ length: COPIES }).map((_, copy) => (
+                <div
+                  key={copy}
+                  aria-hidden={copy !== 1}
+                  className="grid grid-flow-col grid-rows-[auto_auto] items-start gap-x-10 gap-y-12 auto-cols-[248px] sm:auto-cols-[320px] md:auto-cols-[360px]"
+                >
+                  {testimonials.map((testimonial) => (
+                    <figure key={testimonial.name} className="flex w-full flex-col gap-4">
+                      <img
+                        src={testimonial.avatar}
+                        alt={testimonial.name}
+                        draggable={false}
+                        className="size-9 shrink-0 rounded-full object-cover md:size-10"
+                      />
+                      <figcaption className="flex flex-col gap-1">
+                        <span className="font-heading text-base font-semibold text-grey-950 md:text-lg">
+                          {testimonial.name}
+                        </span>
+                        <p className="whitespace-pre-line font-heading text-sm leading-6 text-grey-600 md:text-[15px] md:leading-7">
+                          {testimonial.text}
+                        </p>
+                      </figcaption>
+                    </figure>
+                  ))}
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
         </FadeIn>
 
-        <div className="flex w-full items-center justify-end gap-2">
-          <button
-            type="button"
-            aria-label="Previous"
-            onClick={() => step(-1)}
-            disabled={isFirst}
-            className="flex h-10 w-[52px] items-center justify-center rounded-full border border-grey-150 bg-white text-primary-600 transition-colors hover:bg-grey-50 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-white"
-          >
-            <CaretLeft className="size-5" />
-          </button>
-          <button
-            type="button"
-            aria-label="Next"
-            onClick={() => step(1)}
-            disabled={isLast}
-            className="flex h-10 w-[52px] items-center justify-center rounded-full border border-grey-150 bg-white text-primary-600 transition-colors hover:bg-grey-50 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-white"
-          >
-            <CaretRight className="size-5" />
-          </button>
+        <div className="flex w-full justify-end">
+          <CarouselArrows onPrev={() => scrollByPage(-1)} onNext={() => scrollByPage(1)} />
         </div>
       </Container>
     </section>

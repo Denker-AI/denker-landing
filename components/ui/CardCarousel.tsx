@@ -1,8 +1,8 @@
 "use client";
 
-import { CaretLeft, CaretRight } from "@phosphor-icons/react/dist/ssr";
 import { useEffect, useRef, useState } from "react";
 import { BlurText } from "@/components/ui/BlurText";
+import { CarouselArrows } from "@/components/ui/CarouselArrows";
 import { Container } from "@/components/ui/Container";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { cn } from "@/lib/cn";
@@ -66,7 +66,7 @@ export function CardCarousel({
 }: {
   heading: string;
   cards: CarouselCard[];
-  theme?: "light" | "dark";
+  theme?: "light" | "dark" | "tint";
 }) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const deckRef = useRef<HTMLDivElement>(null);
@@ -142,9 +142,9 @@ export function CardCarousel({
     <section
       className={cn(
         "flex w-full flex-col items-center px-6 py-16 sm:px-10 md:px-20 md:py-20",
-        isDark ? "bg-grey-900" : "bg-white"
+        isDark ? "bg-grey-900" : theme === "tint" ? "section-tint" : "bg-white"
       )}
-      data-theme={theme}
+      data-theme={isDark ? "dark" : "light"}
     >
       <Container className="flex flex-col items-start gap-14">
         <BlurText
@@ -225,35 +225,14 @@ export function CardCarousel({
         </div>
         </FadeIn>
 
-        <div className="flex w-full items-center justify-end gap-2">
-          <button
-            type="button"
-            aria-label="Previous"
-            onClick={() => step(-1)}
-            disabled={active === 0}
-            className={cn(
-              "flex h-10 w-[52px] items-center justify-center rounded-full border transition-colors disabled:cursor-not-allowed disabled:opacity-40",
-              isDark
-                ? "border-white/12 bg-white/8 text-white hover:bg-white/12 disabled:hover:bg-white/8"
-                : "border-grey-150 bg-white text-primary-600 hover:bg-grey-50 disabled:hover:bg-white"
-            )}
-          >
-            <CaretLeft className="size-5" />
-          </button>
-          <button
-            type="button"
-            aria-label="Next"
-            onClick={() => step(1)}
-            disabled={active === cards.length - 1}
-            className={cn(
-              "flex h-10 w-[52px] items-center justify-center rounded-full border transition-colors disabled:cursor-not-allowed disabled:opacity-40",
-              isDark
-                ? "border-white/12 bg-white/8 text-white hover:bg-white/12 disabled:hover:bg-white/8"
-                : "border-grey-150 bg-white text-primary-600 hover:bg-grey-50 disabled:hover:bg-white"
-            )}
-          >
-            <CaretRight className="size-5" />
-          </button>
+        <div className="flex w-full justify-end">
+          <CarouselArrows
+            theme={isDark ? "dark" : "light"}
+            onPrev={() => step(-1)}
+            onNext={() => step(1)}
+            prevDisabled={active === 0}
+            nextDisabled={active === cards.length - 1}
+          />
         </div>
       </Container>
     </section>
