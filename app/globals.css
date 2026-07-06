@@ -2463,52 +2463,65 @@ body {
 /* Memory-graph motion slide. Same play-state convention as the other
    demos: keyframes are paused until the layer enters "playing", and the
    "final" state pins everything to its end values via animation-fill-mode
-   plus the [data-motion-state="final"] overrides below. */
+   plus the [data-motion-state="final"] overrides below.
+
+   USER DIRECTIVE (replaces the old staggered node reveal + edge-draw
+   entirely): the graph frame appears with the WHOLE graph already visible
+   — at most one quick whole-frame fade/scale-in as the slide activates.
+   No per-node stagger delays, no stroke-dashoffset edge drawing. The
+   choreography is now two beats: (1) the Denker cursor bubble appears,
+   (2) the cursor "clicks" the central Denker AI node — its label switches
+   to the selected/violet style — and the right details panel slides in. */
+
+.what-denker-memory-shell {
+  position: absolute;
+  top: 50%;
+  left: 6%;
+  z-index: 18;
+  display: flex;
+  flex-direction: column;
+  width: min(620px, 62%);
+  height: min(430px, 60%);
+  transform: translateY(-50%) scale(0.97);
+  opacity: 0;
+  animation: memory-shell-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-play-state: var(--motion-play-state);
+}
+
+.what-denker-memory-body {
+  padding: 8px;
+}
 
 .memory-graph-edges {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  inset: 8px;
+  width: calc(100% - 16px);
+  height: calc(100% - 16px);
 }
 
 .memory-graph-edges line {
   /* Memory-frame blue tint from production's dark-theme themeColors.linkColor
-     (memory-graph.tsx), not a generic slate/lavender line. */
-  stroke: rgba(90, 200, 250, 0.32);
+     (memory-graph.tsx), not a generic slate/lavender line. Screenshot ground
+     truth shows these fairly bright, hence the raised alpha vs. the frame's
+     other faint strokes. */
+  stroke: rgba(90, 200, 250, 0.5);
   stroke-width: 0.22;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: memory-edge-draw 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: 1.4s;
-  animation-play-state: var(--motion-play-state);
 }
 
 /* Node visual language mirrors the production memory-graph canvas render
    (denker-dolcetto memory-graph-rendering.ts / memory-graph.tsx themeColors):
    a small colored dot with a soft glow, and the label in a dark glass chip
    centered below the dot — rather than one large glass chip containing the
-   text. */
+   text. The whole graph (all nodes + edges) is visible immediately; only
+   the shell itself fades/scales in (see .what-denker-memory-shell above). */
 .memory-graph-node {
   position: absolute;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  transform: translate(-50%, -50%) scale(0.6);
-  opacity: 0;
-  animation: memory-node-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: calc(0.35s + var(--node-order, 0) * 0.28s);
-  animation-play-state: var(--motion-play-state);
+  gap: 6px;
+  transform: translate(-50%, -50%);
 }
-
-.memory-graph-node[data-order="0"] { --node-order: 0; }
-.memory-graph-node[data-order="1"] { --node-order: 1; }
-.memory-graph-node[data-order="2"] { --node-order: 2; }
-.memory-graph-node[data-order="3"] { --node-order: 3; }
-.memory-graph-node[data-order="4"] { --node-order: 4; }
-.memory-graph-node[data-order="5"] { --node-order: 5; }
-.memory-graph-node[data-order="6"] { --node-order: 6; }
 
 .memory-graph-node i {
   width: 8px;
@@ -2518,9 +2531,9 @@ body {
   box-shadow: 0 0 0 6px color-mix(in srgb, var(--node-color, #3af88c) 20%, transparent);
 }
 
-/* Center hub ("Denker AI") gets the larger glow ring production reserves
-   for the user_profile node type. */
-.memory-graph-node[data-order="0"] i {
+/* The demo's clickable hub ("Denker AI") gets the larger glow ring
+   production reserves for the user_profile/company node type. */
+.memory-graph-node[data-selectable="true"] i {
   width: 10px;
   height: 10px;
   box-shadow: 0 0 0 8px color-mix(in srgb, var(--node-color, #3af88c) 24%, transparent);
@@ -2531,41 +2544,135 @@ body {
   border-radius: 4px;
   background: rgba(28, 28, 30, 0.72);
   color: rgba(235, 235, 245, 0.72);
-  font-size: 11.5px;
+  font-size: 10.5px;
   font-weight: 500;
   font-style: normal;
   white-space: nowrap;
   text-align: center;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* Beat 2: the clicked node's label pill switches to the selected style —
+   violet tint background, near-white text (production selection style). */
+.what-denker-graph-motion[data-motion-state="playing"] .memory-graph-node[data-selectable="true"] em,
+.what-denker-graph-motion[data-motion-state="final"] .memory-graph-node[data-selectable="true"] em {
+  animation: memory-node-select 0.3s ease both;
+  animation-delay: 2.2s;
+  animation-play-state: var(--motion-play-state);
+}
+
+.what-denker-graph-motion[data-motion-state="final"] .memory-graph-node[data-selectable="true"] em {
+  animation-duration: 0s;
+  animation-delay: 0s;
+  background: color-mix(in srgb, var(--color-accent-purple) 55%, rgba(28, 28, 30, 0.72));
+  color: rgba(245, 245, 250, 0.95);
+}
+
+.what-denker-memory-search {
+  pointer-events: none;
+}
+
+.what-denker-memory-zoom-btn {
+  display: flex;
+  height: 20px;
+  width: 20px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  border: 1px solid var(--color-glass-stroke-faint);
+  background: var(--color-glass-fill-heavy);
+  color: var(--color-muted);
 }
 
 .what-denker-graph-bubble {
   position: absolute;
-  left: 12%;
-  bottom: 16%;
+  left: 10%;
+  bottom: 12%;
   opacity: 0;
   animation: memory-detail-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: 2.5s;
+  animation-delay: 0.8s;
   animation-play-state: var(--motion-play-state);
 }
 
-.what-denker-graph-motion[data-motion-state="final"] .memory-graph-edges line,
-.what-denker-graph-motion[data-motion-state="final"] .memory-graph-node,
-.what-denker-graph-motion[data-motion-state="final"] .what-denker-graph-bubble {
+/* Beat 2 payoff: the right details panel — hidden until the node-click
+   beat, then slides/fades in from the right edge. Panel only renders
+   visually on wide slides; the ≥900px gate lives in the media query at the
+   bottom of this block (mirrors how the taskboard shell handles narrow
+   widths). */
+.what-denker-memory-panel-wrap {
+  position: absolute;
+  top: 50%;
+  right: 6%;
+  z-index: 19;
+  width: min(300px, 28%);
+  height: min(430px, 60%);
+  transform: translateY(-50%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.what-denker-memory-panel {
+  height: 100%;
+  overflow: hidden auto;
+}
+
+.what-denker-graph-motion[data-motion-state="playing"] .what-denker-memory-panel-wrap,
+.what-denker-graph-motion[data-motion-state="final"] .what-denker-memory-panel-wrap {
+  animation: memory-panel-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 2.3s;
+  animation-play-state: var(--motion-play-state);
+}
+
+.what-denker-graph-motion[data-motion-state="final"] .what-denker-memory-shell,
+.what-denker-graph-motion[data-motion-state="final"] .what-denker-graph-bubble,
+.what-denker-graph-motion[data-motion-state="final"] .what-denker-memory-panel-wrap {
   animation-duration: 0s;
   animation-delay: 0s;
 }
 
-@keyframes memory-node-in {
-  from { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
-  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+@keyframes memory-shell-in {
+  from { opacity: 0; transform: translateY(-50%) scale(0.97); }
+  to { opacity: 1; transform: translateY(-50%) scale(1); }
 }
 
-@keyframes memory-edge-draw {
-  to { stroke-dashoffset: 0; }
+@keyframes memory-node-select {
+  to {
+    background: color-mix(in srgb, var(--color-accent-purple) 55%, rgba(28, 28, 30, 0.72));
+    color: rgba(245, 245, 250, 0.95);
+  }
 }
 
 @keyframes memory-detail-in {
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes memory-panel-in {
+  from { opacity: 0; transform: translateY(-50%) translateX(16px); }
+  to { opacity: 1; transform: translateY(-50%) translateX(0); }
+}
+
+/* Responsive: the right panel only renders/appears when there's room for
+   it beside the frame. Below 900px the slide stays graph-in-frame + bubble
+   only — no panel, no overflow. */
+@media (max-width: 899px) {
+  .what-denker-memory-shell {
+    left: 50%;
+    width: min(420px, 88%);
+    height: min(360px, 58%);
+    transform: translate(-50%, -50%) scale(0.97);
+    animation-name: memory-shell-in-narrow;
+  }
+
+  .what-denker-memory-panel-wrap {
+    display: none;
+  }
+
+  @keyframes memory-shell-in-narrow {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.97); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  }
 }
 
 /* Taskboard choreography — the demo motion (source card fading out,
@@ -4087,14 +4194,16 @@ body {
 }
 
 .hero-production-stage-html {
-  /* Apple's solo iPad: 23.5% of stage width, device ratio 1.41 */
-  --html-frame-top-edge: clamp(330px, 40svh, 370px);
+  /* stage holds the frame at its authentic 560x400 layout size; the glass is
+     transform-scaled to Apple's solo-iPad proportion (23.5% width, ratio 1.41),
+     which shrinks radius, header, and content uniformly */
+  --html-frame-top-edge: clamp(240px, 30svh, 280px);
   z-index: 29;
   top: var(--html-frame-top-edge);
   bottom: auto;
   display: flex;
-  width: min(355px, 24.6vw);
-  height: clamp(240px, 17.4vw, 252px);
+  width: 560px;
+  height: 400px;
   min-height: 0;
   justify-content: center;
   overflow: visible;
@@ -4779,9 +4888,6 @@ body {
   z-index: 1;
   width: 100%;
   height: 100%;
-  /* device-scale shrink: inner layout computes at ~560x400 then zooms to the
-     Apple-proportioned stage, so density reads like a real iPad at distance */
-  zoom: 0.633;
   border-color: transparent !important;
   border-radius: inherit;
   background:
@@ -4791,23 +4897,16 @@ body {
   transform: none;
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
-  --denk-frame-header-min-height: 2.8rem;
-  --denk-frame-header-padding-block-start: 0.85rem;
-  --denk-frame-header-padding-block-end: 0.55rem;
-  --denk-frame-header-padding-inline: clamp(1rem, 2vw, 1.45rem);
-  --denk-frame-header-gap: 0.6rem;
-  --denk-frame-footer-min-height: 2.25rem;
-  --denk-frame-footer-padding-block-start: 0.42rem;
-  --denk-frame-footer-padding-block-end: 0.65rem;
-  --denk-frame-footer-padding-inline: clamp(1rem, 2vw, 1.45rem);
 }
 
-.hero-production-stage-html .hero-production-html::before {
-  display: none;
+/* Apple's solo iPad proportion: shrink the authentic frame uniformly
+   (radius, header, and content scale together) */
+.hero-production-stage-html .hero-production-html-glass {
+  transform: scale(0.633);
+  transform-origin: center center;
 }
 
-/* zoom scales px but not vw/svh units - pin the solo book layout to px so it
-   lays out at the ~560x400 logical size the zoom expects */
+/* compact list so three rows fit the 560x400 frame (approved density) */
 .hero-production-stage-html .hero-production-book-row {
   min-height: 0;
   height: 80px;
@@ -4851,6 +4950,10 @@ body {
 
 .hero-production-stage-html .hero-production-takeaway-copy-block {
   padding: 6px 9px;
+}
+
+.hero-production-stage-html .hero-production-html::before {
+  display: none;
 }
 
 .hero-production-stage-html .hero-production-html [data-frame-header="true"] {

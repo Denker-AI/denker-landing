@@ -86,6 +86,22 @@ for y in range(H):
     row = np.where(nz[y])[0]
     if len(row):
         row_mask[y, row.min():row.max() + 1] = True
+# soften the screen->deck seam: blur band across the hinge plus a faint
+# screen-colored glow spilling onto the keyboard deck
+seam_y = y_bot
+blurred = out.filter(ImageFilter.GaussianBlur(4))
+band = np.zeros((H, W), dtype=np.uint8)
+for y in range(seam_y - 10, min(seam_y + 26, H)):
+    t = 1 - abs(y - seam_y) / 26
+    band[y, :] = int(150 * max(t, 0))
+out = Image.composite(blurred, out, Image.fromarray(band, "L"))
+shot_np = np.asarray(warped.convert("RGB"))
+edge_rgb = tuple(int(c) for c in shot_np[max(seam_y - 24, 0):seam_y - 8, int(W*0.2):int(W*0.8)].mean(axis=(0, 1)))
+glow = np.zeros((H, W), dtype=np.uint8)
+for y in range(seam_y, min(seam_y + 70, H)):
+    glow[y, :] = int(26 * (1 - (y - seam_y) / 70))
+out.paste(Image.new("RGBA", (W, H), edge_rgb + (255,)), (0, 0), Image.fromarray(glow, "L"))
+
 sil = Image.fromarray(((col_mask & row_mask) * 255).astype("uint8"), "L").filter(ImageFilter.GaussianBlur(1.0))
 r, gb, b, _ = out.split()
 Image.merge("RGBA", (r, gb, b, sil)).save(OUT)
