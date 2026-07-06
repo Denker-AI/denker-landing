@@ -167,7 +167,7 @@ export function MemoryGraphMotion({
 
       <div className="what-denker-memory-panel-wrap">
         <div
-          className={cn(surfaceRoleClassName("panel"), "liquid-glass what-denker-memory-panel border")}
+          className="what-denker-memory-panel border"
           {...surfaceRoleAttributes("panel", { nativeLevel: "island" })}
         >
           <MemoryDetailsPanel node={denkerNodeDetail} />
