@@ -206,10 +206,10 @@ export function Testimonials() {
       data-name="Section - Testimonials"
       data-theme="light"
     >
-      <Container className="flex flex-col items-start gap-14">
+      <Container className="flex flex-col items-start gap-copy-media">
         <BlurText
           as="h2"
-          className="font-heading text-3xl font-bold text-grey-950 md:text-[40px] md:leading-[48px]"
+          className="t-display text-grey-950"
           text="Loved by Builders"
         />
 
@@ -242,10 +242,10 @@ export function Testimonials() {
                         className="size-9 shrink-0 rounded-full object-cover object-[center_30%] md:size-10"
                       />
                       <figcaption className="flex flex-col gap-1">
-                        <span className="font-heading text-base font-semibold text-grey-950 md:text-lg">
+                        <span className="t-title text-grey-950">
                           {testimonial.name}
                         </span>
-                        <p className="whitespace-pre-line font-heading text-sm leading-6 text-grey-600 md:text-[15px] md:leading-7">
+                        <p className="t-body whitespace-pre-line text-grey-600">
                           {testimonial.text}
                         </p>
                       </figcaption>

@@ -1,0 +1,12 @@
+import { chromium } from "playwright-core";
+const W=Number(process.argv[2]||1920),H=Number(process.argv[3]||1080),pct=Number(process.argv[4]||52),out=process.argv[5]||"/tmp/s.png";
+const b=await chromium.launch({executablePath:"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",headless:true});
+const p=await b.newPage({viewport:{width:W,height:H},deviceScaleFactor:2});
+await p.goto("http://localhost:3000/?box",{waitUntil:"networkidle"});
+const delay=-Math.round(pct/100*23000);
+await p.addStyleTag({content:`.hero-production-stage-logo,.hero-production-stage-agent-reveal,.hero-production-stage-voice,.hero-production-stage-html,.hero-production-stage-desktop,.hero-production-stage-final,.hero-production-stage-agent-reveal *,.hero-production-stage-html *,.hero-production-stage-desktop *,.hero-production-stage-voice *{animation-delay:${delay}ms !important;animation-play-state:paused !important;}`});
+await p.waitForTimeout(500);
+const info=await p.evaluate(()=>{const b=document.querySelector('.hero-motion-canvas');const cs=getComputedStyle(b);return {fit:b.style.getPropertyValue('--hero-fit'), transform:cs.transform};});
+console.log("W",W,"fit",info.fit);
+await p.screenshot({path:out});
+await b.close();

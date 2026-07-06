@@ -96,13 +96,18 @@ const slides = [
   },
 ];
 
-type Geometry = { cardWidth: number; stride: number; viewportWidth: number };
+type Geometry = { stride: number; cardWidth: number; viewportWidth: number };
 type ControlsMode = "hidden" | "fixed" | "anchored";
 
 const CONTROLS_HEIGHT = 56;
-const CONTROLS_FRAME_GAP_MOBILE = 32;
-const CONTROLS_FRAME_GAP_DESKTOP = 40;
+const CONTROLS_FRAME_GAP_MOBILE = 56;
+const CONTROLS_FRAME_GAP_DESKTOP = 88;
 const CONTROLS_MIN_BOTTOM = 16;
+// visionOS media-control glass: a light neutral-grey translucent fill (matching
+// Apple's Vision Pro controls — not near-black) and a small, tight shadow so the
+// pill sits close to the page (barely floating) rather than lifting off it.
+const CONTROLS_GLASS =
+  "bg-white/[0.14] backdrop-blur-xl shadow-[0_4px_14px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.08)]";
 /* Matches the 4.6s taskboard choreography (see taskboard-* keyframes in
    globals.css) so the completion toast finishes before the slide advances. */
 const TASKBOARD_DEMO_MOTION_MS = 4600;
@@ -250,24 +255,15 @@ function controlsFrameGap() {
   return window.innerWidth >= 768 ? CONTROLS_FRAME_GAP_DESKTOP : CONTROLS_FRAME_GAP_MOBILE;
 }
 
-// Content-left margin shared with every other section (a max-w-1280 container
-// with responsive side padding: 24 / 40 / 80). Keeping the motion carousel on
-// this same edge — instead of centering a big hero card — makes "Explore what
-// Denker can do" line up with Built for Founders and the rest of the page
-// (Apple keeps its highlights carousel near the left margin, not centered).
-function contentLeftMargin(viewportWidth: number) {
-  if (viewportWidth >= 768) return Math.max(80, (viewportWidth - 1280) / 2);
-  if (viewportWidth >= 640) return 40;
-  return 24;
-}
-
-// Left-dock the active card to the content margin (Apple gallery flow) rather
-// than centering it. The same rule applies to every slide, so navigating keeps
-// the active card pinned to the left edge with the next slides peeking right.
+// Center the active card in the viewport (Apple's visionOS gallery rhythm): the
+// card is the full, wide content column, so centering it leaves equal margins
+// with the neighbouring cards peeking symmetrically on both sides. This is
+// independent of the heading — the heading docks to the shared page gutter
+// (.what-denker-heading-align), the card centers on the viewport.
 function targetOffsetFor(index: number, geo: Geometry | null) {
   if (!geo) return 0;
-  const { stride, viewportWidth } = geo;
-  return index * stride - contentLeftMargin(viewportWidth);
+  const { stride, cardWidth, viewportWidth } = geo;
+  return index * stride - (viewportWidth - cardWidth) / 2;
 }
 
 function WebsiteOpeningMotion({
@@ -1037,8 +1033,8 @@ export function WhatDenkerCanDo() {
       const card1 = deck.children[1] as HTMLElement | undefined;
       if (!card0 || !card1) return;
       setGeo({
-        cardWidth: card0.offsetWidth,
         stride: card1.offsetLeft - card0.offsetLeft,
+        cardWidth: card0.offsetWidth,
         viewportWidth: window.innerWidth,
       });
     };
@@ -1224,7 +1220,7 @@ export function WhatDenkerCanDo() {
     <section
       ref={sectionRef}
       id="features"
-      className="section-panel relative isolate flex w-full flex-col items-center overflow-x-clip bg-grey-900 py-20 md:py-24"
+      className="section-panel relative isolate flex w-full flex-col items-center overflow-x-clip bg-grey-900 pt-20 pb-44 md:pt-24 md:pb-60"
       data-name="Section - What denker can do?"
       data-theme="dark"
     >
@@ -1336,7 +1332,11 @@ export function WhatDenkerCanDo() {
                         aria-hidden={!isActive}
                         data-copy-layout={slide.id === 1 ? "side" : "centered"}
                         className={cn(
-                          "what-denker-feature-copy absolute top-6 left-1/2 z-30 w-[min(560px,calc(100%-64px))] -translate-x-1/2 whitespace-pre-line text-center font-sans text-[17px] leading-[22px] font-semibold text-white transition-[opacity,transform] duration-300 sm:text-[24px] sm:leading-[28px] md:top-8 md:text-[28px] md:leading-[32px]",
+                          // whitespace-normal below md so the baked-in "\n"
+                          // doesn't force a 3rd line (a lone word) once the first
+                          // segment already wraps on a narrow card; md+ keeps the
+                          // designed two-line break.
+                          "what-denker-feature-copy absolute top-6 left-1/2 z-30 w-[min(560px,calc(100%-64px))] -translate-x-1/2 text-balance whitespace-normal text-center font-sans text-[17px] leading-[22px] font-semibold text-white transition-[opacity,transform] duration-300 sm:text-[24px] sm:leading-[28px] md:top-8 md:whitespace-pre-line md:text-[28px] md:leading-[32px]",
                           isActive
                             ? "translate-y-0 opacity-100"
                             : "-translate-y-2 opacity-0"
@@ -1354,12 +1354,14 @@ export function WhatDenkerCanDo() {
       </Container>
       <div
         className={cn(
-          "bottom-10 left-1/2 z-30 flex -translate-x-1/2 items-center gap-4 transition-[opacity,transform] duration-300",
+          // Bubble entrance: scales up from center with an overshoot easing so
+          // the controls pop in when the section first appears, then settle.
+          "bottom-10 left-1/2 z-30 flex -translate-x-1/2 items-center gap-4 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
           controlsMode === "fixed" && "fixed",
           controlsMode === "anchored" && "absolute",
           controlsMode === "hidden"
-            ? "pointer-events-none fixed translate-y-4 opacity-0"
-            : "translate-y-0 opacity-100"
+            ? "pointer-events-none fixed scale-75 opacity-0"
+            : "scale-100 opacity-100"
         )}
         style={
           controlsMode !== "hidden" && controlsTop != null
@@ -1367,7 +1369,7 @@ export function WhatDenkerCanDo() {
             : undefined
         }
       >
-        <div className="flex h-14 items-center gap-3.5 rounded-full bg-black/60 px-7 shadow-[0_18px_44px_rgba(0,0,0,0.32),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl">
+        <div className={cn("flex h-14 items-center gap-3.5 rounded-full px-7", CONTROLS_GLASS)}>
           {slides.map((slide, i) => (
             <button
               key={slide.id}
@@ -1385,7 +1387,10 @@ export function WhatDenkerCanDo() {
           type="button"
           aria-label={playing ? "Pause carousel" : "Play carousel"}
           onClick={togglePlayback}
-          className="flex size-14 items-center justify-center rounded-full bg-black/60 text-white shadow-[0_18px_44px_rgba(0,0,0,0.32),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl transition-colors hover:bg-black/72"
+          className={cn(
+            "flex size-14 items-center justify-center rounded-full text-white transition-colors hover:bg-white/20",
+            CONTROLS_GLASS
+          )}
         >
           {playing ? (
             <Pause weight="fill" className="size-4" />

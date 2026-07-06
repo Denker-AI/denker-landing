@@ -22,12 +22,12 @@ import { cn } from "@/lib/cn";
 // by each node's graph-node type, so this reads as the same visual system.
 const nodes = [
   { id: "denker", label: "Denker AI", x: 46, y: 50, type: "company" as const },
-  { id: "workspace", label: "Context-aware AI workspace", x: 21, y: 28, type: "project" as const },
-  { id: "positioning", label: "Why/How/What positioning", x: 68, y: 16, type: "document" as const },
-  { id: "bottlenecks", label: "Reduce doing-everything-yourself bottlenecks", x: 80, y: 38, type: "concept" as const },
-  { id: "founders", label: "Founders, solo builders, and small teams", x: 18, y: 66, type: "concept" as const },
+  { id: "workspace", label: "AI workspace", x: 21, y: 28, type: "project" as const },
+  { id: "positioning", label: "Positioning", x: 68, y: 16, type: "document" as const },
+  { id: "bottlenecks", label: "Fewer bottlenecks", x: 80, y: 38, type: "concept" as const },
+  { id: "founders", label: "Founders & teams", x: 18, y: 66, type: "concept" as const },
   { id: "jane", label: "jane", x: 46, y: 86, type: "person" as const },
-  { id: "onboarding", label: "Onboarding context saved", x: 78, y: 74, type: "preference" as const },
+  { id: "onboarding", label: "Context saved", x: 78, y: 74, type: "preference" as const },
 ] as const;
 
 const edges: Array<[string, string]> = [
@@ -52,7 +52,7 @@ const denkerNodeDetail: DemoMemoryNode = {
   related: [
     {
       id: "positioning",
-      label: "Why/How/What positioning",
+      label: "Positioning",
       type: "document",
       claim:
         "Denker AI's positioning direction is: Why = good work starts when intent is captured clearly; How = stay close to workflow and preserve context; What = a context-aware AI workspace…",
@@ -61,7 +61,7 @@ const denkerNodeDetail: DemoMemoryNode = {
     },
     {
       id: "workspace",
-      label: "Context-aware AI workspace",
+      label: "AI workspace",
       type: "project",
       claim:
         "Denker AI's product vision is a context-aware AI workspace / agent team that keeps context intact as work moves from intent to execution.",
@@ -84,7 +84,7 @@ export function MemoryGraphMotion({
       data-motion-state={state}
     >
       <div
-        className={cn(surfaceRoleClassName("frame"), "liquid-glass what-denker-memory-shell border")}
+        className={cn(surfaceRoleClassName("frame"), "liquid-glass what-denker-memory-shell")}
         {...surfaceRoleAttributes("frame", {
           nativeLevel: "root",
           nativeGroup: "landing-memory-preview",
@@ -152,9 +152,6 @@ export function MemoryGraphMotion({
             </span>
           </div>
 
-          <DenkerCursorBubble className="what-denker-graph-bubble">
-            Searching memory: onboarding context…
-          </DenkerCursorBubble>
         </div>
 
         <FrameFooter
@@ -163,6 +160,12 @@ export function MemoryGraphMotion({
           onDelete={() => undefined}
           data-testid="what-denker-memory-frame-footer"
         />
+
+        {/* Floats above the frame — placed outside the overflow-hidden graph
+            body so the cursor bubble is never cropped. */}
+        <DenkerCursorBubble className="what-denker-graph-bubble">
+          Searching memory: onboarding context…
+        </DenkerCursorBubble>
       </div>
 
       <div className="what-denker-memory-panel-wrap">

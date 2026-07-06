@@ -67,7 +67,7 @@ export function FAQ() {
       <Container className="faq-layout flex items-start gap-12">
         <BlurText
           as="h2"
-          className="max-w-[320px] font-heading text-3xl font-bold text-grey-950 md:text-[40px] md:leading-[48px]"
+          className="t-display max-w-[320px] text-grey-950"
           text="Frequently Asked Questions"
         />
 
@@ -92,7 +92,7 @@ export function FAQ() {
                   className="flex w-full items-center justify-between gap-5 py-5 text-left"
                 >
                   <span
-                    className={`font-heading text-lg font-semibold transition-colors ${
+                    className={`t-title transition-colors ${
                       isOpen ? "text-primary-600" : "text-grey-950 group-hover:text-primary-600"
                     }`}
                   >
@@ -126,7 +126,7 @@ export function FAQ() {
                     }`}
                   >
                     {faq.answer && (
-                      <p className="font-body text-[15px] leading-7 text-grey-500">
+                      <p className="t-body text-grey-500">
                         {faq.answer}
                       </p>
                     )}

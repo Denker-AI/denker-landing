@@ -4,7 +4,7 @@ import { Check, Info } from "@phosphor-icons/react/dist/ssr";
 import { useState } from "react";
 import { BlurText } from "@/components/ui/BlurText";
 import { Container } from "@/components/ui/Container";
-import { FadeIn } from "@/components/ui/FadeIn";
+import { FadeIn, FadeInStagger } from "@/components/ui/FadeIn";
 import { LOGIN_URL } from "@/lib/links";
 
 const freeFeatures = ["2 projects", "5 spaces", "Basic memory", "Community support"];
@@ -45,16 +45,16 @@ export function Pricing() {
         <div className="flex flex-col gap-3 text-grey-950">
           <BlurText
             as="h2"
-            className="font-heading text-3xl font-bold md:text-[40px] md:leading-[48px]"
+            className="t-display"
             text="More progress. One workspace."
           />
-          <FadeIn as="p" delay={0.1} className="font-heading text-xl font-medium text-grey-500">
+          <FadeIn as="p" delay={0.1} className="t-lead text-grey-500">
             Start free. Pay for what your agents actually need.
           </FadeIn>
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="font-heading text-xl font-medium text-grey-950">Monthly</span>
+          <span className="font-marketing text-xl font-medium text-grey-950">Monthly</span>
           <button
             type="button"
             role="switch"
@@ -70,28 +70,28 @@ export function Pricing() {
               }`}
             />
           </button>
-          <span className="font-heading text-xl font-medium text-grey-950">Yearly</span>
+          <span className="font-marketing text-xl font-medium text-grey-950">Yearly</span>
         </div>
       </div>
 
-      <FadeIn delay={0.2} className="pricing-grid w-full">
+      <FadeInStagger delay={0.2} className="pricing-grid w-full">
         {/* Free */}
-        <div className="flex flex-col gap-8 rounded-[20px] sm:rounded-[24px] md:rounded-[32px] bg-grey-50 p-8">
+        <FadeIn className="flex flex-col gap-8 radius-card bg-grey-50 p-8">
           <div className="flex flex-1 flex-col gap-6">
             <div className="flex flex-col gap-3">
-              <p className="font-heading text-sm font-medium text-grey-500">FREE</p>
+              <p className="font-marketing text-sm font-medium text-grey-500">FREE</p>
               <div className="flex items-baseline gap-1">
-                <span className="font-heading text-4xl font-bold text-grey-950">€0</span>
-                <span className="font-body text-base text-grey-500">/forever</span>
+                <span className="font-marketing text-4xl font-bold text-grey-950">€0</span>
+                <span className="font-marketing text-base text-grey-500">/forever</span>
               </div>
             </div>
-            <p className="min-h-12 font-body text-base text-grey-500">
+            <p className="min-h-12 font-marketing text-base text-grey-500">
               Try the desktop app. No credit card needed.
             </p>
             <div className="h-px w-full bg-grey-150" />
             <ul className="flex flex-col gap-3">
               {freeFeatures.map((f) => (
-                <li key={f} className="flex items-center gap-2 font-body text-base text-grey-950">
+                <li key={f} className="flex items-center gap-2 font-marketing text-base text-grey-950">
                   <Check className="size-6 shrink-0 text-primary-600" />
                   {f}
                 </li>
@@ -99,7 +99,7 @@ export function Pricing() {
             </ul>
             <div className="flex gap-2 rounded-xl bg-white p-3">
               <Info className="size-6 shrink-0 text-grey-500" />
-              <p className="font-body text-base text-grey-950">
+              <p className="font-marketing text-base text-grey-950">
                 AI tokens not included — requires your own CLI subscription
                 (Claude Code, Codex, or OpenCode)
               </p>
@@ -107,44 +107,44 @@ export function Pricing() {
           </div>
           <a
             href={LOGIN_URL}
-            className="flex h-12 w-full items-center justify-center rounded-full bg-white font-body text-lg font-medium text-grey-950 transition-colors hover:bg-grey-50"
+            className="flex h-12 w-full items-center justify-center rounded-full bg-white font-marketing text-lg font-medium text-grey-950 transition-colors hover:bg-grey-50"
           >
             Get Started
           </a>
-        </div>
+        </FadeIn>
 
         {/* Pro */}
-        <div className="relative flex flex-col gap-8 rounded-[20px] sm:rounded-[24px] md:rounded-[32px] bg-gradient-to-br from-primary-400 via-primary-600 to-primary-600 p-8">
-          <span className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary-400 bg-grey-900 px-4 py-2 font-heading text-sm font-medium text-white">
+        <FadeIn className="relative flex flex-col gap-8 radius-card bg-gradient-to-br from-primary-400 via-primary-600 to-primary-600 p-8">
+          <span className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary-400 bg-grey-900 px-4 py-2 font-marketing text-sm font-medium text-white">
             <span className="align-middle text-[8px]">●</span> Most Popular{" "}
             <span className="align-middle text-[8px]">●</span>
           </span>
           <div className="flex flex-1 flex-col gap-6">
             <div className="flex flex-col gap-3 text-white">
-              <p className="font-heading text-sm font-medium">PRO</p>
+              <p className="font-marketing text-sm font-medium">PRO</p>
               <div className="flex flex-col gap-1">
                 <div className="flex items-baseline gap-1">
-                  <span className="font-heading text-4xl font-bold">
+                  <span className="font-marketing text-4xl font-bold">
                     {yearly ? "€199" : "€19"}
                   </span>
-                  <span className="font-body text-base">
+                  <span className="font-marketing text-base">
                     {yearly ? "/ year" : "/ month"}
                   </span>
                 </div>
                 {yearly && (
-                  <span className="font-body text-sm text-white/80">
+                  <span className="font-marketing text-sm text-white/80">
                     ≈ €17/mo · 2 months free
                   </span>
                 )}
               </div>
             </div>
-            <p className="min-h-12 font-body text-base text-white">
+            <p className="min-h-12 font-marketing text-base text-white">
               Your full team. Unlimited projects. Persistent memory.
             </p>
             <div className="h-px w-full bg-white/30" />
             <ul className="flex flex-col gap-3">
               {proFeatures.map((f) => (
-                <li key={f} className="flex items-center gap-2 font-body text-base text-white">
+                <li key={f} className="flex items-center gap-2 font-marketing text-base text-white">
                   <Check className="size-6 shrink-0 text-white" />
                   {f}
                 </li>
@@ -153,29 +153,29 @@ export function Pricing() {
           </div>
           <a
             href={LOGIN_URL}
-            className="flex h-12 w-full items-center justify-center rounded-full bg-white font-body text-lg font-medium text-grey-950 transition-colors hover:bg-grey-50"
+            className="flex h-12 w-full items-center justify-center rounded-full bg-white font-marketing text-lg font-medium text-grey-950 transition-colors hover:bg-grey-50"
           >
             Get Started
           </a>
-        </div>
+        </FadeIn>
 
         {/* Max */}
-        <div className="pricing-max relative flex flex-col gap-8 rounded-[20px] sm:rounded-[24px] md:rounded-[32px] bg-grey-50 p-8">
-          <span className="absolute right-5 top-5 rounded-full bg-primary-600 px-4 py-2 font-heading text-sm font-medium text-white">
+        <FadeIn className="pricing-max relative flex flex-col gap-8 radius-card bg-grey-50 p-8">
+          <span className="absolute right-5 top-5 rounded-full bg-primary-600 px-4 py-2 font-marketing text-sm font-medium text-white">
             Coming Soon
           </span>
           <div className="flex flex-1 flex-col gap-6">
             <div className="flex flex-col gap-3">
-              <p className="font-heading text-sm font-medium text-grey-500">MAX</p>
-              <span className="font-heading text-4xl font-bold text-grey-950">TBD</span>
+              <p className="font-marketing text-sm font-medium text-grey-500">MAX</p>
+              <span className="font-marketing text-4xl font-bold text-grey-950">TBD</span>
             </div>
-            <p className="min-h-12 font-body text-base text-grey-500">
+            <p className="min-h-12 font-marketing text-base text-grey-500">
               Cloud execution with persistent agents. Coming soon.
             </p>
             <div className="h-px w-full bg-grey-150" />
             <ul className="flex flex-col gap-3">
               {maxFeatures.map((f) => (
-                <li key={f} className="flex items-center gap-2 font-body text-base text-grey-950">
+                <li key={f} className="flex items-center gap-2 font-marketing text-base text-grey-950">
                   <Check className="size-6 shrink-0 text-primary-600" />
                   {f}
                 </li>
@@ -184,22 +184,22 @@ export function Pricing() {
           </div>
           <button
             disabled
-            className="h-12 w-full rounded-full bg-white font-body text-lg font-medium text-grey-400"
+            className="h-12 w-full rounded-full bg-white font-marketing text-lg font-medium text-grey-400"
           >
             Coming Soon
           </button>
-        </div>
-      </FadeIn>
+        </FadeIn>
+      </FadeInStagger>
 
       <div className="flex w-full flex-col items-center gap-6">
-        <p className="text-center font-heading text-sm font-medium text-grey-500">
+        <p className="text-center font-marketing text-sm font-medium text-grey-500">
           POWERED BY YOUR CLI SUBSCRIPTION
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-2">
+        <div className="flex flex-col items-center gap-2 sm:flex-row sm:flex-wrap sm:justify-center">
           {cliChips.map((chip) => (
             <span
               key={chip.label}
-              className="flex items-center gap-2 rounded-full bg-grey-50 px-4 py-2 font-heading text-sm font-medium text-grey-950"
+              className="flex items-center gap-2 rounded-full bg-grey-50 px-4 py-2 font-marketing text-sm font-medium text-grey-950"
             >
               {chip.icon ? (
                 <img src={chip.icon} alt="" className={`size-5${chip.invert ? " invert" : ""}`} />
@@ -209,15 +209,15 @@ export function Pricing() {
               {chip.label}
             </span>
           ))}
-          <span className="flex items-center gap-2 rounded-full bg-grey-50 px-4 py-2 font-heading text-sm font-medium text-grey-500">
+          <span className="flex items-center gap-2 rounded-full bg-grey-50 px-4 py-2 font-marketing text-sm font-medium text-grey-500">
             <img src="/logos/openrouter.svg" alt="" className="size-5 invert opacity-60" />
             OpenRouter
-            <span className="rounded-full bg-primary-50 px-2 py-0.5 font-heading text-xs font-medium text-primary-600">
+            <span className="rounded-full bg-primary-50 px-2 py-0.5 font-marketing text-xs font-medium text-primary-600">
               Coming Soon
             </span>
           </span>
         </div>
-        <p className="text-center font-heading text-sm font-medium text-grey-500">
+        <p className="text-center font-marketing text-sm font-medium text-grey-500">
           All plans include the canvas, real-time agent visibility, and tool
           connections. Cancel anytime.
         </p>

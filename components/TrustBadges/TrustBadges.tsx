@@ -1,6 +1,6 @@
 import { BlurText } from "@/components/ui/BlurText";
 import { Container } from "@/components/ui/Container";
-import { FadeIn } from "@/components/ui/FadeIn";
+import { FadeIn, FadeInStagger } from "@/components/ui/FadeIn";
 
 // NOTE: Figma repeats the same "Google" placeholder logo 14x — swap in real
 // integration logos/names once the client provides their partner list.
@@ -22,6 +22,12 @@ const integrations = [
   // ... up to 14 entries total
 ];
 
+// Hard cap on visible integration tiles — any logos beyond this roll into the
+// trailing "500+ more" cell so the grid always fits one screenful. Kept at 14
+// because the more-card's column-span tuning (.trustbadges-more-card in
+// globals.css) assumes exactly 14 tiles ahead of it.
+const MAX_VISIBLE_INTEGRATIONS = 14;
+
 export function TrustBadges() {
   return (
     <section
@@ -29,37 +35,37 @@ export function TrustBadges() {
       data-name="Section - Built in Public. Trusted by Builders."
       data-theme="light"
     >
-      <Container className="flex flex-col items-start gap-14">
-        <div className="flex w-full flex-col items-start gap-2">
+      <Container className="flex flex-col items-start gap-copy-media">
+        <div className="flex w-full flex-col items-start gap-title-lead">
           <BlurText
             as="h2"
-            className="font-heading text-3xl font-bold text-grey-950 md:text-[40px] md:leading-[48px]"
+            className="t-display text-grey-950"
             text="Built in Public. Trusted by Builders."
           />
-          <FadeIn as="p" delay={0.1} className="max-w-[800px] font-heading text-xl font-medium leading-7 text-grey-500">
+          <FadeIn as="p" delay={0.1} className="t-lead max-w-[800px] text-grey-500">
             Explore Denker across the platforms where founders and product
             builders discover, collaborate, and contribute.
           </FadeIn>
         </div>
 
-        <FadeIn delay={0.2} className="trustbadges-grid grid w-full gap-2">
-          {integrations.map((integration, i) => (
-            <div
+        <FadeInStagger delay={0.2} className="trustbadges-grid grid w-full gap-2">
+          {integrations.slice(0, MAX_VISIBLE_INTEGRATIONS).map((integration, i) => (
+            <FadeIn
               key={i}
-              className="flex aspect-auto h-full flex-col items-center justify-center gap-3 rounded-[20px] sm:rounded-[24px] md:rounded-[32px] bg-white p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]"
+              className="flex aspect-auto h-full flex-col items-center justify-center gap-3 radius-card bg-white p-6"
             >
               <img src={integration.logo} alt="" className="size-10" />
-              <p className="w-full text-center font-heading text-base font-medium text-grey-500">
+              <p className="t-title w-full text-center text-grey-500">
                 {integration.name}
               </p>
-            </div>
+            </FadeIn>
           ))}
-          <div className="trustbadges-more-card flex aspect-video flex-col items-center justify-center rounded-[20px] sm:rounded-[24px] md:rounded-[32px] bg-white p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
-            <p className="text-center font-heading text-base font-normal leading-6 text-grey-950">
+          <FadeIn className="trustbadges-more-card flex aspect-video flex-col items-center justify-center radius-card bg-white p-6">
+            <p className="t-body text-center text-grey-950">
               More than 500+ integrations are available
             </p>
-          </div>
-        </FadeIn>
+          </FadeIn>
+        </FadeInStagger>
       </Container>
     </section>
   );

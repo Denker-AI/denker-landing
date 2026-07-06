@@ -55,7 +55,7 @@ export function Footer() {
                 height={16}
               />
             </div>
-            <p className="font-heading text-base font-medium leading-6 text-grey-500">
+            <p className="t-body text-grey-500">
               Work smarter with an AI coworker that researches, analyzes, and
               executes tasks across your favorite tools. Built for founders
               and product builders who want to get more done with less
@@ -83,7 +83,7 @@ export function Footer() {
 
           <div className="flex w-full gap-16 sm:w-auto sm:gap-24">
             <div className="flex w-[200px] flex-col items-start gap-4">
-              <p className="font-heading text-base font-bold text-grey-950">Pages</p>
+              <p className="t-title text-grey-950">Pages</p>
               <div className="flex flex-col items-start gap-3">
                 {pageLinks.map((link) => (
                   <a
@@ -91,7 +91,7 @@ export function Footer() {
                     href={link.href}
                     target={link.external ? "_blank" : undefined}
                     rel={link.external ? "noopener noreferrer" : undefined}
-                    className="font-body text-base font-medium text-grey-500 transition-colors hover:text-primary-600"
+                    className="t-body text-grey-500 transition-colors hover:text-primary-600"
                   >
                     {link.label}
                   </a>
@@ -99,7 +99,7 @@ export function Footer() {
               </div>
             </div>
             <div className="flex w-[200px] flex-col items-start gap-4">
-              <p className="font-heading text-base font-bold text-grey-950">
+              <p className="t-title text-grey-950">
                 Information
               </p>
               <div className="flex flex-col items-start gap-3">
@@ -107,7 +107,7 @@ export function Footer() {
                   <a
                     key={link.label}
                     href={link.href}
-                    className="font-body text-base font-medium text-grey-500 transition-colors hover:text-primary-600"
+                    className="t-body text-grey-500 transition-colors hover:text-primary-600"
                   >
                     {link.label}
                   </a>
@@ -119,7 +119,7 @@ export function Footer() {
 
         <div className="h-px w-full bg-grey-100" />
 
-        <p className="w-full text-center font-heading text-base font-medium text-grey-500">
+        <p className="t-caption w-full text-center text-grey-500">
           © 2026 Denker AI. All rights reserved.
         </p>
 

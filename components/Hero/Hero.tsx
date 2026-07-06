@@ -56,41 +56,16 @@ export function Hero() {
         transparent
       />
       <LaunchBadges visible={showHeroActions} />
-      <HereMedia onPlaybackChange={setHeroPlayback} />
-      <div
-        className="hero-actions"
-        data-visible={showHeroOverlay ? "true" : "false"}
-        aria-hidden={!showHeroOverlay}
-      >
-        <div className="flex flex-col items-stretch justify-center gap-2 sm:flex-row sm:items-center">
-          <Button
-            variant="primary"
-            href={LOGIN_URL}
-            tabIndex={showHeroOverlay ? undefined : -1}
-            className="h-11 w-full bg-white px-5 text-base font-semibold text-grey-950 shadow-[0_16px_44px_rgba(0,0,0,0.22)] hover:bg-grey-50 sm:w-auto"
-          >
-            Get Started
-          </Button>
-          <Button
-            variant="secondary"
-            href="#features"
-            tabIndex={showHeroOverlay ? undefined : -1}
-            className="h-11 w-full border-white/45 bg-black/20 px-5 text-base font-semibold text-white shadow-[0_16px_44px_rgba(0,0,0,0.18)] backdrop-blur-[24px] hover:border-white/70 hover:bg-white/10 sm:w-auto"
-          >
-            Learn More
-          </Button>
-        </div>
-      </div>
 
       <div className="hero-viewport-content relative z-10 mx-auto flex w-full max-w-[1260px] flex-col items-center text-center">
         <div className="hero-copy-block flex w-full flex-col items-center">
-          <p className="hero-overline font-sans text-white">
+          <p className="hero-overline text-white">
             For Founders, Builders, and Thinkers.
           </p>
-          <h1 className="hero-title mt-3 text-balance font-sans text-white">
+          <h1 className="hero-title mt-3 text-balance text-white">
             Your AI coworker that follows where you work.
           </h1>
-          <p className="hero-subtitle font-sans text-grey-400">
+          <p className="hero-subtitle text-grey-400">
             <span className="block">
               Never again follow every AI conversation manually.
             </span>
@@ -98,6 +73,34 @@ export function Hero() {
           </p>
         </div>
       </div>
+
+      <HereMedia onPlaybackChange={setHeroPlayback} />
+
+      <div
+        className="hero-actions"
+        data-visible={showHeroOverlay ? "true" : "false"}
+        aria-hidden={!showHeroOverlay}
+      >
+        <div className="flex flex-row items-center justify-center gap-2">
+          <Button
+            variant="primary"
+            href={LOGIN_URL}
+            tabIndex={showHeroOverlay ? undefined : -1}
+            className="h-11 bg-white px-5 text-base font-semibold text-grey-950 shadow-[0_16px_44px_rgba(0,0,0,0.22)] hover:bg-grey-50"
+          >
+            Get Started
+          </Button>
+          <Button
+            variant="secondary"
+            href="#features"
+            tabIndex={showHeroOverlay ? undefined : -1}
+            className="h-11 border-white/45 bg-black/20 px-5 text-base font-semibold text-white shadow-[0_16px_44px_rgba(0,0,0,0.18)] backdrop-blur-[24px] hover:border-white/70 hover:bg-white/10"
+          >
+            Learn More
+          </Button>
+        </div>
+      </div>
+
     </section>
   );
 }

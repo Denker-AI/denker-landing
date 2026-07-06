@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./design-tokens.css";
 
 /* Only apply hover: styles on hover-capable devices at the desktop breakpoint
    (>=lg / 1024px). This removes all hover effects on mobile and tablet, and
@@ -160,8 +161,7 @@ body {
 .hero-title,
 .hero-subtitle,
 .apple-section-heading {
-  font-family: "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont,
-    "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-marketing);
   font-synthesis: none;
 }
 
@@ -171,7 +171,7 @@ body {
 
 .hero-overline {
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0;
   line-height: 24px;
 }
@@ -179,7 +179,7 @@ body {
 .hero-title {
   max-width: 820px;
   font-size: 46px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0;
   line-height: 47px;
 }
@@ -194,8 +194,13 @@ body {
 }
 
 .hero-viewport-section {
+  /* one screen: the motion "video" is a full-bleed background (position:absolute
+     inset:0) that covers the viewport, with the headline overlaid on its upper
+     area — mirroring Apple's hero. Fixed to one screenful so header + video read
+     as a single frame. */
+  position: relative;
   height: 100svh;
-  max-height: 100dvh;
+  min-height: 640px;
   isolation: isolate;
   background: #000;
 }
@@ -379,8 +384,13 @@ body {
 }
 
 .hero-actions {
-  position: fixed;
-  bottom: max(clamp(1rem, 3svh, 2rem), calc(env(safe-area-inset-bottom) + 1rem));
+  /* Pinned to the bottom of the hero itself (which is sized to 100svh/100dvh —
+     i.e. already excludes the mobile browser toolbar), NOT position:fixed to the
+     viewport. Fixed anchored to the visual viewport, so on phones the browser's
+     bottom toolbar / gesture bar covered the buttons and they vanished on short
+     windows. Absolute here keeps them over the motion card and always visible. */
+  position: absolute;
+  bottom: max(clamp(1.5rem, 5svh, 3rem), calc(env(safe-area-inset-bottom) + 2rem));
   left: 50%;
   z-index: 70;
   margin-top: 0;
@@ -470,15 +480,10 @@ body {
 }
 
 @media (max-width: 760px) {
+  /* same growth rule on mobile: never cap the section height — let it scroll to
+     reveal the full band rather than cropping it. */
   .hero-viewport-section {
-    height: min(100svh, 932px);
-    max-height: min(100dvh, 932px);
-  }
-
-  @supports (height: 100dvh) {
-    .hero-viewport-section {
-      height: min(100dvh, 932px);
-    }
+    min-height: 100svh;
   }
 
   .hero-overline {
@@ -583,8 +588,32 @@ body {
    canvases, but shrink earlier on narrower browser widths like Apple's
    product carousels so adjacent context and page chrome still have room. */
 #features {
-  --what-denker-feature-card-width: min(calc(100vw - 48px), 340px);
-  --what-denker-feature-frame-height: clamp(440px, 64svh, 500px);
+  /* Apple visionOS gallery card (measured on apple.com/os/visionos): the card is
+     always the FULL content column — very wide, min(1600px, 87.5vw) — and
+     centered, with small symmetric peeks of the neighbouring cards. The WIDTH
+     never shrinks to fit the viewport; only the HEIGHT flexes:
+
+       height = min(width / --gallery-aspect, --gallery-max-h)
+
+     --gallery-aspect gives the natural shape (portrait on phones → landscape on
+     desktop); --gallery-max-h caps the height so the card never runs past the
+     screen (on short windows it just letterboxes a little — the card stays wide).
+
+     WIDTH is the 1260 content column (min(1260px, 87.5vw)) — the same column the
+     heading and every sibling section use. The card is CENTERED in the viewport
+     (targetOffsetFor), and because a 1260-wide card centered has margins of
+     exactly max(6.25vw, (100vw-1260)/2), its left edge lands on that shared
+     gutter: card-left == heading-left, and left margin == right margin. Raising
+     this cap breaks that identity (the centered card's left edge drifts off the
+     gutter), so keep it at 1260. --gallery-aspect / --gallery-max-h tune shape. */
+  --gallery-aspect: 0.82;
+  --gallery-max-w: min(1260px, 87.5vw);
+  --gallery-max-h: clamp(240px, calc(100svh - 240px), 820px);
+  --what-denker-feature-card-width: var(--gallery-max-w);
+  --what-denker-feature-frame-height: min(
+    calc(var(--gallery-max-w) / var(--gallery-aspect)),
+    var(--gallery-max-h)
+  );
 }
 
 #features::before {
@@ -608,18 +637,13 @@ body {
    carousel's contentLeftMargin() and every other section), instead of
    centering it above a centered card. */
 .what-denker-heading-align {
-  width: var(--what-denker-feature-card-width);
-  margin-left: 24px;
-}
-@media (min-width: 640px) {
-  .what-denker-heading-align {
-    margin-left: 40px;
-  }
-}
-@media (min-width: 768px) {
-  .what-denker-heading-align {
-    margin-left: max(80px, calc((100vw - 1280px) / 2));
-  }
+  /* Content column + gutter identical to every other section — the gallery
+     CardCarousel (BuiltForFounders "An AI coworker…", WhyDenkerAI) uses
+     paddingLeft: max(6.25vw, (100vw-1260)/2) over a 1260 column — so the
+     "Explore…" title's left edge lines up with the rest of the page. The card
+     below is centered independently (targetOffsetFor) and does NOT track this. */
+  width: min(1260px, 87.5vw);
+  margin-left: max(6.25vw, calc((100vw - 1260px) / 2));
 }
 
 .what-denker-feature-card {
@@ -2638,7 +2662,13 @@ body {
      53% (not 50%) — see .what-denker-memory-panel-wrap below, which must
      match so the two stay aligned. */
   top: 53%;
-  left: 6%;
+  /* On narrow cards, dock 6% from the left edge (graph + panel scale with the
+     card). Once the card is wide enough that both hit their width caps, the
+     extra width would otherwise pool into a big middle gap — so instead center
+     the graph+panel cluster (620 + 120 gap + 300 = 1040) and let the side
+     margins absorb the extra. max() picks whichever inset is larger, so the two
+     regimes meet continuously (~1180px card). Panel uses the mirror inset. */
+  left: max(6%, calc((100% - 1040px) / 2));
   z-index: 18;
   display: flex;
   flex-direction: column;
@@ -2646,6 +2676,17 @@ body {
   height: min(430px, 62%);
   transform: translateY(-50%) scale(0.97);
   opacity: 0;
+  /* Darker + more opaque than the shared liquid-glass fill, so the frame reads
+     near-black instead of picking up the bright blue slide behind it. */
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.012)),
+    rgba(9, 11, 15, 0.86) !important;
+  /* Drop liquid-glass's bright inner-highlight strokes (inset 0 ±1px …) — they
+     read as an extra "inner stroke line" inside the card edge. Keep only the
+     outer depth/glow so the frame stays a single clean rounded stroke. */
+  box-shadow:
+    0 12px 34px rgba(0, 0, 0, 0.4),
+    0 0 26px rgba(128, 137, 255, 0.12) !important;
   animation: memory-shell-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
   animation-play-state: var(--motion-play-state);
 }
@@ -2750,6 +2791,7 @@ body {
 
 .what-denker-graph-bubble {
   position: absolute;
+  z-index: 30;
   left: 10%;
   bottom: 12%;
   opacity: 0;
@@ -2768,7 +2810,9 @@ body {
   /* Matches .what-denker-memory-shell's center-anchoring (top: 53% at
      height 62% -> top-edge 22%, bottom-edge 84%). */
   top: 53%;
-  right: 6%;
+  /* Mirror of .what-denker-memory-shell's inset so the graph+panel cluster stays
+     centered with a fixed ~120px gap on wide cards, docked 6% on narrow ones. */
+  right: max(6%, calc((100% - 1040px) / 2));
   z-index: 19;
   width: min(300px, 28%);
   height: min(430px, 62%);
@@ -3521,17 +3565,21 @@ body {
   --earth-cool: rgba(50, 92, 67, 0.56);
 }
 
+/* The card width is always the full column (base #features block); here we set
+   the natural shape (--gallery-aspect: portrait phone → landscape desktop) and
+   the height budget (--gallery-max-h) that caps how tall the wide card gets, so
+   it fits the viewport and only letterboxes a little on short windows. */
 @media (min-width: 640px) {
   #features {
-    --what-denker-feature-card-width: clamp(420px, min(78vw, 70svh), 660px);
-    --what-denker-feature-frame-height: clamp(360px, calc(100svh - 300px), 560px);
+    --gallery-aspect: 1.1;
+    --gallery-max-h: clamp(300px, calc(100svh - 240px), 660px);
   }
 }
 
 @media (min-width: 768px) {
   #features {
-    --what-denker-feature-card-width: clamp(640px, min(84vw, 88svh), 820px);
-    --what-denker-feature-frame-height: clamp(500px, calc(100svh - 360px), 680px);
+    --gallery-aspect: 1.3;
+    --gallery-max-h: clamp(360px, calc(100svh - 260px), 720px);
   }
 
   .what-denker-feature-frame {
@@ -3542,21 +3590,15 @@ body {
 
 @media (min-width: 1080px) {
   #features {
-    --what-denker-feature-card-width: clamp(820px, min(76vw, 92svh), 1020px);
-    --what-denker-feature-frame-height: clamp(560px, calc(100svh - 360px), 720px);
+    --gallery-aspect: 1.5;
+    --gallery-max-h: clamp(440px, calc(100svh - 280px), 780px);
   }
 }
 
 @media (min-width: 1280px) {
   #features {
-    --what-denker-feature-card-width: clamp(980px, min(70vw, 94svh), 1160px);
-    --what-denker-feature-frame-height: clamp(600px, calc(100svh - 360px), 760px);
-  }
-}
-
-@media (min-width: 1500px) {
-  #features {
-    --what-denker-feature-card-width: clamp(1080px, 66vw, 1260px);
+    --gallery-aspect: 1.62;
+    --gallery-max-h: clamp(500px, calc(100svh - 280px), 820px);
   }
 }
 
@@ -3974,6 +4016,10 @@ body {
 .hero-production-stage-logo .hero-production-onboarding-mark {
   width: 128px;
   height: 128px;
+  /* the glyph is drawn off-center in its path (and the box is left-anchored by
+     inset), leaving it ~19px left / 19px high in the bubble; this independent
+     `translate` recenters it and composes with the breathe `transform`. */
+  translate: 19px 19px;
 }
 
 .hero-production-onboarding-intro {
@@ -3987,8 +4033,10 @@ body {
 .hero-production-onboarding-field {
   position: relative;
   display: grid;
-  width: 100vw;
-  height: clamp(300px, 40vw, 540px);
+  /* box-relative (not 100vw) so the glow + logo stay centered on the box,
+     not the viewport, on wide screens. */
+  width: 100cqw;
+  height: 66cqh;
   place-items: center;
   overflow: visible;
   isolation: isolate;
@@ -4171,15 +4219,20 @@ body {
 }
 
 .hero-production-stage-agent-reveal {
-  --agent-reveal-width: clamp(300px, 24vw, 360px);
-  --agent-reveal-height: clamp(612px, 49vw, 735px);
-  --agent-reveal-half-height: clamp(306px, 24.5vw, 367px);
-  --agent-reveal-top-edge: clamp(220px, 30svh, 285px);
+  /* box-relative (cqw = % of the 1440 box) so the solo team card is a fixed
+     fraction of the box at every viewport. Shorter than before (was ~706px
+     tall / "too long"): ~24% wide x ~37% -> a phone-ish card that fits the
+     band with only a small Apple-style bottom crop. */
+  --agent-reveal-width: 24cqw;
+  --agent-reveal-height: 37cqw;
   --agent-reveal-voice-scale-x: 0.377;
   --agent-reveal-voice-scale-y: 0.074;
   position: absolute;
   left: 50%;
-  top: calc(var(--agent-reveal-top-edge) + var(--agent-reveal-half-height));
+  /* rest center in the 1440x600 box: Apple iPhone beat @ ~69% (tall frame,
+     bottom Apple-crops past the band). translateY(-50%) in the keyframe puts
+     the center exactly at this top. */
+  top: 69%;
   z-index: 26;
   width: var(--agent-reveal-width);
   height: var(--agent-reveal-height);
@@ -4401,9 +4454,10 @@ body {
   /* stage holds the frame at its authentic 560x400 layout size; the glass is
      transform-scaled to Apple's solo-iPad proportion (23.5% width, ratio 1.41),
      which shrinks radius, header, and content uniformly */
-  --html-frame-top-edge: clamp(285px, 35svh, 330px);
+  /* rest center in the 1440x600 box: Apple iPad beat @ ~59%.
+     translateY(-50%) in the keyframe puts the center exactly at this top. */
   z-index: 29;
-  top: var(--html-frame-top-edge);
+  top: 59%;
   bottom: auto;
   display: flex;
   width: 560px;
@@ -4443,8 +4497,12 @@ body {
 
 .hero-production-stage-final {
   z-index: 18;
-  top: clamp(700px, 72svh, 900px);
-  width: 1480px;
+  /* lower portion of the 1440x950 box so the flat-lay sits BELOW the overlaid
+     headline (which occupies the upper ~35%), like Apple's hero. */
+  top: 73%;
+  /* one canonical flat-lay in the 1440x950 box; the box scales it to every
+     viewport (no per-breakpoint overrides). coords below match FINAL_SLOTS. */
+  width: 1320px;
   height: 590px;
   min-height: 0;
   animation-duration: var(--hero-production-cycle);
@@ -4576,10 +4634,10 @@ body {
 }
 
 .hero-production-final-desktop {
-  --hero-final-desktop-scale: 0.94;
-  --hero-final-desktop-width: 800px;
-  top: -75px;
-  left: -56px;
+  --hero-final-desktop-scale: 0.76;
+  --hero-final-desktop-width: 720px;
+  top: -28px;
+  left: 8px;
   z-index: 1;
   width: var(--hero-final-desktop-width);
   height: calc(var(--hero-final-desktop-width) * 1919 / 2040);
@@ -4590,12 +4648,12 @@ body {
 }
 
 .hero-production-final-agent-shell {
-  --hero-final-agent-scale: 0.38;
+  --hero-final-agent-scale: 0.396;
   /* slightly wider than a bare iPhone ratio for readability (~0.53 w/h) */
   --agent-reveal-width: 312px;
   --agent-reveal-height: 590px;
-  top: 112px;
-  left: 702px;
+  top: 120px;
+  left: 626px;
   z-index: 4;
   width: var(--agent-reveal-width);
   height: var(--agent-reveal-height);
@@ -4662,12 +4720,12 @@ body {
 }
 
 .hero-production-final-book {
-  --hero-final-book-scale: 0.6;
-  top: -18px;
-  left: 858px;
+  --hero-final-book-scale: 0.518;
+  top: -20px;
+  left: 898px;
   z-index: 3;
   width: 760px;
-  height: 560px;
+  height: 530px;
   filter: drop-shadow(0 30px 84px rgba(0, 0, 0, 0.56));
   transform: translateZ(48px) scale(var(--hero-final-book-scale));
   transform-origin: top left;
@@ -4717,9 +4775,9 @@ body {
 }
 
 .hero-production-final-voice {
-  --hero-final-voice-scale: 0.9;
-  left: 1080px;
-  top: 342px;
+  --hero-final-voice-scale: 1.1;
+  left: 876px;
+  top: 288px;
   bottom: auto;
   z-index: 5;
   filter: drop-shadow(0 24px 52px rgba(0, 0, 0, 0.6));
@@ -4763,151 +4821,13 @@ body {
   animation: none !important;
 }
 
-@media (max-width: 1180px) {
-  .hero-production-stage-final {
-    width: 1260px;
-  }
-
-  .hero-production-final-desktop {
-    --hero-final-desktop-scale: 0.72;
-    --hero-final-desktop-width: 700px;
-    top: -18px;
-    left: 28px;
-  }
-
-  .hero-production-final-agent-shell {
-    --hero-final-agent-scale: 0.365;
-    top: 122px;
-    left: 608px;
-  }
-
-  .hero-production-final-book {
-    --hero-final-book-scale: 0.477;
-    top: -10px;
-    left: 872px;
-    height: 520px;
-  }
-
-  .hero-production-final-voice {
-    --hero-final-voice-scale: 1;
-    left: 844px;
-    top: 268px;
-  }
-
-  .hero-production-final-cursor {
-    top: 262px;
-    left: 1044px;
-    transform: translateZ(88px) scale(1.1);
-  }
-}
-
+/* The finale is one fixed flat-lay in the 1440x600 box (see base rules above);
+   the box scales it to every viewport, so no per-breakpoint finale overrides.
+   Only genuinely viewport-specific, non-finale tweaks remain below. */
 @media (min-width: 1600px) {
   .hero-production-stage-agent-reveal {
     --agent-reveal-voice-scale-x: 0.31;
     --agent-reveal-voice-scale-y: 0.065;
-  }
-
-  .hero-production-stage-final {
-    width: 1420px;
-  }
-
-  .hero-production-final-desktop {
-    --hero-final-desktop-scale: 0.78;
-    --hero-final-desktop-width: 730px;
-    top: -34px;
-    left: -72px;
-  }
-
-  .hero-production-final-agent-shell {
-    --hero-final-agent-scale: 0.412;
-    top: 118px;
-    left: 636px;
-  }
-
-  .hero-production-final-book {
-    --hero-final-book-scale: 0.539;
-    top: -26px;
-    left: 980px;
-    height: 530px;
-  }
-
-  .hero-production-final-voice {
-    --hero-final-voice-scale: 1.15;
-    left: 954px;
-    top: 292px;
-  }
-
-  .hero-production-final-cursor {
-    top: 286px;
-    left: 1178px;
-    transform: translateZ(88px) scale(1.25);
-  }
-}
-
-@media (min-width: 1181px) and (max-width: 1599px) {
-  .hero-production-stage-final {
-    width: 1320px;
-  }
-
-  .hero-production-final-desktop {
-    --hero-final-desktop-scale: 0.76;
-    --hero-final-desktop-width: 720px;
-    top: -28px;
-    left: 8px;
-  }
-
-  .hero-production-final-agent-shell {
-    --hero-final-agent-scale: 0.396;
-    top: 120px;
-    left: 626px;
-  }
-
-  .hero-production-final-book {
-    --hero-final-book-scale: 0.518;
-    top: -20px;
-    left: 898px;
-    height: 530px;
-  }
-
-  .hero-production-final-voice {
-    --hero-final-voice-scale: 1.1;
-    left: 876px;
-    top: 288px;
-  }
-
-  .hero-production-final-cursor {
-    top: 282px;
-    left: 1087px;
-    transform: translateZ(88px) scale(1.2);
-  }
-}
-
-@media (max-height: 720px) and (min-width: 761px) {
-  .hero-production-stage-final {
-    top: calc(100svh - 40px);
-    width: 1260px;
-    height: 526px;
-  }
-
-  .hero-production-final-desktop {
-    --hero-final-desktop-scale: 0.7;
-  }
-
-  .hero-production-final-agent-shell {
-    --hero-final-agent-scale: 0.4;
-    left: 560px;
-  }
-
-  .hero-production-final-book {
-    --hero-final-book-scale: 0.52;
-    left: 760px;
-    height: 430px;
-  }
-
-  .hero-production-final-voice {
-    --hero-final-voice-scale: 0.72;
-    left: 800px;
-    top: 256px;
   }
 }
 
@@ -4915,33 +4835,6 @@ body {
   .hero-production-stage-agent-reveal {
     --agent-reveal-voice-scale-x: 0.41;
     --agent-reveal-voice-scale-y: 0.074;
-  }
-
-  .hero-production-stage-final {
-    left: 47%;
-    top: calc(100svh - 78px);
-    width: 1280px;
-    height: 510px;
-  }
-
-  .hero-production-final-desktop {
-    --hero-final-desktop-scale: 0.7;
-  }
-
-  .hero-production-final-agent-shell {
-    --hero-final-agent-scale: 0.4;
-  }
-
-  .hero-production-final-book {
-    --hero-final-book-scale: 0.54;
-    left: 820px;
-    height: 500px;
-  }
-
-  .hero-production-final-voice {
-    --hero-final-voice-scale: 0.72;
-    left: 880px;
-    top: 308px;
   }
 }
 
@@ -5147,10 +5040,11 @@ body {
   --denk-frame-footer-padding-inline: 1.4rem;
 }
 
-/* Apple's solo iPad proportion: shrink the authentic frame uniformly
-   (radius, header, and content scale together) */
+/* iPad-style solo proportion: shrink the authentic frame uniformly (radius,
+   header, and content scale together). ~0.71 -> ~28% of the box, a touch
+   larger than before so it doesn't read as small next to the other beats. */
 .hero-production-stage-html .hero-production-html-glass {
-  transform: scale(0.633);
+  transform: scale(0.71);
   transform-origin: center center;
 }
 
@@ -5651,21 +5545,21 @@ body {
     clip-path: inset(0 0 0 0 round clamp(22px, 2.2vw, 30px));
     filter: blur(0) brightness(1.12) saturate(1.08)
       drop-shadow(0 18px 42px rgba(0, 0, 0, 0.36));
-    transform: translate(-50%, 7%) translateZ(170px) scale(0.58);
+    transform: translate(-50%, -47%) translateZ(170px) scale(0.58);
   }
   47.6% {
     opacity: 1;
     clip-path: inset(0 0 0 0 round clamp(22px, 2.2vw, 30px));
     filter: blur(0) brightness(1.08) saturate(1.06)
       drop-shadow(0 62px 132px rgba(0, 0, 0, 0.7));
-    transform: translate(-50%, 4%) translateZ(300px) scale(1.035);
+    transform: translate(-50%, -50%) translateZ(300px) scale(1.035);
   }
   57.6% {
     opacity: 1;
     clip-path: inset(0 0 0 0 round clamp(22px, 2.2vw, 30px));
     filter: blur(0) brightness(1.08) saturate(1.06)
       drop-shadow(0 62px 132px rgba(0, 0, 0, 0.7));
-    transform: translate(-50%, 4%) translateZ(300px) scale(1.035);
+    transform: translate(-50%, -50%) translateZ(300px) scale(1.035);
   }
   58.8%,
   100% {
@@ -5673,7 +5567,7 @@ body {
     clip-path: inset(0 0 0 0 round clamp(22px, 2.2vw, 30px));
     filter: blur(0) brightness(0.9) saturate(0.94)
       drop-shadow(0 24px 54px rgba(0, 0, 0, 0.42));
-    transform: translate(-50%, 1%) translateZ(180px) scale(0.58);
+    transform: translate(-50%, -53%) translateZ(180px) scale(0.58);
   }
 }
 
@@ -5742,7 +5636,10 @@ body {
   100% {
     opacity: 1;
     filter: blur(0) brightness(1) drop-shadow(0 44px 110px rgba(0, 0, 0, 0.62));
-    transform: translate(-50%, -50%) translateZ(0) scale(1);
+    /* full-size devices, nudged down ~31px so the flat-lay (whose MacBook/book
+       have negative top offsets) centers within the 600px box without its tops
+       clipping the band's top edge. */
+    transform: translate(-50%, -50%) translateZ(0) scale(0.92);
   }
 }
 
@@ -5830,8 +5727,7 @@ body {
   }
 
   .hero-production-stage-html {
-    --html-frame-top-edge: clamp(370px, 52svh, 430px);
-    top: var(--html-frame-top-edge);
+    top: 59%;
     bottom: auto;
     width: min(94vw, 640px);
     height: min(150vw, 700px);
@@ -6072,20 +5968,18 @@ body {
 }
 
 .hero-viewport-section .hero-production-cinema {
-  /* motion stage: flows below the headline copy and fills the remaining
-     viewport height; the canvas inside scales to fit. clip so beats never
-     rise into the headline or spill below the fold. */
-  position: relative !important;
-  inset: auto !important;
+  /* full-bleed "video" background: fills the whole hero section; the canvas
+     inside covers it (width bleeds, height fills) with the focal point centered.
+     The headline overlays this on a higher z-index. */
+  position: absolute !important;
+  inset: 0 !important;
   z-index: 1;
-  flex: 1 1 auto !important;
-  width: 100vw !important;
+  width: 100% !important;
+  height: 100% !important;
   max-width: none;
-  height: auto !important;
-  min-height: 0;
-  max-height: none;
+  min-height: 0 !important;
+  max-height: none !important;
   margin: 0 !important;
-  margin-inline: calc(50% - 50vw) !important;
   display: flex !important;
   align-items: center;
   justify-content: center;
@@ -6093,18 +5987,20 @@ body {
 }
 
 /* Fixed-size motion canvas (the "video"). Beats/finale lay out in this
-   1440x900 coordinate space; the whole box scales uniformly (--hero-fit, set
-   in JS) to fit the stage below the headline, like a video that keeps its
-   shape and shrinks to fit. */
+   1440x600 coordinate space; the whole box scales uniformly (--hero-fit, set
+   in JS) to fill the stage width below the headline, like a video that keeps
+   its aspect and crops top/bottom rather than letterboxing the sides. */
 .hero-motion-canvas {
   position: relative;
   flex: none;
   width: 1440px;
-  height: 900px;
+  height: 950px;
   container-type: size;
   container-name: herostage;
-  transform: scale(var(--hero-fit, 1));
-  transform-origin: center center;
+  /* `zoom` (not `transform: scale`) so the box re-lays-out at the target size
+     and renders natively sharp on wide screens, instead of rasterizing at
+     1440px and magnifying the bitmap (which softens everything > 1440px). */
+  zoom: var(--hero-fit, 1);
 }
 
 /* debug: append ?box to the URL to see the motion box bounds + live size */
@@ -6141,11 +6037,10 @@ body {
 }
 
 .hero-production-cinema .hero-production-stage-agent-reveal {
-  --agent-reveal-width: clamp(300px, 24vw, 360px);
-  --agent-reveal-height: clamp(612px, 49vw, 735px);
-  --agent-reveal-half-height: clamp(306px, 24.5vw, 367px);
-  --agent-reveal-top-edge: clamp(220px, 30svh, 285px);
-  top: calc(var(--agent-reveal-top-edge) + var(--agent-reveal-half-height)) !important;
+  /* sizes inherited from the base rule (box-relative cqw); this scope only
+     re-asserts the applied top/width/height with the specificity needed to win
+     over the media blocks. */
+  top: 69% !important;
   width: var(--agent-reveal-width) !important;
   height: var(--agent-reveal-height) !important;
 }
@@ -6154,9 +6049,7 @@ body {
   .hero-production-cinema .hero-production-stage-agent-reveal {
     --agent-reveal-width: min(88vw, 400px);
     --agent-reveal-height: min(116vw, 540px);
-    --agent-reveal-half-height: min(58vw, 270px);
-    --agent-reveal-top-edge: clamp(314px, 40svh, 348px);
-    top: calc(var(--agent-reveal-top-edge) + var(--agent-reveal-half-height)) !important;
+    top: 69% !important;
     width: var(--agent-reveal-width) !important;
     height: var(--agent-reveal-height) !important;
   }

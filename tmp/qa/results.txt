@@ -1,0 +1,38 @@
+
+=== Desktop (1440x900) ===
+Slide 0 — card 980x600
+  .what-denker-motion-browser: x14.8 y20.0 w70.4 h64.7 (bottom 84.7)
+  p.what-denker-feature-copy: x21.4 y8.0 w57.1 h10.7 (bottom 18.7)
+Slide 1 — card 980x600
+  .what-denker-summary-browser: x4.5 y10.0 w53.0 h84.0 (bottom 94.0)
+  .what-denker-summary-frame: x60.0 y26.0 w36.0 h58.0 (bottom 84.0)
+  p.what-denker-feature-copy: x60.0 y10.0 w36.0 h16.0 (bottom 26.0)
+Slide 2 — card 980x600
+  .what-denker-gmail-browser: x10.0 y20.0 w80.0 h66.0 (bottom 86.0)
+  p.what-denker-feature-copy: x21.4 y8.0 w57.1 h10.7 (bottom 18.7)
+Slide 3 — card 980x600
+  .what-denker-taskboard-shell: x9.2 y20.0 w81.6 h62.0 (bottom 82.0)
+  p.what-denker-feature-copy: x21.4 y8.0 w57.1 h10.7 (bottom 18.7)
+Slide 4 — card 980x600
+  .what-denker-memory-shell: x6.0 y20.0 w62.0 h62.0 (bottom 82.0)
+  .what-denker-memory-panel-wrap: x66.0 y20.0 w28.0 h62.0 (bottom 82.0)
+  p.what-denker-feature-copy: x21.4 y8.0 w57.1 h10.7 (bottom 18.7)
+
+=== Mobile (390x844) ===
+Slide 0 — card 340x500
+  .what-denker-motion-browser: x4.1 y22.0 w91.8 h50.0 (bottom 72.0)
+  p.what-denker-feature-copy: x9.4 y7.2 w81.2 h13.2 (bottom 20.4)
+Slide 1 — card 340x500
+  .what-denker-summary-browser: x4.0 y22.0 w88.0 h58.0 (bottom 80.0)
+  .what-denker-summary-frame: x13.0 y48.0 w82.0 h40.0 (bottom 88.0)
+  p.what-denker-feature-copy: x9.4 y7.2 w81.2 h13.2 (bottom 20.4)
+Slide 2 — card 340x500
+  .what-denker-gmail-browser: x5.0 y22.0 w90.0 h64.0 (bottom 86.0)
+  p.what-denker-feature-copy: x9.4 y7.2 w81.2 h8.8 (bottom 16.0)
+Slide 3 — card 340x500
+  .what-denker-taskboard-shell: x6.5 y22.0 w87.1 h56.0 (bottom 78.0)
+  p.what-denker-feature-copy: x9.4 y7.2 w81.2 h13.2 (bottom 20.4)
+Slide 4 — card 340x500
+  .what-denker-memory-shell: x6.0 y22.0 w88.0 h58.0 (bottom 80.0)
+  .what-denker-memory-panel-wrap: MISSING
+  p.what-denker-feature-copy: x9.4 y7.2 w81.2 h13.2 (bottom 20.4)

@@ -27,10 +27,19 @@ export type CarouselCard = {
   image?: string;
   /** gallery: environment photo, object-fit cover */
   background?: string;
+  /** gallery: self-made CSS background (gradient/texture) — used instead of a
+   *  photo so a whole row shares one coherent, on-brand tone. Rendered behind
+   *  the foreground; takes precedence over `background`. */
+  backgroundCss?: string;
   /** gallery: UI still rebuilt as JSX/CSS, floated over the background */
   foreground?: ReactNode;
   /** gallery: per-card background focal point, e.g. "center 40%" */
   backgroundPosition?: string;
+  /** gallery: mobile-only foreground nudge (px). Negative x shifts the
+   *  foreground left so a right-side region (e.g. an agent bubble) stays in
+   *  view instead of cropping. Consumed via --gallery-mob-tx/ty in globals.css. */
+  mobileNudgeX?: number;
+  mobileNudgeY?: number;
 };
 
 // Legacy card frame heights per breakpoint — fixed values (not fluid scaling),
@@ -71,10 +80,6 @@ function galleryWidthVars(desktopWidth = GALLERY_DEFAULT_WIDTH) {
     "--gcard-w-desktop": `${desktopWidth}px`,
     "--gcard-w-tablet": `${tabletWidth}px`,
     "--gcard-w-mobile": `min(${mobileWidth}px, calc(100vw - 72px))`,
-    // Foreground is authored to fill a design box of desktopWidth×452 and
-    // scaled by the tile-height ratio, so its proportions stay identical as
-    // the tile shrinks at tablet/mobile.
-    "--gcard-design-w": `${desktopWidth}px`,
   } as React.CSSProperties;
 }
 
@@ -127,6 +132,14 @@ export function CardCarousel({
   const dragging = dragOffset !== null;
   const isDark = theme === "dark";
   const isGallery = variant === "gallery";
+  // Gallery uses a full-width gutter shell (Apple's shared content edge);
+  // legacy keeps the centered max-w-1280 Container. The gutter is applied
+  // inline (not via a class) so it's immune to Tailwind purge / stale CSS.
+  const Shell: React.ElementType = isGallery ? "div" : Container;
+  const galleryGutter = "max(6.25vw, calc((100vw - 1260px) / 2))";
+  const shellStyle = isGallery
+    ? { paddingLeft: galleryGutter, paddingRight: galleryGutter }
+    : undefined;
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
@@ -187,50 +200,67 @@ export function CardCarousel({
   return (
     <section
       className={cn(
-        "flex w-full flex-col items-center px-6 sm:px-10 md:px-20",
-        isGallery ? "py-20 md:py-36" : "py-16 md:py-20",
+        "flex w-full flex-col items-center",
+        isGallery
+          ? "py-14 md:pt-20 md:pb-28"
+          : "px-6 py-16 sm:px-10 md:px-20 md:py-20",
         isDark ? "bg-grey-900" : theme === "tint" ? "section-tint" : "bg-white"
       )}
       data-theme={isDark ? "dark" : "light"}
     >
-      <Container className={cn("flex flex-col items-start", isGallery ? "gap-12" : "gap-14")}>
+      {/* Gallery docks to Apple's shared content gutter (max((100vw−1260)/2,
+          6.25vw)) and lets cards bleed right; legacy keeps the max-w-1280
+          container. */}
+      <Shell
+        style={shellStyle}
+        className={cn(
+          "flex flex-col items-start",
+          isGallery ? "w-full gap-12" : "gap-14"
+        )}
+      >
         {isGallery ? (
-          // Tier-B lockup: eyebrow → riff headline → intro paragraph.
-          <div className="flex w-full max-w-[820px] flex-col gap-3">
+          // Tier-B lockup (measured off apple.com/os/visionos): eyebrow 21/21
+          // semibold → 12px → riff 48/52 semibold, tracking −0.144px → 24px →
+          // intro 21/29 in muted grey. Apple flows this text to an 840px measure
+          // (not ~640), so lines run longer before wrapping.
+          <div className="flex w-full max-w-[840px] flex-col">
             {eyebrow && (
-              <p
+              <FadeIn
+                as="p"
                 className={cn(
-                  "apple-section-heading text-lg font-semibold md:text-[21px]",
-                  isDark ? "text-white/80" : "text-grey-500"
+                  "apple-section-heading text-[19px] font-semibold leading-[1.1] md:text-[21px]",
+                  isDark ? "text-grey-300" : "text-grey-500"
                 )}
               >
                 {eyebrow}
-              </p>
+              </FadeIn>
             )}
             <BlurText
               as="h2"
               className={cn(
-                "apple-section-heading text-3xl font-semibold leading-[1.08] md:text-[40px] min-[1181px]:text-[48px] min-[1181px]:leading-[52px]",
+                "t-display mt-3",
                 isDark ? "text-white" : "text-grey-950"
               )}
               text={heading}
             />
             {intro && (
-              <p
+              <FadeIn
+                as="p"
+                delay={0.12}
                 className={cn(
-                  "apple-section-heading mt-1 text-lg font-medium leading-[1.4] md:text-[21px]",
-                  isDark ? "text-grey-300" : "text-grey-500"
+                  "apple-section-heading mt-5 text-[18px] font-medium leading-[1.4] md:text-[21px] md:leading-[29px]",
+                  isDark ? "text-grey-400" : "text-grey-500"
                 )}
               >
                 {intro}
-              </p>
+              </FadeIn>
             )}
           </div>
         ) : (
           <BlurText
             as="h2"
             className={cn(
-              "font-heading text-3xl font-bold md:text-[40px] md:leading-[48px]",
+              "t-display",
               isDark ? "text-white" : "text-grey-950"
             )}
             text={heading}
@@ -259,18 +289,34 @@ export function CardCarousel({
                 isGallery ? (
                   <div
                     key={card.title}
-                    style={galleryWidthVars(card.widthPx)}
+                    style={{
+                      ...galleryWidthVars(card.widthPx),
+                      ...(card.mobileNudgeX != null
+                        ? { "--gallery-mob-tx": `${card.mobileNudgeX}px` }
+                        : {}),
+                      ...(card.mobileNudgeY != null
+                        ? { "--gallery-mob-ty": `${card.mobileNudgeY}px` }
+                        : {}),
+                    } as React.CSSProperties}
                     className="gallery-card flex shrink-0 flex-col gap-4 select-none"
                   >
-                    <div className="gallery-card-tile relative shrink-0 overflow-hidden rounded-[22px] sm:rounded-[28px] shadow-[0_22px_80px_rgba(0,0,0,0.28)]">
-                      {card.background && (
-                        <img
-                          src={card.background}
-                          alt=""
-                          draggable={false}
-                          className="pointer-events-none absolute inset-0 size-full object-cover"
-                          style={{ objectPosition: card.backgroundPosition ?? "center 45%" }}
+                    <div className="gallery-card-tile relative shrink-0 overflow-hidden radius-card">
+                      {card.backgroundCss ? (
+                        <div
+                          aria-hidden="true"
+                          className="pointer-events-none absolute inset-0"
+                          style={{ background: card.backgroundCss }}
                         />
+                      ) : (
+                        card.background && (
+                          <img
+                            src={card.background}
+                            alt=""
+                            draggable={false}
+                            className="pointer-events-none absolute inset-0 size-full object-cover"
+                            style={{ objectPosition: card.backgroundPosition ?? "center 45%" }}
+                          />
+                        )
                       )}
                       <div aria-hidden="true" className="gallery-card-vignette" />
                       {card.foreground && (
@@ -304,7 +350,7 @@ export function CardCarousel({
                     style={cardWidthVars(card.widthPx)}
                     className="carousel-card-width flex shrink-0 flex-col gap-5 select-none"
                   >
-                    <div className="carousel-card-height w-full shrink-0 overflow-hidden rounded-[20px] sm:rounded-[24px] md:rounded-[32px] bg-primary-50">
+                    <div className="carousel-card-height w-full shrink-0 overflow-hidden radius-card bg-primary-50">
                       {card.image && (
                         <img
                           src={card.image}
@@ -329,7 +375,7 @@ export function CardCarousel({
                     <div className="flex flex-col gap-1">
                       <p
                         className={cn(
-                          "font-heading text-2xl font-bold md:text-[32px] md:leading-[40px]",
+                          "font-marketing text-2xl font-semibold md:text-[32px] md:leading-[40px]",
                           isDark ? "text-white" : "text-grey-950"
                         )}
                       >
@@ -337,7 +383,7 @@ export function CardCarousel({
                       </p>
                       <p
                         className={cn(
-                          "font-heading text-lg font-medium leading-7",
+                          "font-marketing text-lg font-medium leading-7",
                           isDark ? "text-grey-300" : "text-grey-500"
                         )}
                       >
@@ -360,7 +406,7 @@ export function CardCarousel({
             nextDisabled={active === cards.length - 1}
           />
         </div>
-      </Container>
+      </Shell>
     </section>
   );
 }

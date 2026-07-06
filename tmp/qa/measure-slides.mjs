@@ -14,11 +14,18 @@ const SELECTORS = {
 };
 
 async function measureViewport(browser, width, height, label) {
-  const page = await browser.newPage({
+  // Fresh incognito-style context per viewport so we never reuse a stale
+  // disk/HTTP cache entry for the CSS chunk across runs.
+  const context = await browser.newContext({
     viewport: { width, height },
     deviceScaleFactor: 1,
   });
-  await page.goto(url, { waitUntil: "networkidle", timeout: 60_000 });
+  await context.route("**/*.css*", (route) =>
+    route.continue({ headers: { ...route.request().headers(), "Cache-Control": "no-cache" } })
+  );
+  const page = await context.newPage();
+  await page.goto(url, { waitUntil: "load", timeout: 60_000 });
+  await page.reload({ waitUntil: "load", timeout: 60_000 });
   await page.waitForSelector('[data-name="Section - What denker can do?"]', {
     timeout: 30_000,
   });
@@ -114,7 +121,7 @@ async function measureViewport(browser, width, height, label) {
     }
   }
 
-  await page.close();
+  await context.close();
   return results;
 }
 

@@ -12,16 +12,16 @@ export function CTABanner() {
       data-theme="light"
     >
       <Container>
-        <div className="relative flex w-full flex-col items-center justify-center gap-10 overflow-hidden rounded-[20px] bg-grey-50 px-8 py-14 sm:rounded-[24px] sm:px-10 sm:py-16 md:min-h-[408px] md:rounded-[32px] md:px-16 md:py-20">
-          <div className="relative z-20 flex max-w-[600px] flex-col items-center gap-2 text-center text-grey-950">
+        <div className="relative flex w-full flex-col items-center justify-center gap-copy-media overflow-hidden radius-card bg-grey-50 px-8 py-14 sm:px-10 sm:py-16 md:min-h-[408px] md:px-16 md:py-20">
+          <div className="relative z-20 flex max-w-[600px] flex-col items-center gap-title-lead text-center text-grey-950">
             <BlurText
               as="h2"
-              className="font-heading text-3xl font-bold md:text-[40px] md:leading-[48px]"
-              text="Built in Public. Trusted by Builders."
+              className="t-display"
+              text="Your AI coworker is ready when you are."
             />
-            <FadeIn as="p" delay={0.1} className="font-heading text-lg font-medium leading-7 text-grey-500 sm:text-xl">
-              Explore Denker across the platforms where founders and product
-              builders discover, collaborate, and contribute.
+            <FadeIn as="p" delay={0.1} className="t-lead text-grey-500">
+              Download Denker and hand off the research, analysis, and busywork —
+              right across the tools you already use.
             </FadeIn>
           </div>
 
@@ -32,7 +32,6 @@ export function CTABanner() {
             <Button
               variant="secondary"
               href={DOWNLOAD_URL}
-              download
               className="w-full border-primary-600 bg-transparent text-primary-600 hover:bg-primary-50 sm:w-auto"
             >
               Download Denker

@@ -1,0 +1,10 @@
+import { chromium } from "playwright-core";
+const W=Number(process.argv[2]||1440),H=Number(process.argv[3]||900),out=process.argv[4]||"/tmp/f.png";
+const b=await chromium.launch({executablePath:"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",headless:true});
+const p=await b.newPage({viewport:{width:W,height:H},deviceScaleFactor:2});
+await p.goto("http://localhost:3000/?box",{waitUntil:"networkidle"});
+await p.addStyleTag({content:`.hero-production-stage-logo,.hero-production-stage-agent-reveal,.hero-production-stage-voice,.hero-production-stage-html,.hero-production-stage-desktop,.hero-production-stage-final{animation-delay:-22990ms !important;animation-play-state:paused !important;} .hero-production-stage-final{opacity:1 !important;}`});
+await p.waitForTimeout(600);
+await p.screenshot({path:out});
+await b.close();
+console.log("saved",out);

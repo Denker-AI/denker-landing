@@ -120,6 +120,16 @@ const DENKER_GREEN = "#30D158";
 const HERO_INTRO_SEQUENCE_MS = 18_000;
 const HERO_SEQUENCE_MS = 23_000;
 
+/** Fixed reference size of the motion canvas. Apple's visionOS hero video is a
+ *  near-screen-shape ~1.5:1 full-bleed video (1440x950 at desktop) with the
+ *  headline overlaid on its empty upper area and the devices in the lower
+ *  ~55-90%. We mirror that: 1440x950 coordinate space, covered over the
+ *  viewport (width bleeds, no side gaps), headline overlaid on top. */
+const HERO_CANVAS_W = 1440;
+const HERO_CANVAS_H = 950;
+/** Floor so tiny screens crop the composition instead of shrinking to nothing. */
+const HERO_MIN_FIT = 0.5;
+
 /**
  * User-approved final flat-lay slots (Phase 1 gate, 2026-07-06), stated for
  * the canonical 1181-1599px breakpoint of `.hero-production-final-layout`
@@ -137,15 +147,24 @@ const HERO_SEQUENCE_MS = 23_000;
  * the Phase 2 timeline holds each component at during its solo beat, before
  * the finale assembles everything into FINAL_SLOTS. Order = playback order.
  */
+// `centerYPct`/`widthPct` are the AS-RENDERED rest states measured against the
+// 1440x600 box (tmp/measure-beats.mjs), reconciled with globals.css on
+// 2026-07-06 — i.e. the exact position/size the CSS holds each beat at, so the
+// Phase 2 timeline can animate to a source of truth that matches the DOM.
+// `appleRef` records the visionOS beat each maps to (centered at x=50% like
+// Apple). `cursorBubble` has no solo stage yet — it only appears in the finale.
 export const SOLO_BEATS = {
-  logo: { widthPct: 18, centerXPct: 50, centerYPct: 55, appleRef: "Siri glow 30% @54.5%" },
-  teamFrame: { widthPct: 21, centerXPct: 50, centerYPct: 69, appleRef: "iPhone 21% @68.7%" },
-  voice: { widthPct: 19, centerXPct: 50, centerYPct: 55, appleRef: "Vision Pro 29% @56.2%" },
-  cursorBubble: { widthPct: 11, centerXPct: 50, centerYPct: 58, appleRef: "Watch 9.7% @57.9%" },
-  macbookFront: { widthPct: 37, centerXPct: 50, centerYPct: 68, appleRef: "MacBook 36% @67.7%" },
+  logo: { widthPct: 22, centerXPct: 50, centerYPct: 52, appleRef: "Siri glow 30% @54.5%" },
+  teamFrame: { widthPct: 25, centerXPct: 50, centerYPct: 69, appleRef: "iPhone 21% @68.7% (tall, bottom crops)" },
+  voice: { widthPct: 23.5, centerXPct: 50, centerYPct: 55, appleRef: "Vision Pro 29% @56.2%" },
+  cursorBubble: { widthPct: 11, centerXPct: 50, centerYPct: 58, appleRef: "Watch 9.7% @57.9% (finale-only)" },
+  macbookFront: { widthPct: 37.7, centerXPct: 50, centerYPct: 67, appleRef: "MacBook 36% @67.7%" },
   bookFrame: { widthPct: 25.5, centerXPct: 50, centerYPct: 59, appleRef: "iPad 23.5% @59.3%" },
 } as const;
 
+// Finale flat-lay slots in the 1440x600 box, mirroring the
+// `.hero-production-final-*` rules in globals.css (top/left in box px, `scale`
+// applied from each element's top-left). Keep in sync with those rules.
 export const FINAL_SLOTS = {
   macbookTopDown: { top: -28, left: 8, width: 720, scale: 0.76 },
   teamFrame: { top: 120, left: 626, width: 312, height: 590, scale: 0.396 },
@@ -161,6 +180,7 @@ export function HereMedia({
   onPlaybackChange?: (playback: HeroPlayback) => void;
 }) {
   const cinemaRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLDivElement>(null);
   const [playback, setPlayback] = useState<HeroPlayback>("playing");
   const [isHeroVisible, setIsHeroVisible] = useState(true);
   const [runId, setRunId] = useState(0);
@@ -176,6 +196,49 @@ export function HereMedia({
     );
     observer.observe(cinema);
     return () => observer.disconnect();
+  }, []);
+
+  // Motion canvas fits like a video: the fixed HERO_CANVAS box scales uniformly
+  // to fill the stage (never taller than the space below the headline, never
+  // wider than the viewport), so every component scales together as one unit.
+  useLayoutEffect(() => {
+    const stage = cinemaRef.current;
+    const canvas = canvasRef.current;
+    if (!stage || !canvas) return;
+
+    const debug =
+      typeof window !== "undefined" &&
+      new URLSearchParams(window.location.search).has("box");
+
+    const fit = () => {
+      const w = stage.clientWidth;
+      const h = stage.clientHeight;
+      if (!w || !h) return;
+      // Cover, like Apple's full-bleed hero video: the composition fills the
+      // viewport in BOTH dimensions (width bleeds so there are never side gaps;
+      // height fills so it spans top-to-bottom), cropping whatever overflows,
+      // focal point centered. The floor keeps a minimum size on tiny stages.
+      const scale = Math.max(
+        HERO_MIN_FIT,
+        w / HERO_CANVAS_W,
+        h / HERO_CANVAS_H
+      );
+      canvas.style.setProperty("--hero-fit", scale.toFixed(4));
+      if (debug) {
+        stage.dataset.debugBox = "true";
+        const label = stage.querySelector<HTMLElement>(".hero-motion-debug");
+        if (label) {
+          label.textContent = `stage ${w}×${h}  ·  box ${Math.round(
+            HERO_CANVAS_W * scale
+          )}×${Math.round(HERO_CANVAS_H * scale)}  ·  fit ${scale.toFixed(3)}`;
+        }
+      }
+    };
+
+    fit();
+    const ro = new ResizeObserver(fit);
+    ro.observe(stage);
+    return () => ro.disconnect();
   }, []);
 
   useEffect(() => {
@@ -215,6 +278,7 @@ export function HereMedia({
         } as CSSProperties
       }
     >
+      <div className="hero-motion-canvas" ref={canvasRef}>
       <div key={runId} aria-hidden="true" inert>
         <div className="hero-production-stage-logo" aria-hidden>
           <OnboardingDenkerIntro />
@@ -260,6 +324,7 @@ export function HereMedia({
           </div>
         </div>
       </div>
+      </div>
 
       <button
         type="button"
@@ -274,6 +339,8 @@ export function HereMedia({
           <Icons.Play aria-hidden="true" className="ml-0.5 size-4" />
         )}
       </button>
+
+      <div className="hero-motion-debug" aria-hidden />
     </div>
   );
 }

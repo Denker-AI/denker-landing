@@ -1,40 +1,37 @@
 import { CardCarousel, type CarouselCard } from "@/components/ui/CardCarousel";
-import {
-  CanvasWorkspaceStill,
-  CrossToolStill,
-  ScreenUnderstandingStill,
-} from "@/components/WhyDenkerAI/foregrounds";
+import { NotionDoc, ScreenBrowser } from "@/components/WhyDenkerAI/foregrounds";
 
-// "Why Denker AI?" — the differentiation section (§5 of the 2026-07-06
-// sections redesign). Three architecture-level claims, each a layered visionOS
-// tile: a blue/teal environment photo (single-hue-family rule, §6a) under a UI
-// still rebuilt in code. Motion lives only in the "Explore" section; these are
-// stills. `widthPx` varies gently per card for the Apple gallery rhythm — the
-// foreground panel stays a fixed size, so only the revealed background changes.
+// "Why Denker AI?" — the differentiation row. Per-row hue system: motion reads
+// blue, founders green, this row YELLOW. Cards 1–2 recreate the UI window in
+// code (like the founders foregrounds) floated over a yellow texture backdrop;
+// card 3 is the real desktop screenshot (already yellow-toned), shown full-bleed
+// so it keeps height and crops width as the screen narrows. `widthPx` varies per
+// card for the visionOS gallery rhythm.
+const BG = "/images/what-denker-can-do/backgrounds";
+
 const cards: CarouselCard[] = [
   {
     title: "It sees what you see.",
     body: "Ask about anything on your screen — no copy-pasting context into a chat window.",
-    widthPx: 760,
-    background: "/images/what-denker-can-do/backgrounds/clear-blue-shoreline.jpg",
-    backgroundPosition: "center 55%",
-    foreground: <ScreenUnderstandingStill />,
+    widthPx: 780,
+    background: `${BG}/yellow-ink-fluid.jpg`,
+    backgroundPosition: "center 45%",
+    foreground: <ScreenBrowser />,
   },
   {
     title: "One AI across all your tools.",
     body: "Denker moves work between your apps — sheets to docs to email — instead of living in one tab.",
-    widthPx: 700,
-    background: "/images/what-denker-can-do/backgrounds/downloaded-patrick-teal-architecture.jpg",
-    backgroundPosition: "center 40%",
-    foreground: <CrossToolStill />,
+    widthPx: 720,
+    background: `${BG}/yellow-motion-wave.jpg`,
+    backgroundPosition: "center center",
+    foreground: <NotionDoc />,
   },
   {
     title: "Answers become interfaces.",
     body: "Your workspace fills with live frames — boards, reports, timers — not walls of text.",
     widthPx: 820,
-    background: "/images/what-denker-can-do/backgrounds/downloaded-blue-ink-marble.jpg",
-    backgroundPosition: "center 50%",
-    foreground: <CanvasWorkspaceStill />,
+    background: "/images/hero/denker-desktop-screenshot.jpg",
+    backgroundPosition: "center center",
   },
 ];
 

@@ -46,14 +46,14 @@ export function ReachOut() {
       <Container>
         {/* Same card shell as the CTA below (grey-50, radius, padding,
             min-height, centered) so the two read as one matched pair. */}
-        <div className="flex w-full flex-col items-center justify-center gap-8 rounded-[20px] bg-grey-50 px-8 py-14 text-center sm:rounded-[24px] sm:px-10 sm:py-16 md:min-h-[408px] md:rounded-[32px] md:px-16 md:py-20">
-          <div className="flex max-w-[600px] flex-col items-center gap-2">
+        <div className="flex w-full flex-col items-center justify-center gap-copy-media radius-card bg-grey-50 px-8 py-14 text-center sm:px-10 sm:py-16 md:min-h-[408px] md:px-16 md:py-20">
+          <div className="flex max-w-[600px] flex-col items-center gap-title-lead">
             <BlurText
               as="h2"
-              className="font-heading text-3xl font-bold text-grey-950 md:text-[40px] md:leading-[48px]"
+              className="t-display text-grey-950"
               text="Reach Out"
             />
-            <FadeIn as="p" delay={0.1} className="font-heading text-lg font-medium leading-7 text-grey-500 sm:text-xl">
+            <FadeIn as="p" delay={0.1} className="t-lead text-grey-500">
               Find Denker across the platforms where founders and product
               builders connect — or subscribe for practical founder tips.
             </FadeIn>

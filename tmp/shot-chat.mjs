@@ -1,0 +1,12 @@
+import { chromium } from "playwright-core";
+const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+const OUT = process.env.OUT;
+const browser = await chromium.launch({ executablePath: CHROME, headless: true });
+const page = await browser.newPage({ viewport: { width: 700, height: 560 } });
+const errs = [];
+page.on("console", m => { if (m.type()==="error") errs.push(m.text().slice(0,120)); });
+await page.goto("http://localhost:3000/bff-preview", { waitUntil: "networkidle" });
+await page.waitForTimeout(1500);
+await page.screenshot({ path: `${OUT}/chat-prod.png` });
+console.log("errors:", errs.slice(0,3));
+await browser.close();

@@ -1,0 +1,11 @@
+import { chromium } from "playwright-core";
+const b=await chromium.launch({executablePath:"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",headless:false});
+const p=await b.newPage({viewport:{width:1920,height:1080},deviceScaleFactor:1});
+await p.goto("http://localhost:3000/",{waitUntil:"networkidle"});
+const dir="/private/tmp/claude-501/-Users-juanzhang-Desktop-Denker-ClaudeCode-denker-landing-standalone/61e73619-5ab1-4ca1-920c-7f7d812c60f8/scratchpad";
+await p.waitForTimeout(2700); await p.screenshot({path:dir+"/play-logo.png"});
+const o1=await p.evaluate(()=>getComputedStyle(document.querySelector('.hero-production-stage-logo')).opacity);
+await p.waitForTimeout(22500-2700); await p.screenshot({path:dir+"/play-finale.png"});
+const o2=await p.evaluate(()=>getComputedStyle(document.querySelector('.hero-production-stage-final')).opacity);
+console.log("logo@2.7s opacity",o1,"| final@22.5s opacity",o2);
+await b.close();
