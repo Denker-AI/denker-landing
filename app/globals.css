@@ -676,7 +676,10 @@ body {
    Tailwind utility for y once we've dropped the x-centering. */
 @media (min-width: 768px) {
   .what-denker-feature-copy[data-copy-layout="side"] {
-    top: 10%;
+    /* Top aligned to the same rendered line as the centered copy on every
+       other slide (top-8 = 32px ≈ 5.3% of the 600px card at 1440px), so
+       slide 2's headline sits at the same visual height as slide 1's. */
+    top: 5.3%;
     left: 60%;
     right: 4%;
     width: auto;
@@ -4530,8 +4533,8 @@ body {
 
 .hero-production-final-agent-shell {
   --hero-final-agent-scale: 0.38;
-  /* iPhone body ratio (~0.49 w/h) */
-  --agent-reveal-width: 290px;
+  /* slightly wider than a bare iPhone ratio for readability (~0.53 w/h) */
+  --agent-reveal-width: 312px;
   --agent-reveal-height: 590px;
   top: 112px;
   left: 702px;
@@ -4716,8 +4719,8 @@ body {
 
   .hero-production-final-agent-shell {
     --hero-final-agent-scale: 0.365;
-    top: 140px;
-    left: 649px;
+    top: 122px;
+    left: 608px;
   }
 
   .hero-production-final-book {
@@ -4759,8 +4762,8 @@ body {
 
   .hero-production-final-agent-shell {
     --hero-final-agent-scale: 0.412;
-    top: 136px;
-    left: 679px;
+    top: 118px;
+    left: 636px;
   }
 
   .hero-production-final-book {
@@ -4797,8 +4800,8 @@ body {
 
   .hero-production-final-agent-shell {
     --hero-final-agent-scale: 0.396;
-    top: 140px;
-    left: 669px;
+    top: 120px;
+    left: 626px;
   }
 
   .hero-production-final-book {
