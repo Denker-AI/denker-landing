@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { HeroMacBook } from "@/components/Hero/HeroMacBook";
+import { HeroMacBookFront } from "@/components/Hero/HeroMacBookFront";
 import {
   HeroVoiceListeningIndicator,
   OnboardingDenkerIntro,
@@ -35,7 +36,8 @@ const CELLS: { id: string; beatWidth: string; aspectRatio?: string; node: ReactN
   },
   { id: "voice", beatWidth: "18%", node: <HeroVoiceListeningIndicator staticMode /> },
   // cursor bubble cell added in Task 7 when the component exists
-  { id: "macbook", beatWidth: "36%", node: <HeroMacBook /> },
+  { id: "macbook-front-solo", beatWidth: "36%", node: <HeroMacBookFront /> },
+  { id: "macbook-topdown-finale", beatWidth: "36%", node: <HeroMacBook /> },
   { id: "book", beatWidth: "30%", aspectRatio: "760 / 520", node: <ProductionHtmlFrame /> },
 ];
 

@@ -12,6 +12,7 @@ import {
 } from "react";
 import Image from "next/image";
 import { HeroMacBook } from "@/components/Hero/HeroMacBook";
+import { HeroMacBookFront } from "@/components/Hero/HeroMacBookFront";
 import { Icons } from "@/components/production/ui/icons";
 import {
   surfaceRoleAttributes,
@@ -199,7 +200,7 @@ export function HereMedia({
         </div>
 
         <div className="hero-production-stage-desktop" aria-hidden>
-          <HeroMacBook />
+          <HeroMacBookFront />
         </div>
 
         <div className="hero-production-stage-final" aria-hidden>

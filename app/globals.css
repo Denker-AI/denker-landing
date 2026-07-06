@@ -2468,6 +2468,123 @@ body {
   animation: none;
 }
 
+/* Memory-graph motion slide. Same play-state convention as the other
+   demos: keyframes are paused until the layer enters "playing", and the
+   "final" state pins everything to its end values via animation-fill-mode
+   plus the [data-motion-state="final"] overrides below. */
+.what-denker-graph-motion {
+  --graph-cycle: 4.6s;
+}
+
+.memory-graph-edges {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.memory-graph-edges line {
+  stroke: rgba(214, 197, 255, 0.55);
+  stroke-width: 0.22;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: memory-edge-draw 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 1.4s;
+  animation-play-state: var(--motion-play-state);
+}
+
+.memory-graph-node {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  transform: translate(-50%, -50%) scale(0.6);
+  background: rgba(10, 22, 30, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(12px);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  animation: memory-node-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(0.35s + var(--node-order, 0) * 0.28s);
+  animation-play-state: var(--motion-play-state);
+}
+
+.memory-graph-node[data-order="0"] { --node-order: 0; }
+.memory-graph-node[data-order="1"] { --node-order: 1; }
+.memory-graph-node[data-order="2"] { --node-order: 2; }
+.memory-graph-node[data-order="3"] { --node-order: 3; }
+.memory-graph-node[data-order="4"] { --node-order: 4; }
+.memory-graph-node[data-order="5"] { --node-order: 5; }
+.memory-graph-node[data-order="6"] { --node-order: 6; }
+
+.memory-graph-node i {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #3af88c;
+}
+
+.memory-graph-detail {
+  position: absolute;
+  right: 7%;
+  bottom: 30%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: rgba(8, 18, 26, 0.78);
+  border: 1px solid rgba(58, 248, 140, 0.35);
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 12.5px;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: memory-detail-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 3.3s;
+  animation-play-state: var(--motion-play-state);
+}
+
+.memory-graph-detail strong {
+  font-size: 13.5px;
+  color: #3af88c;
+}
+
+.what-denker-graph-bubble {
+  position: absolute;
+  left: 12%;
+  bottom: 16%;
+  opacity: 0;
+  animation: memory-detail-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 3.7s;
+  animation-play-state: var(--motion-play-state);
+}
+
+.what-denker-graph-motion[data-motion-state="final"] .memory-graph-edges line,
+.what-denker-graph-motion[data-motion-state="final"] .memory-graph-node,
+.what-denker-graph-motion[data-motion-state="final"] .memory-graph-detail,
+.what-denker-graph-motion[data-motion-state="final"] .what-denker-graph-bubble {
+  animation-duration: 0s;
+  animation-delay: 0s;
+}
+
+@keyframes memory-node-in {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes memory-edge-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes memory-detail-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .what-denker-taskboard-shell {
   --taskboard-column-gap: 10px;
   --taskboard-padding: 18px;
@@ -4513,9 +4630,9 @@ body {
   backface-visibility: hidden;
 }
 
-.hero-production-stage-desktop .hero-macbook {
-  height: 100%;
-  aspect-ratio: 2040 / 1919;
+.hero-production-stage-desktop .hero-macbook-front {
+  width: min(100%, 58vw);
+  max-width: 880px;
   margin-inline: auto;
 }
 
@@ -4579,6 +4696,61 @@ body {
 
 .hero-macbook-device {
   object-fit: contain;
+}
+
+.hero-macbook-front {
+  position: relative;
+  width: 100%;
+}
+
+.hero-macbook-front-lid {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 2200 / 1429;
+  border: clamp(6px, 0.62vw, 10px) solid #060607;
+  border-radius: clamp(14px, 1.3vw, 20px) clamp(14px, 1.3vw, 20px) 0 0;
+  background: #060607;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.09),
+    inset 0 0 1px rgba(255, 255, 255, 0.22);
+}
+
+.hero-macbook-front-display {
+  object-fit: cover;
+  border-radius: clamp(7px, 0.65vw, 10px) clamp(7px, 0.65vw, 10px) 0 0;
+}
+
+.hero-macbook-front-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 11.4%;
+  height: 3.4%;
+  border-radius: 0 0 clamp(4px, 0.4vw, 6px) clamp(4px, 0.4vw, 6px);
+  background: #060607;
+  transform: translateX(-50%);
+}
+
+.hero-macbook-front-base {
+  position: relative;
+  height: clamp(10px, 1.1vw, 16px);
+  border-radius: 0 0 clamp(10px, 1vw, 14px) clamp(10px, 1vw, 14px);
+  background:
+    linear-gradient(180deg, #3a3b3e 0%, #232427 34%, #101113 78%, #050506 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 18px 44px rgba(0, 0, 0, 0.55);
+}
+
+.hero-macbook-front-scoop {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 16%;
+  height: 46%;
+  border-radius: 0 0 999px 999px;
+  background: linear-gradient(180deg, #08090a 0%, #1c1d20 100%);
+  transform: translateX(-50%);
 }
 
 .hero-production-final-layout {
