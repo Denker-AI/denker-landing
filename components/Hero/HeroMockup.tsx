@@ -236,7 +236,7 @@ export function HereMedia({
   );
 }
 
-function HeroVoiceListeningIndicator({
+export function HeroVoiceListeningIndicator({
   staticMode = false,
 }: {
   staticMode?: boolean;
@@ -319,7 +319,7 @@ function HeroVoiceListeningIndicator({
   );
 }
 
-function OnboardingDenkerIntro() {
+export function OnboardingDenkerIntro() {
   return (
     <div className="hero-production-onboarding-intro" aria-hidden="true">
       <div className="hero-production-onboarding-field">
@@ -703,7 +703,7 @@ function ProductionFrame({
   );
 }
 
-function ProductionAgentFrame({ className }: { className?: string }) {
+export function ProductionAgentFrame({ className }: { className?: string }) {
   return (
     <ProductionFrame className={className}>
       <FrameHeader
@@ -749,7 +749,7 @@ function ProductionAgentFrame({ className }: { className?: string }) {
   );
 }
 
-function HeroFinalTopDownMacBook({ className }: { className?: string }) {
+export function HeroFinalTopDownMacBook({ className }: { className?: string }) {
   return (
     <div className={cn("hero-production-final-topdown", className)}>
       <Image
@@ -763,7 +763,7 @@ function HeroFinalTopDownMacBook({ className }: { className?: string }) {
   );
 }
 
-function HeroDesktopFocusDisplay({ className }: { className?: string }) {
+export function HeroDesktopFocusDisplay({ className }: { className?: string }) {
   return (
     <div className={cn("hero-production-desktop-macbook", className)}>
       <div className="hero-production-desktop-macbook-shell">
@@ -773,7 +773,7 @@ function HeroDesktopFocusDisplay({ className }: { className?: string }) {
   );
 }
 
-function ProductionHtmlFrame() {
+export function ProductionHtmlFrame() {
   return (
     <IntroGlassBubble
       className="hero-production-html-glass"
