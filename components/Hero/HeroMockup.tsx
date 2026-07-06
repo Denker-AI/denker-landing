@@ -131,7 +131,7 @@ const HERO_SEQUENCE_MS = 23_000;
  */
 export const FINAL_SLOTS = {
   macbookTopDown: { top: -28, left: 8, width: 720, scale: 0.76 },
-  teamFrame: { top: 140, left: 669, width: 290, height: 590, scale: 0.396 },
+  teamFrame: { top: 120, left: 626, width: 312, height: 590, scale: 0.396 },
   bookFrame: { top: -20, left: 898, width: 760, height: 530, scale: 0.518 },
   voice: { top: 288, left: 876, scale: 1.1 },
   cursorBubble: { top: 282, left: 1087, scale: 1.2 },
