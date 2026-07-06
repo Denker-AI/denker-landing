@@ -4904,6 +4904,9 @@ body {
   transform: none;
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
+  /* keep header/footer text clear of the rounded corners */
+  --denk-frame-header-padding-inline: 1.4rem;
+  --denk-frame-footer-padding-inline: 1.4rem;
 }
 
 /* Apple's solo iPad proportion: shrink the authentic frame uniformly
