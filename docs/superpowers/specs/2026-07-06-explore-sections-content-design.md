@@ -79,25 +79,100 @@ integrations → S3C2; generative UI → S3C3; parallel agents → S1#4; memory 
 `CardCarousel`'s card becomes a two-layer composition:
 
 1. **Background layer** — wallpaper/environment photo, `object-fit: cover`, fills the card
-   at every width; crops instead of distorting. Source from the existing wallpaper
-   library (`public/images/what-denker-can-do/backgrounds/` plus the macOS-style
-   wallpapers already used in the baked webps). Each card gets a distinct background;
-   exact assignment tuned at build QA for section-level color rhythm.
+   at every width; crops instead of distorting.
 2. **Foreground layer** — the UI component rebuilt as JSX + CSS (same approach as the
    motion section's GitHub/Gmail surfaces), rendered inside the card:
-   - Designed at a fixed design width per component (≈640–760px).
-   - Scaled to the card via `transform: scale()` driven by the card height ratio
-     (desktop 495 / tablet 360 / mobile 192), so proportions and text stay identical
-     across breakpoints — only the visible background area changes.
+   - Designed at a fixed design width per component (≈600px inside the 696px tile).
+   - Scaled to the card via `transform: scale()` driven by the tile size per breakpoint,
+     so proportions and text stay identical across breakpoints — only the visible
+     background area changes.
    - Real drop shadow + existing vignette treatment for the floating-panel spatial look.
 3. **API change** — `CarouselCard` gains `background: string` and
-   `foreground?: ReactNode` (+ optional `foregroundWidth`); the current single `image`
-   field remains supported during migration.
+   `foreground?: ReactNode`; the current single `image` field remains supported during
+   migration. The per-card `widthPx` variable-width system retires in favor of uniform
+   tiles (see §7).
 
 These are stills: no animation inside section 2/3 foregrounds (matches Apple's static
 sections; motion lives only in section 1).
 
-## 7. Spatial language (shared rules)
+### 6a. Background color coherence
+
+The current baked assets span purple, gold/bronze, orange, and blue wallpapers — the
+page reads as unrelated screenshots. New rule: **one hue family, varied brightness and
+texture.**
+
+- All card backgrounds (motion + both static sections) come from the cool
+  blue → teal → cyan spectrum (hue ≈ 190°–250°) that the motion section and hero
+  already use. No purple, gold, or orange backdrops anywhere in the three sections.
+- Backgrounds differ per card by brightness, texture, and composition — not by hue.
+  Source from the existing library in `public/images/what-denker-can-do/backgrounds/`
+  (11 blue/teal images: shoreline, lakes, marble, architecture lines, fluid renders),
+  which already fits the rule. Exact per-card assignment tuned at build QA.
+- Denker green (`#3AF88C`) remains the only accent color, carried by agent cursors,
+  bubbles, and highlights in the foreground components.
+- Section surface rhythm mirrors Apple's three-surface system (§7): dark hero →
+  dark motion/founders sections → light "Why Denker" section, with the same blue-teal
+  wallpaper family inside cards on both surface types.
+
+## 7. Measured Apple visionOS specs → Denker adaptation
+
+Measured live on apple.com/os/visionos at 1440 / 1068 / 390 viewports (2026-07-06).
+
+### Section rhythm
+
+| Property | Apple (measured) | Denker adaptation |
+|---|---|---|
+| Section vertical padding | 144px top / 144–216px bottom | Raise our sections from ~80px to 144px top / 144px bottom (desktop) |
+| Section height | ~950–1170px per section | Falls out of card size + header lockup + padding |
+| Surface colors | Only 3 on the whole page: `#000`, `#1d1d1f`, `#f5f5f7` | Hero + motion + Founders on dark (`grey-950`/`grey-900`), Why Denker on light `#f5f5f7`-equivalent |
+
+### Section header lockups
+
+Apple uses two tiers:
+
+- **Tier A** (hero, motion section): single H2, 48px/52 semibold, letter-spacing −0.144px.
+  Ladder 48 → 40 → 32px (desktop/tablet/mobile).
+- **Tier B** (static gallery sections): three-part lockup — eyebrow 21px/21 semibold
+  (12px below) + riff headline 48px/52 semibold (24px below) + intro paragraph 21px/29
+  semibold in grey `#6e6e73`. Riff ladder 48 → 40 → 32px.
+
+Denker adaptation: motion section keeps Tier A (bump max size 42 → 48px ladder).
+Both static sections upgrade from single heading to the Tier B lockup:
+
+- Built for Founders: eyebrow "Built for founders" · riff (proposed) "Run your week,
+  not your inbox." · intro one-liner about delegating real work.
+- Why Denker AI: eyebrow "Why Denker AI" · riff (proposed) "Not another chatbot tab." ·
+  intro one-liner about desktop-level, cross-app AI.
+
+Riff/intro copy is a proposal — finalize at implementation review.
+
+### Motion carousel (Apple "highlights")
+
+| Property | Apple | Denker adaptation |
+|---|---|---|
+| Tile size (desktop 1440) | 1245×680 (~87vw, 1.83:1), radius 28px | Keep our ~1260px tile; standardize radius 28px |
+| Slide gap | 20px | Change ours from 16px to 20px |
+| Caption overlay | Pinned top-center, 28px/32 semibold, white 92%; ladder 28 → 24 → 17px | Bump ours from 22px to the 28/24/17 ladder |
+| Mobile tile | **Portrait 306×480 (~0.64:1)** — not a shrunken landscape | Adopt: below ~734px the motion card switches to portrait; background crops via cover, foreground rescales/re-stacks |
+| Controls | Play/pause 56×56 circle; dots pill 216×56, radius 28 | Ours already match (size-14 = 56px) — keep |
+
+### Static gallery (Apple "Spatial experiences" pattern)
+
+| Property | Apple | Denker adaptation |
+|---|---|---|
+| Tile (desktop) | Uniform 696×452 (1.54:1), radius 28px, overflow hidden | Replace variable 620–880px widths with uniform 696×452 tiles |
+| Tile (tablet 1068) | 644×416 | Adopt |
+| Tile (mobile 390) | **260×316 portrait-ish (0.82:1)** | Adopt — replaces our 192px-tall letterbox cards, which is where legibility currently dies |
+| Item gap | 20px | Change ours from 8px to 20px |
+| Caption placement | Below the tile, never overlaid | Ours already below — keep |
+| Caption type | Title 17px/21 semibold dark; body 17px/21 semibold grey `#6e6e73`, ~14px below title; mobile title 14px | Shrink ours from 32px title / 18px body to the 17px quiet-caption scale (dark sections: white title, `grey-300` body) |
+| Prev/next buttons | 36×36 circles, `rgba(210,210,215,0.64)`, right-aligned | Replace our 40×52 pills with 36px circles |
+
+Rationale for the quiet captions: Apple lets the tile carry the message and keeps text
+as a caption, which is what makes five-card sections scannable. Our current 32px
+per-card titles compete with the section headline.
+
+## 8. Spatial language (shared rules)
 
 - One consistent "space": every card = environment photo → floating glass panel(s) →
   small foreground accent (cursor bubble, voice capsule, key caps).
@@ -105,11 +180,15 @@ sections; motion lives only in section 1).
   to force depth even in stills.
 - Reuse the `what-denker-photo-vignette` treatment and existing glass tokens everywhere.
 
-## 8. Build scope summary
+## 9. Build scope summary
 
-- **Copy edits:** motion slides 1–4 overlays; section 2/3 headings unchanged, all card
-  titles/bodies replaced; `WhyDenkerAI` goes 5 → 3 cards.
+- **Copy edits:** motion slides 1–4 overlays; all card titles/bodies replaced;
+  `WhyDenkerAI` goes 5 → 3 cards; both static sections gain the eyebrow + riff + intro
+  header lockup (§7).
 - **New motion build:** memory-graph slide (CSS/SVG), parallel-agent polish on taskboard.
 - **Component builds:** 8 static foreground components (JSX + CSS stills).
-- **Carousel change:** layered card support in `CardCarousel`.
-- **No new image production**; backgrounds reuse the existing wallpaper library.
+- **Carousel changes:** layered card support; uniform 696×452 tiles (644×416 tablet,
+  260×316 portrait mobile); 20px gaps; 17px caption scale; 36px circular paddles;
+  144px section padding.
+- **No new image production**; backgrounds reuse the existing blue/teal wallpaper
+  library under the single-hue-family rule (§6a).
