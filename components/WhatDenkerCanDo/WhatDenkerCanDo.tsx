@@ -109,7 +109,12 @@ const TASKBOARD_DEMO_MOTION_MS = 4600;
 const FIRST_DEMO_MOTION_MS = 4200;
 const SUMMARY_DEMO_MOTION_MS = 4600;
 const GMAIL_DEMO_MOTION_MS = 4600;
-const GRAPH_DEMO_MOTION_MS = 4600;
+/* Simpler two-beat choreography (bubble at 0.8s, node-select + panel-in at
+   2.2s/2.3s, ~0.45s panel slide) finishes well before the taskboard's 4.6s
+   window — shortened so the slide holds on the completed state (graph +
+   selected node + panel) for a beat before advancing, instead of sitting
+   idle. */
+const GRAPH_DEMO_MOTION_MS = 3800;
 const DEMO_FINAL_HOLD_MS = 500;
 const GITHUB_PROMPT = "Open GitHub page";
 const GITHUB_TYPING_START_MS = 720;
