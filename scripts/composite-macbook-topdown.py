@@ -5,8 +5,8 @@ photo (denker-macbook-physical-tight-opaque.png):
 1. fits the screen trapezoid from pixel brightness and perspective-warps the
    screenshot behind a rounded-corner mask (with baked vertical shading), over
    a bezel-black underlay that hides the old baked screen;
-2. re-pastes the photo's own notch (camera dot included) using its dark
-   pixels only, so no old-wallpaper fringe comes along;
+2. draws a clean synthetic notch (rounded bottom corners, bezel black) on
+   the screenshot before warping, so it stays perspective-correct;
 3. rebuilds a clean silhouette alpha from the intact opaque photo via
    row-span x column-span intersection of non-black pixels (the shipped
    "tight" alpha asset has holes in the keyboard - do not use it).
@@ -37,7 +37,7 @@ edge = lambda fit, y: fit[0] * y + fit[1]
 yo_t, yo_b = 33, 799
 outer = [(edge(lfit, yo_t) - 5, yo_t), (edge(rfit, yo_t) + 5, yo_t),
          (edge(rfit, yo_b) + 5, yo_b), (edge(lfit, yo_b) - 5, yo_b)]
-y_top, y_bot, in_x, in_t, in_b = 38, 794, 8, 7, 6
+y_top, y_bot, in_x, in_t, in_b = 38, 794, 2, 2, 2
 quad = [(edge(lfit, y_top) + in_x, y_top + in_t), (edge(rfit, y_top) - in_x, y_top + in_t),
         (edge(rfit, y_bot) - in_x, y_bot - in_b), (edge(lfit, y_bot) + in_x, y_bot - in_b)]
 
@@ -57,9 +57,15 @@ for y in range(sh):
     sarr[y, :] = int(30 * (y / sh))
 black = Image.new("RGBA", (sw, sh), (0, 0, 0, 255))
 shot = Image.alpha_composite(shot, Image.merge("RGBA", (*black.split()[:3], Image.fromarray(sarr, "L"))))
+# clean synthetic notch, drawn flat in source space so the warp keeps it
+# perspective-true: 12% of screen width, menu-bar height, rounded bottom
+notch_w, notch_h, notch_r = int(sw * 0.121), int(sh * 0.040), int(sw * 0.006)
+nd = ImageDraw.Draw(shot)
+nx0 = (sw - notch_w) // 2
+nd.rounded_rectangle([nx0, -notch_r, nx0 + notch_w, notch_h], radius=notch_r, fill=(5, 5, 6, 255))
 warped = shot.transform((W, H), Image.PERSPECTIVE, coeffs, resample=Image.BICUBIC)
 mask_src = Image.new("L", (sw, sh), 0)
-ImageDraw.Draw(mask_src).rounded_rectangle([0, 0, sw - 1, sh - 1], radius=42, fill=255)
+ImageDraw.Draw(mask_src).rounded_rectangle([0, 0, sw - 1, sh - 1], radius=34, fill=255)
 mask = mask_src.transform((W, H), Image.PERSPECTIVE, coeffs, resample=Image.BICUBIC)
 
 out = base.copy()
@@ -68,11 +74,6 @@ ImageDraw.Draw(under).polygon(outer, fill=255)
 out.paste(Image.new("RGBA", (W, H), (8, 8, 10, 255)), (0, 0), under.filter(ImageFilter.GaussianBlur(1.2)))
 out.paste(warped, (0, 0), mask)
 
-NX0, NX1, NY0, NY1 = 916, 1122, 36, 92
-bbox = np.zeros((H, W), dtype=bool)
-bbox[NY0:NY1, NX0:NX1] = True
-notch = (g < 55) & bbox
-out.paste(base, (0, 0), Image.fromarray((notch * 255).astype("uint8"), "L").filter(ImageFilter.GaussianBlur(0.6)))
 
 nz = g > 3
 col_mask = np.zeros_like(nz)
