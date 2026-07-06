@@ -56,6 +56,9 @@ import { Icons } from "@/components/production/ui/icons";
 import { AgentAvatarPreview } from "@/components/production/ui/agent-avatar-preview";
 import { FrameFooter } from "@/components/production/shapes/shared/frame-footer";
 import { FrameHeader } from "@/components/production/shapes/shared/frame-header";
+import { KanbanColumn } from "@/components/production/shapes/taskboard/kanban-column";
+import { KanbanCard } from "@/components/production/shapes/taskboard/kanban-card";
+import type { DemoColumn, DemoTask } from "@/components/production/shapes/taskboard/types";
 import {
   surfaceRoleAttributes,
   surfaceRoleClassName,
@@ -152,107 +155,99 @@ const githubRuns = [
   },
 ];
 
-const taskboardColumns = [
+const taskboardColumns: DemoColumn[] = [
   {
     status: "backlog",
-    title: "Backlog",
-    color: "var(--taskboard-status-muted)",
-    count: 1,
     tasks: [
       {
         id: "task-101",
         ticket: "DEN-101",
         title: "Turn homepage notes into onboarding checklist",
+        status: "backlog",
         agent: "Denker",
+        agentColor: "#3af88c",
         priority: "low",
         due: "8 Jul",
         comments: 1,
-        ship: "Plan",
+        ship: { label: "Plan", variant: "neutral" },
       },
     ],
   },
   {
     status: "todo",
-    title: "Todo",
-    color: "var(--taskboard-status-selected)",
-    count: 1,
     tasks: [
       {
         id: "task-118",
         ticket: "DEN-118",
         title: "Create signed local-dev smoke test runbook",
+        status: "todo",
         agent: "Runtime",
+        agentColor: "#60a5fa",
         priority: "medium",
         due: "Today",
         comments: 2,
-        ship: "WIP",
+        ship: { label: "WIP", variant: "blue" },
       },
     ],
   },
   {
     status: "in_progress",
-    title: "In Progress",
-    color: "var(--taskboard-status-warning)",
-    count: 1,
     tasks: [
       {
         id: "task-126",
         ticket: "DEN-126",
         title: "Wire taskboard demo to new-user desktop seed data",
+        status: "in_progress",
         agent: "Canvas",
+        agentColor: "#f472b6",
         priority: "high",
         due: "Today",
         comments: 4,
-        ship: "Pushed",
+        ship: { label: "Pushed", variant: "amber" },
       },
     ],
   },
   {
     status: "blocked",
-    title: "Blocked",
-    color: "var(--taskboard-status-error)",
-    count: 1,
     tasks: [
       {
         id: "task-133",
         ticket: "DEN-133",
         title: "Wait for notarized desktop build artifact",
+        status: "blocked",
         agent: "Release",
+        agentColor: "#ff453a",
         priority: "urgent",
         due: "Today",
         comments: 1,
-        ship: "Fix",
+        ship: { label: "Fix", variant: "amber" },
       },
     ],
   },
   {
     status: "in_review",
-    title: "In review",
-    color: "var(--taskboard-status-review)",
-    count: 1,
     tasks: [
       {
         id: "task-142",
         ticket: "DEN-142",
         title: "Verify desktop toast handoff after workflow completion",
+        status: "in_review",
         agent: "QA",
+        agentColor: "#a78bfa",
         priority: "medium",
         due: "Today",
         comments: 3,
-        ship: "#630",
+        ship: { label: "#630", variant: "neutral" },
       },
     ],
   },
   {
     status: "done",
-    title: "Done",
-    color: "var(--taskboard-status-accent)",
-    count: 0,
     tasks: [],
   },
 ];
 
-const completedTask = taskboardColumns[4].tasks[0];
+const completedTask: DemoTask = taskboardColumns[4]!.tasks[0]!;
 
 function controlsFrameGap() {
   return window.innerWidth >= 768 ? CONTROLS_FRAME_GAP_DESKTOP : CONTROLS_FRAME_GAP_MOBILE;
@@ -873,57 +868,58 @@ function GmailReplySurface({ pastedReply }: { pastedReply: string }) {
 }
 
 function ProductionTaskboardSurface({ active }: { active: boolean }) {
+  const movingTask: DemoTask = { ...completedTask, due: "Done", ship: { label: "Merged", variant: "purple" } };
+
   return (
     <div
-      className="what-denker-taskboard-shell"
+      className={cn(surfaceRoleClassName("frame"), "what-denker-taskboard-shell")}
       aria-hidden="true"
       data-active={active ? "true" : undefined}
+      {...surfaceRoleAttributes("frame", {
+        nativeLevel: "root",
+        nativeGroup: "landing-taskboard-preview",
+      })}
     >
-      <header className="taskboard-header">
-        <div className="taskboard-title-row">
-          <span className="taskboard-frame-icon">
-            <Icons.Kanban />
-          </span>
-          <h3>Task Board</h3>
-        </div>
-        <div className="taskboard-display-control">
-          <span>Board</span>
-          <ChevronRight />
-        </div>
-      </header>
+      <FrameHeader
+        title="Task Board"
+        icon={Icons.Kanban}
+        accentColor="bg-accent"
+        pinned
+        onTogglePin={() => undefined}
+        onHide={() => undefined}
+        data-testid="what-denker-taskboard-frame-header"
+      />
 
-      <section className="taskboard-columns">
-        {taskboardColumns.map((column) => {
-          const tasks = column.tasks ?? [];
+      {/* Board content — production taskboard-frame wraps the columns in
+          "flex min-h-0 flex-1 gap-1.5 overflow-x-auto px-2 py-1"; the demo
+          clips instead of scrolling. */}
+      <div className="taskboard-columns scrollbar-none flex min-h-0 flex-1 gap-1.5 overflow-hidden px-2 py-1">
+        {taskboardColumns.map((column) => (
+          <KanbanColumn
+            key={column.status}
+            status={column.status}
+            tasks={column.tasks}
+            countTransitionTo={column.status === "done" ? column.tasks.length + 1 : undefined}
+            getCardClassName={(task) =>
+              task.id === completedTask.id ? "taskboard-card-moving-source" : undefined
+            }
+          />
+        ))}
+      </div>
 
-          return (
-          <div key={column.status} className="taskboard-column" data-status={column.status}>
-              <div className="taskboard-column-header">
-                <span className="taskboard-status-dot" style={{ backgroundColor: column.color }} />
-                <span>{column.title}</span>
-              <strong className={column.title === "Done" ? "taskboard-done-count" : undefined}>
-                <span>{column.count}</span>
-                {column.title === "Done" && <span>{column.count + 1}</span>}
-              </strong>
-                {(column.status === "backlog" || column.status === "todo") && (
-                  <span className="taskboard-add-button">+</span>
-                )}
-              </div>
-              <div className="taskboard-column-body">
-                {tasks.map((task) => (
-                  <TaskboardKanbanCard
-                    key={task.id}
-                    task={task}
-                    movingSource={task.id === completedTask.id}
-                  />
-                ))}
-              </div>
-            </div>
-          );
-        })}
-      </section>
+      <FrameFooter
+        onComment={() => undefined}
+        onExpand={() => undefined}
+        onDelete={() => undefined}
+        data-testid="what-denker-taskboard-frame-footer"
+      />
 
-      <TaskboardKanbanCard task={{ ...completedTask, due: "Done", ship: "Merged" }} moving />
+      {/* Moving-card choreography — a clone of the completed task that slides
+          from "In Review" into "Done" (shell-relative positioning in the
+          taskboard choreography CSS). */}
+      <div className="taskboard-moving-task">
+        <KanbanCard task={movingTask} />
+      </div>
 
       <div className="taskboard-toast">
         <div className="taskboard-toast-topbar">
@@ -946,48 +942,6 @@ function ProductionTaskboardSurface({ active }: { active: boolean }) {
         <div className="taskboard-toast-action">View</div>
       </div>
     </div>
-  );
-}
-
-function TaskboardKanbanCard({
-  task,
-  moving = false,
-  movingSource = false,
-}: {
-  task: (typeof taskboardColumns)[number]["tasks"][number];
-  moving?: boolean;
-  movingSource?: boolean;
-}) {
-  return (
-    <article
-      className={cn(
-        "taskboard-card",
-        moving && "taskboard-moving-task",
-        movingSource && "taskboard-card-moving-source"
-      )}
-      data-priority={task.priority}
-    >
-      <div className="taskboard-card-title">
-        <span className="taskboard-card-dot" />
-        <p>{task.title}</p>
-      </div>
-      <div className="taskboard-card-meta">
-        <span className="taskboard-ticket">{task.ticket}</span>
-        <span className="taskboard-date">
-          <Icons.Calendar />
-          {task.due}
-        </span>
-        <span className="taskboard-agent-chip">
-          <span />
-          {task.agent}
-        </span>
-        <span className="taskboard-comment-badge">
-          <Icons.MessageSquare />
-          {task.comments}
-        </span>
-        <span className="taskboard-ship-chip">{task.ship}</span>
-      </div>
-    </article>
   );
 }
 

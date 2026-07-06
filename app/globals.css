@@ -73,9 +73,17 @@
   --color-muted: rgba(255, 255, 255, 0.5);
   --color-canvas: #05070c;
   --color-surface: #1c1c22;
+  /* Matches dolcetto's dark-theme --color-elevated (src/index.css .dark block). */
+  --color-elevated: #2c2c34;
   --color-accent: #3af88c;
   --color-danger: #ff453a;
   --color-warning: #ffd60a;
+  /* Matches dolcetto's dark-theme --color-success (src/index.css .dark block). */
+  --color-success: #3af88c;
+  /* Matches dolcetto's dark-theme --accent-purple (src/index.css .dark block) —
+     used for the "in review" status dot and "merged" ship-status chip, which
+     have no dedicated semantic token in either codebase. */
+  --color-accent-purple: #a78bfa;
   --color-glass-fill: rgba(24, 27, 34, 0.26);
   --color-glass-fill-heavy: rgba(28, 31, 39, 0.36);
   --color-glass-fill-dense: rgba(34, 38, 47, 0.52);
@@ -2314,34 +2322,10 @@ body {
   78%,
   100% {
     opacity: 1;
-    transform: translate3d(
-      calc(var(--taskboard-column-width) + var(--taskboard-column-gap)),
-      0,
-      0
-    )
-    scale(1);
-  }
-}
-
-@keyframes taskboard-card-to-done-mobile {
-  0%,
-  40% {
-    opacity: 0;
-    transform: translate3d(0, 0, 0) scale(0.98);
-  }
-  46% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  78%,
-  100% {
-    opacity: 1;
-    transform: translate3d(
-      calc(var(--taskboard-column-width) + var(--taskboard-column-gap)),
-      0,
-      0
-    )
-    scale(1);
+    /* One column to the right. Percentages in transforms resolve against the
+       moving card's own width (column width - 12px column-body padding), so
+       100% + 12px + 6px gap = column width + gap at every breakpoint. */
+    transform: translate3d(calc(100% + 18px), 0, 0) scale(1);
   }
 }
 
@@ -2389,14 +2373,16 @@ body {
 }
 
 @keyframes taskboard-done-dropzone {
+  /* "From" matches the ported column's resting surface (bg-surface/30 over
+     #1c1c22) so the highlight fades in without a jump. */
   0%,
   48% {
-    background: linear-gradient(180deg, rgba(34, 38, 47, 0.3), rgba(20, 24, 32, 0.2));
+    background: rgba(28, 28, 34, 0.3);
     box-shadow: none;
   }
   64%,
   100% {
-    background: linear-gradient(180deg, rgba(58, 248, 140, 0.12), rgba(20, 24, 32, 0.22));
+    background: linear-gradient(180deg, rgba(58, 248, 140, 0.12), rgba(28, 28, 34, 0.22));
     box-shadow: inset 0 0 0 1px rgba(58, 248, 140, 0.16);
   }
 }
@@ -2602,383 +2588,23 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-.what-denker-taskboard-shell {
-  --taskboard-column-gap: 10px;
-  --taskboard-padding: 18px;
-  --taskboard-column-width: calc((100% - (var(--taskboard-padding) * 2) - (var(--taskboard-column-gap) * 3)) / 4);
-  position: absolute;
-  top: 24%;
-  left: 50%;
-  z-index: 18;
-  display: flex;
-  width: min(980px, 88%);
-  height: min(500px, 64%);
-  min-height: 0;
-  flex-direction: column;
-  gap: 12px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  border-radius: 18px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(241, 245, 249, 0.9)),
-    rgba(255, 255, 255, 0.88);
-  box-shadow:
-    0 28px 70px rgba(0, 0, 0, 0.36),
-    inset 0 1px 0 rgba(255, 255, 255, 0.88);
-  color: #17202a;
-  padding: var(--taskboard-padding);
-  transform: translateX(-50%);
-  -webkit-backdrop-filter: blur(24px) saturate(1.2);
-  backdrop-filter: blur(24px) saturate(1.2);
-}
+/* Taskboard choreography — the demo motion (source card fading out,
+   moving card animating into "Done", completion toast, done-count
+   transition). Visual card/column/header styling now lives in the ported
+   production components (components/production/shapes/taskboard/) via
+   Tailwind classes; only positioning + animation triggers remain here. */
 
-.taskboard-header {
-  display: flex;
-  flex: 0 0 auto;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.taskboard-eyebrow {
-  display: block;
-  margin-bottom: 4px;
-  color: #64748b;
-  font-size: 10px;
-  font-weight: 700;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.taskboard-header h3 {
-  margin: 0;
-  color: #111827;
-  font-size: 18px;
-  font-weight: 750;
-  line-height: 1.15;
-}
-
-.taskboard-header-actions {
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  gap: 9px;
-}
-
-.taskboard-search {
-  display: flex;
-  width: 176px;
-  height: 32px;
-  min-width: 0;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid #d6dde7;
-  border-radius: 8px;
-  background: rgba(248, 250, 252, 0.78);
-  color: #64748b;
-  padding: 0 10px;
-  font-size: 11px;
-  font-weight: 600;
-}
-
-.taskboard-search svg {
-  width: 13px;
-  height: 13px;
-  flex: 0 0 auto;
-}
-
-.taskboard-search span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.taskboard-header-actions button {
-  display: inline-flex;
-  height: 32px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  background: #111827;
-  color: #ffffff;
-  padding: 0 12px;
-  font-size: 11px;
-  font-weight: 750;
-}
-
-.taskboard-meta-row {
-  display: flex;
-  flex: 0 0 auto;
-  align-items: center;
-  gap: 8px;
-  color: #475569;
-  font-size: 11px;
-  font-weight: 650;
-  line-height: 1;
-}
-
-.taskboard-meta-row span {
-  border: 1px solid #d8e0eb;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.7);
-  padding: 6px 9px;
-  white-space: nowrap;
-}
-
-.taskboard-columns {
+.taskboard-done-count {
   display: grid;
-  min-height: 0;
-  flex: 1 1 auto;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--taskboard-column-gap);
 }
 
-.taskboard-column {
-  display: flex;
-  min-width: 0;
-  min-height: 0;
-  flex-direction: column;
-  overflow: hidden;
-  border: 1px solid #dbe3ed;
-  border-radius: 12px;
-  background: rgba(241, 245, 249, 0.78);
-}
-
-.taskboard-column-header {
-  display: flex;
-  height: 38px;
-  flex: 0 0 auto;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid #dbe3ed;
-  padding: 0 10px;
-  color: #334155;
-  font-size: 11px;
-  font-weight: 760;
-  line-height: 1;
-}
-
-.taskboard-column-header strong {
-  display: grid;
-  width: 20px;
-  height: 20px;
-  place-items: center;
-  border-radius: 999px;
-  background: #e2e8f0;
-  color: #475569;
-  font-size: 10px;
-}
-
-.taskboard-column-header strong span {
+.taskboard-done-count span {
   grid-area: 1 / 1;
 }
 
 .taskboard-done-count span:last-child {
   opacity: 0;
   transform: translateY(8px);
-}
-
-.taskboard-column-body {
-  display: flex;
-  min-height: 0;
-  flex: 1 1 auto;
-  flex-direction: column;
-  gap: 9px;
-  padding: 10px;
-}
-
-.taskboard-card {
-  --task-accent: #0ea5e9;
-  position: relative;
-  min-width: 0;
-  overflow: hidden;
-  border: 1px solid rgba(203, 213, 225, 0.95);
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
-  padding: 10px;
-}
-
-.taskboard-card::before {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  height: 3px;
-  background: var(--task-accent);
-  content: "";
-}
-
-.taskboard-card[data-accent="rose"] {
-  --task-accent: #f43f5e;
-}
-
-.taskboard-card[data-accent="amber"] {
-  --task-accent: #f59e0b;
-}
-
-.taskboard-card[data-accent="violet"] {
-  --task-accent: #7c3aed;
-}
-
-.taskboard-card[data-accent="green"] {
-  --task-accent: #16a34a;
-}
-
-.taskboard-card-topline,
-.taskboard-card-footer {
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  gap: 6px;
-}
-
-.taskboard-card-topline {
-  justify-content: space-between;
-  color: #64748b;
-  font-size: 9px;
-  font-weight: 800;
-  line-height: 1;
-}
-
-.taskboard-card-topline strong {
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--task-accent) 13%, white);
-  color: var(--task-accent);
-  padding: 4px 6px;
-}
-
-.taskboard-card h4 {
-  display: -webkit-box;
-  overflow: hidden;
-  margin: 9px 0 10px;
-  color: #111827;
-  font-size: 12px;
-  font-weight: 740;
-  line-height: 1.22;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-
-.taskboard-tags {
-  display: flex;
-  min-width: 0;
-  flex-wrap: wrap;
-  gap: 5px;
-  margin-bottom: 10px;
-}
-
-.taskboard-tags span {
-  overflow: hidden;
-  max-width: 100%;
-  border-radius: 6px;
-  background: #eef2f7;
-  color: #475569;
-  padding: 4px 6px;
-  font-size: 9px;
-  font-weight: 700;
-  line-height: 1;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.taskboard-card-footer {
-  color: #64748b;
-  font-size: 10px;
-  font-weight: 700;
-}
-
-.taskboard-card-footer time {
-  margin-left: auto;
-  color: #475569;
-  white-space: nowrap;
-}
-
-.taskboard-avatar {
-  display: grid;
-  width: 19px;
-  height: 19px;
-  flex: 0 0 auto;
-  place-items: center;
-  border-radius: 999px;
-  background: #111827;
-  color: #ffffff;
-  font-size: 9px;
-  font-weight: 800;
-}
-
-.taskboard-moving-task {
-  position: absolute;
-  top: 151px;
-  left: calc(
-    var(--taskboard-padding) +
-    ((var(--taskboard-column-width) + var(--taskboard-column-gap)) * 2) +
-    10px
-  );
-  z-index: 9;
-  width: calc(var(--taskboard-column-width) - 20px);
-  opacity: 0;
-  pointer-events: none;
-}
-
-.taskboard-toast {
-  position: absolute;
-  right: 24px;
-  bottom: 24px;
-  z-index: 11;
-  display: flex;
-  width: min(280px, calc(100% - 48px));
-  align-items: center;
-  gap: 10px;
-  border: 1px solid rgba(22, 163, 74, 0.24);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 18px 38px rgba(15, 23, 42, 0.18);
-  padding: 11px 12px;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.taskboard-toast > span {
-  display: grid;
-  width: 26px;
-  height: 26px;
-  flex: 0 0 auto;
-  place-items: center;
-  border-radius: 999px;
-  background: #16a34a;
-}
-
-.taskboard-toast > span::before {
-  width: 10px;
-  height: 6px;
-  border-bottom: 2px solid #ffffff;
-  border-left: 2px solid #ffffff;
-  content: "";
-  transform: rotate(-45deg) translate(1px, -1px);
-}
-
-.taskboard-toast strong,
-.taskboard-toast p {
-  display: block;
-  margin: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.taskboard-toast strong {
-  color: #111827;
-  font-size: 12px;
-  font-weight: 800;
-  line-height: 1.15;
-}
-
-.taskboard-toast p {
-  margin-top: 3px;
-  color: #475569;
-  font-size: 10px;
-  font-weight: 650;
 }
 
 .what-denker-taskboard-shell[data-active="true"] .taskboard-card-moving-source {
@@ -3384,139 +3010,6 @@ body {
   .gmail-demo-reply-tools button {
     height: 24px;
     padding: 0 16px;
-  }
-
-  .what-denker-taskboard-shell {
-    --taskboard-column-gap: 9px;
-    --taskboard-padding: 14px;
-    --taskboard-column-width: calc((100% - (var(--taskboard-padding) * 2) - var(--taskboard-column-gap)) / 2);
-    top: 25%;
-    width: min(420px, calc(100% - 28px));
-    height: 66%;
-    gap: 9px;
-    border-radius: 15px;
-    padding: var(--taskboard-padding);
-  }
-
-  .taskboard-header {
-    gap: 10px;
-  }
-
-  .taskboard-eyebrow {
-    margin-bottom: 3px;
-    font-size: 8px;
-  }
-
-  .taskboard-header h3 {
-    font-size: 14px;
-  }
-
-  .taskboard-search {
-    display: none;
-  }
-
-  .taskboard-header-actions button {
-    height: 28px;
-    padding: 0 9px;
-    font-size: 9px;
-  }
-
-  .taskboard-meta-row {
-    gap: 5px;
-    font-size: 8px;
-  }
-
-  .taskboard-meta-row span {
-    padding: 5px 6px;
-  }
-
-  .taskboard-columns {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--taskboard-column-gap);
-  }
-
-  .taskboard-column-header {
-    height: 30px;
-    padding: 0 8px;
-    font-size: 9px;
-  }
-
-  .taskboard-column-header strong {
-    width: 17px;
-    height: 17px;
-    font-size: 8px;
-  }
-
-  .taskboard-column-body {
-    gap: 7px;
-    padding: 8px;
-  }
-
-  .taskboard-card {
-    border-radius: 8px;
-    padding: 8px;
-  }
-
-  .taskboard-card-topline {
-    font-size: 7px;
-  }
-
-  .taskboard-card h4 {
-    margin: 7px 0 8px;
-    font-size: 9px;
-    line-height: 1.2;
-  }
-
-  .taskboard-tags {
-    gap: 4px;
-    margin-bottom: 7px;
-  }
-
-  .taskboard-tags span {
-    padding: 3px 4px;
-    font-size: 7px;
-  }
-
-  .taskboard-card-footer {
-    gap: 4px;
-    font-size: 8px;
-  }
-
-  .taskboard-avatar {
-    width: 16px;
-    height: 16px;
-    font-size: 7px;
-  }
-
-  .taskboard-moving-task {
-    top: 235px;
-    left: calc(var(--taskboard-padding) + 8px);
-    width: calc(var(--taskboard-column-width) - 16px);
-  }
-
-  .what-denker-taskboard-shell[data-active="true"] .taskboard-moving-task {
-    animation-name: taskboard-card-to-done-mobile;
-  }
-
-  .taskboard-toast {
-    right: 14px;
-    bottom: 14px;
-    width: min(250px, calc(100% - 28px));
-    border-radius: 10px;
-    padding: 9px 10px;
-  }
-
-  .taskboard-toast > span {
-    width: 22px;
-    height: 22px;
-  }
-
-  .taskboard-toast strong {
-    font-size: 10px;
-  }
-
-  .taskboard-toast p {
-    font-size: 8px;
   }
 
   .antler-browser-chrome {
@@ -6306,27 +5799,35 @@ body {
   }
 }
 
-/* Dolcetto-derived taskboard preview for the fifth WhatDenkerCanDo slide.
-   Mirrors the Tauri app's compact dark Kanban frame and notification toast
-   anatomy instead of a generic landing-page board mock. */
+/* Taskboard preview for the fourth WhatDenkerCanDo slide — mirrors the
+   Tauri app's compact dark Kanban frame. Card/column/header visual styling
+   now lives in the ported production components
+   (components/production/shapes/taskboard/) via Tailwind classes; this
+   block only covers the slide-specific shell positioning, board layout
+   sizing (needed for the moving-card offset math below), and the
+   completion toast (not a ported component — see brief). */
 .what-denker-taskboard-shell {
-  --taskboard-padding: 14px;
-  --taskboard-column-gap: 8px;
+  /* Geometry consumed by the moving-card offset math. Mirrors the columns
+     wrapper's Tailwind classes: px-2 (8px) and gap-1.5 (6px), 6 equal
+     flex-1 columns. */
+  --taskboard-padding: 8px;
+  --taskboard-column-gap: 6px;
   --taskboard-column-width: calc((100% - (var(--taskboard-padding) * 2) - (var(--taskboard-column-gap) * 5)) / 6);
-  --taskboard-status-muted: rgba(255, 255, 255, 0.5);
-  --taskboard-status-selected: #0a84ff;
-  --taskboard-status-warning: #ffd60a;
-  --taskboard-status-error: #ff453a;
-  --taskboard-status-review: #bf5af2;
-  --taskboard-status-accent: #3af88c;
+  position: absolute;
   top: 25%;
-  width: min(720px, 68%);
-  height: auto;
+  left: 50%;
+  z-index: 18;
+  display: flex;
+  /* Wide enough for six ported columns at production's min-w-[120px]:
+     6 * 120 + 5 * 6 + 2 * 8 = 766px. */
+  width: min(800px, 76%);
+  height: min(430px, 58%);
   max-height: none;
-  aspect-ratio: 4 / 3;
+  min-height: 0;
+  flex-direction: column;
   gap: 0;
   overflow: visible;
-  border-color: rgba(245, 247, 250, 0.08);
+  border: 1px solid rgba(245, 247, 250, 0.08);
   border-radius: 20px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.018) 48%, rgba(0, 0, 0, 0.12)),
@@ -6337,267 +5838,39 @@ body {
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.95);
   padding: 0;
+  transform: translateX(-50%);
   -webkit-backdrop-filter: blur(26px) saturate(1.35);
   backdrop-filter: blur(26px) saturate(1.35);
 }
 
-.taskboard-header {
-  min-height: 46px;
-  gap: 12px;
-  border-bottom: 0;
-  padding: 10px 14px 6px;
-}
-
-.taskboard-title-row {
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  gap: 8px;
-}
-
-.taskboard-frame-icon {
-  display: grid;
-  width: 20px;
-  height: 20px;
-  flex: 0 0 auto;
-  place-items: center;
-  border-radius: 6px;
-  background: #3af88c;
-  color: rgba(5, 7, 12, 0.92);
-}
-
-.taskboard-frame-icon svg {
-  width: 12px;
-  height: 12px;
-}
-
-.taskboard-header h3 {
-  overflow: hidden;
-  color: rgba(255, 255, 255, 0.95);
-  font-size: 14px;
-  font-weight: 650;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.taskboard-display-control {
-  display: inline-flex;
-  height: 24px;
-  flex: 0 0 auto;
-  align-items: center;
-  gap: 5px;
-  border: 0;
-  border-radius: 8px;
-  background: rgba(34, 38, 47, 0.36);
-  color: rgba(255, 255, 255, 0.72);
-  padding: 0 8px;
-  font-size: 10px;
-  font-weight: 600;
-}
-
-.taskboard-display-control svg {
-  width: 10px;
-  height: 10px;
-}
-
-.taskboard-columns {
-  grid-template-columns: repeat(6, minmax(0, var(--taskboard-column-width)));
-  gap: var(--taskboard-column-gap);
-  overflow: hidden;
-  padding: 8px var(--taskboard-padding) var(--taskboard-padding);
-}
-
-.taskboard-column {
-  min-width: 0;
-  border-color: transparent;
-  border-radius: 12px;
-  background: linear-gradient(180deg, rgba(34, 38, 47, 0.3), rgba(20, 24, 32, 0.2));
-}
-
-.taskboard-column-header {
-  height: 32px;
-  gap: 5px;
-  border-bottom: 0;
-  padding: 7px 7px 6px;
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 11px;
-  font-weight: 650;
-}
-
-.taskboard-column-header > span:nth-child(2) {
-  min-width: 0;
-  flex: 1 1 auto;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.taskboard-status-dot {
-  width: 8px;
-  height: 8px;
-  flex: 0 0 auto;
-  border-radius: 999px;
-}
-
-.taskboard-column-header strong {
-  width: auto;
-  height: auto;
-  flex: 0 0 auto;
-  border-radius: 0;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 9px;
-  font-weight: 600;
-}
-
-.taskboard-add-button {
-  display: grid;
-  width: 14px;
-  height: 14px;
-  flex: 0 0 auto;
-  place-items: center;
-  border-radius: 4px;
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 13px;
-  line-height: 1;
-}
-
-.taskboard-column-body {
-  gap: 4px;
-  overflow: hidden;
-  padding: 0 6px 6px;
-}
-
-.taskboard-card {
-  --task-priority: rgba(255, 255, 255, 0.5);
-  border: 0;
-  border-left: 1.5px solid var(--task-priority);
-  border-radius: 8px;
-  background: rgba(34, 38, 47, 0.4);
-  box-shadow: none;
-  padding: 8px 8px 7px;
-}
-
-.taskboard-card::before {
-  display: none;
-}
-
-.taskboard-card[data-priority="medium"] {
-  --task-priority: rgba(10, 132, 255, 0.86);
-}
-
-.taskboard-card[data-priority="high"] {
-  --task-priority: rgba(255, 214, 10, 0.86);
-}
-
-.taskboard-card[data-priority="urgent"] {
-  --task-priority: rgba(255, 69, 58, 0.86);
-}
-
-.taskboard-card-title {
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  gap: 6px;
-}
-
-.taskboard-card-dot {
-  width: 6px;
-  height: 6px;
-  flex: 0 0 auto;
-  border-radius: 999px;
-  background: #bf5af2;
-}
-
-.taskboard-card-title p {
-  display: -webkit-box;
-  overflow: hidden;
-  margin: 0;
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 1.22;
-  text-overflow: clip;
-  white-space: normal;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-
-.taskboard-card-meta {
-  display: flex;
-  min-width: 0;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 5px 7px;
-  margin-top: 7px;
-  padding-left: 12px;
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 9px;
-  line-height: 1.2;
-}
-
-.taskboard-card-meta svg {
-  width: 10px;
-  height: 10px;
-  flex: 0 0 auto;
-}
-
-.taskboard-ticket {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-}
-
-.taskboard-date,
-.taskboard-agent-chip,
-.taskboard-comment-badge,
-.taskboard-ship-chip {
-  display: inline-flex;
-  min-width: 0;
-  align-items: center;
-  gap: 3px;
-}
-
-.taskboard-agent-chip span {
-  width: 5px;
-  height: 5px;
-  flex: 0 0 auto;
-  border-radius: 999px;
-  background: #3af88c;
-}
-
-.taskboard-comment-badge {
-  color: #3af88c;
-}
-
-.taskboard-ship-chip {
-  height: 18px;
-  border: 0;
-  border-radius: 4px;
-  background: rgba(58, 248, 140, 0.12);
-  color: #3af88c;
-  padding: 0 5px;
-  font-weight: 600;
-}
-
 .taskboard-moving-task {
-  top: 96px;
+  position: absolute;
+  /* Over the "In Review" card: frame header + wrapper py-1 + column header. */
+  top: 62px;
   left: calc(
     var(--taskboard-padding) +
     ((var(--taskboard-column-width) + var(--taskboard-column-gap)) * 4) +
     6px
   );
-  width: calc(var(--taskboard-column-width) - 14px);
+  z-index: 9;
+  /* Column width minus the column body's px-1.5 padding. */
+  width: calc(var(--taskboard-column-width) - 12px);
+  opacity: 0;
+  pointer-events: none;
   box-shadow:
     0 18px 38px rgba(0, 0, 0, 0.34),
     0 0 0 1px rgba(58, 248, 140, 0.18);
 }
 
 .taskboard-toast {
+  position: absolute;
   top: -34px;
   right: -58px;
   bottom: auto;
+  z-index: 11;
   display: block;
   width: min(270px, calc(100% - 24px));
-  border-color: rgba(245, 247, 250, 0.09);
+  border: 1px solid rgba(245, 247, 250, 0.09);
   border-radius: 16px;
   background:
     linear-gradient(180deg, rgba(58, 248, 140, 0.08), rgba(58, 248, 140, 0.02)),
@@ -6607,6 +5880,8 @@ body {
     0 8px 20px rgba(0, 0, 0, 0.22),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   padding: 0;
+  opacity: 0;
+  pointer-events: none;
   -webkit-backdrop-filter: blur(26px) saturate(1.2);
   backdrop-filter: blur(26px) saturate(1.2);
 }
@@ -6693,7 +5968,7 @@ body {
   font-weight: 600;
 }
 
-.what-denker-taskboard-shell[data-active="true"] .taskboard-column[data-status="done"] {
+.what-denker-taskboard-shell[data-active="true"] [data-status="done"] {
   animation: taskboard-done-dropzone 4.6s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -6702,104 +5977,30 @@ body {
     --taskboard-column-width: calc((100% - (var(--taskboard-padding) * 2) - var(--taskboard-column-gap)) / 2);
   }
 
-  .taskboard-columns {
-    grid-template-columns: repeat(2, minmax(0, var(--taskboard-column-width)));
-  }
-
-  .taskboard-column {
+  /* Narrow viewports show only the two columns involved in the demo
+     choreography ("In Review" -> "Done"); the rest are hidden. */
+  .what-denker-taskboard-shell [data-status] {
     display: none;
   }
 
-  .taskboard-column[data-status="in_review"],
-  .taskboard-column[data-status="done"] {
+  .what-denker-taskboard-shell [data-status="in_review"],
+  .what-denker-taskboard-shell [data-status="done"] {
     display: flex;
   }
 
   .taskboard-moving-task {
     left: calc(var(--taskboard-padding) + 6px);
-    width: calc(var(--taskboard-column-width) - 14px);
   }
 }
 
 @media (max-width: 767px) {
   .what-denker-taskboard-shell {
-    --taskboard-column-gap: 4px;
-    --taskboard-padding: 8px;
-    --taskboard-column-width: calc((100% - (var(--taskboard-padding) * 2) - var(--taskboard-column-gap)) / 2);
     top: 27%;
     width: min(360px, calc(100% - 44px));
     height: auto;
     max-height: 62%;
     aspect-ratio: 4 / 3;
     border-radius: 15px;
-  }
-
-  .taskboard-header {
-    min-height: 36px;
-    padding: 7px 10px 6px;
-  }
-
-  .taskboard-header h3 {
-    font-size: 11px;
-  }
-
-  .taskboard-display-control {
-    height: 22px;
-    padding: 0 7px;
-    font-size: 9px;
-  }
-
-  .taskboard-columns {
-    grid-template-columns: repeat(2, minmax(0, var(--taskboard-column-width)));
-    padding: 7px var(--taskboard-padding);
-  }
-
-  .taskboard-column {
-    min-width: 0;
-    border-radius: 9px;
-  }
-
-  .taskboard-column-header {
-    height: 26px;
-    padding: 6px 5px;
-    font-size: 9px;
-  }
-
-  .taskboard-column-body {
-    gap: 4px;
-    padding: 0 5px 5px;
-  }
-
-  .taskboard-card {
-    border-radius: 4px;
-    padding: 5px 6px;
-  }
-
-  .taskboard-card-title p {
-    font-size: 9px;
-  }
-
-  .taskboard-card-meta {
-    gap: 4px 6px;
-    margin-top: 4px;
-    padding-left: 11px;
-    font-size: 7px;
-  }
-
-  .taskboard-card-meta svg {
-    width: 8px;
-    height: 8px;
-  }
-
-  .taskboard-ship-chip {
-    height: 15px;
-    padding: 0 4px;
-  }
-
-  .taskboard-moving-task {
-    top: 75px;
-    left: calc(var(--taskboard-padding) + 5px);
-    width: calc(var(--taskboard-column-width) - 10px);
   }
 
   .taskboard-toast {
