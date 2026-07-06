@@ -200,6 +200,16 @@ body {
   background: #000;
 }
 
+/* Full-screen "panel" rhythm: every section is at least one screenful with its
+   content vertically centered. Uses min-height (never a fixed height) so thin
+   sections show symmetric breathing room while tall/dynamic content (an open
+   FAQ, stacked pricing cards on mobile) grows past the screen instead of being
+   clipped. Applied to elements that are already `display:flex; flex-direction:column`. */
+.section-panel {
+  min-height: 100svh;
+  justify-content: center;
+}
+
 .hero-viewport-section::after {
   position: absolute;
   right: 0;
@@ -4662,11 +4672,11 @@ body {
 
 .hero-production-final-cursor {
   position: absolute;
-  top: 392px;
-  left: 690px;
+  top: 282px;
+  left: 1087px;
   z-index: 6;
   filter: drop-shadow(0 18px 38px rgba(0, 0, 0, 0.55));
-  transform: translateZ(88px) scale(0.92);
+  transform: translateZ(88px) scale(1.2);
   transform-origin: top left;
 }
 
@@ -4704,22 +4714,28 @@ body {
   }
 
   .hero-production-final-agent-shell {
-    --hero-final-agent-scale: 0.32;
-    top: 132px;
-    left: 548px;
+    --hero-final-agent-scale: 0.365;
+    top: 140px;
+    left: 649px;
   }
 
   .hero-production-final-book {
-    --hero-final-book-scale: 0.48;
-    top: 44px;
-    left: 704px;
+    --hero-final-book-scale: 0.477;
+    top: -10px;
+    left: 872px;
     height: 520px;
   }
 
   .hero-production-final-voice {
-    --hero-final-voice-scale: 0.74;
-    left: 812px;
-    top: 316px;
+    --hero-final-voice-scale: 1;
+    left: 808px;
+    top: 268px;
+  }
+
+  .hero-production-final-cursor {
+    top: 262px;
+    left: 1044px;
+    transform: translateZ(88px) scale(1.1);
   }
 }
 
@@ -4741,22 +4757,28 @@ body {
   }
 
   .hero-production-final-agent-shell {
-    --hero-final-agent-scale: 0.34;
-    top: 126px;
-    left: 690px;
+    --hero-final-agent-scale: 0.412;
+    top: 136px;
+    left: 679px;
   }
 
   .hero-production-final-book {
-    --hero-final-book-scale: 0.52;
-    top: 24px;
-    left: 952px;
+    --hero-final-book-scale: 0.539;
+    top: -26px;
+    left: 980px;
     height: 530px;
   }
 
   .hero-production-final-voice {
-    --hero-final-voice-scale: 0.8;
-    left: 1088px;
-    top: 322px;
+    --hero-final-voice-scale: 1.15;
+    left: 904px;
+    top: 292px;
+  }
+
+  .hero-production-final-cursor {
+    top: 286px;
+    left: 1178px;
+    transform: translateZ(88px) scale(1.25);
   }
 }
 
@@ -4773,22 +4795,28 @@ body {
   }
 
   .hero-production-final-agent-shell {
-    --hero-final-agent-scale: 0.34;
-    top: 126px;
-    left: 590px;
+    --hero-final-agent-scale: 0.396;
+    top: 140px;
+    left: 669px;
   }
 
   .hero-production-final-book {
-    --hero-final-book-scale: 0.5;
-    top: 34px;
-    left: 760px;
+    --hero-final-book-scale: 0.518;
+    top: -20px;
+    left: 898px;
     height: 530px;
   }
 
   .hero-production-final-voice {
-    --hero-final-voice-scale: 0.78;
-    left: 890px;
-    top: 320px;
+    --hero-final-voice-scale: 1.1;
+    left: 827px;
+    top: 288px;
+  }
+
+  .hero-production-final-cursor {
+    top: 282px;
+    left: 1087px;
+    transform: translateZ(88px) scale(1.2);
   }
 }
 
@@ -4804,13 +4832,13 @@ body {
   }
 
   .hero-production-final-agent-shell {
-    --hero-final-agent-scale: 0.31;
-    left: 548px;
+    --hero-final-agent-scale: 0.4;
+    left: 560px;
   }
 
   .hero-production-final-book {
-    --hero-final-book-scale: 0.46;
-    left: 704px;
+    --hero-final-book-scale: 0.52;
+    left: 760px;
     height: 430px;
   }
 
@@ -4839,12 +4867,12 @@ body {
   }
 
   .hero-production-final-agent-shell {
-    --hero-final-agent-scale: 0.31;
+    --hero-final-agent-scale: 0.4;
   }
 
   .hero-production-final-book {
-    --hero-final-book-scale: 0.48;
-    left: 790px;
+    --hero-final-book-scale: 0.54;
+    left: 820px;
     height: 500px;
   }
 
